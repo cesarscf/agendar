@@ -1,112 +1,140 @@
-# CLAUDE.md
+# API - Agendar
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+Backend Fastify para sistema de agendamento multi-tenant.
 
-## Project Overview
+## Comandos
 
-This is "Agendar API" - a Portuguese appointment booking system API for beauty salons and similar establishments. It's built with Fastify, TypeScript, Drizzle ORM with PostgreSQL, and includes subscription management via Stripe.
-
-## Development Commands
-
-- **Start development server**: `npm run dev` (watches files with tsx, loads .env)
-- **Start local development**: `npm run local` (uses .env.local instead)
-- **Format code**: `npm run format` (uses Biome)
-- **Build project**: `npm run build` (uses tsup)
-- **Start production**: `npm start`
-
-## Database Commands
-
-- **Generate migrations**: `npm run db:generate`
-- **Run migrations**: `npm run db:migrate`
-- **Seed database**: `npm run db:seed`
-
-## Architecture
-
-### Core Stack
-- **Framework**: Fastify with fastify-type-provider-zod for type-safe schemas
-- **Database**: PostgreSQL with Drizzle ORM
-- **Authentication**: JWT tokens (@fastify/jwt)
-- **Validation**: Zod schemas throughout
-- **Payments**: Stripe integration with webhooks
-- **Push Notifications**: Firebase Admin SDK
-- **Email**: Resend API
-- **Documentation**: Swagger/OpenAPI auto-generated
-
-### Project Structure
-```
-src/
-├── @types/           # TypeScript type definitions
-├── clients/          # External service clients (Firebase, Stripe, Resend)
-├── db/              # Database connection and schema definitions
-├── enums/           # Shared enumerations
-├── middlewares/     # Authentication and authorization middleware
-├── routes/          # Feature-based route handlers
-├── utils/           # Shared utilities and schemas
-├── env.ts           # Environment variable validation
-└── server.ts        # Main application setup
+```bash
+bun run dev      # Desenvolvimento (watch mode)
+bun run local    # Desenvolvimento com .env.local
+bun run build    # Build de produção
+bun run db:generate  # Gerar migrações
+bun run db:migrate   # Executar migrações
 ```
 
-### Route Organization
-Routes are organized by feature domain:
-- `/admin` - Admin panel operations
-- `/public` - Public-facing endpoints (via establishment slug)
-- Root level routes for core entities (appointments, customers, employees, etc.)
+## Padrões Arquiteturais
 
-### Key Patterns
+### Plugin Pattern (Rotas)
 
-#### Authentication Layers
-- `auth.ts` - Basic JWT authentication
-- `admin-auth.ts` - Admin user authorization
-- `customer-auth.ts` - Customer authorization
-- `require-active-subscription.ts` - Subscription validation
+Cada grupo de rotas é um plugin Fastify:
 
-#### Multi-tenancy
-The system uses establishment-based multi-tenancy:
-- Partners own establishments
-- `getCurrentEstablishmentId()` helper retrieves the current establishment from `x-establishment-id` header or defaults to partner's first establishment
-- Most routes are scoped to an establishment via this pattern
+```typescript
+// routes/appointments/index.ts
+export async function appointmentsRoutes(app: FastifyInstance) {
+  await createAppointment(app)
+  await updateAppointmentStatus(app)
+}
 
-#### Database Schema
-- Located in `src/db/schema/` with individual files per entity
-- Uses Drizzle ORM with full TypeScript integration
-- Migration files generated in `/drizzle` directory
-- Schema exports centralized in `src/db/schema/index.ts`
+// server.ts - registro
+app.register(appointmentsRoutes)
+```
 
-#### Error Handling
-- Centralized error handler in `utils/error-handler.ts`
-- Custom error classes: `BadRequestError`, `UnauthorizedError`, `ForbiddenError`
-- Automatic Zod validation error formatting
-- Consistent error responses across the API
+### Middleware via Hooks
 
-#### Environment Configuration
-- Zod-validated environment variables in `src/env.ts`
-- Separate `.env` and `.env.local` files supported
-- Required variables: DATABASE_URL, JWT_SECRET, STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET, FIREBASE_SERVICE_ACCOUNT_KEY_ENCODED_JSON, RESEND_API_KEY, RESEND_EMAIL
+Middlewares adicionam métodos ao `request` via `preHandler`:
 
-#### Stripe Integration
-- Webhook handler in `routes/subscription/stripe-webhook.ts`
-- Handles subscription lifecycle events (created, updated, deleted)
-- Payment method management via setup intents
-- Invoice payment tracking (paid/failed)
+```typescript
+app.addHook("preHandler", async request => {
+  request.getCurrentPartnerId = async () => { ... }
+  request.getCurrentEstablishmentId = async () => { ... }
+})
+```
 
-## Code Style
+### Type-Safe Routes com Zod
 
-- **Formatter**: Biome (configured in `biome.json`)
-- **Spacing**: 2 spaces, line width 80 characters
-- **Semicolons**: As needed only
-- **Quotes**: Double quotes for JSX, arrow parens as needed
-- **Imports**: Organized automatically by Biome
-- **Path Aliases**: `@/*` maps to `./src/*`
+```typescript
+typedApp.post("/endpoint", {
+  schema: {
+    tags: ["Tag"],
+    body: z.object({ field: z.string() }),
+    response: { 201: z.object({ id: z.string().uuid() }) }
+  }
+}, async (request, reply) => { ... })
+```
 
-## Business Logic Context
+### Drizzle ORM com Relations
 
-This is a multi-tenant SaaS for appointment booking with:
-- **Establishments** (beauty salons) with custom slugs for public booking
-- **Partners** (establishment owners) with subscription plans
-- **Employees/Professionals** who provide services
-- **Customers** who book appointments
-- **Services** with categories and pricing
-- **Packages** (service bundles) and loyalty programs
-- **Subscription tiers** based on employee count (handled via Stripe)
+```typescript
+// Query com eager loading
+db.query.appointments.findFirst({
+  where: eq(appointments.id, id),
+  with: { employee: true, service: true }
+})
+```
 
-The system supports both admin panel management and public booking flows via establishment slug URLs.
+## Autenticação (3 Camadas)
+
+### Partner Auth (JWT)
+- Token contém `sub` (partnerId)
+- Header `x-establishment-id` roteia para estabelecimento
+- `request.getCurrentPartnerId()` e `request.getCurrentEstablishmentId()`
+
+### Customer Auth (Headers - sem JWT)
+- Header `x-customer-phone` identifica cliente
+- Header `x-establishment-id` define contexto
+- Cliente identificado por telefone + establishment
+
+### Subscription Validation
+- Middleware `requireActiveSubscription`
+- Verifica status ("active" | "trialing") e `currentPeriodEnd > now`
+- Bypass em `NODE_ENV === "development"`
+
+## Classes de Erro
+
+```typescript
+throw new UnauthorizedError("message") // 401
+throw new ForbiddenError("message")    // 403
+throw new BadRequestError("message")   // 400
+```
+
+## Padrão: Notificações Async
+
+Responde primeiro, depois notifica (fire-and-forget):
+
+```typescript
+reply.status(201).send({ id: appointment.id })
+messaging.send({...}).catch(err => logger.error(err))
+```
+
+## Padrão: Validação de Conflitos de Horário
+
+SQL para detectar sobreposição (overlap):
+```sql
+startTime < :endTime AND endTime > :startTime
+```
+
+Aplicado em:
+- Agendamentos existentes do funcionário
+- Bloqueios manuais (`employeeTimeBlocks`)
+- Bloqueios recorrentes (`employeeRecurringBlocks`)
+
+## Convenções de Dados
+
+| Tipo | Convenção |
+|------|-----------|
+| Preços | Decimal como string ("10.50") |
+| Centavos | Inteiro (1050 = R$10,50) |
+| Comissão | Decimal 0-1 no DB, percentual string no front |
+| Datas | String "YYYY-MM-DD" |
+| Weekday | 0=Domingo, 1=Segunda... (padrão JS) |
+
+## Utilitários de Conversão
+
+```typescript
+// Preços (utils/price.ts)
+centsToReais("1050") // "10.50"
+reaisToCents(10.50)  // "1050"
+
+// Comissão (utils/commission.ts)
+commissionToDb("25")    // "0.25"
+commissionToFront(0.25) // "25"
+```
+
+## Variáveis de Ambiente
+
+Validadas via Zod em `src/env.ts`:
+- DATABASE_URL
+- JWT_SECRET
+- STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET
+- FIREBASE_SERVICE_ACCOUNT_KEY_ENCODED_JSON
+- RESEND_API_KEY, RESEND_EMAIL
