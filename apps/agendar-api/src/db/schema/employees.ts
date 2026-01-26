@@ -1,8 +1,8 @@
+import { relations } from "drizzle-orm"
+import { boolean, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core"
 import { appointments } from "@/db/schema/appointments"
 import { employeeServices } from "@/db/schema/employee-services"
 import { establishments } from "@/db/schema/establishments"
-import { relations } from "drizzle-orm"
-import { boolean, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core"
 
 export const employees = pgTable("employees", {
   id: uuid("id").notNull().primaryKey().defaultRandom(),

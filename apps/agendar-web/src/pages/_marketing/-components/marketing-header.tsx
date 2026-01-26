@@ -1,17 +1,17 @@
-import { Link } from "@tanstack/react-router";
-import { Menu } from "lucide-react";
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
+import { Link } from "@tanstack/react-router"
+import { Menu } from "lucide-react"
+import { useState } from "react"
+import { Button } from "@/components/ui/button"
 import {
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/components/ui/sheet";
+} from "@/components/ui/sheet"
 
 export function MarketingHeader() {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false)
 
   return (
     <header className="w-full bg-[#1a2b5f] sticky top-0 z-50">
@@ -122,7 +122,10 @@ export function MarketingHeader() {
             >
               Preços
             </a>
-            <Button asChild className="bg-yellow-400 hover:bg-yellow-500 text-[#1a2b5f] font-bold px-6 py-2 rounded-full shadow-lg transition-transform hover:scale-105">
+            <Button
+              asChild
+              className="bg-yellow-400 hover:bg-yellow-500 text-[#1a2b5f] font-bold px-6 py-2 rounded-full shadow-lg transition-transform hover:scale-105"
+            >
               <Link to="/pre-register">Teste grátis</Link>
             </Button>
             <a
@@ -142,5 +145,5 @@ export function MarketingHeader() {
         </div>
       </div>
     </header>
-  );
+  )
 }

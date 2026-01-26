@@ -1,11 +1,12 @@
 // @ts-nocheck
 
+import { eq } from "drizzle-orm"
 import { db } from "@/db"
 import {
   appointments,
   categories,
-  customerServicePackageUsages,
   customerServicePackages,
+  customerServicePackageUsages,
   customers,
   employees,
   establishments,
@@ -14,10 +15,9 @@ import {
   packageItems,
   packages,
   serviceCategories,
-  serviceToCategories,
   services,
+  serviceToCategories,
 } from "@/db/schema"
-import { eq } from "drizzle-orm"
 
 async function seed(establishmentId: string) {
   console.log("🌱 Iniciando seed do banco de dados...")

@@ -1,35 +1,35 @@
-import { useQuery } from "@tanstack/react-query";
-import { createFileRoute } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query"
+import { createFileRoute } from "@tanstack/react-router"
 
-import { useQueryState } from "nuqs";
+import { useQueryState } from "nuqs"
 
-import { Tabs, TabsContent } from "@/components/ui/tabs";
-import { getPackage } from "@/http/packages/get-package";
-import { getServices } from "@/http/services/get-services";
-import { UpdatePackageForm } from "./-components/update-package-form";
+import { Tabs, TabsContent } from "@/components/ui/tabs"
+import { getPackage } from "@/http/packages/get-package"
+import { getServices } from "@/http/services/get-services"
+import { UpdatePackageForm } from "./-components/update-package-form"
 
 export const Route = createFileRoute("/app/packages/$packageId/")({
   component: Package,
-});
+})
 
 function Package() {
-  const { packageId } = Route.useParams();
+  const { packageId } = Route.useParams()
   const { data: services } = useQuery({
     queryKey: ["services"],
     queryFn: getServices,
-  });
+  })
 
   const { data, isLoading } = useQuery({
     queryKey: ["package", packageId],
     queryFn: () => getPackage(packageId),
-  });
+  })
 
   const [tab, setTab] = useQueryState("tab", {
     defaultValue: "update-package",
-  });
+  })
 
   if (isLoading) {
-    return null;
+    return null
   }
 
   if (!data) {
@@ -37,7 +37,7 @@ function Package() {
       <div className="p-6 text-center text-muted-foreground">
         Pacote não encontrado.
       </div>
-    );
+    )
   }
 
   return (
@@ -83,5 +83,5 @@ function Package() {
         </TabsContent> */}
       </Tabs>
     </div>
-  );
+  )
 }

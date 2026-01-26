@@ -1,5 +1,5 @@
-import { useSession } from "@/providers/auth-context"
 import { SplashScreen } from "expo-router"
+import { useSession } from "@/providers/auth-context"
 
 export function SplashScreenController() {
   const { isLoading } = useSession()

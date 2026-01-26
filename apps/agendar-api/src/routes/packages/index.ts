@@ -1,3 +1,4 @@
+import type { FastifyInstance } from "fastify"
 import { associateItemsToPackage } from "@/routes/packages/associate-items-to-package"
 import { createPackage } from "@/routes/packages/create-package"
 import { deletePackage } from "@/routes/packages/delete-package"
@@ -5,7 +6,6 @@ import { getPackage } from "@/routes/packages/get-package"
 import { getPackages } from "@/routes/packages/get-packages"
 import { updatePackage } from "@/routes/packages/update-package"
 import { UpdatePackageStatus } from "@/routes/packages/update-package-status"
-import type { FastifyInstance } from "fastify"
 
 export async function packagesRoutes(app: FastifyInstance) {
   await getPackages(app)

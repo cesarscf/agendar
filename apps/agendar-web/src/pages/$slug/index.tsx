@@ -1,5 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
-import { createFileRoute } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query"
+import { createFileRoute } from "@tanstack/react-router"
 import {
   CheckCircle,
   Clock,
@@ -8,37 +8,37 @@ import {
   Phone,
   TriangleAlert,
   Users,
-} from "lucide-react";
-import React from "react";
-import { ThemeWrapper } from "@/components/theme-wrapper";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { getPublicEstablishment } from "@/http/public/get-public-establishment";
-import { getPublicLoyalties } from "@/http/public/get-public-loyalties";
-import { getPublicPackages } from "@/http/public/get-public-packages";
-import { getPublicProfessionals } from "@/http/public/get-public-professionals";
-import { getPublicServices } from "@/http/public/get-public-services";
-import { maskPhone } from "@/lib/masks";
-import { cn } from "@/lib/utils";
-import { EstablishmentFooter } from "./-components/establishment-footer";
-import { EstablishmentHeader } from "./-components/establishment-header";
-import { EstablishmentHeroBanner } from "./-components/establishment-hero-banner";
-import { EstablishmentLoyaltyProgramsList } from "./-components/establishment-loyalty-programs-list";
-import { EstablishmentPackagesList } from "./-components/establishment-package-list";
-import { EstablishmentProfessionalsList } from "./-components/establishment-professionals-list";
-import { EstablishmentServicesList } from "./-components/establishment-service-list";
-import { EstablishmentSidebar } from "./-components/establishment-sidebar";
+} from "lucide-react"
+import React from "react"
+import { ThemeWrapper } from "@/components/theme-wrapper"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { getPublicEstablishment } from "@/http/public/get-public-establishment"
+import { getPublicLoyalties } from "@/http/public/get-public-loyalties"
+import { getPublicPackages } from "@/http/public/get-public-packages"
+import { getPublicProfessionals } from "@/http/public/get-public-professionals"
+import { getPublicServices } from "@/http/public/get-public-services"
+import { maskPhone } from "@/lib/masks"
+import { cn } from "@/lib/utils"
+import { EstablishmentFooter } from "./-components/establishment-footer"
+import { EstablishmentHeader } from "./-components/establishment-header"
+import { EstablishmentHeroBanner } from "./-components/establishment-hero-banner"
+import { EstablishmentLoyaltyProgramsList } from "./-components/establishment-loyalty-programs-list"
+import { EstablishmentPackagesList } from "./-components/establishment-package-list"
+import { EstablishmentProfessionalsList } from "./-components/establishment-professionals-list"
+import { EstablishmentServicesList } from "./-components/establishment-service-list"
+import { EstablishmentSidebar } from "./-components/establishment-sidebar"
 
 export const Route = createFileRoute("/$slug/")({
   component: RouteComponent,
   loader: async ({ params }) => {
-    const slug = params.slug;
+    const slug = params.slug
 
-    const data = await getPublicEstablishment(slug);
+    const data = await getPublicEstablishment(slug)
 
     return {
       ...data,
-    };
+    }
   },
   head: ({ loaderData }) => {
     return {
@@ -57,44 +57,44 @@ export const Route = createFileRoute("/$slug/")({
           href: "/favicon.ico",
         },
       ],
-    };
+    }
   },
-});
+})
 
 function RouteComponent() {
-  const establishment = Route.useLoaderData();
+  const establishment = Route.useLoaderData()
 
-  const { slug } = Route.useParams();
-  const [activeTab, setActiveTab] = React.useState("services");
+  const { slug } = Route.useParams()
+  const [activeTab, setActiveTab] = React.useState("services")
 
   const { data: services, isLoading: servicesIsLoading } = useQuery({
     queryKey: ["public", "services", slug],
     queryFn: () => getPublicServices(slug),
-  });
+  })
 
   const { data: professionals, isLoading: professionalsIsLoading } = useQuery({
     queryKey: ["public", "professionals", slug],
     queryFn: () => getPublicProfessionals(slug),
-  });
+  })
 
   const { data: packages, isLoading: _packagesIsLoading } = useQuery({
     queryKey: ["public", "packages", slug],
     queryFn: () => getPublicPackages(slug),
-  });
+  })
 
   const { data: loyalties, isLoading: _loyaltiesIsLoading } = useQuery({
     queryKey: ["public", "loyalties", slug],
     queryFn: () => getPublicLoyalties(slug),
-  });
+  })
 
-  const isLoading = professionalsIsLoading || servicesIsLoading;
+  const isLoading = professionalsIsLoading || servicesIsLoading
 
   if (isLoading) {
     return (
       <div className="min-h-screen bg-background flex-1 w-full flex justify-center items-center">
         <Loader2 className="size-16 animate-spin" />
       </div>
-    );
+    )
   }
 
   if (!establishment) {
@@ -102,7 +102,7 @@ function RouteComponent() {
       <div className="min-h-screen bg-background flex-1 w-full flex justify-center items-center">
         <TriangleAlert className="size-28" />
       </div>
-    );
+    )
   }
 
   if (!establishment.active) {
@@ -113,7 +113,7 @@ function RouteComponent() {
           <p>Esta loja está desativada no momento</p>
         </div>
       </div>
-    );
+    )
   }
 
   return (
@@ -233,7 +233,7 @@ function RouteComponent() {
                       {
                         "text-foreground border-b-2 border-primary":
                           activeTab === "services",
-                      },
+                      }
                     )}
                   >
                     Serviços
@@ -249,7 +249,7 @@ function RouteComponent() {
                       {
                         "text-foreground border-b-2 border-primary":
                           activeTab === "professionals",
-                      },
+                      }
                     )}
                   >
                     Profissionais
@@ -265,7 +265,7 @@ function RouteComponent() {
                       {
                         "text-foreground border-b-2 border-primary":
                           activeTab === "packages",
-                      },
+                      }
                     )}
                   >
                     Pacotes
@@ -281,7 +281,7 @@ function RouteComponent() {
                       {
                         "text-foreground border-b-2 border-primary":
                           activeTab === "loyalties",
-                      },
+                      }
                     )}
                   >
                     Fidelidade
@@ -310,5 +310,5 @@ function RouteComponent() {
         <EstablishmentFooter />
       </div>
     </ThemeWrapper>
-  );
+  )
 }

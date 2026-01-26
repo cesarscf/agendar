@@ -1,7 +1,6 @@
+import { ActivityIndicator, SafeAreaView, View } from "react-native"
 import { UpdateEstablishmentForm } from "@/components/forms/update-establishment-form"
 import { useEstablishment } from "@/hooks/data/establishment/use-establishment"
-
-import { ActivityIndicator, SafeAreaView, View } from "react-native"
 
 export default function General() {
   const { data: establishment, isLoading } = useEstablishment()

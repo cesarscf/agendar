@@ -1,9 +1,9 @@
-import { useLoyaltyPrograms } from "@/hooks/data/loyalty/use-loyalty-programs"
 import { Link } from "expo-router"
-import { Gift, FolderOpen } from "lucide-react-native"
+import { FolderOpen, Gift } from "lucide-react-native"
 import { Pressable, SafeAreaView, ScrollView, Text, View } from "react-native"
-import { Empty } from "@/components/empty"
 import { Badge } from "@/components/badge"
+import { Empty } from "@/components/empty"
+import { useLoyaltyPrograms } from "@/hooks/data/loyalty/use-loyalty-programs"
 
 const SKELETON_IDS = Array.from(
   { length: 6 },

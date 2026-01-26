@@ -1,7 +1,7 @@
 import { useMemo } from "react"
-import { PieChartCard } from "./pie-chart-card"
 import { useMostBookedServices } from "@/hooks/data/reports/use-most-booked-services"
 import { formatNumber } from "@/utils"
+import { PieChartCard } from "./pie-chart-card"
 
 type MostBookedServicesChartProps = {
   startDate: string

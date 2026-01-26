@@ -1,24 +1,23 @@
-import { useEffect, useMemo } from "react"
-import {
-  View,
-  Text,
-  ScrollView,
-  Modal,
-  TouchableOpacity,
-  Alert,
-} from "react-native"
-import { Controller, useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { X } from "lucide-react-native"
-
-import { Input } from "./input"
-import { AppButton } from "./button"
-import { Select, type SelectOption } from "./select"
-import { checkinSchema, type CheckinFormData } from "@/lib/validations/checkin"
+import { useEffect, useMemo } from "react"
+import { Controller, useForm } from "react-hook-form"
+import {
+  Alert,
+  Modal,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native"
+import type { Appointment } from "@/hooks/data/appointment/use-appointments"
 import { useCheckBonus } from "@/hooks/data/appointment/use-check-bonus"
 import { useCreateCheckin } from "@/hooks/data/appointment/use-create-checkin"
-import type { Appointment } from "@/hooks/data/appointment/use-appointments"
+import { type CheckinFormData, checkinSchema } from "@/lib/validations/checkin"
 import { formatCentsToReal } from "@/utils/currency"
+import { AppButton } from "./button"
+import { Input } from "./input"
+import { Select, type SelectOption } from "./select"
 
 interface CheckinDialogProps {
   visible: boolean
@@ -294,7 +293,11 @@ export function CheckinDialog({
               render={({ field }) => (
                 <Select
                   value={field.value}
-                  onValueChange={(value) => handlePaymentTypeChange(value as CheckinFormData["paymentType"])}
+                  onValueChange={value =>
+                    handlePaymentTypeChange(
+                      value as CheckinFormData["paymentType"]
+                    )
+                  }
                   options={paymentTypeOptions}
                   placeholder="Selecione o tipo de pagamento"
                   disabled={isSelectDisabled}
@@ -321,7 +324,7 @@ export function CheckinDialog({
                   placeholder="0,00"
                   keyboardType="decimal-pad"
                   value={field.value.replace(".", ",")}
-                  onChangeText={(text) => {
+                  onChangeText={text => {
                     // Substitui vírgula por ponto para armazenar internamente
                     const normalizedValue = text.replace(",", ".")
                     field.onChange(normalizedValue)

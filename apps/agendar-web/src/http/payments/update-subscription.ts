@@ -1,9 +1,9 @@
-import { api } from "@/lib/api-client";
+import { api } from "@/lib/api-client"
 
 export interface UpdateSubscriptionResponse {
-  newPlanName: string;
-  status: string;
-  currentPeriodEnd: string;
+  newPlanName: string
+  status: string
+  currentPeriodEnd: string
 }
 
 export async function updateSubscription(newPlanId: string) {
@@ -11,7 +11,7 @@ export async function updateSubscription(newPlanId: string) {
     "/subscriptions/change-plan",
     {
       newPlanId,
-    },
-  );
-  return result.data;
+    }
+  )
+  return result.data
 }

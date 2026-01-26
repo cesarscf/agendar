@@ -1,12 +1,12 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useNavigate } from "@tanstack/react-router";
-import { Loader2 } from "lucide-react";
-import React from "react";
-import { useForm } from "react-hook-form";
-import type z from "zod";
-import LogoUploader from "@/components/logo-uploader";
-import { Button } from "@/components/ui/button";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { useNavigate } from "@tanstack/react-router"
+import { Loader2 } from "lucide-react"
+import React from "react"
+import { useForm } from "react-hook-form"
+import type z from "zod"
+import LogoUploader from "@/components/logo-uploader"
+import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -14,27 +14,27 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Switch } from "@/components/ui/switch";
-import { Textarea } from "@/components/ui/textarea";
-import { deleteEmployee } from "@/http/employees/delete-employee";
-import { updateEmployee } from "@/http/employees/update-employee";
-import { maskPhone } from "@/lib/masks";
-import { uploadImage } from "@/lib/upload-image";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { Switch } from "@/components/ui/switch"
+import { Textarea } from "@/components/ui/textarea"
+import { deleteEmployee } from "@/http/employees/delete-employee"
+import { updateEmployee } from "@/http/employees/update-employee"
+import { maskPhone } from "@/lib/masks"
+import { uploadImage } from "@/lib/upload-image"
 import {
   type Employee,
   updateEmployeeSchema,
-} from "@/lib/validations/employees";
+} from "@/lib/validations/employees"
 
-type Inputs = z.infer<typeof updateEmployeeSchema>;
+type Inputs = z.infer<typeof updateEmployeeSchema>
 
 export function UpdateEmployeeForm({ employee }: { employee: Employee }) {
-  const navigate = useNavigate();
-  const queryClient = useQueryClient();
+  const navigate = useNavigate()
+  const queryClient = useQueryClient()
 
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [imageFile, setImageFile] = React.useState<File | null>(null);
+  const [isLoading, setIsLoading] = React.useState(false)
+  const [imageFile, setImageFile] = React.useState<File | null>(null)
 
   const form = useForm<Inputs>({
     resolver: zodResolver(updateEmployeeSchema),
@@ -47,34 +47,34 @@ export function UpdateEmployeeForm({ employee }: { employee: Employee }) {
       address: employee.address,
       biography: employee.biography,
     },
-  });
+  })
 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: updateEmployee,
-  });
+  })
 
   const { mutateAsync: deleteServiceMutate, isPending: deleteIsPending } =
     useMutation({
       mutationFn: deleteEmployee,
-    });
+    })
 
   async function onSubmit(values: Inputs) {
-    setIsLoading(true);
-    let image: string | undefined;
+    setIsLoading(true)
+    let image: string | undefined
 
     if (imageFile) {
-      const imageUrl = await uploadImage(imageFile);
+      const imageUrl = await uploadImage(imageFile)
 
-      image = imageUrl;
+      image = imageUrl
     } else {
-      image = employee.avatarUrl;
+      image = employee.avatarUrl
     }
 
-    await mutateAsync({ ...values, avatarUrl: image, id: employee.id });
+    await mutateAsync({ ...values, avatarUrl: image, id: employee.id })
 
-    queryClient.invalidateQueries({ queryKey: [employee.id] });
+    queryClient.invalidateQueries({ queryKey: [employee.id] })
 
-    setIsLoading(false);
+    setIsLoading(false)
   }
 
   return (
@@ -127,7 +127,7 @@ export function UpdateEmployeeForm({ employee }: { employee: Employee }) {
                 <Input
                   placeholder="Digite aqui o telefone do profissional"
                   {...field}
-                  onChange={(e) => field.onChange(maskPhone(e.target.value))}
+                  onChange={e => field.onChange(maskPhone(e.target.value))}
                 />
               </FormControl>
               <FormMessage />
@@ -198,14 +198,14 @@ export function UpdateEmployeeForm({ employee }: { employee: Employee }) {
             onClick={async () => {
               if (
                 confirm(
-                  "Tem certeza que deseja excluir este funcionário? Todos os dados relacionados serão excluídos.",
+                  "Tem certeza que deseja excluir este funcionário? Todos os dados relacionados serão excluídos."
                 )
               ) {
-                await deleteServiceMutate(employee.id);
+                await deleteServiceMutate(employee.id)
 
-                queryClient.invalidateQueries({ queryKey: ["employees"] });
+                queryClient.invalidateQueries({ queryKey: ["employees"] })
 
-                navigate({ to: "/app/employees" });
+                navigate({ to: "/app/employees" })
               }
             }}
           >
@@ -217,5 +217,5 @@ export function UpdateEmployeeForm({ employee }: { employee: Employee }) {
         </div>
       </form>
     </Form>
-  );
+  )
 }

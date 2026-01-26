@@ -1,7 +1,7 @@
 import { useMemo } from "react"
-import { PieChartCard } from "./pie-chart-card"
 import { useServicesByEmployee } from "@/hooks/data/reports/use-services-by-employee"
 import { formatNumber } from "@/utils"
+import { PieChartCard } from "./pie-chart-card"
 
 type ServicesByEmployeeChartProps = {
   startDate: string

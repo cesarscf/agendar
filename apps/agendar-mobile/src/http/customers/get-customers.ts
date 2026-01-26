@@ -1,6 +1,6 @@
-import { api } from "../api-client"
 import type { Customer } from "@/lib/validations/customer"
 import { handleApiError } from "@/utils"
+import { api } from "../api-client"
 
 export async function getCustomers() {
   try {

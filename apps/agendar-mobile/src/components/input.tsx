@@ -1,5 +1,5 @@
-import { cn } from "@/utils/cn"
 import { TextInput, type TextInputProps } from "react-native"
+import { cn } from "@/utils/cn"
 
 function Input({ className, placeholderClassName, ...props }: TextInputProps) {
   return (

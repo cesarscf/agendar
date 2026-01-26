@@ -1,3 +1,8 @@
+import { addMinutes, format } from "date-fns"
+import { and, eq, gt, isNull, lt, or } from "drizzle-orm"
+import type { FastifyInstance } from "fastify"
+import type { ZodTypeProvider } from "fastify-type-provider-zod"
+import { z } from "zod"
 import { db } from "@/db"
 import {
   appointments,
@@ -10,12 +15,6 @@ import {
 import { customerAuth } from "@/middlewares/customer-auth"
 import { DateUtils } from "@/utils/get-date"
 import { customerHeaderSchema } from "@/utils/schemas/headers"
-import { addMinutes } from "date-fns"
-import { format } from "date-fns"
-import { and, eq, gt, isNull, lt, or } from "drizzle-orm"
-import type { FastifyInstance } from "fastify"
-import type { ZodTypeProvider } from "fastify-type-provider-zod"
-import { z } from "zod"
 
 export const createAppointmentSchema = z.object({
   employeeId: z.string().uuid(),

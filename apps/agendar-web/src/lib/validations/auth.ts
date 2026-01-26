@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "zod"
 
 export const loginSchema = z.object({
   email: z.email({
@@ -13,19 +13,19 @@ export const loginSchema = z.object({
       message: "A senha deve ter no máximo 100 caracteres",
     }),
   rememberMe: z.boolean().default(false),
-});
+})
 
 export const preRegisterSchema = z.object({
   name: z
     .string({ message: "Por favor, insira seu nome completo" })
     .min(4, { message: "O nome é obrigatório" })
-    .refine((value) => value.trim().includes(" "), {
+    .refine(value => value.trim().includes(" "), {
       message: "Por favor, insira seu nome completo",
     }),
   email: z.string().email({
     message: "Por favor, insira um endereço de e-mail válido",
   }),
-});
+})
 
 export const registerSchema = z
   .object({
@@ -36,7 +36,7 @@ export const registerSchema = z
     name: z
       .string({ message: "Por favor, insira seu nome completo" })
       .min(4, { message: "O nome é obrigatório" })
-      .refine((value) => value.trim().includes(" "), {
+      .refine(value => value.trim().includes(" "), {
         message: "Por favor, insira seu nome completo",
       }),
     email: z.string().email({
@@ -56,7 +56,7 @@ export const registerSchema = z
     state: z.string().min(2, { message: "O estado é obrigatório" }),
     city: z.string().min(2, { message: "A cidade é obrigatória" }),
   })
-  .refine((data) => data.password === data.confirmPassword, {
+  .refine(data => data.password === data.confirmPassword, {
     message: "As senhas não coincidem",
     path: ["confirmPassword"],
-  });
+  })

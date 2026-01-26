@@ -1,7 +1,7 @@
-import { customers } from "@/db/schema/customers"
-import { packages } from "@/db/schema/packages"
 import { relations } from "drizzle-orm"
 import { boolean, integer, pgTable, timestamp, uuid } from "drizzle-orm/pg-core"
+import { customers } from "@/db/schema/customers"
+import { packages } from "@/db/schema/packages"
 
 export const customerServicePackages = pgTable("customer_service_packages", {
   id: uuid("id").notNull().primaryKey().defaultRandom(),

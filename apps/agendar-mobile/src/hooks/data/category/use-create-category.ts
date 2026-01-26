@@ -1,7 +1,7 @@
+import { useMutation } from "@tanstack/react-query"
 import { createCategory } from "@/http/category/create-category"
 import { queryClient } from "@/lib/react-query"
 import type { CreateCategoryRequest } from "@/lib/validations/category"
-import { useMutation } from "@tanstack/react-query"
 
 export function useCreateCategory() {
   return useMutation<{ id: string }, string, CreateCategoryRequest>({

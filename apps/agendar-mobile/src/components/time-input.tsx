@@ -1,14 +1,14 @@
-import { useState, useEffect } from "react"
+import DateTimePicker from "@react-native-community/datetimepicker"
+import { useEffect, useState } from "react"
 import {
-  TextInput,
-  View,
-  Text,
+  Modal,
   Platform,
   Pressable,
-  Modal,
+  Text,
+  TextInput,
   type TextInputProps,
+  View,
 } from "react-native"
-import DateTimePicker from "@react-native-community/datetimepicker"
 import { cn } from "@/utils/cn"
 
 type TimeInputProps = {

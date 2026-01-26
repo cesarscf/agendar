@@ -11,5 +11,5 @@ export function EstablishmentFooter() {
         </p>
       </div>
     </footer>
-  );
+  )
 }

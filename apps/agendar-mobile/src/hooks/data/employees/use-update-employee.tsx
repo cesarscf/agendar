@@ -1,9 +1,7 @@
+import { useMutation } from "@tanstack/react-query"
 import { updateEmployee } from "@/http/employee/update-employee"
-
 import { queryClient } from "@/lib/react-query"
 import type { UpdateEmployeeRequest } from "@/lib/validations/employee"
-
-import { useMutation } from "@tanstack/react-query"
 
 export function useUpdateEmployee() {
   return useMutation<boolean, string, UpdateEmployeeRequest>({

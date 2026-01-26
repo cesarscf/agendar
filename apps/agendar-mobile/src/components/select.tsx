@@ -1,13 +1,13 @@
+import { Check, ChevronDown } from "lucide-react-native"
 import { useState } from "react"
 import {
-  View,
+  Modal,
+  Pressable,
+  ScrollView,
   Text,
   TouchableOpacity,
-  Modal,
-  ScrollView,
-  Pressable,
+  View,
 } from "react-native"
-import { ChevronDown, Check } from "lucide-react-native"
 import { cn } from "@/utils/cn"
 
 export interface SelectOption {

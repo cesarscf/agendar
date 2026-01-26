@@ -1,9 +1,7 @@
+import { useMutation } from "@tanstack/react-query"
 import { updateCustomer } from "@/http/customers/update-customer"
-
 import { queryClient } from "@/lib/react-query"
 import type { UpdateCustomerRequest } from "@/lib/validations/customer"
-
-import { useMutation } from "@tanstack/react-query"
 
 export function useUpdateCustomer() {
   return useMutation<boolean, string, UpdateCustomerRequest>({

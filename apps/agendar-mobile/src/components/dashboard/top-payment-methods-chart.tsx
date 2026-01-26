@@ -1,6 +1,6 @@
 import { useMemo } from "react"
-import { PieChartCard } from "./pie-chart-card"
 import { useTopPaymentMethods } from "@/hooks/data/reports/use-top-payment-methods"
+import { PieChartCard } from "./pie-chart-card"
 
 type TopPaymentMethodsChartProps = {
   startDate: string

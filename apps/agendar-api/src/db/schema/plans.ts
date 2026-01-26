@@ -1,7 +1,7 @@
-import { subscriptions } from "@/db/schema/subscriptions"
-import { lifecycleDates } from "@/db/schema/utils"
 import { relations } from "drizzle-orm"
 import { decimal, integer, pgTable, text, uuid } from "drizzle-orm/pg-core"
+import { subscriptions } from "@/db/schema/subscriptions"
+import { lifecycleDates } from "@/db/schema/utils"
 
 export const plans = pgTable("plans", {
   id: uuid("id").notNull().primaryKey().defaultRandom(),

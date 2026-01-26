@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query"
 import {
-  getDailyRevenue,
   type GetDailyRevenueParams,
   type GetDailyRevenueResponse,
+  getDailyRevenue,
 } from "@/http/reports/get-daily-revenue"
 
 export function useDailyRevenue(params: GetDailyRevenueParams) {

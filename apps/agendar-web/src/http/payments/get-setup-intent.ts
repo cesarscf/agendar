@@ -1,11 +1,11 @@
-import { api } from "@/lib/api-client";
+import { api } from "@/lib/api-client"
 
 interface GetSetupIntent {
-  clientSecret: "string";
+  clientSecret: "string"
 }
 
 export async function getSetupIntent() {
-  const result = await api.get<GetSetupIntent>("/payment-methods/setup-intent");
+  const result = await api.get<GetSetupIntent>("/payment-methods/setup-intent")
 
-  return result.data;
+  return result.data
 }

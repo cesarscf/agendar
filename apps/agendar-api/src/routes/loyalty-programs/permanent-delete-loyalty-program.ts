@@ -1,13 +1,12 @@
-import { db } from "@/db"
-
-import { loyaltyPrograms } from "@/db/schema"
-import { auth } from "@/middlewares/auth"
-import { requireActiveSubscription } from "@/middlewares/require-active-subscription"
-import { establishmentHeaderSchema } from "@/utils/schemas/headers"
 import { and, eq } from "drizzle-orm"
 import type { FastifyInstance } from "fastify"
 import type { ZodTypeProvider } from "fastify-type-provider-zod"
 import z from "zod"
+import { db } from "@/db"
+import { loyaltyPrograms } from "@/db/schema"
+import { auth } from "@/middlewares/auth"
+import { requireActiveSubscription } from "@/middlewares/require-active-subscription"
+import { establishmentHeaderSchema } from "@/utils/schemas/headers"
 
 export async function permanentDeleteLoyaltyProgram(app: FastifyInstance) {
   await app.register(async app => {

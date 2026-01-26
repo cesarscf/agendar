@@ -1,6 +1,6 @@
+import { useMutation } from "@tanstack/react-query"
 import { cancelAppointment } from "@/http/appointments/cancel-appointment"
 import { queryClient } from "@/lib/react-query"
-import { useMutation } from "@tanstack/react-query"
 
 interface CancelAppointmentParams {
   appointmentId: string

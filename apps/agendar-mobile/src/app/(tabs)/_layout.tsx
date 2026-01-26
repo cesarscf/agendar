@@ -1,5 +1,10 @@
-import { CalendarDays, Activity, Settings, ShoppingBag } from "lucide-react-native"
 import { Tabs } from "expo-router"
+import {
+  Activity,
+  CalendarDays,
+  Settings,
+  ShoppingBag,
+} from "lucide-react-native"
 import { Image, View } from "react-native"
 
 function HeaderRight() {

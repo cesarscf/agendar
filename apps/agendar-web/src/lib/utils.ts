@@ -1,10 +1,10 @@
-import { type ClassValue, clsx } from "clsx";
-import { format, parse } from "date-fns";
-import { ptBR } from "date-fns/locale";
-import { twMerge } from "tailwind-merge";
+import { type ClassValue, clsx } from "clsx"
+import { format, parse } from "date-fns"
+import { ptBR } from "date-fns/locale"
+import { twMerge } from "tailwind-merge"
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
+  return twMerge(clsx(inputs))
 }
 
 export function slugify(str: string) {
@@ -12,7 +12,7 @@ export function slugify(str: string) {
     .toLowerCase()
     .replace(/ /g, "-")
     .replace(/[^\w-]+/g, "")
-    .replace(/--+/g, "-");
+    .replace(/--+/g, "-")
 }
 
 // ============================================
@@ -26,16 +26,16 @@ export function slugify(str: string) {
  * @returns String formatada como moeda (ex: "R$ 1.234,56")
  */
 export function formatPrice(price: string | number): string {
-  const numericPrice = typeof price === "string" ? Number(price) : price;
+  const numericPrice = typeof price === "string" ? Number(price) : price
 
   if (Number.isNaN(numericPrice)) {
-    return typeof price === "string" ? price : String(price);
+    return typeof price === "string" ? price : String(price)
   }
 
   return new Intl.NumberFormat("pt-BR", {
     style: "currency",
     currency: "BRL",
-  }).format(numericPrice);
+  }).format(numericPrice)
 }
 
 /**
@@ -45,14 +45,14 @@ export function formatPrice(price: string | number): string {
  * @returns String formatada como moeda (ex: "R$ 1.234,56")
  */
 export function formatPriceFromCents(price: string) {
-  const numberPrice = Number(price) / 100;
+  const numberPrice = Number(price) / 100
 
   return new Intl.NumberFormat("pt-BR", {
     style: "currency",
     currency: "BRL",
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
-  }).format(numberPrice);
+  }).format(numberPrice)
 }
 
 /**
@@ -62,11 +62,11 @@ export function formatPriceFromCents(price: string) {
  * @returns String com valor em centavos (ex: "123456")
  */
 export function convertUnmaskedToCents(unmaskedValue: string): string {
-  if (!unmaskedValue) return "0";
-  const normalized = unmaskedValue.replace(",", ".");
-  const float = parseFloat(normalized);
-  if (Number.isNaN(float)) return "0";
-  return String(Math.round(float * 100));
+  if (!unmaskedValue) return "0"
+  const normalized = unmaskedValue.replace(",", ".")
+  const float = parseFloat(normalized)
+  if (Number.isNaN(float)) return "0"
+  return String(Math.round(float * 100))
 }
 
 /**
@@ -76,9 +76,9 @@ export function convertUnmaskedToCents(unmaskedValue: string): string {
  * @returns Valor formatado para o MaskInput (ex: "1234.56")
  */
 export function convertCentsToUnmasked(cents: string): string {
-  const value = Number(cents);
-  if (Number.isNaN(value)) return "0";
-  return (value / 100).toFixed(2);
+  const value = Number(cents)
+  if (Number.isNaN(value)) return "0"
+  return (value / 100).toFixed(2)
 }
 
 // ============================================
@@ -92,13 +92,11 @@ export function convertCentsToUnmasked(cents: string): string {
  */
 export function formatDuration(minutes: number) {
   if (minutes < 60) {
-    return `${minutes}min`;
+    return `${minutes}min`
   }
-  const hours = Math.floor(minutes / 60);
-  const remainingMinutes = minutes % 60;
-  return remainingMinutes > 0
-    ? `${hours}h ${remainingMinutes}min`
-    : `${hours}h`;
+  const hours = Math.floor(minutes / 60)
+  const remainingMinutes = minutes % 60
+  return remainingMinutes > 0 ? `${hours}h ${remainingMinutes}min` : `${hours}h`
 }
 
 /**
@@ -107,7 +105,7 @@ export function formatDuration(minutes: number) {
  * @returns Número de minutos
  */
 export function parseDuration(duration: string): number {
-  return parseInt(duration, 10);
+  return parseInt(duration, 10)
 }
 
 /**
@@ -116,7 +114,7 @@ export function parseDuration(duration: string): number {
  * @returns String com o número
  */
 export function formatDurationToString(duration: number): string {
-  return String(duration);
+  return String(duration)
 }
 
 // ============================================
@@ -129,7 +127,7 @@ export function formatDurationToString(duration: number): string {
  * @returns String contendo apenas números
  */
 export function onlyNumbers(str: string): string {
-  return str.replace(/\D/g, "");
+  return str.replace(/\D/g, "")
 }
 
 // ============================================
@@ -144,7 +142,7 @@ export const weekdays = [
   "Quinta-feira",
   "Sexta-feira",
   "Sábado",
-];
+]
 
 export const weekdaysWithValue = [
   { value: 0, label: "Domingo" },
@@ -154,7 +152,7 @@ export const weekdaysWithValue = [
   { value: 4, label: "Quinta-feira" },
   { value: 5, label: "Sexta-feira" },
   { value: 6, label: "Sábado" },
-];
+]
 
 /**
  * Formata uma data usando date-fns
@@ -164,10 +162,10 @@ export const weekdaysWithValue = [
  */
 export function formatDate(
   dateInput: string | Date,
-  formatString: string,
+  formatString: string
 ): string {
-  const date = typeof dateInput === "string" ? new Date(dateInput) : dateInput;
-  return format(date, formatString, { locale: ptBR });
+  const date = typeof dateInput === "string" ? new Date(dateInput) : dateInput
+  return format(date, formatString, { locale: ptBR })
 }
 
 /**
@@ -175,15 +173,15 @@ export function formatDate(
  * @returns Array com horários no formato "HH:mm"
  */
 export function generateTimeOptions() {
-  const times = [];
+  const times = []
   for (let h = 0; h < 24; h++) {
     for (let m = 0; m < 60; m += 30) {
-      const hour = h.toString().padStart(2, "0");
-      const minute = m.toString().padStart(2, "0");
-      times.push(`${hour}:${minute}`);
+      const hour = h.toString().padStart(2, "0")
+      const minute = m.toString().padStart(2, "0")
+      times.push(`${hour}:${minute}`)
     }
   }
-  return times;
+  return times
 }
 
 /**
@@ -192,11 +190,11 @@ export function generateTimeOptions() {
  * @returns Objeto Date
  */
 export function parseDateString(value: string): Date {
-  const [day, month, year] = value.split("/");
-  const date = new Date(`${year}-${month}-${day}`);
+  const [day, month, year] = value.split("/")
+  const date = new Date(`${year}-${month}-${day}`)
 
-  if (Number.isNaN(date.getTime())) throw new Error("Data inválida");
-  return date;
+  if (Number.isNaN(date.getTime())) throw new Error("Data inválida")
+  return date
 }
 
 /**
@@ -205,11 +203,11 @@ export function parseDateString(value: string): Date {
  * @returns Data no formato "dd/mm/yyyy"
  */
 export function formatIsoToDateBr(iso: string) {
-  const date = new Date(iso);
-  const day = String(date.getUTCDate()).padStart(2, "0");
-  const month = String(date.getUTCMonth() + 1).padStart(2, "0");
-  const year = date.getUTCFullYear();
-  return `${day}/${month}/${year}`;
+  const date = new Date(iso)
+  const day = String(date.getUTCDate()).padStart(2, "0")
+  const month = String(date.getUTCMonth() + 1).padStart(2, "0")
+  const year = date.getUTCFullYear()
+  return `${day}/${month}/${year}`
 }
 
 /**
@@ -219,9 +217,9 @@ export function formatIsoToDateBr(iso: string) {
  * @returns Range formatado (ex: "01/01/2024 - 31/01/2024")
  */
 export function formatDateRange(startDate: string, endDate: string): string {
-  const start = formatIsoToDateBr(startDate);
-  const end = formatIsoToDateBr(endDate);
-  return `${start} - ${end}`;
+  const start = formatIsoToDateBr(startDate)
+  const end = formatIsoToDateBr(endDate)
+  return `${start} - ${end}`
 }
 
 /**
@@ -230,9 +228,9 @@ export function formatDateRange(startDate: string, endDate: string): string {
  * @returns String ISO
  */
 export function parseDateBrToIso(dateBr: string): string {
-  if (!dateBr) return "";
-  const parsed = parse(dateBr, "dd/MM/yyyy", new Date());
-  return parsed.toISOString();
+  if (!dateBr) return ""
+  const parsed = parse(dateBr, "dd/MM/yyyy", new Date())
+  return parsed.toISOString()
 }
 
 /**
@@ -241,7 +239,7 @@ export function parseDateBrToIso(dateBr: string): string {
  * @returns String no formato "yyyy-MM-dd"
  */
 export function toISODateString(date: Date) {
-  return format(date, "yyyy-MM-dd");
+  return format(date, "yyyy-MM-dd")
 }
 
 // ============================================
@@ -255,7 +253,7 @@ export const themeOptions = [
   { label: "Roxo", value: "purple", color: "#8b5cf6" },
   { label: "Amarelo", value: "yellow", color: "#eab308" },
   { label: "Laranja", value: "orange", color: "#ff6900" },
-];
+]
 
 // ============================================
 // FORMATAÇÃO DE COMISSÃO
@@ -267,9 +265,9 @@ export const themeOptions = [
  * @returns String com porcentagem (ex: "10.50")
  */
 export function commissionFromDatabase(value: string): string {
-  const num = Number(value);
-  if (Number.isNaN(num)) return "0";
-  return (num / 100).toFixed(2);
+  const num = Number(value)
+  if (Number.isNaN(num)) return "0"
+  return (num / 100).toFixed(2)
 }
 
 /**
@@ -278,9 +276,9 @@ export function commissionFromDatabase(value: string): string {
  * @returns String em centavos (ex: "1050")
  */
 export function commissionToDatabase(value: string): string {
-  const num = Number(value.replace(",", "."));
-  if (Number.isNaN(num)) return "0";
-  return Math.round(num * 100).toString();
+  const num = Number(value.replace(",", "."))
+  if (Number.isNaN(num)) return "0"
+  return Math.round(num * 100).toString()
 }
 
 // ============================================
@@ -293,16 +291,16 @@ export function commissionToDatabase(value: string): string {
  * @returns Nome abreviado (ex: "Cesar S.")
  */
 export function abbreviateName(fullName: string): string {
-  if (!fullName || typeof fullName !== "string") return "";
+  if (!fullName || typeof fullName !== "string") return ""
 
-  const parts = fullName.trim().split(/\s+/);
-  if (parts.length === 0) return "";
-  if (parts.length === 1) return parts[0];
+  const parts = fullName.trim().split(/\s+/)
+  if (parts.length === 0) return ""
+  if (parts.length === 1) return parts[0]
 
-  const firstName = parts[0];
-  const secondNameInitial = `${parts[1].charAt(0).toUpperCase()}.`;
+  const firstName = parts[0]
+  const secondNameInitial = `${parts[1].charAt(0).toUpperCase()}.`
 
-  return `${firstName} ${secondNameInitial}`;
+  return `${firstName} ${secondNameInitial}`
 }
 
 // ============================================
@@ -316,19 +314,19 @@ export function abbreviateName(fullName: string): string {
  * @returns Time string in UTC format "HH:mm"
  */
 export const convertLocalTimeToUTC = (time: string): string => {
-  if (!time) return "";
+  if (!time) return ""
 
-  const [hours, minutes] = time.split(":").map(Number);
+  const [hours, minutes] = time.split(":").map(Number)
   // Create a date with the local time
-  const localDate = new Date();
-  localDate.setHours(hours, minutes, 0, 0);
+  const localDate = new Date()
+  localDate.setHours(hours, minutes, 0, 0)
 
   // Get the UTC time (this automatically applies the timezone offset)
-  const utcHours = localDate.getUTCHours().toString().padStart(2, "0");
-  const utcMinutes = localDate.getUTCMinutes().toString().padStart(2, "0");
+  const utcHours = localDate.getUTCHours().toString().padStart(2, "0")
+  const utcMinutes = localDate.getUTCMinutes().toString().padStart(2, "0")
 
-  return `${utcHours}:${utcMinutes}`;
-};
+  return `${utcHours}:${utcMinutes}`
+}
 
 /**
  * Convert time string from UTC to local timezone
@@ -337,19 +335,19 @@ export const convertLocalTimeToUTC = (time: string): string => {
  * @returns Time string in local timezone format "HH:mm"
  */
 export const convertUTCToLocalTime = (time: string): string => {
-  if (!time) return "";
+  if (!time) return ""
 
-  const [hours, minutes] = time.split(":").map(Number);
+  const [hours, minutes] = time.split(":").map(Number)
   // Create a date with UTC time
-  const utcDate = new Date();
-  utcDate.setUTCHours(hours, minutes, 0, 0);
+  const utcDate = new Date()
+  utcDate.setUTCHours(hours, minutes, 0, 0)
 
   // Get the local time (this automatically applies the timezone offset)
-  const localHours = utcDate.getHours().toString().padStart(2, "0");
-  const localMinutes = utcDate.getMinutes().toString().padStart(2, "0");
+  const localHours = utcDate.getHours().toString().padStart(2, "0")
+  const localMinutes = utcDate.getMinutes().toString().padStart(2, "0")
 
-  return `${localHours}:${localMinutes}`;
-};
+  return `${localHours}:${localMinutes}`
+}
 
 /**
  * Convert local Date object to UTC Date
@@ -360,7 +358,7 @@ export const convertUTCToLocalTime = (time: string): string => {
 export function convertLocalDateToUTC(localDate: Date): Date {
   // Simply return the same Date object - JavaScript Date objects are always in UTC internally
   // When we call toISOString(), it will give us the correct UTC representation
-  return localDate;
+  return localDate
 }
 
 /**
@@ -371,5 +369,5 @@ export function convertLocalDateToUTC(localDate: Date): Date {
 export function convertUTCStringToLocal(utcString: string): string {
   // JavaScript Date constructor already handles ISO strings correctly
   // Just parse and return as ISO string - the Date object handles timezone internally
-  return new Date(utcString).toISOString();
+  return new Date(utcString).toISOString()
 }

@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
 import {
-  getCustomerPackages,
   type CustomerPackage,
+  getCustomerPackages,
 } from "@/http/customers/get-customer-packages"
 
 export function useCustomerPackages(customerId: string) {

@@ -1,12 +1,12 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { ChevronLeft, Loader2 } from "lucide-react";
-import React from "react";
-import { useForm } from "react-hook-form";
-import type z from "zod";
-import LogoUploader from "@/components/logo-uploader";
-import { Button } from "@/components/ui/button";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router"
+import { ChevronLeft, Loader2 } from "lucide-react"
+import React from "react"
+import { useForm } from "react-hook-form"
+import type z from "zod"
+import LogoUploader from "@/components/logo-uploader"
+import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -14,39 +14,39 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { MaskInput } from "@/components/ui/mask-input";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { MaskInput } from "@/components/ui/mask-input"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import { createPackage } from "@/http/packages/create-package";
-import { getServices } from "@/http/services/get-services";
-import { uploadImage } from "@/lib/upload-image";
-import { createPackageSchema } from "@/lib/validations/package";
+} from "@/components/ui/select"
+import { Textarea } from "@/components/ui/textarea"
+import { createPackage } from "@/http/packages/create-package"
+import { getServices } from "@/http/services/get-services"
+import { uploadImage } from "@/lib/upload-image"
+import { createPackageSchema } from "@/lib/validations/package"
 
 export const Route = createFileRoute("/app/packages/new/")({
   component: NewPackage,
-});
+})
 
-type Inputs = z.infer<typeof createPackageSchema>;
+type Inputs = z.infer<typeof createPackageSchema>
 
 function NewPackage() {
-  const navigate = useNavigate();
-  const queryClient = useQueryClient();
+  const navigate = useNavigate()
+  const queryClient = useQueryClient()
 
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [imageFile, setImageFile] = React.useState<File | null>(null);
+  const [isLoading, setIsLoading] = React.useState(false)
+  const [imageFile, setImageFile] = React.useState<File | null>(null)
 
   const { data: services } = useQuery({
     queryKey: ["services"],
     queryFn: getServices,
-  });
+  })
 
   const form = useForm<Inputs>({
     resolver: zodResolver(createPackageSchema),
@@ -59,27 +59,27 @@ function NewPackage() {
       serviceId: "",
       quantity: 1,
     },
-  });
+  })
 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: createPackage,
-  });
+  })
 
-  const watchPrice = form.watch("price");
-  const watchQuantity = form.watch("quantity");
+  const watchPrice = form.watch("price")
+  const watchQuantity = form.watch("quantity")
 
   const unitValue =
     watchPrice && watchQuantity && !Number.isNaN(watchQuantity)
       ? Number(watchPrice) / Number(watchQuantity || 1)
-      : 0;
+      : 0
 
   async function onSubmit(values: Inputs) {
-    setIsLoading(true);
-    let image: string | undefined;
+    setIsLoading(true)
+    let image: string | undefined
 
     if (imageFile) {
-      const imageUrl = await uploadImage(imageFile);
-      image = imageUrl;
+      const imageUrl = await uploadImage(imageFile)
+      image = imageUrl
     }
 
     await mutateAsync({
@@ -87,12 +87,12 @@ function NewPackage() {
       image,
       active: true,
       quantity: Number(values.quantity),
-    });
+    })
 
-    queryClient.invalidateQueries({ queryKey: ["packages"] });
+    queryClient.invalidateQueries({ queryKey: ["packages"] })
 
-    navigate({ to: "/app/packages" });
-    setIsLoading(false);
+    navigate({ to: "/app/packages" })
+    setIsLoading(false)
   }
 
   return (
@@ -158,7 +158,7 @@ function NewPackage() {
                     placeholder="R$ 0,00"
                     value={field.value}
                     onValueChange={(_maskedValue, unmaskedValue) => {
-                      field.onChange(unmaskedValue);
+                      field.onChange(unmaskedValue)
                     }}
                   />
                 </FormControl>
@@ -178,7 +178,7 @@ function NewPackage() {
                     mask="percentage"
                     value={field.value}
                     onValueChange={(_maskedValue, unmaskedValue) => {
-                      field.onChange(unmaskedValue);
+                      field.onChange(unmaskedValue)
                     }}
                     placeholder="0.00%"
                     invalid={!!form.formState.errors.commission}
@@ -201,7 +201,7 @@ function NewPackage() {
                       <SelectValue placeholder="Selecione um serviço" />
                     </SelectTrigger>
                     <SelectContent>
-                      {services?.map((service) => (
+                      {services?.map(service => (
                         <SelectItem key={service.id} value={service.id}>
                           {service.name}
                         </SelectItem>
@@ -227,7 +227,7 @@ function NewPackage() {
                     min="0"
                     placeholder="0"
                     value={Number.isNaN(field.value) ? "" : field.value}
-                    onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                    onChange={e => field.onChange(e.target.valueAsNumber)}
                   />
                 </FormControl>
                 <FormMessage />
@@ -275,5 +275,5 @@ function NewPackage() {
         </form>
       </Form>
     </div>
-  );
+  )
 }

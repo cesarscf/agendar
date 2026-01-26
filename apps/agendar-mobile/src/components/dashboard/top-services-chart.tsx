@@ -1,7 +1,7 @@
 import { useMemo } from "react"
-import { PieChartCard } from "./pie-chart-card"
 import { useTopServices } from "@/hooks/data/reports/use-top-services"
 import { formatPriceFromCents } from "@/utils"
+import { PieChartCard } from "./pie-chart-card"
 
 type TopServicesChartProps = {
   startDate: string

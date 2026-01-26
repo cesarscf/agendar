@@ -1,8 +1,7 @@
 import { useMutation } from "@tanstack/react-query"
-
+import { updateCategory } from "@/http/category/update-category"
 import { queryClient } from "@/lib/react-query"
 import type { UpdateCategoryRequest } from "@/lib/validations/category"
-import { updateCategory } from "@/http/category/update-category"
 
 export function useUpdateCategory() {
   return useMutation<boolean, string, UpdateCategoryRequest>({

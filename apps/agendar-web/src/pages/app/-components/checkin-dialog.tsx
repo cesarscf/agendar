@@ -1,11 +1,11 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Loader2 } from "lucide-react";
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { toast } from "sonner";
-import { z } from "zod";
-import { Button } from "@/components/ui/button";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { Loader2 } from "lucide-react"
+import { useEffect, useState } from "react"
+import { useForm } from "react-hook-form"
+import { toast } from "sonner"
+import { z } from "zod"
+import { Button } from "@/components/ui/button"
 import {
   Dialog,
   DialogContent,
@@ -14,7 +14,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
+} from "@/components/ui/dialog"
 import {
   Form,
   FormControl,
@@ -22,48 +22,48 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { MaskInput } from "@/components/ui/mask-input";
+} from "@/components/ui/form"
+import { MaskInput } from "@/components/ui/mask-input"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import { cancelAppointment } from "@/http/appointments/cancel-appointment";
-import { checkin, type PaymentType } from "@/http/appointments/checkin";
-import type { Appointment } from "@/http/appointments/get-appointments";
-import { checkBonus } from "@/http/loyalty/check-bonus";
+} from "@/components/ui/select"
+import { Textarea } from "@/components/ui/textarea"
+import { cancelAppointment } from "@/http/appointments/cancel-appointment"
+import { checkin, type PaymentType } from "@/http/appointments/checkin"
+import type { Appointment } from "@/http/appointments/get-appointments"
+import { checkBonus } from "@/http/loyalty/check-bonus"
 
 const checkinCompletedSchema = z.object({
   status: z.literal("completed"),
   paymentType: z.string().min(1, "Selecione o tipo de pagamento"),
   paymentAmount: z.string().min(1, "Informe o valor do pagamento"),
   notes: z.string().optional(),
-});
+})
 
 const cancelSchema = z.object({
   status: z.literal("canceled"),
   reason: z.string().optional(),
-});
+})
 
-export type CheckinCompletedFormValues = z.infer<typeof checkinCompletedSchema>;
-export type CancelFormValues = z.infer<typeof cancelSchema>;
+export type CheckinCompletedFormValues = z.infer<typeof checkinCompletedSchema>
+export type CancelFormValues = z.infer<typeof cancelSchema>
 
 export function CheckinDialog({
   data,
   onSuccess,
 }: {
-  data: Appointment;
-  onSuccess: () => void;
+  data: Appointment
+  onSuccess: () => void
 }) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false)
   const [selectedStatus, setSelectedStatus] = useState<
     "completed" | "canceled"
-  >("completed");
-  const queryClient = useQueryClient();
+  >("completed")
+  const queryClient = useQueryClient()
 
   const { data: bonusData } = useQuery({
     queryKey: ["check-bonus", data.customer.id, data.service.id],
@@ -73,43 +73,43 @@ export function CheckinDialog({
         serviceId: data.service.id,
       }),
     enabled: open,
-  });
+  })
 
   const { mutate: mutateCheckin, isPending: isPendingCheckin } = useMutation({
     mutationFn: checkin,
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["check-bonus", data.customer.id, data.service.id],
-      });
+      })
       queryClient.invalidateQueries({
         queryKey: ["customer-packages", data.customer.id],
-      });
+      })
       queryClient.invalidateQueries({
         queryKey: ["customer-loyalty-programs", data.customer.phoneNumber],
-      });
-      onSuccess();
-      setOpen(false);
+      })
+      onSuccess()
+      setOpen(false)
     },
     onError: () => {
-      toast.error("Falha ao realizar o check-in. Tente novamente.");
+      toast.error("Falha ao realizar o check-in. Tente novamente.")
     },
-  });
+  })
 
   const { mutate: mutateCancel, isPending: isPendingCancel } = useMutation({
     mutationFn: cancelAppointment,
     onSuccess: () => {
-      onSuccess();
-      setOpen(false);
-      cancelForm.reset();
+      onSuccess()
+      setOpen(false)
+      cancelForm.reset()
     },
     onError: () => {
-      toast.error("Falha ao cancelar agendamento. Tente novamente.");
+      toast.error("Falha ao cancelar agendamento. Tente novamente.")
     },
-  });
+  })
 
-  const isFirstPackageSession = data.package && !data.package.paid;
-  const isPackageAlreadyPaid = data.package?.paid;
-  const hasBonus = bonusData?.hasBonus || false;
+  const isFirstPackageSession = data.package && !data.package.paid
+  const isPackageAlreadyPaid = data.package?.paid
+  const hasBonus = bonusData?.hasBonus || false
 
   const getCheckinDefaultValues = (): CheckinCompletedFormValues => {
     // Lógica para appointment com package já pago
@@ -119,7 +119,7 @@ export function CheckinDialog({
         paymentType: "package",
         paymentAmount: "0",
         notes: `Pagamento via pacote "${data.package?.name}"`,
-      };
+      }
     }
 
     // Lógica padrão (sem package ou primeiro serviço do package)
@@ -134,13 +134,13 @@ export function CheckinDialog({
         isFirstPackageSession && data.package
           ? `Pagamento do pacote "${data.package.name}" - Primeiro serviço`
           : "",
-    };
-  };
+    }
+  }
 
   const checkinForm = useForm<CheckinCompletedFormValues>({
     resolver: zodResolver(checkinCompletedSchema),
     defaultValues: getCheckinDefaultValues(),
-  });
+  })
 
   const cancelForm = useForm<CancelFormValues>({
     resolver: zodResolver(cancelSchema),
@@ -148,47 +148,45 @@ export function CheckinDialog({
       status: "canceled",
       reason: "",
     },
-  });
+  })
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: ...
   useEffect(() => {
     const subscription = checkinForm.watch((value, { name }) => {
       if (name === "paymentType" && value.paymentType) {
         if (value.paymentType === "loyalty") {
-          checkinForm.setValue("paymentAmount", "0");
+          checkinForm.setValue("paymentAmount", "0")
           checkinForm.setValue(
             "notes",
-            `Pagamento via fidelidade - ${bonusData?.currentPoints || 0} pontos disponíveis`,
-          );
+            `Pagamento via fidelidade - ${bonusData?.currentPoints || 0} pontos disponíveis`
+          )
         } else if (value.paymentType !== "package") {
           // Preenche com o valor correto: pacote se for primeira sessão, senão serviço
           const correctAmount =
             isFirstPackageSession && data.package
               ? data.package.price
-              : data.service.servicePrice;
-          checkinForm.setValue("paymentAmount", correctAmount);
+              : data.service.servicePrice
+          checkinForm.setValue("paymentAmount", correctAmount)
         }
       }
-    });
-    return () => subscription.unsubscribe();
-  }, [checkinForm, bonusData?.currentPoints]);
+    })
+    return () => subscription.unsubscribe()
+  }, [checkinForm, bonusData?.currentPoints])
 
   // Reseta os formulários ao alternar entre status
-  // biome-ignore lint/correctness/useExhaustiveDependencies: ...
   useEffect(() => {
     if (selectedStatus === "canceled") {
       cancelForm.reset({
         status: "canceled",
         reason: "",
-      });
+      })
     } else {
-      checkinForm.reset(getCheckinDefaultValues());
+      checkinForm.reset(getCheckinDefaultValues())
     }
-  }, [selectedStatus]);
+  }, [selectedStatus])
 
-  const currentPaymentType = checkinForm.watch("paymentType");
+  const currentPaymentType = checkinForm.watch("paymentType")
   const shouldDisablePaymentAmount =
-    isPackageAlreadyPaid || currentPaymentType === "loyalty";
+    isPackageAlreadyPaid || currentPaymentType === "loyalty"
 
   const handleCheckinSubmit = async (values: CheckinCompletedFormValues) => {
     mutateCheckin({
@@ -197,15 +195,15 @@ export function CheckinDialog({
       paymentType: values.paymentType as PaymentType,
       paymentAmount: values.paymentAmount,
       notes: values.notes,
-    });
-  };
+    })
+  }
 
   const handleCancelSubmit = async (values: CancelFormValues) => {
     mutateCancel({
       appointmentId: data.id,
       reason: values.reason,
-    });
-  };
+    })
+  }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -310,24 +308,21 @@ export function CheckinDialog({
                       <FormLabel>Tipo de Pagamento</FormLabel>
                       <Select
                         value={field.value}
-                        onValueChange={(value) => {
-                          field.onChange(value);
+                        onValueChange={value => {
+                          field.onChange(value)
                           if (value === "loyalty") {
-                            checkinForm.setValue("paymentAmount", "0");
+                            checkinForm.setValue("paymentAmount", "0")
                             checkinForm.setValue(
                               "notes",
-                              `Pagamento via fidelidade - ${bonusData?.currentPoints || 0} pontos disponíveis`,
-                            );
+                              `Pagamento via fidelidade - ${bonusData?.currentPoints || 0} pontos disponíveis`
+                            )
                           } else if (value !== "package") {
                             // Preenche com o valor correto: pacote se for primeira sessão, senão serviço
                             const correctAmount =
                               isFirstPackageSession && data.package
                                 ? data.package.price
-                                : data.service.servicePrice;
-                            checkinForm.setValue(
-                              "paymentAmount",
-                              correctAmount,
-                            );
+                                : data.service.servicePrice
+                            checkinForm.setValue("paymentAmount", correctAmount)
                           }
                         }}
                         disabled={isPackageAlreadyPaid}
@@ -374,7 +369,7 @@ export function CheckinDialog({
                           placeholder="R$ 0,00"
                           value={field.value}
                           onValueChange={(_maskedValue, unmaskedValue) => {
-                            field.onChange(unmaskedValue);
+                            field.onChange(unmaskedValue)
                           }}
                           disabled={shouldDisablePaymentAmount}
                         />
@@ -421,5 +416,5 @@ export function CheckinDialog({
         </div>
       </DialogContent>
     </Dialog>
-  );
+  )
 }

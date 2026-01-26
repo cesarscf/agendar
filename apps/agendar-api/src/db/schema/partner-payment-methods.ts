@@ -1,7 +1,7 @@
-import { partners } from "@/db/schema/partners"
-import { lifecycleDates } from "@/db/schema/utils"
 import { relations } from "drizzle-orm"
 import { boolean, integer, pgTable, text, uuid } from "drizzle-orm/pg-core"
+import { partners } from "@/db/schema/partners"
+import { lifecycleDates } from "@/db/schema/utils"
 export const partnerPaymentMethods = pgTable("partner_payment_methods", {
   id: uuid("id").defaultRandom().primaryKey(),
   partnerId: uuid("partner_id")

@@ -1,23 +1,23 @@
+import { CalendarOff } from "lucide-react-native"
 import { useState } from "react"
 import {
-  View,
-  Text,
-  ScrollView,
-  Pressable,
-  Modal,
   ActivityIndicator,
+  Modal,
+  Pressable,
+  ScrollView,
+  Text,
+  View,
 } from "react-native"
-import { useEmployeeBlocks } from "@/hooks/data/employees/use-employee-blocks"
-import { useEmployeeRecurringBlocks } from "@/hooks/data/employees/use-employee-recurring-blocks"
-import { useDeleteEmployeeBlock } from "@/hooks/data/employees/use-delete-employee-block"
-import { useDeleteEmployeeRecurringBlock } from "@/hooks/data/employees/use-delete-employee-recurring-block"
-import { cn } from "@/utils/cn"
 import { BlockCard, RecurringBlockCard } from "@/components/block-card"
-import { CreateEmployeeBlockForm } from "@/components/forms/create-employee-block-form"
-import { CreateEmployeeRecurringBlockForm } from "@/components/forms/create-employee-recurring-block-form"
 import { AppButton } from "@/components/button"
 import { Empty } from "@/components/empty"
-import { CalendarOff } from "lucide-react-native"
+import { CreateEmployeeBlockForm } from "@/components/forms/create-employee-block-form"
+import { CreateEmployeeRecurringBlockForm } from "@/components/forms/create-employee-recurring-block-form"
+import { useDeleteEmployeeBlock } from "@/hooks/data/employees/use-delete-employee-block"
+import { useDeleteEmployeeRecurringBlock } from "@/hooks/data/employees/use-delete-employee-recurring-block"
+import { useEmployeeBlocks } from "@/hooks/data/employees/use-employee-blocks"
+import { useEmployeeRecurringBlocks } from "@/hooks/data/employees/use-employee-recurring-blocks"
+import { cn } from "@/utils/cn"
 
 interface EmployeeBlocksTabProps {
   employeeId: string

@@ -1,7 +1,7 @@
+import { useMutation } from "@tanstack/react-query"
 import { createPackage } from "@/http/packages/create-package"
 import { queryClient } from "@/lib/react-query"
 import type { CreatePackageRequest, Package } from "@/lib/validations/packages"
-import { useMutation } from "@tanstack/react-query"
 
 export function useCreatePackage() {
   return useMutation<Package, string, CreatePackageRequest>({

@@ -1,10 +1,10 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { ChevronLeft, Loader2 } from "lucide-react";
-import { useForm } from "react-hook-form";
-import type z from "zod";
-import { Button } from "@/components/ui/button";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router"
+import { ChevronLeft, Loader2 } from "lucide-react"
+import { useForm } from "react-hook-form"
+import type z from "zod"
+import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -12,22 +12,22 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { createCustomer } from "@/http/customers/create-customer";
-import { maskCPF, maskDate, maskPhone } from "@/lib/masks";
-import { createCustomerSchema } from "@/lib/validations/customer";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import { createCustomer } from "@/http/customers/create-customer"
+import { maskCPF, maskDate, maskPhone } from "@/lib/masks"
+import { createCustomerSchema } from "@/lib/validations/customer"
 
 export const Route = createFileRoute("/app/customers/new/")({
   component: NewCustomer,
-});
+})
 
-type Inputs = z.infer<typeof createCustomerSchema>;
+type Inputs = z.infer<typeof createCustomerSchema>
 
 function NewCustomer() {
-  const navigate = useNavigate();
-  const queryClient = useQueryClient();
+  const navigate = useNavigate()
+  const queryClient = useQueryClient()
 
   const form = useForm<Inputs>({
     resolver: zodResolver(createCustomerSchema),
@@ -42,18 +42,18 @@ function NewCustomer() {
       address: "",
       notes: "",
     },
-  });
+  })
 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: createCustomer,
-  });
+  })
 
   async function onSubmit(values: Inputs) {
-    await mutateAsync({ ...values });
+    await mutateAsync({ ...values })
 
-    queryClient.invalidateQueries({ queryKey: ["customers"] });
+    queryClient.invalidateQueries({ queryKey: ["customers"] })
 
-    navigate({ to: "/app/customers" });
+    navigate({ to: "/app/customers" })
   }
 
   return (
@@ -106,7 +106,7 @@ function NewCustomer() {
                     placeholder="(99) 99999-9999"
                     maxLength={15}
                     {...field}
-                    onChange={(e) => field.onChange(maskPhone(e.target.value))}
+                    onChange={e => field.onChange(maskPhone(e.target.value))}
                   />
                 </FormControl>
                 <FormMessage />
@@ -124,7 +124,7 @@ function NewCustomer() {
                   <Input
                     placeholder="XX/XX/XXXX"
                     {...field}
-                    onChange={(e) => field.onChange(maskDate(e.target.value))}
+                    onChange={e => field.onChange(maskDate(e.target.value))}
                   />
                 </FormControl>
                 <FormMessage />
@@ -157,7 +157,7 @@ function NewCustomer() {
                     placeholder="000.000.000-00"
                     maxLength={14}
                     {...field}
-                    onChange={(e) => field.onChange(maskCPF(e.target.value))}
+                    onChange={e => field.onChange(maskCPF(e.target.value))}
                   />
                 </FormControl>
                 <FormMessage />
@@ -236,5 +236,5 @@ function NewCustomer() {
         </form>
       </Form>
     </div>
-  );
+  )
 }

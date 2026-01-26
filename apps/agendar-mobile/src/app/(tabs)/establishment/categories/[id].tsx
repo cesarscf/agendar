@@ -1,8 +1,7 @@
 import { useLocalSearchParams } from "expo-router"
-import { View, Text } from "react-native"
-
-import { useCategory } from "@/hooks/data/category/use-category"
+import { Text, View } from "react-native"
 import { EditCategoryForm } from "@/components/forms/update-category-form"
+import { useCategory } from "@/hooks/data/category/use-category"
 
 export default function EditCategoryScreen() {
   const { id } = useLocalSearchParams()

@@ -1,7 +1,6 @@
 import { useMutation } from "@tanstack/react-query"
-
-import { queryClient } from "@/lib/react-query"
 import { deleteService } from "@/http/service/delete-service"
+import { queryClient } from "@/lib/react-query"
 
 export function useDeleteService() {
   return useMutation<boolean, string, string>({

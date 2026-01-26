@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "zod"
 
 export const plansSchema = z.object({
   id: z.uuid(),
@@ -10,6 +10,6 @@ export const plansSchema = z.object({
   minimumProfessionalsIncluded: z.number(),
   maximumProfessionalsIncluded: z.number(),
   status: z.string(),
-});
+})
 
-export type Plan = z.infer<typeof plansSchema>;
+export type Plan = z.infer<typeof plansSchema>

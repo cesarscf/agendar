@@ -1,8 +1,8 @@
-import { View, Text, Pressable } from "react-native"
+import { Trash2 } from "lucide-react-native"
+import { Pressable, Text, View } from "react-native"
 import type { Availability } from "@/lib/validations/availability"
 import { Switch } from "./switch"
 import { TimeInput } from "./time-input"
-import { Trash2 } from "lucide-react-native"
 
 interface DayAvailabilityCardProps {
   weekdayLabel: string

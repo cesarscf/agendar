@@ -6,19 +6,19 @@ import {
   DollarSign,
   type LucideIcon,
   Users,
-} from "lucide-react";
+} from "lucide-react"
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@/components/ui/card"
 
 interface Feature {
-  icon: LucideIcon;
-  title: string;
-  description: string;
+  icon: LucideIcon
+  title: string
+  description: string
 }
 
 const features: Feature[] = [
@@ -58,7 +58,7 @@ const features: Feature[] = [
     description:
       "Envie lembretes automáticos para seus clientes via whatsapp e reduza o número de faltas.",
   },
-];
+]
 
 export function Features() {
   return (
@@ -70,8 +70,8 @@ export function Features() {
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {features.map((feature) => {
-            const Icon = feature.icon;
+          {features.map(feature => {
+            const Icon = feature.icon
             return (
               <Card key={feature.title} className="border-2">
                 <CardHeader>
@@ -86,10 +86,10 @@ export function Features() {
                   </CardDescription>
                 </CardContent>
               </Card>
-            );
+            )
           })}
         </div>
       </div>
     </section>
-  );
+  )
 }

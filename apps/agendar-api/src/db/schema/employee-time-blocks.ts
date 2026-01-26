@@ -1,6 +1,6 @@
-import { employees } from "@/db/schema/employees"
 import { relations } from "drizzle-orm"
 import { pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core"
+import { employees } from "@/db/schema/employees"
 
 export const employeeTimeBlocks = pgTable("employee_time_blocks", {
   id: uuid("id").notNull().primaryKey().defaultRandom(),

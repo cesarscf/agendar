@@ -1,30 +1,29 @@
-import { useAppointments } from "@/hooks/data/appointment/use-appointments"
-import type { Appointment } from "@/hooks/data/appointment/use-appointments"
-import { useEmployees } from "@/hooks/data/employees/use-employees"
-import { useServices } from "@/hooks/data/services/use-services"
-import { useEstablishment } from "@/hooks/data/establishment/use-establishment"
-import { useCancelAppointment } from "@/hooks/data/appointment/use-cancel-appointment"
-import { AppointmentCard } from "@/components/appointment-card"
-import { CheckinDialog } from "@/components/checkin-dialog"
-import { CancelAppointmentDialog } from "@/components/cancel-appointment-dialog"
-import { Empty } from "@/components/empty"
-import { DashboardFilters } from "@/components/dashboard/dashboard-filters"
-import { useAgendaFilters } from "@/hooks/use-agenda-filters"
-
+import { CalendarX, ChevronDown, ChevronUp } from "lucide-react-native"
+import { useState } from "react"
 import {
-  View,
-  Text,
   ActivityIndicator,
-  TouchableOpacity,
-  ScrollView,
-  SafeAreaView,
   FlatList,
   Image,
-  Pressable,
   Linking,
+  Pressable,
+  SafeAreaView,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native"
-import { ChevronDown, ChevronUp, CalendarX } from "lucide-react-native"
-import { useState } from "react"
+import { AppointmentCard } from "@/components/appointment-card"
+import { CancelAppointmentDialog } from "@/components/cancel-appointment-dialog"
+import { CheckinDialog } from "@/components/checkin-dialog"
+import { DashboardFilters } from "@/components/dashboard/dashboard-filters"
+import { Empty } from "@/components/empty"
+import type { Appointment } from "@/hooks/data/appointment/use-appointments"
+import { useAppointments } from "@/hooks/data/appointment/use-appointments"
+import { useCancelAppointment } from "@/hooks/data/appointment/use-cancel-appointment"
+import { useEmployees } from "@/hooks/data/employees/use-employees"
+import { useEstablishment } from "@/hooks/data/establishment/use-establishment"
+import { useServices } from "@/hooks/data/services/use-services"
+import { useAgendaFilters } from "@/hooks/use-agenda-filters"
 
 export default function Appointments() {
   const [selectedEmployee, setSelectedEmployee] = useState<string>("")

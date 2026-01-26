@@ -1,6 +1,6 @@
+import { useQuery } from "@tanstack/react-query"
 import { getCustomer } from "@/http/customers/get-customer"
 import type { Customer } from "@/lib/validations/customer"
-import { useQuery } from "@tanstack/react-query"
 
 export function useCustomer(customerId: string) {
   return useQuery<Customer, string>({

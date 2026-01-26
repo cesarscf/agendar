@@ -1,4 +1,3 @@
-import { useEmployees } from "@/hooks/data/employees"
 import { Link } from "expo-router"
 import { ChevronRight, Hammer } from "lucide-react-native"
 import {
@@ -11,6 +10,7 @@ import {
   View,
 } from "react-native"
 import { Empty } from "@/components/empty"
+import { useEmployees } from "@/hooks/data/employees"
 
 export default function Employees() {
   const { data: employees, isLoading } = useEmployees()

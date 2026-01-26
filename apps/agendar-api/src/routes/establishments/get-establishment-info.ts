@@ -1,11 +1,11 @@
-import { db } from "@/db"
-import { establishments } from "@/db/schema"
-import { auth } from "@/middlewares/auth"
-import { establishmentHeaderSchema } from "@/utils/schemas/headers"
 import { eq } from "drizzle-orm"
 import type { FastifyInstance } from "fastify"
 import type { ZodTypeProvider } from "fastify-type-provider-zod"
 import z from "zod"
+import { db } from "@/db"
+import { establishments } from "@/db/schema"
+import { auth } from "@/middlewares/auth"
+import { establishmentHeaderSchema } from "@/utils/schemas/headers"
 
 export async function getEstablishmentInfo(app: FastifyInstance) {
   await app.register(async app => {

@@ -1,10 +1,10 @@
-import { db } from "@/db"
-import { appointments } from "@/db/schema"
-import { auth } from "@/middlewares/auth"
 import { and, eq, gte, lte, sql } from "drizzle-orm"
 import type { FastifyInstance } from "fastify"
 import type { ZodTypeProvider } from "fastify-type-provider-zod"
 import z from "zod"
+import { db } from "@/db"
+import { appointments } from "@/db/schema"
+import { auth } from "@/middlewares/auth"
 
 export async function getAverageTicket(app: FastifyInstance) {
   app
@@ -56,7 +56,8 @@ export async function getAverageTicket(app: FastifyInstance) {
 
         const totalRevenue = Number.parseFloat(result[0]?.totalRevenue || "0")
         const totalAppointments = Number.parseInt(
-          result[0]?.totalAppointments || "0"
+          result[0]?.totalAppointments || "0",
+          10
         )
 
         const averageTicket =

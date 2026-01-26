@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
 import {
-  getCustomerLoyaltyPrograms,
   type CustomerLoyaltyProgram,
+  getCustomerLoyaltyPrograms,
 } from "@/http/customers/get-customer-loyalty-programs"
 
 export function useCustomerLoyaltyPrograms(customerPhone: string) {

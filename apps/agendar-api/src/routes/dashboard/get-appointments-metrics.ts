@@ -1,10 +1,10 @@
-import { db } from "@/db"
-import { appointments } from "@/db/schema"
-import { auth } from "@/middlewares/auth"
 import { and, eq, gte, lte, sql } from "drizzle-orm"
 import type { FastifyInstance } from "fastify"
 import type { ZodTypeProvider } from "fastify-type-provider-zod"
 import z from "zod"
+import { db } from "@/db"
+import { appointments } from "@/db/schema"
+import { auth } from "@/middlewares/auth"
 
 export async function getAppointmentsMetrics(app: FastifyInstance) {
   app
@@ -56,10 +56,12 @@ export async function getAppointmentsMetrics(app: FastifyInstance) {
           )
 
         const customersServed = Number.parseInt(
-          result[0]?.uniqueCustomers || "0"
+          result[0]?.uniqueCustomers || "0",
+          10
         )
         const appointmentsCount = Number.parseInt(
-          result[0]?.totalAppointments || "0"
+          result[0]?.totalAppointments || "0",
+          10
         )
 
         return reply.send({

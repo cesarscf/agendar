@@ -1,5 +1,5 @@
-import * as React from "react";
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
+import * as React from "react"
+import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
 
 import {
   Card,
@@ -7,43 +7,43 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@/components/ui/card"
 import {
   type ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart";
-import { useDailyRevenue } from "@/hooks/use-daily-revenue";
-import type { GetDailyRevenueParams } from "@/http/reports/get-daily-revenue";
-import { formatPrice } from "@/lib/utils";
+} from "@/components/ui/chart"
+import { useDailyRevenue } from "@/hooks/use-daily-revenue"
+import type { GetDailyRevenueParams } from "@/http/reports/get-daily-revenue"
+import { formatPrice } from "@/lib/utils"
 
 const chartConfig = {
   revenue: {
     label: "Receita",
     color: "hsl(var(--chart-1))",
   },
-} satisfies ChartConfig;
+} satisfies ChartConfig
 
 interface DailyRevenueChartProps {
-  params: GetDailyRevenueParams;
+  params: GetDailyRevenueParams
 }
 
 export function DailyRevenueChart({ params }: DailyRevenueChartProps) {
-  const { data, isLoading, isError } = useDailyRevenue(params);
+  const { data, isLoading, isError } = useDailyRevenue(params)
 
   const chartData = React.useMemo(() => {
-    if (!data?.items) return [];
-    return data.items.map((item) => ({
+    if (!data?.items) return []
+    return data.items.map(item => ({
       date: item.date,
       value: item.value / 100,
-    }));
-  }, [data]);
+    }))
+  }, [data])
 
   const total = React.useMemo(() => {
-    if (!chartData.length) return 0;
-    return chartData.reduce((acc, curr) => acc + curr.value, 0);
-  }, [chartData]);
+    if (!chartData.length) return 0
+    return chartData.reduce((acc, curr) => acc + curr.value, 0)
+  }, [chartData])
 
   if (isLoading) {
     return (
@@ -60,7 +60,7 @@ export function DailyRevenueChart({ params }: DailyRevenueChartProps) {
           </div>
         </CardContent>
       </Card>
-    );
+    )
   }
 
   if (isError || !chartData.length) {
@@ -80,7 +80,7 @@ export function DailyRevenueChart({ params }: DailyRevenueChartProps) {
           </div>
         </CardContent>
       </Card>
-    );
+    )
   }
 
   return (
@@ -123,12 +123,12 @@ export function DailyRevenueChart({ params }: DailyRevenueChartProps) {
               axisLine={false}
               tickMargin={8}
               minTickGap={32}
-              tickFormatter={(value) => {
-                const date = new Date(value);
+              tickFormatter={value => {
+                const date = new Date(value)
                 return date.toLocaleDateString("pt-BR", {
                   day: "2-digit",
                   month: "short",
-                });
+                })
               }}
             />
             <ChartTooltip
@@ -136,15 +136,15 @@ export function DailyRevenueChart({ params }: DailyRevenueChartProps) {
                 <ChartTooltipContent
                   className="w-[180px]"
                   nameKey="revenue"
-                  labelFormatter={(value) => {
+                  labelFormatter={value => {
                     return new Date(value).toLocaleDateString("pt-BR", {
                       day: "2-digit",
                       month: "long",
                       year: "numeric",
-                    });
+                    })
                   }}
-                  formatter={(value) => {
-                    return formatPrice(value as number);
+                  formatter={value => {
+                    return formatPrice(value as number)
                   }}
                 />
               }
@@ -154,5 +154,5 @@ export function DailyRevenueChart({ params }: DailyRevenueChartProps) {
         </ChartContainer>
       </CardContent>
     </Card>
-  );
+  )
 }

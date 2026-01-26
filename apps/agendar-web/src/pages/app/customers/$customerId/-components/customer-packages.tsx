@@ -1,29 +1,29 @@
-import { useQuery } from "@tanstack/react-query";
-import { CheckCircle, Clock, Loader2, Package } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
+import { useQuery } from "@tanstack/react-query"
+import { CheckCircle, Clock, Loader2, Package } from "lucide-react"
+import { Badge } from "@/components/ui/badge"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Progress } from "@/components/ui/progress"
 import {
   type CustomerPackage,
   getCustomerPackages,
-} from "@/http/customers/get-customer-packages";
+} from "@/http/customers/get-customer-packages"
 
 interface CustomerPackagesProps {
-  customerId: string;
+  customerId: string
 }
 
 export function CustomerPackages({ customerId }: CustomerPackagesProps) {
   const { data, isLoading, error } = useQuery({
     queryKey: ["customer-packages", customerId],
     queryFn: () => getCustomerPackages(customerId),
-  });
+  })
 
   if (isLoading) {
     return (
       <div className="flex items-center justify-center py-8">
         <Loader2 className="h-8 w-8 animate-spin" />
       </div>
-    );
+    )
   }
 
   if (error) {
@@ -33,7 +33,7 @@ export function CustomerPackages({ customerId }: CustomerPackagesProps) {
           Erro ao carregar pacotes do cliente
         </p>
       </div>
-    );
+    )
   }
 
   if (!data || data.length === 0) {
@@ -45,7 +45,7 @@ export function CustomerPackages({ customerId }: CustomerPackagesProps) {
           Este cliente ainda não possui nenhum pacote de serviços.
         </p>
       </div>
-    );
+    )
   }
 
   const getPackageStatus = (pkg: CustomerPackage) => {
@@ -54,21 +54,21 @@ export function CustomerPackages({ customerId }: CustomerPackagesProps) {
         label: "Finalizado",
         variant: "secondary" as const,
         icon: CheckCircle,
-      };
+      }
     }
     if (pkg.remainingSessions > 0) {
       return {
         label: "Em andamento",
         variant: "default" as const,
         icon: Clock,
-      };
+      }
     }
-    return { label: "Inativo", variant: "outline" as const, icon: Package };
-  };
+    return { label: "Inativo", variant: "outline" as const, icon: Package }
+  }
 
   const getUsagePercentage = (pkg: CustomerPackage) => {
-    return (pkg.usedSessions / pkg.totalSessions) * 100;
-  };
+    return (pkg.usedSessions / pkg.totalSessions) * 100
+  }
 
   return (
     <div className="space-y-4">
@@ -78,10 +78,10 @@ export function CustomerPackages({ customerId }: CustomerPackagesProps) {
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {data.map((pkg) => {
-          const status = getPackageStatus(pkg);
-          const usagePercentage = getUsagePercentage(pkg);
-          const StatusIcon = status.icon;
+        {data.map(pkg => {
+          const status = getPackageStatus(pkg)
+          const usagePercentage = getUsagePercentage(pkg)
+          const StatusIcon = status.icon
 
           return (
             <Card key={pkg.id} className="relative">
@@ -143,9 +143,9 @@ export function CustomerPackages({ customerId }: CustomerPackagesProps) {
                 </div>
               </CardContent>
             </Card>
-          );
+          )
         })}
       </div>
     </div>
-  );
+  )
 }

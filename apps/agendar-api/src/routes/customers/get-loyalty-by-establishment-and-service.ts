@@ -1,3 +1,7 @@
+import { and, eq } from "drizzle-orm"
+import type { FastifyInstance } from "fastify"
+import type { ZodTypeProvider } from "fastify-type-provider-zod"
+import { z } from "zod"
 import { db } from "@/db"
 import {
   customerLoyaltyPoints,
@@ -6,10 +10,6 @@ import {
 } from "@/db/schema"
 import { customerAuth } from "@/middlewares/customer-auth"
 import { customerHeaderSchema } from "@/utils/schemas/headers"
-import { and, eq } from "drizzle-orm"
-import type { FastifyInstance } from "fastify"
-import type { ZodTypeProvider } from "fastify-type-provider-zod"
-import { z } from "zod"
 
 export async function getLoyaltyByEstablishmentAndService(
   app: FastifyInstance

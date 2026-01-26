@@ -1,16 +1,16 @@
-import { ListItem } from "@/components/list-item"
 import type { Href } from "expo-router"
 import {
-  DoorOpen,
-  Scissors,
   Box,
-  Store,
+  DoorOpen,
   FolderTree,
+  Gift,
+  Scissors,
+  Store,
   UserCog,
   UserSquare,
-  Gift,
 } from "lucide-react-native"
 import { SafeAreaView, ScrollView, View } from "react-native"
+import { ListItem } from "@/components/list-item"
 
 export default function Establishment() {
   const items = [

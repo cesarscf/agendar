@@ -1,9 +1,9 @@
-import { db } from "@/db"
-import { admins } from "@/db/schema"
 import bcrypt from "bcrypt"
 import type { FastifyInstance } from "fastify"
 import type { ZodTypeProvider } from "fastify-type-provider-zod"
 import z from "zod"
+import { db } from "@/db"
+import { admins } from "@/db/schema"
 
 export async function createAdmin(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(

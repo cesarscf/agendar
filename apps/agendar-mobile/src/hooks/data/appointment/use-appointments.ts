@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query"
 
 import {
-  getAppointments,
   type GetAppointmentsParams,
+  getAppointments,
 } from "@/http/appointments/get-appointments"
 
 export type Appointment = {

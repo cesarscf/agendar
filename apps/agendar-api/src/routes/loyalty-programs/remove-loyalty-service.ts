@@ -1,11 +1,11 @@
-import { db } from "@/db"
-import { loyaltyPointRules } from "@/db/schema"
-import { auth } from "@/middlewares/auth"
-import { requireActiveSubscription } from "@/middlewares/require-active-subscription"
 import { and, eq } from "drizzle-orm"
 import type { FastifyInstance } from "fastify"
 import type { ZodTypeProvider } from "fastify-type-provider-zod"
 import z from "zod"
+import { db } from "@/db"
+import { loyaltyPointRules } from "@/db/schema"
+import { auth } from "@/middlewares/auth"
+import { requireActiveSubscription } from "@/middlewares/require-active-subscription"
 
 export async function removeLoyaltyService(app: FastifyInstance) {
   await app.register(async app => {

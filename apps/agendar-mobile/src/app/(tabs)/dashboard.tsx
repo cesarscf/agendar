@@ -1,25 +1,25 @@
 import { useState } from "react"
 import {
-  View,
-  Text,
+  ActivityIndicator,
   Pressable,
   ScrollView,
-  ActivityIndicator,
+  Text,
+  View,
 } from "react-native"
-import { cn } from "@/utils/cn"
-import { useDashboardFilters } from "@/hooks/use-dashboard-filters"
-import { DashboardFilters } from "@/components/dashboard/dashboard-filters"
-import { TotalRevenueCard } from "@/components/dashboard/total-revenue-card"
-import { NetRevenueCard } from "@/components/dashboard/net-revenue-card"
-import { AverageTicketCard } from "@/components/dashboard/average-ticket-card"
 import { AppointmentsCountCard } from "@/components/dashboard/appointments-count-card"
+import { AverageTicketCard } from "@/components/dashboard/average-ticket-card"
 import { DailyRevenueChart } from "@/components/dashboard/daily-revenue-chart"
-import { TopServicesChart } from "@/components/dashboard/top-services-chart"
-import { MostBookedServicesChart } from "@/components/dashboard/most-booked-services-chart"
-import { TopPaymentMethodsChart } from "@/components/dashboard/top-payment-methods-chart"
-import { EmployeeRevenueChart } from "@/components/dashboard/employee-revenue-chart"
+import { DashboardFilters } from "@/components/dashboard/dashboard-filters"
 import { EmployeeCommissionChart } from "@/components/dashboard/employee-commission-chart"
+import { EmployeeRevenueChart } from "@/components/dashboard/employee-revenue-chart"
+import { MostBookedServicesChart } from "@/components/dashboard/most-booked-services-chart"
+import { NetRevenueCard } from "@/components/dashboard/net-revenue-card"
 import { ServicesByEmployeeChart } from "@/components/dashboard/services-by-employee-chart"
+import { TopPaymentMethodsChart } from "@/components/dashboard/top-payment-methods-chart"
+import { TopServicesChart } from "@/components/dashboard/top-services-chart"
+import { TotalRevenueCard } from "@/components/dashboard/total-revenue-card"
+import { useDashboardFilters } from "@/hooks/use-dashboard-filters"
+import { cn } from "@/utils/cn"
 
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState<"overview" | "employees">(

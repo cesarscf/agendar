@@ -1,38 +1,38 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { endOfMonth, format, startOfMonth } from "date-fns";
-import { parseAsIsoDate, useQueryState } from "nuqs";
-import { AppointmentsCountCard } from "@/components/appointments-count-card";
-import { AverageTicketCard } from "@/components/average-ticket-card";
-import { DailyRevenueChart } from "@/components/daily-revenue-chart";
-import { EmployeeCommissionChart } from "@/components/employee-commission-chart";
-import { EmployeeRevenueChart } from "@/components/employee-revenue-chart";
-import { MonthlyServicesChart } from "@/components/monthly-services-chart";
-import { MostBookedServicesChart } from "@/components/most-booked-services-chart";
-import { NetRevenueCard } from "@/components/net-revenue-card";
-import { ServicesByEmployeeChart } from "@/components/services-by-employee-chart";
-import { TopPaymentMethodsChart } from "@/components/top-payment-methods-chart";
-import { TopServicesChart } from "@/components/top-services-chart";
-import { TotalRevenueCard } from "@/components/total-revenue-card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { DashboardFilters } from "./-components/dashboard-filters";
+import { createFileRoute } from "@tanstack/react-router"
+import { endOfMonth, format, startOfMonth } from "date-fns"
+import { parseAsIsoDate, useQueryState } from "nuqs"
+import { AppointmentsCountCard } from "@/components/appointments-count-card"
+import { AverageTicketCard } from "@/components/average-ticket-card"
+import { DailyRevenueChart } from "@/components/daily-revenue-chart"
+import { EmployeeCommissionChart } from "@/components/employee-commission-chart"
+import { EmployeeRevenueChart } from "@/components/employee-revenue-chart"
+import { MonthlyServicesChart } from "@/components/monthly-services-chart"
+import { MostBookedServicesChart } from "@/components/most-booked-services-chart"
+import { NetRevenueCard } from "@/components/net-revenue-card"
+import { ServicesByEmployeeChart } from "@/components/services-by-employee-chart"
+import { TopPaymentMethodsChart } from "@/components/top-payment-methods-chart"
+import { TopServicesChart } from "@/components/top-services-chart"
+import { TotalRevenueCard } from "@/components/total-revenue-card"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { DashboardFilters } from "./-components/dashboard-filters"
 
 export const Route = createFileRoute("/app/dashboard/")({
   component: Dashboard,
-});
+})
 
-const getCurrentMonthStart = () => startOfMonth(new Date());
-const getCurrentMonthEnd = () => endOfMonth(new Date());
+const getCurrentMonthStart = () => startOfMonth(new Date())
+const getCurrentMonthEnd = () => endOfMonth(new Date())
 
 function Dashboard() {
   const [startDate] = useQueryState(
     "startDate",
-    parseAsIsoDate.withDefault(getCurrentMonthStart()),
-  );
+    parseAsIsoDate.withDefault(getCurrentMonthStart())
+  )
 
   const [endDate] = useQueryState(
     "endDate",
-    parseAsIsoDate.withDefault(getCurrentMonthEnd()),
-  );
+    parseAsIsoDate.withDefault(getCurrentMonthEnd())
+  )
 
   return (
     <div className="p-4 md:p-6 space-y-4 md:space-y-6">
@@ -154,5 +154,5 @@ function Dashboard() {
         </TabsContent>
       </Tabs>
     </div>
-  );
+  )
 }

@@ -1,7 +1,7 @@
 import { TrendingUp } from "lucide-react-native"
-import { MetricCard } from "./metric-card"
 import { useNetRevenue } from "@/hooks/data/reports/use-net-revenue"
 import { formatPriceFromCents } from "@/utils"
+import { MetricCard } from "./metric-card"
 
 type NetRevenueCardProps = {
   startDate: string

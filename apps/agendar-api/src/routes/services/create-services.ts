@@ -1,13 +1,12 @@
+import type { FastifyInstance } from "fastify"
+import type { ZodTypeProvider } from "fastify-type-provider-zod"
+import z from "zod"
 import { db } from "@/db"
 import { serviceCategories, services } from "@/db/schema"
 import { auth } from "@/middlewares/auth"
 import { centsToReais } from "@/utils/price"
 import { establishmentHeaderSchema } from "@/utils/schemas/headers"
 import { createServiceSchema } from "@/utils/schemas/services"
-import {} from "drizzle-orm"
-import type { FastifyInstance } from "fastify"
-import type { ZodTypeProvider } from "fastify-type-provider-zod"
-import z from "zod"
 
 export async function createService(app: FastifyInstance) {
   await app.register(async app => {

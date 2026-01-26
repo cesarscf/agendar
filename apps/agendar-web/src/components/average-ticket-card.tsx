@@ -4,17 +4,17 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { useAverageTicket } from "@/hooks/use-average-ticket";
-import type { GetAverageTicketParams } from "@/http/reports/get-average-ticket";
-import { formatPriceFromCents } from "@/lib/utils";
+} from "@/components/ui/card"
+import { useAverageTicket } from "@/hooks/use-average-ticket"
+import type { GetAverageTicketParams } from "@/http/reports/get-average-ticket"
+import { formatPriceFromCents } from "@/lib/utils"
 
 interface AverageTicketCardProps {
-  params: GetAverageTicketParams;
+  params: GetAverageTicketParams
 }
 
 export function AverageTicketCard({ params }: AverageTicketCardProps) {
-  const { data, isLoading, isError } = useAverageTicket(params);
+  const { data, isLoading, isError } = useAverageTicket(params)
 
   if (isLoading) {
     return (
@@ -26,7 +26,7 @@ export function AverageTicketCard({ params }: AverageTicketCardProps) {
           </CardTitle>
         </CardHeader>
       </Card>
-    );
+    )
   }
 
   if (isError || !data) {
@@ -44,7 +44,7 @@ export function AverageTicketCard({ params }: AverageTicketCardProps) {
           </div>
         </CardFooter>
       </Card>
-    );
+    )
   }
 
   return (
@@ -61,5 +61,5 @@ export function AverageTicketCard({ params }: AverageTicketCardProps) {
         </div>
       </CardFooter>
     </Card>
-  );
+  )
 }

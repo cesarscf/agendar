@@ -1,12 +1,12 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useNavigate } from "@tanstack/react-router";
-import { Loader2 } from "lucide-react";
-import React from "react";
-import { useForm } from "react-hook-form";
-import type z from "zod";
-import LogoUploader from "@/components/logo-uploader";
-import { Button } from "@/components/ui/button";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { useNavigate } from "@tanstack/react-router"
+import { Loader2 } from "lucide-react"
+import React from "react"
+import { useForm } from "react-hook-form"
+import type z from "zod"
+import LogoUploader from "@/components/logo-uploader"
+import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -14,41 +14,41 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { MaskInput } from "@/components/ui/mask-input";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { MaskInput } from "@/components/ui/mask-input"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Switch } from "@/components/ui/switch";
-import { Textarea } from "@/components/ui/textarea";
-import { getCategories } from "@/http/categories/get-categories";
-import { deleteService } from "@/http/services/delete-service";
-import { updateService } from "@/http/services/update-service";
-import { uploadImage } from "@/lib/upload-image";
-import { convertCentsToUnmasked, formatDurationToString } from "@/lib/utils";
-import { type Service, updateServiceSchema } from "@/lib/validations/service";
+} from "@/components/ui/select"
+import { Switch } from "@/components/ui/switch"
+import { Textarea } from "@/components/ui/textarea"
+import { getCategories } from "@/http/categories/get-categories"
+import { deleteService } from "@/http/services/delete-service"
+import { updateService } from "@/http/services/update-service"
+import { uploadImage } from "@/lib/upload-image"
+import { convertCentsToUnmasked, formatDurationToString } from "@/lib/utils"
+import { type Service, updateServiceSchema } from "@/lib/validations/service"
 
-type Inputs = z.infer<typeof updateServiceSchema>;
+type Inputs = z.infer<typeof updateServiceSchema>
 
 export function UpdateServiceForm({ service }: { service: Service }) {
-  const navigate = useNavigate();
-  const queryClient = useQueryClient();
+  const navigate = useNavigate()
+  const queryClient = useQueryClient()
 
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [imageFile, setImageFile] = React.useState<File | null>(null);
+  const [isLoading, setIsLoading] = React.useState(false)
+  const [imageFile, setImageFile] = React.useState<File | null>(null)
   const [selectedCategories, setSelectedCategories] = React.useState<string[]>(
-    service.categories?.map((cat) => cat.id) || [],
-  );
+    service.categories?.map(cat => cat.id) || []
+  )
 
   const { data: categories = [] } = useQuery({
     queryKey: ["categories"],
     queryFn: getCategories,
-  });
+  })
 
   const form = useForm<Inputs>({
     resolver: zodResolver(updateServiceSchema),
@@ -58,36 +58,36 @@ export function UpdateServiceForm({ service }: { service: Service }) {
       description: service.description,
       active: service.active,
       durationInMinutes: formatDurationToString(
-        Number(service.durationInMinutes),
+        Number(service.durationInMinutes)
       ),
       price: convertCentsToUnmasked(service.price),
     },
-  });
+  })
 
   const { mutate, isPending } = useMutation({
     mutationFn: updateService,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [service.id] });
+      queryClient.invalidateQueries({ queryKey: [service.id] })
 
-      setIsLoading(false);
+      setIsLoading(false)
     },
-  });
+  })
 
   const { mutateAsync: deleteServiceMutate, isPending: deleteIsPending } =
     useMutation({
       mutationFn: deleteService,
-    });
+    })
 
   async function onSubmit(values: Inputs) {
-    setIsLoading(true);
-    let image: string | undefined;
+    setIsLoading(true)
+    let image: string | undefined
 
     if (imageFile) {
-      const imageUrl = await uploadImage(imageFile);
+      const imageUrl = await uploadImage(imageFile)
 
-      image = imageUrl;
+      image = imageUrl
     } else {
-      image = service.image;
+      image = service.image
     }
 
     mutate({
@@ -95,7 +95,7 @@ export function UpdateServiceForm({ service }: { service: Service }) {
       image: image ?? undefined,
       id: service.id,
       categoryIds: selectedCategories,
-    });
+    })
   }
 
   return (
@@ -123,9 +123,9 @@ export function UpdateServiceForm({ service }: { service: Service }) {
           <FormControl>
             <Select
               value={""}
-              onValueChange={(value) => {
+              onValueChange={value => {
                 if (value && !selectedCategories.includes(value)) {
-                  setSelectedCategories([...selectedCategories, value]);
+                  setSelectedCategories([...selectedCategories, value])
                 }
               }}
             >
@@ -134,10 +134,8 @@ export function UpdateServiceForm({ service }: { service: Service }) {
               </SelectTrigger>
               <SelectContent>
                 {categories
-                  .filter(
-                    (category) => !selectedCategories.includes(category.id),
-                  )
-                  .map((category) => (
+                  .filter(category => !selectedCategories.includes(category.id))
+                  .map(category => (
                     <SelectItem key={category.id} value={category.id}>
                       {category.name}
                     </SelectItem>
@@ -147,8 +145,8 @@ export function UpdateServiceForm({ service }: { service: Service }) {
           </FormControl>
           {selectedCategories.length > 0 && (
             <div className="flex flex-wrap gap-2 mt-2">
-              {selectedCategories.map((categoryId) => {
-                const category = categories.find((c) => c.id === categoryId);
+              {selectedCategories.map(categoryId => {
+                const category = categories.find(c => c.id === categoryId)
                 return (
                   <div
                     key={categoryId}
@@ -159,15 +157,15 @@ export function UpdateServiceForm({ service }: { service: Service }) {
                       type="button"
                       onClick={() => {
                         setSelectedCategories(
-                          selectedCategories.filter((id) => id !== categoryId),
-                        );
+                          selectedCategories.filter(id => id !== categoryId)
+                        )
                       }}
                       className="text-muted-foreground hover:text-foreground"
                     >
                       ×
                     </button>
                   </div>
-                );
+                )
               })}
             </div>
           )}
@@ -237,7 +235,7 @@ export function UpdateServiceForm({ service }: { service: Service }) {
                   placeholder="R$ 0,00"
                   value={field.value}
                   onValueChange={(_maskedValue, unmaskedValue) => {
-                    field.onChange(unmaskedValue);
+                    field.onChange(unmaskedValue)
                   }}
                 />
               </FormControl>
@@ -277,14 +275,14 @@ export function UpdateServiceForm({ service }: { service: Service }) {
             onClick={async () => {
               if (
                 confirm(
-                  "Tem certeza que deseja excluir este serviço? Todos os dados relacionados serão excluídos.",
+                  "Tem certeza que deseja excluir este serviço? Todos os dados relacionados serão excluídos."
                 )
               ) {
-                await deleteServiceMutate(service.id);
+                await deleteServiceMutate(service.id)
 
-                queryClient.invalidateQueries({ queryKey: ["services"] });
+                queryClient.invalidateQueries({ queryKey: ["services"] })
 
-                navigate({ to: "/app/services" });
+                navigate({ to: "/app/services" })
               }
             }}
           >
@@ -296,5 +294,5 @@ export function UpdateServiceForm({ service }: { service: Service }) {
         </div>
       </form>
     </Form>
-  );
+  )
 }

@@ -1,13 +1,13 @@
+import { and, eq } from "drizzle-orm"
+import type { FastifyInstance } from "fastify"
+import type { ZodTypeProvider } from "fastify-type-provider-zod"
+import z from "zod"
 import { db } from "@/db"
 import { appointments } from "@/db/schema/appointments"
 import { customerServicePackageUsages } from "@/db/schema/customer-service-packages-usages"
 import { auth } from "@/middlewares/auth"
 import { requireActiveSubscription } from "@/middlewares/require-active-subscription"
 import { BadRequestError } from "@/routes/_erros/bad-request-error"
-import { and, eq } from "drizzle-orm"
-import type { FastifyInstance } from "fastify"
-import type { ZodTypeProvider } from "fastify-type-provider-zod"
-import z from "zod"
 
 export async function cancelAppointment(app: FastifyInstance) {
   await app.register(async app => {

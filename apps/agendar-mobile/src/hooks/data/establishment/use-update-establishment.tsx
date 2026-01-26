@@ -1,8 +1,7 @@
+import { useMutation } from "@tanstack/react-query"
 import { updateEstablishment } from "@/http/establishment/update-establishment"
 import { queryClient } from "@/lib/react-query"
 import type { UpdateEstablishmentRequest } from "@/lib/validations/establishment"
-
-import { useMutation } from "@tanstack/react-query"
 
 export function useUpdateEstablishment() {
   return useMutation<boolean, string, UpdateEstablishmentRequest>({

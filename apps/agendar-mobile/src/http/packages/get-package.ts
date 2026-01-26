@@ -1,6 +1,6 @@
-import { api } from "../api-client"
 import type { PackageWithItems } from "@/lib/validations/packages"
 import { handleApiError } from "@/utils"
+import { api } from "../api-client"
 
 export async function getPackage(packageId: string) {
   try {

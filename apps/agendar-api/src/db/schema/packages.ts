@@ -1,10 +1,10 @@
+import { relations } from "drizzle-orm"
+import { boolean, decimal, pgTable, text, uuid } from "drizzle-orm/pg-core"
 import { appointments } from "@/db/schema/appointments"
 import { customers } from "@/db/schema/customers"
 import { establishments } from "@/db/schema/establishments"
 import { packageItems } from "@/db/schema/package-items"
 import { lifecycleDates } from "@/db/schema/utils"
-import { relations } from "drizzle-orm"
-import { boolean, decimal, pgTable, text, uuid } from "drizzle-orm/pg-core"
 
 export const packages = pgTable("packages", {
   id: uuid("id").notNull().primaryKey().defaultRandom(),

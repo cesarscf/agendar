@@ -1,7 +1,4 @@
-import { uuid } from "drizzle-orm/pg-core"
-import { timestamp } from "drizzle-orm/pg-core"
-import { text } from "drizzle-orm/pg-core"
-import { pgTable } from "drizzle-orm/pg-core"
+import { pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core"
 import { lifecycleDates } from "./utils"
 
 export const verifications = pgTable("verifications", {

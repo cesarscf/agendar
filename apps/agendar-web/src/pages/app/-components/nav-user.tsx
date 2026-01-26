@@ -1,6 +1,6 @@
-import { useQueryClient } from "@tanstack/react-query";
-import { useNavigate } from "@tanstack/react-router";
-import { CreditCard, LogOut, MoreVertical, User } from "lucide-react";
+import { useQueryClient } from "@tanstack/react-query"
+import { useNavigate } from "@tanstack/react-router"
+import { CreditCard, LogOut, MoreVertical, User } from "lucide-react"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,24 +9,24 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@/components/ui/dropdown-menu"
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@/components/ui/sidebar";
-import { useAuth } from "@/hooks/use-auth";
-import { clearToken } from "@/lib/auth";
+} from "@/components/ui/sidebar"
+import { useAuth } from "@/hooks/use-auth"
+import { clearToken } from "@/lib/auth"
 
 export function NavUser() {
-  const { isMobile } = useSidebar();
-  const queryClient = useQueryClient();
-  const navigate = useNavigate();
+  const { isMobile } = useSidebar()
+  const queryClient = useQueryClient()
+  const navigate = useNavigate()
 
-  const { partner } = useAuth();
+  const { partner } = useAuth()
 
-  const user = partner;
+  const user = partner
 
   return (
     <SidebarMenu>
@@ -80,13 +80,13 @@ export function NavUser() {
             <DropdownMenuSeparator />
             <DropdownMenuItem
               onClick={() => {
-                queryClient.clear();
-                clearToken();
+                queryClient.clear()
+                clearToken()
                 navigate({
                   to: "/login",
                   replace: true,
                   search: { redirect: undefined },
-                });
+                })
               }}
             >
               <LogOut />
@@ -96,5 +96,5 @@ export function NavUser() {
         </DropdownMenu>
       </SidebarMenuItem>
     </SidebarMenu>
-  );
+  )
 }

@@ -1,10 +1,10 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
-import { Loader2 } from "lucide-react";
-import { useFieldArray, useForm } from "react-hook-form";
-import type z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useMutation } from "@tanstack/react-query"
+import { Loader2 } from "lucide-react"
+import { useFieldArray, useForm } from "react-hook-form"
+import type z from "zod"
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -12,31 +12,31 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/components/ui/select"
 
-import { updatePackageItems } from "@/http/packages/update-package-items";
+import { updatePackageItems } from "@/http/packages/update-package-items"
 import {
   type PackageItem,
   type UpdatePackageItemsRequest,
   updatePackageItemsSchema,
-} from "@/lib/validations/package";
-import type { Service } from "@/lib/validations/service";
+} from "@/lib/validations/package"
+import type { Service } from "@/lib/validations/service"
 
 interface UpdatePackageItemFormProps {
-  items: PackageItem[];
-  services: Service[];
-  packageId: string;
+  items: PackageItem[]
+  services: Service[]
+  packageId: string
 }
 
-export type Inputs = z.infer<typeof updatePackageItemsSchema>;
+export type Inputs = z.infer<typeof updatePackageItemsSchema>
 
 export function UpdatePackageItemForm({
   items,
@@ -46,32 +46,32 @@ export function UpdatePackageItemForm({
   const form = useForm<Inputs>({
     resolver: zodResolver(updatePackageItemsSchema),
     defaultValues: {
-      items: items.map((item) => ({
+      items: items.map(item => ({
         serviceId: item.serviceId,
         quantity: item.quantity,
         name: item.name,
       })),
     },
-  });
+  })
 
   const { fields, append, remove } = useFieldArray({
     control: form.control,
     name: "items",
-  });
+  })
 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: updatePackageItems,
-  });
+  })
 
   async function handleSubmit(data: Inputs) {
     const payload: UpdatePackageItemsRequest = {
-      items: data.items.map((item) => ({
+      items: data.items.map(item => ({
         serviceId: item.serviceId,
         quantity: item.quantity,
       })),
-    };
+    }
 
-    await mutateAsync({ ...payload, packageId });
+    await mutateAsync({ ...payload, packageId })
   }
 
   return (
@@ -92,16 +92,14 @@ export function UpdatePackageItemForm({
                 <FormItem>
                   <FormLabel>Serviço</FormLabel>
                   <Select
-                    onValueChange={(value) => {
-                      itemField.onChange(value);
-                      const selectedService = services.find(
-                        (s) => s.id === value,
-                      );
+                    onValueChange={value => {
+                      itemField.onChange(value)
+                      const selectedService = services.find(s => s.id === value)
                       if (selectedService) {
                         form.setValue(
                           `items.${index}.name`,
-                          selectedService.name,
-                        );
+                          selectedService.name
+                        )
                       }
                     }}
                     value={itemField.value}
@@ -112,7 +110,7 @@ export function UpdatePackageItemForm({
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {services.map((service) => (
+                      {services.map(service => (
                         <SelectItem key={service.id} value={service.id}>
                           {service.name}
                         </SelectItem>
@@ -138,9 +136,7 @@ export function UpdatePackageItemForm({
                       value={
                         Number.isNaN(itemField.value) ? "" : itemField.value
                       }
-                      onChange={(e) =>
-                        itemField.onChange(e.target.valueAsNumber)
-                      }
+                      onChange={e => itemField.onChange(e.target.valueAsNumber)}
                     />
                   </FormControl>
                   <FormMessage />
@@ -179,5 +175,5 @@ export function UpdatePackageItemForm({
         </div>
       </form>
     </Form>
-  );
+  )
 }

@@ -1,11 +1,11 @@
-import { db } from "@/db"
-import { customerServicePackages, packageItems, packages } from "@/db/schema"
-import { customerAuth } from "@/middlewares/customer-auth"
-import { customerHeaderSchema } from "@/utils/schemas/headers"
 import { and, eq, gt, isNull, or, sql } from "drizzle-orm"
 import type { FastifyInstance } from "fastify"
 import type { ZodTypeProvider } from "fastify-type-provider-zod"
 import z from "zod"
+import { db } from "@/db"
+import { customerServicePackages, packageItems, packages } from "@/db/schema"
+import { customerAuth } from "@/middlewares/customer-auth"
+import { customerHeaderSchema } from "@/utils/schemas/headers"
 import { BadRequestError } from "../_erros/bad-request-error"
 
 export async function checkCustomerActivePackage(app: FastifyInstance) {

@@ -1,8 +1,8 @@
-import { View, Text, ScrollView, ActivityIndicator } from "react-native"
+import { ActivityIndicator, ScrollView, Text, View } from "react-native"
 import { useCustomerPackages } from "@/hooks/data/customers/use-customer-packages"
 import type { CustomerPackage } from "@/http/customers/get-customer-packages"
-import { Badge } from "./badge"
 import { cn } from "@/utils/cn"
+import { Badge } from "./badge"
 
 interface CustomerPackagesProps {
   customerId: string

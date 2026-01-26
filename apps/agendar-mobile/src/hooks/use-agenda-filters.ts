@@ -1,6 +1,6 @@
-import { useState, useCallback, useEffect } from "react"
-import { startOfDay, endOfDay, format } from "date-fns"
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import { endOfDay, format, startOfDay } from "date-fns"
+import { useCallback, useEffect, useState } from "react"
 
 const FILTERS_KEY = "@agenda:filters"
 

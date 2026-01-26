@@ -1,9 +1,9 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
-import { Loader2 } from "lucide-react";
-import { useForm } from "react-hook-form";
-import type z from "zod";
-import { Button } from "@/components/ui/button";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useMutation } from "@tanstack/react-query"
+import { Loader2 } from "lucide-react"
+import { useForm } from "react-hook-form"
+import type z from "zod"
+import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -11,20 +11,20 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
 
-import { updateCategory } from "@/http/categories/update-category";
-import { type Category, categorySchema } from "@/lib/validations/category";
+import { updateCategory } from "@/http/categories/update-category"
+import { type Category, categorySchema } from "@/lib/validations/category"
 
-type Inputs = z.infer<typeof categorySchema>;
+type Inputs = z.infer<typeof categorySchema>
 
 export function UpdateCategoryForm({
   category,
   onSuccess,
 }: {
-  category: Category;
-  onSuccess?: () => void;
+  category: Category
+  onSuccess?: () => void
 }) {
   const form = useForm<Inputs>({
     resolver: zodResolver(categorySchema),
@@ -32,16 +32,16 @@ export function UpdateCategoryForm({
       id: category.id,
       name: category.name,
     },
-  });
+  })
 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: updateCategory,
-  });
+  })
 
   async function onSubmit(values: Inputs) {
-    await mutateAsync({ ...values, id: category.id });
+    await mutateAsync({ ...values, id: category.id })
 
-    onSuccess?.();
+    onSuccess?.()
   }
   return (
     <Form {...form}>
@@ -72,5 +72,5 @@ export function UpdateCategoryForm({
         </Button>
       </form>
     </Form>
-  );
+  )
 }

@@ -1,26 +1,26 @@
-import { api } from "@/lib/api-client";
+import { api } from "@/lib/api-client"
 
 export type CustomerLoyaltyProgram = {
-  id: string;
-  name: string;
-  points: number;
-  requiredPoints: number;
-  active: boolean;
+  id: string
+  name: string
+  points: number
+  requiredPoints: number
+  active: boolean
   rewardService: {
-    id: string;
-    name: string;
-  };
-  progress: number;
-  canRedeem: boolean;
-};
+    id: string
+    name: string
+  }
+  progress: number
+  canRedeem: boolean
+}
 
 export type GetCustomerLoyaltyProgramResponse = {
-  loyaltyPrograms: CustomerLoyaltyProgram[];
-};
+  loyaltyPrograms: CustomerLoyaltyProgram[]
+}
 
 export interface GetCustomerLoyaltyProgramParams {
-  customerPhone: string;
-  establishmentId: string;
+  customerPhone: string
+  establishmentId: string
 }
 
 export async function getCustomerLoyaltyPrograms({
@@ -34,8 +34,8 @@ export async function getCustomerLoyaltyPrograms({
         "x-customer-phone": customerPhone,
         "x-establishment-id": establishmentId,
       },
-    },
-  );
+    }
+  )
 
-  return response.data;
+  return response.data
 }

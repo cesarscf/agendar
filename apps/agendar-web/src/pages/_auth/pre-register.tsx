@@ -1,12 +1,12 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { AxiosError } from "axios";
-import { ArrowRight, Loader2 } from "lucide-react";
-import { useForm } from "react-hook-form";
-import { toast } from "sonner";
-import type z from "zod";
-import { Button } from "@/components/ui/button";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useMutation } from "@tanstack/react-query"
+import { createFileRoute, useNavigate } from "@tanstack/react-router"
+import { AxiosError } from "axios"
+import { ArrowRight, Loader2 } from "lucide-react"
+import { useForm } from "react-hook-form"
+import { toast } from "sonner"
+import type z from "zod"
+import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -14,19 +14,19 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { preRegister } from "@/http/auth/register";
-import { preRegisterSchema } from "@/lib/validations/auth";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { preRegister } from "@/http/auth/register"
+import { preRegisterSchema } from "@/lib/validations/auth"
 
 export const Route = createFileRoute("/_auth/pre-register")({
   component: PreRegister,
-});
+})
 
-type Inputs = z.infer<typeof preRegisterSchema>;
+type Inputs = z.infer<typeof preRegisterSchema>
 
 function PreRegister() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const form = useForm({
     resolver: zodResolver(preRegisterSchema),
@@ -34,30 +34,30 @@ function PreRegister() {
       name: "",
       email: "",
     },
-  });
+  })
 
   const { mutateAsync: sendCode, isPending } = useMutation({
     mutationFn: preRegister,
     onSuccess: () => {
       toast.success("Código enviado!", {
         description: "Verifique seu e-mail para continuar o cadastro.",
-      });
+      })
     },
     onError: (error: Error) => {
       if (error instanceof AxiosError) {
         const message =
-          error.response?.data?.message ?? "Erro inesperado no servidor.";
+          error.response?.data?.message ?? "Erro inesperado no servidor."
 
-        toast.error(message);
-        return;
+        toast.error(message)
+        return
       }
 
-      toast.error("Erro desconhecido. Tente novamente mais tarde.");
+      toast.error("Erro desconhecido. Tente novamente mais tarde.")
     },
-  });
+  })
 
   async function onSubmit(values: Inputs) {
-    await sendCode(values);
+    await sendCode(values)
 
     navigate({
       to: "/register",
@@ -66,7 +66,7 @@ function PreRegister() {
         email: values.email,
         redirect: undefined,
       },
-    });
+    })
   }
 
   return (
@@ -129,5 +129,5 @@ function PreRegister() {
         </form>
       </Form>
     </div>
-  );
+  )
 }

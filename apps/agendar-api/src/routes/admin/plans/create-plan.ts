@@ -1,9 +1,9 @@
-import { createPlanOnStripe } from "@/clients/stripe"
-import { db } from "@/db"
-import { plans } from "@/db/schema"
 import type { FastifyInstance } from "fastify"
 import type { ZodTypeProvider } from "fastify-type-provider-zod"
 import z from "zod"
+import { createPlanOnStripe } from "@/clients/stripe"
+import { db } from "@/db"
+import { plans } from "@/db/schema"
 
 export const createPlanSchema = z.object({
   name: z.string().min(3),

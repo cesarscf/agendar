@@ -1,5 +1,5 @@
-import { View, Image, TouchableOpacity, Text } from "react-native"
 import * as ImagePicker from "expo-image-picker"
+import { Image, Text, TouchableOpacity, View } from "react-native"
 
 interface ImagePickerControlProps {
   value?: string

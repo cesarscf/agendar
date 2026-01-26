@@ -1,13 +1,13 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Check, Loader2, Share2 } from "lucide-react";
-import React from "react";
-import { useForm } from "react-hook-form";
-import { toast } from "sonner";
-import type z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { Check, Loader2, Share2 } from "lucide-react"
+import React from "react"
+import { useForm } from "react-hook-form"
+import { toast } from "sonner"
+import type z from "zod"
 
-import LogoUploader from "@/components/logo-uploader";
-import { Button } from "@/components/ui/button";
+import LogoUploader from "@/components/logo-uploader"
+import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -15,40 +15,40 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import { updateEstablishment } from "@/http/establishment/update-establishment";
-import { maskPhone } from "@/lib/masks";
-import { uploadImage } from "@/lib/upload-image";
-import { slugify, themeOptions } from "@/lib/utils";
+} from "@/components/ui/select"
+import { Textarea } from "@/components/ui/textarea"
+import { updateEstablishment } from "@/http/establishment/update-establishment"
+import { maskPhone } from "@/lib/masks"
+import { uploadImage } from "@/lib/upload-image"
+import { slugify, themeOptions } from "@/lib/utils"
 import {
   type Establishment,
   updateEstablishmentSchema,
-} from "@/lib/validations/establishment";
+} from "@/lib/validations/establishment"
 
-type Inputs = z.infer<typeof updateEstablishmentSchema>;
+type Inputs = z.infer<typeof updateEstablishmentSchema>
 
 export function UpdateStoreForm({
   establishment,
 }: {
-  establishment: Establishment;
+  establishment: Establishment
 }) {
-  const queryClient = useQueryClient();
+  const queryClient = useQueryClient()
 
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false)
   const [bannerImageFile, setBannerImageFile] = React.useState<File | null>(
-    null,
-  );
-  const [logoImageFile, setLogoImageFile] = React.useState<File | null>(null);
-  const [copied, setCopied] = React.useState(false);
+    null
+  )
+  const [logoImageFile, setLogoImageFile] = React.useState<File | null>(null)
+  const [copied, setCopied] = React.useState(false)
 
   const form = useForm<Inputs>({
     resolver: zodResolver(updateEstablishmentSchema),
@@ -65,57 +65,57 @@ export function UpdateStoreForm({
       phone: maskPhone(establishment.phone ?? ""),
       theme: establishment.theme,
     },
-  });
+  })
 
   const { mutate, isPending } = useMutation({
     mutationFn: updateEstablishment,
     onSuccess: () => {
-      toast.success("Alterações salvas com sucesso!");
-      queryClient.invalidateQueries({ queryKey: ["establishment"] });
-      setIsLoading(false);
+      toast.success("Alterações salvas com sucesso!")
+      queryClient.invalidateQueries({ queryKey: ["establishment"] })
+      setIsLoading(false)
     },
     onError: (error: any) => {
       const errorMessage =
-        error?.response?.data?.message || "Erro ao salvar alterações";
-      toast.error(errorMessage);
-      console.error(error);
-      setIsLoading(false);
+        error?.response?.data?.message || "Erro ao salvar alterações"
+      toast.error(errorMessage)
+      console.error(error)
+      setIsLoading(false)
     },
-  });
+  })
 
   const handleCopyLink = async () => {
     try {
-      const storeUrl = `${window.location.origin}/${establishment.slug}`;
-      await navigator.clipboard.writeText(storeUrl);
-      setCopied(true);
-      toast.success("Link da loja copiado!");
-      setTimeout(() => setCopied(false), 2000);
+      const storeUrl = `${window.location.origin}/${establishment.slug}`
+      await navigator.clipboard.writeText(storeUrl)
+      setCopied(true)
+      toast.success("Link da loja copiado!")
+      setTimeout(() => setCopied(false), 2000)
     } catch {
-      toast.error("Erro ao copiar link");
+      toast.error("Erro ao copiar link")
     }
-  };
+  }
 
   async function onSubmit(values: Inputs) {
-    setIsLoading(true);
+    setIsLoading(true)
 
     try {
-      let logoUrl: string | undefined;
-      let bannerUrl: string | undefined;
+      let logoUrl: string | undefined
+      let bannerUrl: string | undefined
 
       if (logoImageFile) {
-        const logoImageUrl = await uploadImage(logoImageFile);
+        const logoImageUrl = await uploadImage(logoImageFile)
 
-        logoUrl = logoImageUrl;
+        logoUrl = logoImageUrl
       } else {
-        logoUrl = establishment.logoUrl;
+        logoUrl = establishment.logoUrl
       }
 
       if (bannerImageFile) {
-        const logoImageUrl = await uploadImage(bannerImageFile);
+        const logoImageUrl = await uploadImage(bannerImageFile)
 
-        bannerUrl = logoImageUrl;
+        bannerUrl = logoImageUrl
       } else {
-        bannerUrl = establishment.bannerUrl;
+        bannerUrl = establishment.bannerUrl
       }
 
       mutate({
@@ -123,21 +123,21 @@ export function UpdateStoreForm({
         id: establishment.id,
         logoUrl: logoUrl ?? undefined,
         bannerUrl: bannerUrl ?? undefined,
-      });
+      })
     } catch (error: any) {
       const errorMessage =
-        error?.response?.data?.message || "Erro ao fazer upload das imagens";
-      toast.error(errorMessage);
-      console.error(error);
-      setIsLoading(false);
+        error?.response?.data?.message || "Erro ao fazer upload das imagens"
+      toast.error(errorMessage)
+      console.error(error)
+      setIsLoading(false)
     }
   }
 
-  const slugState = form.watch("slug");
+  const slugState = form.watch("slug")
 
   React.useEffect(() => {
-    form.setValue("slug", slugify(slugState ?? ""));
-  }, [slugState, form]);
+    form.setValue("slug", slugify(slugState ?? ""))
+  }, [slugState, form])
 
   return (
     <Form {...form}>
@@ -235,7 +235,7 @@ export function UpdateStoreForm({
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {themeOptions.map((option) => (
+                  {themeOptions.map(option => (
                     <SelectItem key={option.value} value={option.value}>
                       <div className="flex items-center gap-2">
                         <span
@@ -263,7 +263,7 @@ export function UpdateStoreForm({
                 <Input
                   placeholder="Digite o telefone da loja aqui"
                   {...field}
-                  onChange={(e) => field.onChange(maskPhone(e.target.value))}
+                  onChange={e => field.onChange(maskPhone(e.target.value))}
                 />
               </FormControl>
               <FormMessage />
@@ -376,5 +376,5 @@ export function UpdateStoreForm({
         </Button>
       </form>
     </Form>
-  );
+  )
 }

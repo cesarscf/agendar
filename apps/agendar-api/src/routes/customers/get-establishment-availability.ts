@@ -1,12 +1,3 @@
-import { db } from "@/db"
-import {
-  appointments,
-  employeeRecurringBlocks,
-  employeeTimeBlocks,
-  establishmentAvailability,
-  services,
-} from "@/db/schema"
-import { DateUtils } from "@/utils/get-date"
 import {
   addMinutes,
   format,
@@ -19,6 +10,15 @@ import { and, eq, gte, lte, ne } from "drizzle-orm"
 import type { FastifyInstance } from "fastify"
 import type { ZodTypeProvider } from "fastify-type-provider-zod"
 import z from "zod"
+import { db } from "@/db"
+import {
+  appointments,
+  employeeRecurringBlocks,
+  employeeTimeBlocks,
+  establishmentAvailability,
+  services,
+} from "@/db/schema"
+import { DateUtils } from "@/utils/get-date"
 
 export async function getAvailability(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().get(

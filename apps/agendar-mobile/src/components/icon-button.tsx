@@ -1,6 +1,6 @@
+import { Trash2 } from "lucide-react-native"
 import { ActivityIndicator, Pressable, type PressableProps } from "react-native"
 import { cn } from "../utils/cn"
-import { Trash2 } from "lucide-react-native"
 
 type IconButtonProps = {
   onPress?: () => void

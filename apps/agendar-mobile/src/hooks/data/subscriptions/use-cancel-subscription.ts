@@ -1,7 +1,6 @@
-import { cancelSubscription } from "@/http/subscription/cancel-subscription"
-
-import { queryClient } from "@/lib/react-query"
 import { useMutation } from "@tanstack/react-query"
+import { cancelSubscription } from "@/http/subscription/cancel-subscription"
+import { queryClient } from "@/lib/react-query"
 
 export function useCancelSubscription() {
   return useMutation<boolean, string>({

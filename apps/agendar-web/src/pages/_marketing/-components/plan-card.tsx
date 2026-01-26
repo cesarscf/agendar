@@ -1,34 +1,34 @@
-import { Link } from "@tanstack/react-router";
-import { Calendar, Check, Users, Zap } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Link } from "@tanstack/react-router"
+import { Calendar, Check, Users, Zap } from "lucide-react"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import type { Plan } from "@/lib/validations/plan";
+} from "@/components/ui/card"
+import type { Plan } from "@/lib/validations/plan"
 
 export function PlanCard({
   plan,
   currentPlanId,
 }: {
-  plan: Plan;
-  currentPlanId?: string;
+  plan: Plan
+  currentPlanId?: string
 }) {
   const getDiscountBadge = (intervalMonth: number) => {
-    if (intervalMonth === 6) return "10% OFF";
-    if (intervalMonth === 12) return "20% OFF";
-    return null;
-  };
+    if (intervalMonth === 6) return "10% OFF"
+    if (intervalMonth === 12) return "20% OFF"
+    return null
+  }
 
   const getProfessionalsText = (min: number, max: number) => {
-    if (min === max) return `${min} profissional`;
-    if (max === 100) return `${min}+ profissionais`;
-    return `${min} a ${max} profissionais`;
-  };
+    if (min === max) return `${min} profissional`
+    if (max === 100) return `${min}+ profissionais`
+    return `${min} a ${max} profissionais`
+  }
 
   return (
     <Card className="relative hover:shadow-lg transition-shadow duration-300">
@@ -63,7 +63,7 @@ export function PlanCard({
             <span>
               {getProfessionalsText(
                 plan.minimumProfessionalsIncluded,
-                plan.maximumProfessionalsIncluded,
+                plan.maximumProfessionalsIncluded
               )}
             </span>
           </div>
@@ -93,5 +93,5 @@ export function PlanCard({
         </Button>
       </CardContent>
     </Card>
-  );
+  )
 }

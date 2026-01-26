@@ -1,13 +1,12 @@
+import { Stack } from "expo-router"
 import { SplashScreenController } from "@/components/splash"
 import { SessionProvider, useSession } from "@/providers/auth-context"
-import { Stack } from "expo-router"
 import "../../global.css"
-import { StatusBar } from "expo-status-bar"
 import messaging from "@react-native-firebase/messaging"
-
-import { queryClient } from "@/lib/react-query"
 import { QueryClientProvider } from "@tanstack/react-query"
+import { StatusBar } from "expo-status-bar"
 import { PermissionsAndroid } from "react-native"
+import { queryClient } from "@/lib/react-query"
 
 PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS)
 

@@ -1,7 +1,7 @@
-import { employees } from "@/db/schema/employees"
-import { services } from "@/db/schema/services"
 import { relations } from "drizzle-orm"
 import { boolean, decimal, pgTable, uuid } from "drizzle-orm/pg-core"
+import { employees } from "@/db/schema/employees"
+import { services } from "@/db/schema/services"
 
 export const employeeServices = pgTable("employee_services", {
   id: uuid("id").notNull().primaryKey().defaultRandom(),

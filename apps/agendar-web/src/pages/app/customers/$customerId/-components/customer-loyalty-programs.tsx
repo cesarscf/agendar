@@ -1,13 +1,13 @@
-import { useQuery } from "@tanstack/react-query";
-import { Gift, Loader2, Star } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { getCustomerLoyaltyPrograms } from "@/http/customers/get-customer-loyalty-programs";
+import { useQuery } from "@tanstack/react-query"
+import { Gift, Loader2, Star } from "lucide-react"
+import { Badge } from "@/components/ui/badge"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Progress } from "@/components/ui/progress"
+import { getCustomerLoyaltyPrograms } from "@/http/customers/get-customer-loyalty-programs"
 
 interface CustomerLoyaltyProgramsProps {
-  customerPhone: string;
-  establishmentId: string;
+  customerPhone: string
+  establishmentId: string
 }
 
 export function CustomerLoyaltyPrograms({
@@ -18,14 +18,14 @@ export function CustomerLoyaltyPrograms({
     queryKey: ["customer-loyalty-programs", customerPhone],
     queryFn: () =>
       getCustomerLoyaltyPrograms({ customerPhone, establishmentId }),
-  });
+  })
 
   if (isLoading) {
     return (
       <div className="flex items-center justify-center py-8">
         <Loader2 className="h-8 w-8 animate-spin" />
       </div>
-    );
+    )
   }
 
   if (error) {
@@ -35,7 +35,7 @@ export function CustomerLoyaltyPrograms({
           Erro ao carregar programas de fidelidade
         </p>
       </div>
-    );
+    )
   }
 
   if (!data?.loyaltyPrograms || data.loyaltyPrograms.length === 0) {
@@ -49,7 +49,7 @@ export function CustomerLoyaltyPrograms({
           Este cliente ainda não participa de nenhum programa de fidelidade.
         </p>
       </div>
-    );
+    )
   }
 
   return (
@@ -60,7 +60,7 @@ export function CustomerLoyaltyPrograms({
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {data.loyaltyPrograms.map((program) => (
+        {data.loyaltyPrograms.map(program => (
           <Card key={program.id} className="relative">
             <CardHeader className="pb-3">
               <div className="flex items-center justify-between">
@@ -109,5 +109,5 @@ export function CustomerLoyaltyPrograms({
         ))}
       </div>
     </div>
-  );
+  )
 }

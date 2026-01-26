@@ -1,51 +1,51 @@
-import { useQuery } from "@tanstack/react-query";
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { ChevronLeft } from "lucide-react";
-import { useQueryState } from "nuqs";
-import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { getEmployee } from "@/http/employees/get-employee";
-import { getServices } from "@/http/services/get-services";
-import { EmployeeBlocks } from "./-components/blocks";
+import { useQuery } from "@tanstack/react-query"
+import { createFileRoute, Link } from "@tanstack/react-router"
+import { ChevronLeft } from "lucide-react"
+import { useQueryState } from "nuqs"
+import { Button } from "@/components/ui/button"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { getEmployee } from "@/http/employees/get-employee"
+import { getServices } from "@/http/services/get-services"
+import { EmployeeBlocks } from "./-components/blocks"
 
-import { UpdateEmployeeForm } from "./-components/update-employee-form";
-import { UpdateEmployeeServices } from "./-components/update-employee-service";
+import { UpdateEmployeeForm } from "./-components/update-employee-form"
+import { UpdateEmployeeServices } from "./-components/update-employee-service"
 
 export const Route = createFileRoute("/app/employees/$employeeId/")({
   component: Employee,
-});
+})
 
 function Employee() {
-  const { employeeId } = Route.useParams();
+  const { employeeId } = Route.useParams()
 
   const [tab, setTab] = useQueryState("tab", {
     defaultValue: "geral",
-  });
+  })
 
   const { data, isLoading } = useQuery({
     queryKey: ["employee", employeeId],
     queryFn: () => getEmployee(employeeId),
-  });
+  })
 
   const { data: services } = useQuery({
     queryKey: ["services"],
     queryFn: getServices,
-  });
+  })
 
   if (!data || isLoading) {
-    return null;
+    return null
   }
 
   if (!data) {
-    return null;
+    return null
   }
 
   return (
     <div className="p-6">
       <Tabs
         value={tab || "geral"}
-        onValueChange={(value) => {
-          setTab(value);
+        onValueChange={value => {
+          setTab(value)
         }}
         className="w-full"
       >
@@ -106,5 +106,5 @@ function Employee() {
         </TabsContent>
       </Tabs>
     </div>
-  );
+  )
 }

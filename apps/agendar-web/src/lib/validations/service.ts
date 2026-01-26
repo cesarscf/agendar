@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "zod"
 
 export const serviceSchema = z.object({
   id: z.string(),
@@ -16,24 +16,24 @@ export const serviceSchema = z.object({
       z.object({
         id: z.string(),
         name: z.string(),
-      }),
+      })
     )
     .optional(),
   categoryIds: z.array(z.string()).optional(),
-});
+})
 
 export const createServiceSchema = serviceSchema.omit({
   id: true,
   categories: true,
-});
+})
 
 export const updateServiceSchema = serviceSchema
   .omit({ categories: true })
   .partial()
   .extend({
     id: z.string().min(1, "ID obrigatório"),
-  });
+  })
 
-export type Service = z.infer<typeof serviceSchema>;
-export type CreateServiceRequest = z.infer<typeof createServiceSchema>;
-export type UpdateServiceRequest = z.infer<typeof updateServiceSchema>;
+export type Service = z.infer<typeof serviceSchema>
+export type CreateServiceRequest = z.infer<typeof createServiceSchema>
+export type UpdateServiceRequest = z.infer<typeof updateServiceSchema>

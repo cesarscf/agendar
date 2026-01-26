@@ -1,7 +1,3 @@
-import { establishments } from "@/db/schema/establishments"
-import { packageItems } from "@/db/schema/package-items"
-import { serviceCategories } from "@/db/schema/services-categories"
-import { lifecycleDates } from "@/db/schema/utils"
 import { relations } from "drizzle-orm"
 import {
   boolean,
@@ -11,6 +7,10 @@ import {
   text,
   uuid,
 } from "drizzle-orm/pg-core"
+import { establishments } from "@/db/schema/establishments"
+import { packageItems } from "@/db/schema/package-items"
+import { serviceCategories } from "@/db/schema/services-categories"
+import { lifecycleDates } from "@/db/schema/utils"
 
 export const services = pgTable("services", {
   id: uuid("id").notNull().primaryKey().defaultRandom(),

@@ -1,12 +1,12 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
-import { createFileRoute } from "@tanstack/react-router";
-import { Loader2 } from "lucide-react";
-import { useForm } from "react-hook-form";
-import type z from "zod";
-import { PasswordInput } from "@/components/password-input";
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useMutation } from "@tanstack/react-query"
+import { createFileRoute } from "@tanstack/react-router"
+import { Loader2 } from "lucide-react"
+import { useForm } from "react-hook-form"
+import type z from "zod"
+import { PasswordInput } from "@/components/password-input"
+import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
 import {
   Form,
   FormControl,
@@ -14,33 +14,33 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
 
-import { login } from "@/http/auth/login";
-import { loginSchema } from "@/lib/validations/auth";
+import { login } from "@/http/auth/login"
+import { loginSchema } from "@/lib/validations/auth"
 
 type AuthParams = {
-  redirect?: string;
-};
+  redirect?: string
+}
 
 export const Route = createFileRoute("/_auth/login")({
   component: Login,
   validateSearch: (search: AuthParams) => {
     return {
       redirect: search.redirect,
-    };
+    }
   },
-});
+})
 
-type Inputs = z.infer<typeof loginSchema>;
+type Inputs = z.infer<typeof loginSchema>
 
 function Login() {
-  const { redirect } = Route.useSearch();
+  const { redirect } = Route.useSearch()
 
   const { mutateAsync: authenticate, isPending } = useMutation({
     mutationFn: login,
-  });
+  })
 
   const form = useForm({
     resolver: zodResolver(loginSchema),
@@ -49,13 +49,13 @@ function Login() {
       password: "",
       rememberMe: false,
     },
-  });
+  })
 
   async function onSubmit(values: Inputs) {
-    await authenticate(values);
+    await authenticate(values)
 
-    const redirectTo = decodeURIComponent(redirect ?? "/app");
-    window.location.href = redirectTo;
+    const redirectTo = decodeURIComponent(redirect ?? "/app")
+    window.location.href = redirectTo
   }
 
   return (
@@ -114,7 +114,7 @@ function Login() {
                 <FormControl>
                   <Checkbox
                     checked={field.value}
-                    onCheckedChange={(checked) => field.onChange(!!checked)}
+                    onCheckedChange={checked => field.onChange(!!checked)}
                   />
                 </FormControl>
                 <div className="space-y-1 leading-none">
@@ -131,5 +131,5 @@ function Login() {
         </form>
       </Form>
     </div>
-  );
+  )
 }

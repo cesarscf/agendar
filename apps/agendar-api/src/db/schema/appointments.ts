@@ -1,9 +1,3 @@
-import { customerServicePackages } from "@/db/schema/customer-service-packages"
-import { customerServicePackageUsages } from "@/db/schema/customer-service-packages-usages"
-import { customers } from "@/db/schema/customers"
-import { employees } from "@/db/schema/employees"
-import { establishments } from "@/db/schema/establishments"
-import { services } from "@/db/schema/services"
 import { relations } from "drizzle-orm"
 import {
   boolean,
@@ -15,6 +9,12 @@ import {
   timestamp,
   uuid,
 } from "drizzle-orm/pg-core"
+import { customerServicePackages } from "@/db/schema/customer-service-packages"
+import { customerServicePackageUsages } from "@/db/schema/customer-service-packages-usages"
+import { customers } from "@/db/schema/customers"
+import { employees } from "@/db/schema/employees"
+import { establishments } from "@/db/schema/establishments"
+import { services } from "@/db/schema/services"
 
 export const appointmentStatusValues = [
   "scheduled",

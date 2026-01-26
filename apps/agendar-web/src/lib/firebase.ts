@@ -1,5 +1,5 @@
-import { initializeApp } from "firebase/app";
-import { getStorage } from "firebase/storage";
+import { initializeApp } from "firebase/app"
+import { getStorage } from "firebase/storage"
 
 const firebaseConfig = {
   apiKey: "AIzaSyBUCqKFQ_9MCHOvpXk8JWjYjfEj05hirpc",
@@ -9,8 +9,8 @@ const firebaseConfig = {
   messagingSenderId: "787006319304",
   appId: "1:787006319304:web:7f042e7046171be17013fd",
   measurementId: "G-RWMP4PLCFP",
-};
+}
 
-const app = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig)
 
-export const storage = getStorage(app);
+export const storage = getStorage(app)

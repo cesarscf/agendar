@@ -1,11 +1,11 @@
+import { and, eq } from "drizzle-orm"
+import type { FastifyInstance } from "fastify"
+import { fastifyPlugin } from "fastify-plugin"
 import { db } from "@/db"
 import { customers, establishments } from "@/db/schema"
 import { BadRequestError } from "@/routes/_erros/bad-request-error"
 import { ForbiddenError } from "@/routes/_erros/forbidden-request-error"
 import { UnauthorizedError } from "@/routes/_erros/unauthorized-error"
-import { and, eq } from "drizzle-orm"
-import type { FastifyInstance } from "fastify"
-import { fastifyPlugin } from "fastify-plugin"
 
 export const customerAuth = fastifyPlugin(async (app: FastifyInstance) => {
   app.addHook("preHandler", async request => {

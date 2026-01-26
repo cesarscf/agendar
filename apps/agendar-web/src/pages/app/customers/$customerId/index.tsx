@@ -1,34 +1,34 @@
-import { useQuery } from "@tanstack/react-query";
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { ChevronLeft } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { getCustomer } from "@/http/customers/get-customer";
-import { useEstablishment } from "@/hooks/use-establishment";
-import { CustomerLoyaltyPrograms } from "./-components/customer-loyalty-programs";
-import { CustomerPackages } from "./-components/customer-packages";
-import { UpdateCustomerForm } from "./-components/update-customer-form";
+import { useQuery } from "@tanstack/react-query"
+import { createFileRoute, Link } from "@tanstack/react-router"
+import { ChevronLeft } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { useEstablishment } from "@/hooks/use-establishment"
+import { getCustomer } from "@/http/customers/get-customer"
+import { CustomerLoyaltyPrograms } from "./-components/customer-loyalty-programs"
+import { CustomerPackages } from "./-components/customer-packages"
+import { UpdateCustomerForm } from "./-components/update-customer-form"
 
 export const Route = createFileRoute("/app/customers/$customerId/")({
   component: Customer,
-});
+})
 
 function Customer() {
-  const { customerId } = Route.useParams();
-  const { establishment } = useEstablishment();
+  const { customerId } = Route.useParams()
+  const { establishment } = useEstablishment()
 
   const { data, isLoading } = useQuery({
     queryKey: ["customer", customerId],
     queryFn: () => getCustomer(customerId),
     enabled: !!customerId,
-  });
+  })
 
   if (!data || isLoading) {
-    return null;
+    return null
   }
 
   if (!data) {
-    return null;
+    return null
   }
 
   return (
@@ -79,5 +79,5 @@ function Customer() {
         </TabsContent>
       </Tabs>
     </div>
-  );
+  )
 }

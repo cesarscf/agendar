@@ -1,19 +1,19 @@
-import { useNavigate } from "@tanstack/react-router";
-import { AlertTriangle, CreditCard } from "lucide-react";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Button } from "@/components/ui/button";
+import { useNavigate } from "@tanstack/react-router"
+import { AlertTriangle, CreditCard } from "lucide-react"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { useSubscription } from "@/hooks/use-subscription";
+} from "@/components/ui/card"
+import { useSubscription } from "@/hooks/use-subscription"
 
 export function PlanExpiredWarning() {
-  const navigate = useNavigate();
-  const { currentSubscription, isTrial } = useSubscription();
+  const navigate = useNavigate()
+  const { currentSubscription, isTrial } = useSubscription()
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-b from-background to-muted/20 p-4">
@@ -62,7 +62,7 @@ export function PlanExpiredWarning() {
               className="w-full"
               size="lg"
               onClick={() => {
-                navigate({ to: "/", hash: "#plans" });
+                navigate({ to: "/", hash: "#plans" })
               }}
             >
               {isTrial ? "Conhecer Planos" : "Ver Planos Disponíveis"}
@@ -76,7 +76,7 @@ export function PlanExpiredWarning() {
                   navigate({
                     to: "/checkout",
                     search: { planId: currentSubscription.plan.id },
-                  });
+                  })
                 }}
               >
                 Renovar Plano Anterior
@@ -90,5 +90,5 @@ export function PlanExpiredWarning() {
         </CardContent>
       </Card>
     </div>
-  );
+  )
 }

@@ -1,5 +1,5 @@
-import { createCategorySchema } from "@/lib/validations/category" // crie esse schema simples: { name: string.min(1) }
 import { zodResolver } from "@hookform/resolvers/zod"
+import { router } from "expo-router"
 import { Controller, useForm } from "react-hook-form"
 import {
   Alert,
@@ -9,10 +9,10 @@ import {
   View,
 } from "react-native"
 import type { z } from "zod"
-import { Input } from "../input"
-import { AppButton } from "../button"
 import { useCreateCategory } from "@/hooks/data/category/use-create-category"
-import { router } from "expo-router"
+import { createCategorySchema } from "@/lib/validations/category" // crie esse schema simples: { name: string.min(1) }
+import { AppButton } from "../button"
+import { Input } from "../input"
 
 type Inputs = z.infer<typeof createCategorySchema>
 

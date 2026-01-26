@@ -1,26 +1,26 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query"
 
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "@/components/ui/badge"
 
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Card, CardContent, CardHeader } from "@/components/ui/card"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
-import { getPlans } from "@/http/payments/get-plans";
-import { getSubscriptions } from "@/http/payments/get-subscriptions";
-import { PlanCard } from "./plan-card";
+import { getPlans } from "@/http/payments/get-plans"
+import { getSubscriptions } from "@/http/payments/get-subscriptions"
+import { PlanCard } from "./plan-card"
 
 export function Pricing() {
   const { data, isLoading } = useQuery({
     queryKey: ["plans"],
     queryFn: getPlans,
-  });
+  })
 
   const { data: subscriptions } = useQuery({
     queryKey: ["subscriptions"],
     queryFn: getSubscriptions,
-  });
+  })
 
-  const subscription = subscriptions?.[0];
+  const subscription = subscriptions?.[0]
 
   if (isLoading) {
     return (
@@ -45,17 +45,20 @@ export function Pricing() {
           </div>
         </div>
       </section>
-    );
+    )
   }
 
-  const plans = data || [];
+  const plans = data || []
 
-  const monthlyPlans = plans.filter((plan) => plan.intervalMonth === 1);
-  const semestralPlans = plans.filter((plan) => plan.intervalMonth === 6);
-  const annualPlans = plans.filter((plan) => plan.intervalMonth === 12);
+  const monthlyPlans = plans.filter(plan => plan.intervalMonth === 1)
+  const semestralPlans = plans.filter(plan => plan.intervalMonth === 6)
+  const annualPlans = plans.filter(plan => plan.intervalMonth === 12)
 
   return (
-    <section id="planos" className="py-20 px-4 bg-gradient-to-b from-background to-muted/20">
+    <section
+      id="planos"
+      className="py-20 px-4 bg-gradient-to-b from-background to-muted/20"
+    >
       <div className="container mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold mb-4">
@@ -120,7 +123,7 @@ export function Pricing() {
 
           <TabsContent value="monthly">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {monthlyPlans.map((plan) => (
+              {monthlyPlans.map(plan => (
                 <PlanCard
                   key={plan.id}
                   plan={plan}
@@ -132,7 +135,7 @@ export function Pricing() {
 
           <TabsContent value="semestral">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {semestralPlans.map((plan) => (
+              {semestralPlans.map(plan => (
                 <PlanCard
                   key={plan.id}
                   plan={plan}
@@ -144,7 +147,7 @@ export function Pricing() {
 
           <TabsContent value="annual">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {annualPlans.map((plan) => (
+              {annualPlans.map(plan => (
                 <PlanCard
                   key={plan.id}
                   plan={plan}
@@ -156,5 +159,5 @@ export function Pricing() {
         </Tabs>
       </div>
     </section>
-  );
+  )
 }

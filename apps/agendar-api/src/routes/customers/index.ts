@@ -1,3 +1,4 @@
+import type { FastifyInstance } from "fastify"
 import { checkBonus } from "@/routes/customers/check-bonus"
 import { checkCustomerActivePackage } from "@/routes/customers/check-customer-active-package"
 import { createCustomer } from "@/routes/customers/create-customer"
@@ -11,7 +12,6 @@ import { listCustomerLoyaltyPrograms } from "@/routes/customers/list-customer-lo
 import { listCustomerPackages } from "@/routes/customers/list-customer-packages"
 import { updateCustomer } from "@/routes/customers/update-customer"
 import { verifyCustomerByPhone } from "@/routes/customers/verify-customer-by-phone"
-import type { FastifyInstance } from "fastify"
 
 export async function customersRoutes(app: FastifyInstance) {
   await getCustomer(app)

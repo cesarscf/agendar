@@ -1,5 +1,5 @@
-import z from "zod";
-import { api } from "@/lib/api-client";
+import z from "zod"
+import { api } from "@/lib/api-client"
 
 const getTopPaymentMethodsParamsSchema = z.object({
   startDate: z
@@ -8,11 +8,11 @@ const getTopPaymentMethodsParamsSchema = z.object({
   endDate: z
     .string()
     .regex(/^\d{4}-\d{2}-\d{2}$/, "Formato deve ser YYYY-MM-DD"),
-});
+})
 
 export type GetTopPaymentMethodsParams = z.infer<
   typeof getTopPaymentMethodsParamsSchema
->;
+>
 
 export type GetTopPaymentMethods = {
   items: {
@@ -23,10 +23,10 @@ export type GetTopPaymentMethods = {
       | "cash"
       | "package"
       | "loyalty"
-      | "other";
-    usage: number;
-  }[];
-};
+      | "other"
+    usage: number
+  }[]
+}
 
 export async function getTopPaymentMethods({
   endDate,
@@ -36,8 +36,8 @@ export async function getTopPaymentMethods({
     "/establishments/top-payment-methods",
     {
       params: { endDate, startDate },
-    },
-  );
+    }
+  )
 
-  return response.data;
+  return response.data
 }

@@ -1,19 +1,19 @@
-import { api } from "@/lib/api-client";
+import { api } from "@/lib/api-client"
 
 export type PublicLoyaltyProgram = {
-  name: string;
-  serviceRewardName: string;
-  requiredPoints: number;
+  name: string
+  serviceRewardName: string
+  requiredPoints: number
   rules: {
-    serviceName: string;
-    points: number;
-  }[];
-};
+    serviceName: string
+    points: number
+  }[]
+}
 
 export async function getPublicLoyalties(slug: string) {
   const response = await api.get<PublicLoyaltyProgram[]>(
-    `/public/${slug}/loyalty-programs`,
-  );
+    `/public/${slug}/loyalty-programs`
+  )
 
-  return response.data;
+  return response.data
 }

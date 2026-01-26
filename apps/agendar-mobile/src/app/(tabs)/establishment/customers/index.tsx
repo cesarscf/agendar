@@ -1,15 +1,15 @@
-import { useCustomers } from "@/hooks/data/customers/use-customers"
 import { Link } from "expo-router"
-import { ChevronRight, Phone, Mail, UserX } from "lucide-react-native"
+import { ChevronRight, Mail, Phone, UserX } from "lucide-react-native"
 import {
   ActivityIndicator,
+  Pressable,
   SafeAreaView,
   ScrollView,
   Text,
   View,
-  Pressable,
 } from "react-native"
 import { Empty } from "@/components/empty"
+import { useCustomers } from "@/hooks/data/customers/use-customers"
 
 export default function Customers() {
   const { data: customers, isLoading } = useCustomers()

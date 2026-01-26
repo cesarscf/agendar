@@ -1,6 +1,6 @@
-import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { createFileRoute, useNavigate } from "@tanstack/react-router"
 import {
   ChevronLeft,
   DollarSign,
@@ -10,61 +10,61 @@ import {
   Shield,
   User,
   Users,
-} from "lucide-react";
-import { useState } from "react";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+} from "lucide-react"
+import { useState } from "react"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
-import { useAuth } from "@/hooks/use-auth";
-import { useSubscription } from "@/hooks/use-subscription";
-import { createPartnerSubscribe } from "@/http/payments/create-partner-subscribe";
-import { getPaymentMethods } from "@/http/payments/get-payment-methods";
-import { getPlan } from "@/http/payments/get-plan";
-import { getSetupIntent } from "@/http/payments/get-setup-intent";
-import { updateSubscription } from "@/http/payments/update-subscription";
-import { paymentMethodSchema } from "@/lib/validations/payment-method";
+} from "@/components/ui/card"
+import { Separator } from "@/components/ui/separator"
+import { useAuth } from "@/hooks/use-auth"
+import { useSubscription } from "@/hooks/use-subscription"
+import { createPartnerSubscribe } from "@/http/payments/create-partner-subscribe"
+import { getPaymentMethods } from "@/http/payments/get-payment-methods"
+import { getPlan } from "@/http/payments/get-plan"
+import { getSetupIntent } from "@/http/payments/get-setup-intent"
+import { updateSubscription } from "@/http/payments/update-subscription"
+import { paymentMethodSchema } from "@/lib/validations/payment-method"
 
 type CheckoutParams = {
-  planId: string;
-};
+  planId: string
+}
 
 export const Route = createFileRoute("/checkout/")({
   component: RouteComponent,
   validateSearch: (search: CheckoutParams) => {
     return {
       planId: search.planId,
-    };
+    }
   },
-});
+})
 
-const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 
 function RouteComponent() {
-  const { planId } = Route.useSearch();
-  const navigate = useNavigate();
-  const stripe = useStripe();
-  const elements = useElements();
-  const queryClient = useQueryClient();
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState(false);
+  const { planId } = Route.useSearch()
+  const navigate = useNavigate()
+  const stripe = useStripe()
+  const elements = useElements()
+  const queryClient = useQueryClient()
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const [success, setSuccess] = useState(false)
 
-  const { partner, isLoading: partnerIsLoading } = useAuth();
-  const { subscriptions } = useSubscription();
+  const { partner, isLoading: partnerIsLoading } = useAuth()
+  const { subscriptions } = useSubscription()
 
   const { data: plan, isLoading: planIsLoading } = useQuery({
     queryKey: ["plan", planId],
     queryFn: () => getPlan(planId),
-  });
+  })
 
   const { data: paymentMethodsRaw, isLoading: paymentMethodsLoading } =
     useQuery({
@@ -75,16 +75,16 @@ function RouteComponent() {
         !!subscriptions &&
         subscriptions.length > 0 &&
         subscriptions[0]?.plan.id !== planId,
-    });
+    })
 
   const paymentMethods = paymentMethodsRaw
     ? paymentMethodsRaw
-        .map((pm) => {
-          const parsed = paymentMethodSchema.safeParse(pm);
-          return parsed.success ? parsed.data : null;
+        .map(pm => {
+          const parsed = paymentMethodSchema.safeParse(pm)
+          return parsed.success ? parsed.data : null
         })
         .filter(Boolean)
-    : [];
+    : []
 
   const {
     mutateAsync: updateSubscriptionMutate,
@@ -92,22 +92,22 @@ function RouteComponent() {
   } = useMutation({
     mutationFn: () => updateSubscription(planId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["partner"] });
-      queryClient.invalidateQueries({ queryKey: ["subscriptions"] });
+      queryClient.invalidateQueries({ queryKey: ["partner"] })
+      queryClient.invalidateQueries({ queryKey: ["subscriptions"] })
     },
-  });
+  })
 
-  const subscription = subscriptions?.[0];
-  const currentPlanId = subscription?.plan.id;
+  const subscription = subscriptions?.[0]
+  const currentPlanId = subscription?.plan.id
   const isSubscriptionActive = ["active", "trialing", "past_due"].includes(
-    subscription?.status ?? "",
-  );
+    subscription?.status ?? ""
+  )
   const isUpgrade =
-    currentPlanId && currentPlanId !== planId && isSubscriptionActive;
+    currentPlanId && currentPlanId !== planId && isSubscriptionActive
 
   if (!planId) {
-    navigate({ to: "/" });
-    return null;
+    navigate({ to: "/" })
+    return null
   }
 
   if (!partner && !partnerIsLoading) {
@@ -116,119 +116,119 @@ function RouteComponent() {
       search: {
         redirect: location.pathname + location.search,
       },
-    });
-    return null;
+    })
+    return null
   }
 
   if (planId === currentPlanId && isSubscriptionActive) {
-    navigate({ to: "/app" });
-    return null;
+    navigate({ to: "/app" })
+    return null
   }
 
   async function handlePayment() {
     if (isUpgrade && cardToShow) {
       try {
-        setLoading(true);
-        setError(null);
-        await updateSubscriptionMutate();
-        setSuccess(true);
-        queryClient.invalidateQueries({ queryKey: ["subscriptions"] });
-        queryClient.invalidateQueries({ queryKey: ["partner"] });
-        queryClient.invalidateQueries({ queryKey: ["plans"] });
+        setLoading(true)
+        setError(null)
+        await updateSubscriptionMutate()
+        setSuccess(true)
+        queryClient.invalidateQueries({ queryKey: ["subscriptions"] })
+        queryClient.invalidateQueries({ queryKey: ["partner"] })
+        queryClient.invalidateQueries({ queryKey: ["plans"] })
         setTimeout(() => {
-          navigate({ to: "/app" });
-        }, 2000);
+          navigate({ to: "/app" })
+        }, 2000)
       } catch (err) {
         const message =
           err instanceof Error
             ? err.message
-            : "Erro inesperado ao atualizar assinatura.";
-        setError(message);
+            : "Erro inesperado ao atualizar assinatura."
+        setError(message)
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
-      return;
+      return
     }
 
     if (!stripe || !elements || !partner || !plan) {
-      setError("Stripe não foi carregado corretamente.");
-      return;
+      setError("Stripe não foi carregado corretamente.")
+      return
     }
 
-    const cardElement = elements.getElement(CardElement);
+    const cardElement = elements.getElement(CardElement)
     if (!cardElement) {
-      setError("Elemento do cartão não encontrado.");
-      return;
+      setError("Elemento do cartão não encontrado.")
+      return
     }
 
     try {
-      setLoading(true);
-      setError(null);
+      setLoading(true)
+      setError(null)
 
-      const currentMethods = await getPaymentMethods();
-      const initialMethodCount = currentMethods.length || 0;
+      const currentMethods = await getPaymentMethods()
+      const initialMethodCount = currentMethods.length || 0
 
       const { paymentMethod, error: paymentMethodError } =
         await stripe.createPaymentMethod({
           type: "card",
           card: cardElement,
-        });
+        })
 
       if (paymentMethodError || !paymentMethod) {
         throw new Error(
-          paymentMethodError?.message || "Erro ao criar método de pagamento.",
-        );
+          paymentMethodError?.message || "Erro ao criar método de pagamento."
+        )
       }
 
-      const setupIntent = await getSetupIntent();
+      const setupIntent = await getSetupIntent()
       const { setupIntent: _confirmedSetupIntent, error: confirmError } =
         await stripe.confirmCardSetup(setupIntent.clientSecret, {
           payment_method: paymentMethod.id,
-        });
+        })
 
       if (confirmError) {
         throw new Error(
-          confirmError.message || "Erro ao confirmar SetupIntent.",
-        );
+          confirmError.message || "Erro ao confirmar SetupIntent."
+        )
       }
 
-      let attempts = 0;
-      const maxAttempts = 6;
+      let attempts = 0
+      const maxAttempts = 6
 
       while (attempts < maxAttempts) {
-        await sleep(5000);
-        const updatedMethods = await getPaymentMethods();
+        await sleep(5000)
+        const updatedMethods = await getPaymentMethods()
 
         if (updatedMethods.length <= initialMethodCount) {
-          attempts++;
-          continue;
+          attempts++
+          continue
         }
 
-        const latestMethod = updatedMethods[0];
+        const latestMethod = updatedMethods[0]
         await createPartnerSubscribe({
           cardId: latestMethod.id,
           planId: planId,
-        });
+        })
 
-        setSuccess(true);
-        queryClient.invalidateQueries({ queryKey: ["partner"] });
-        queryClient.invalidateQueries({ queryKey: ["payment-methods"] });
+        setSuccess(true)
+        queryClient.invalidateQueries({ queryKey: ["partner"] })
+        queryClient.invalidateQueries({ queryKey: ["payment-methods"] })
 
         setTimeout(() => {
-          navigate({ to: "/" });
-        }, 2000);
-        return;
+          navigate({ to: "/" })
+        }, 2000)
+        return
       }
 
-      throw new Error("Tempo excedido ao esperar o cartão ser registrado.");
+      throw new Error("Tempo excedido ao esperar o cartão ser registrado.")
     } catch (error) {
       const message =
         error instanceof Error
           ? error.message
-          : "Erro inesperado ao processar pagamento.";
-      setError(message);
+          : "Erro inesperado ao processar pagamento."
+      setError(message)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
   }
 
@@ -241,7 +241,7 @@ function RouteComponent() {
       <div className="flex items-center justify-center min-h-screen">
         <Loader2 className="h-8 w-8 animate-spin" />
       </div>
-    );
+    )
   }
 
   if (!plan) {
@@ -255,7 +255,7 @@ function RouteComponent() {
           </CardContent>
         </Card>
       </div>
-    );
+    )
   }
 
   if (success) {
@@ -274,10 +274,10 @@ function RouteComponent() {
           </CardContent>
         </Card>
       </div>
-    );
+    )
   }
 
-  const cardToShow = paymentMethods?.[0];
+  const cardToShow = paymentMethods?.[0]
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
@@ -286,7 +286,7 @@ function RouteComponent() {
         className="mb-4"
         variant="outline"
         onClick={() => {
-          navigate({ to: "/" });
+          navigate({ to: "/" })
         }}
       >
         <ChevronLeft />
@@ -493,7 +493,7 @@ function RouteComponent() {
                   <AvatarFallback>
                     {partner?.name
                       ?.split(" ")
-                      .map((n) => n[0])
+                      .map(n => n[0])
                       .join("")
                       .toUpperCase() || "U"}
                   </AvatarFallback>
@@ -523,5 +523,5 @@ function RouteComponent() {
         </div>
       </div>
     </div>
-  );
+  )
 }

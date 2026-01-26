@@ -1,7 +1,7 @@
-import { packages } from "@/db/schema/packages"
-import { services } from "@/db/schema/services"
 import { relations } from "drizzle-orm"
 import { integer, pgTable, uuid } from "drizzle-orm/pg-core"
+import { packages } from "@/db/schema/packages"
+import { services } from "@/db/schema/services"
 
 export const packageItems = pgTable("package_items", {
   id: uuid("id").notNull().primaryKey().defaultRandom(),

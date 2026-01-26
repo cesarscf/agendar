@@ -1,10 +1,10 @@
-import { messaging } from "@/clients/firebase"
-import { db } from "@/db"
-import { fcmTokens } from "@/db/schema"
 import { eq } from "drizzle-orm"
 import type { FastifyInstance } from "fastify"
 import type { ZodTypeProvider } from "fastify-type-provider-zod"
 import { z } from "zod"
+import { messaging } from "@/clients/firebase"
+import { db } from "@/db"
+import { fcmTokens } from "@/db/schema"
 
 export async function sendTestPushRoute(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(

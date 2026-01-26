@@ -1,7 +1,7 @@
 import { Receipt } from "lucide-react-native"
-import { MetricCard } from "./metric-card"
 import { useAverageTicket } from "@/hooks/data/reports/use-average-ticket"
 import { formatPriceFromCents } from "@/utils"
+import { MetricCard } from "./metric-card"
 
 type AverageTicketCardProps = {
   startDate: string

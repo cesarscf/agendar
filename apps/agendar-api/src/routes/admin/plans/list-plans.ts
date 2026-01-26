@@ -1,8 +1,8 @@
-import { db } from "@/db"
-import { plans } from "@/db/schema"
 import type { FastifyInstance } from "fastify"
 import type { ZodTypeProvider } from "fastify-type-provider-zod"
 import z from "zod"
+import { db } from "@/db"
+import { plans } from "@/db/schema"
 
 export async function listPlans(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().get(

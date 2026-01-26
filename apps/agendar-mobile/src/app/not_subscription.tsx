@@ -1,6 +1,6 @@
-import { AppButton } from "@/components/button"
 import { StatusBar } from "expo-status-bar"
-import { Linking, View, Text } from "react-native"
+import { Linking, Text, View } from "react-native"
+import { AppButton } from "@/components/button"
 
 export default function NotSubscription() {
   const PLANS_URL = "https://test.com.br/plans"

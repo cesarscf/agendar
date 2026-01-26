@@ -1,4 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod"
+import { router } from "expo-router"
+import React from "react"
 import { Controller, useForm } from "react-hook-form"
 import {
   Alert,
@@ -8,15 +10,13 @@ import {
   View,
 } from "react-native"
 import type { z } from "zod"
-import { Input } from "../input"
+import { useCreatePackage } from "@/hooks/data/packages/use-create-package"
+import { StorageEntity, uploadImageToFirebase } from "@/lib/upload-image"
+import { createPackageSchema } from "@/lib/validations/packages"
+import { formatCurrencyInput, formatPercentageInput } from "@/utils/currency"
 import { AppButton } from "../button"
 import { ImagePickerControl } from "../image-picker"
-import { router } from "expo-router"
-import { StorageEntity, uploadImageToFirebase } from "@/lib/upload-image"
-import { formatCurrencyInput, formatPercentageInput } from "@/utils/currency"
-import React from "react"
-import { useCreatePackage } from "@/hooks/data/packages/use-create-package"
-import { createPackageSchema } from "@/lib/validations/packages"
+import { Input } from "../input"
 
 type Inputs = z.infer<typeof createPackageSchema>
 

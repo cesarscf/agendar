@@ -1,13 +1,13 @@
 import { randomInt } from "node:crypto"
+import { eq } from "drizzle-orm"
+import type { FastifyInstance } from "fastify"
+import type { ZodTypeProvider } from "fastify-type-provider-zod"
+import z from "zod"
 import { sendEmail } from "@/clients/resend"
 import { db } from "@/db"
 import { prePartners } from "@/db/schema"
 import { BadRequestError } from "@/routes/_erros/bad-request-error"
 import { sendCodeTemplate } from "@/utils/template-html"
-import { eq } from "drizzle-orm"
-import type { FastifyInstance } from "fastify"
-import type { ZodTypeProvider } from "fastify-type-provider-zod"
-import z from "zod"
 
 export async function createPrePartner(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
@@ -62,7 +62,6 @@ export async function createPrePartner(app: FastifyInstance) {
         }
 
         return reply.status(204).send()
-        // biome-ignore lint/style/noUselessElse: <explanation>
       } else {
         await db
           .insert(prePartners)

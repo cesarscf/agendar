@@ -1,10 +1,9 @@
-import { useState } from "react"
 import { useLocalSearchParams } from "expo-router"
-import { View, Text, Pressable } from "react-native"
-
-import { EditCustomerForm } from "@/components/forms/edit-customer-form"
-import { CustomerPackages } from "@/components/customer-packages"
+import { useState } from "react"
+import { Pressable, Text, View } from "react-native"
 import { CustomerLoyaltyPrograms } from "@/components/customer-loyalty-programs"
+import { CustomerPackages } from "@/components/customer-packages"
+import { EditCustomerForm } from "@/components/forms/edit-customer-form"
 import { useCustomer } from "@/hooks/data/customers/use-customer"
 import { cn } from "@/utils/cn"
 

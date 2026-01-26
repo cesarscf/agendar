@@ -1,7 +1,7 @@
-import { AppButton } from "@/components/button"
+import { router } from "expo-router"
 import { StatusBar } from "expo-status-bar"
 import { Linking, Platform, Text, TouchableOpacity, View } from "react-native"
-import { router } from "expo-router"
+import { AppButton } from "@/components/button"
 
 export default function RegisterRedirect() {
   const WEB_REGISTER_URL = "https://agendar-web-omega.vercel.app/pre-register"

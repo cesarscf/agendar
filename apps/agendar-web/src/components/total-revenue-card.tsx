@@ -1,29 +1,29 @@
-import { useMemo } from "react";
+import { useMemo } from "react"
 import {
   Card,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { useDailyRevenue } from "@/hooks/use-daily-revenue";
-import type { GetDailyRevenueParams } from "@/http/reports/get-daily-revenue";
-import { formatPriceFromCents } from "@/lib/utils";
+} from "@/components/ui/card"
+import { useDailyRevenue } from "@/hooks/use-daily-revenue"
+import type { GetDailyRevenueParams } from "@/http/reports/get-daily-revenue"
+import { formatPriceFromCents } from "@/lib/utils"
 
 interface TotalRevenueCardProps {
-  params: GetDailyRevenueParams;
+  params: GetDailyRevenueParams
 }
 
 export function TotalRevenueCard({ params }: TotalRevenueCardProps) {
-  const { data, isLoading, isError } = useDailyRevenue(params);
+  const { data, isLoading, isError } = useDailyRevenue(params)
 
   const totalInCents = useMemo(() => {
     if (!data?.items || data.items.length === 0) {
-      return 0;
+      return 0
     }
 
-    return data.items.reduce((acc, curr) => acc + curr.value, 0);
-  }, [data]);
+    return data.items.reduce((acc, curr) => acc + curr.value, 0)
+  }, [data])
 
   if (isLoading) {
     return (
@@ -35,7 +35,7 @@ export function TotalRevenueCard({ params }: TotalRevenueCardProps) {
           </CardTitle>
         </CardHeader>
       </Card>
-    );
+    )
   }
 
   if (isError || !data) {
@@ -53,7 +53,7 @@ export function TotalRevenueCard({ params }: TotalRevenueCardProps) {
           </div>
         </CardFooter>
       </Card>
-    );
+    )
   }
 
   return (
@@ -70,5 +70,5 @@ export function TotalRevenueCard({ params }: TotalRevenueCardProps) {
         </div>
       </CardFooter>
     </Card>
-  );
+  )
 }

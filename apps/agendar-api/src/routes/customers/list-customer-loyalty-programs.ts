@@ -1,11 +1,11 @@
-import { db } from "@/db"
-import { customerLoyaltyPoints, loyaltyPrograms, services } from "@/db/schema"
-import { customerAuth } from "@/middlewares/customer-auth"
-import { customerHeaderSchema } from "@/utils/schemas/headers"
 import { eq } from "drizzle-orm"
 import type { FastifyInstance } from "fastify"
 import type { ZodTypeProvider } from "fastify-type-provider-zod"
 import { z } from "zod"
+import { db } from "@/db"
+import { customerLoyaltyPoints, loyaltyPrograms, services } from "@/db/schema"
+import { customerAuth } from "@/middlewares/customer-auth"
+import { customerHeaderSchema } from "@/utils/schemas/headers"
 
 export async function listCustomerLoyaltyPrograms(app: FastifyInstance) {
   await app.register(async app => {

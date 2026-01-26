@@ -1,7 +1,7 @@
+import type { FastifyInstance } from "fastify"
 import { getDailyRevenue } from "@/routes/dashboard/get-daily-revenue"
 import { getNetRevenue } from "@/routes/dashboard/get-net-revenue"
 import { listAppointments } from "@/routes/dashboard/list-appointments"
-import type { FastifyInstance } from "fastify"
 import { getAppointmentsMetrics } from "./get-appointments-metrics"
 import { getAverageTicket } from "./get-average-ticket"
 import { getEmployeeCommission } from "./get-employee-commission"

@@ -1,5 +1,5 @@
-import z from "zod";
-import { api } from "@/lib/api-client";
+import z from "zod"
+import { api } from "@/lib/api-client"
 
 const getAverageTicketParamsSchema = z.object({
   startDate: z
@@ -8,15 +8,15 @@ const getAverageTicketParamsSchema = z.object({
   endDate: z
     .string()
     .regex(/^\d{4}-\d{2}-\d{2}$/, "Formato deve ser YYYY-MM-DD"),
-});
+})
 
 export type GetAverageTicketParams = z.infer<
   typeof getAverageTicketParamsSchema
->;
+>
 
 export type GetAverageTicket = {
-  value: number;
-};
+  value: number
+}
 
 export async function getAverageTicket({
   endDate,
@@ -26,8 +26,8 @@ export async function getAverageTicket({
     "/establishments/average-ticket",
     {
       params: { endDate, startDate },
-    },
-  );
+    }
+  )
 
-  return response.data;
+  return response.data
 }

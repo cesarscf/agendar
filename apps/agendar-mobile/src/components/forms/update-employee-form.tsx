@@ -1,4 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useRouter } from "expo-router"
+import React from "react"
 import { Controller, useForm } from "react-hook-form"
 import {
   Alert,
@@ -9,17 +11,15 @@ import {
   View,
 } from "react-native"
 import type { z } from "zod"
-import { Input } from "../input"
+import { useUpdateEmployee } from "@/hooks/data/employees"
+import { useDeleteEmployee } from "@/hooks/data/employees/use-delete-employee"
+import { StorageEntity, uploadImageToFirebase } from "@/lib/upload-image"
+import { updateEmployeeSchema } from "@/lib/validations/employee"
+import { formatPhoneNumber } from "@/utils"
 import { AppButton } from "../button"
 import { IconButton } from "../icon-button"
 import { ImagePickerControl } from "../image-picker"
-import { StorageEntity, uploadImageToFirebase } from "@/lib/upload-image"
-import { useRouter } from "expo-router"
-import { formatPhoneNumber } from "@/utils"
-import React from "react"
-import { updateEmployeeSchema } from "@/lib/validations/employee"
-import { useUpdateEmployee } from "@/hooks/data/employees"
-import { useDeleteEmployee } from "@/hooks/data/employees/use-delete-employee"
+import { Input } from "../input"
 
 type Inputs = z.infer<typeof updateEmployeeSchema>
 

@@ -1,7 +1,7 @@
-import { partnerPaymentMethods } from "@/db/schema/partner-payment-methods"
-import { subscriptions } from "@/db/schema/subscriptions"
 import { relations } from "drizzle-orm"
 import { pgTable, text, uuid } from "drizzle-orm/pg-core"
+import { partnerPaymentMethods } from "@/db/schema/partner-payment-methods"
+import { subscriptions } from "@/db/schema/subscriptions"
 import { establishments } from "./establishments"
 import { lifecycleDates } from "./utils"
 

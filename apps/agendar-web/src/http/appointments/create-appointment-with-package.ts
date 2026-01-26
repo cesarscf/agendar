@@ -1,19 +1,19 @@
-import { format } from "date-fns";
-import { api } from "@/lib/api-client";
+import { format } from "date-fns"
+import { api } from "@/lib/api-client"
 
 export type CreateAppointmentWithPackageRequest = {
-  employeeId: string;
-  packageId: string;
-  date: Date;
-  startTime: Date;
-  customerPhone: string;
-  establishmentId: string;
-};
+  employeeId: string
+  packageId: string
+  date: Date
+  startTime: Date
+  customerPhone: string
+  establishmentId: string
+}
 
 export async function createAppointmentWithPackage(
-  inputs: CreateAppointmentWithPackageRequest,
+  inputs: CreateAppointmentWithPackageRequest
 ) {
-  const utcTime = new Date(inputs.startTime.toISOString());
+  const utcTime = new Date(inputs.startTime.toISOString())
 
   const payload = {
     employeeId: inputs.employeeId,
@@ -26,12 +26,12 @@ export async function createAppointmentWithPackage(
       hour12: false,
       timeZone: "UTC",
     }),
-  };
+  }
 
   await api.post("/appointments/use-package", payload, {
     headers: {
       "x-establishment-id": inputs.establishmentId,
       "x-customer-phone": inputs.customerPhone,
     },
-  });
+  })
 }

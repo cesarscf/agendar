@@ -1,5 +1,5 @@
-import z from "zod";
-import { api } from "@/lib/api-client";
+import z from "zod"
+import { api } from "@/lib/api-client"
 
 const getMostBookedServicesParamsSchema = z.object({
   startDate: z
@@ -8,18 +8,18 @@ const getMostBookedServicesParamsSchema = z.object({
   endDate: z
     .string()
     .regex(/^\d{4}-\d{2}-\d{2}$/, "Formato deve ser YYYY-MM-DD"),
-});
+})
 
 export type GetMostBookedServicesParams = z.infer<
   typeof getMostBookedServicesParamsSchema
->;
+>
 
 export type GetMostBookedServices = {
   items: {
-    service: string;
-    totalBookings: number;
-  }[];
-};
+    service: string
+    totalBookings: number
+  }[]
+}
 
 export async function getMostBookedServices({
   endDate,
@@ -29,8 +29,8 @@ export async function getMostBookedServices({
     "/establishments/most-booked-services",
     {
       params: { endDate, startDate },
-    },
-  );
+    }
+  )
 
-  return response.data;
+  return response.data
 }

@@ -1,36 +1,36 @@
-import { useQuery } from "@tanstack/react-query";
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { ChevronLeft } from "lucide-react";
-import { useQueryState } from "nuqs";
-import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useEstablishment } from "@/hooks/use-establishment";
-import { getEstablishmentAvailability } from "@/http/establishment/get-establishment-availability";
-import { UpdateAvailabilityForm } from "./-components/update-availability-form";
-import { UpdateStoreForm } from "./-components/update-store-form";
+import { useQuery } from "@tanstack/react-query"
+import { createFileRoute, Link } from "@tanstack/react-router"
+import { ChevronLeft } from "lucide-react"
+import { useQueryState } from "nuqs"
+import { Button } from "@/components/ui/button"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { useEstablishment } from "@/hooks/use-establishment"
+import { getEstablishmentAvailability } from "@/http/establishment/get-establishment-availability"
+import { UpdateAvailabilityForm } from "./-components/update-availability-form"
+import { UpdateStoreForm } from "./-components/update-store-form"
 
 export const Route = createFileRoute("/app/store/")({
   component: Store,
-});
+})
 
 function Store() {
   const [tab, setTab] = useQueryState("tab", {
     defaultValue: "geral",
-  });
+  })
 
-  const { establishment, isLoading } = useEstablishment();
+  const { establishment, isLoading } = useEstablishment()
 
   const { data: availabilities, isLoading: availabilityIsLoading } = useQuery({
     queryKey: ["availabilities"],
     queryFn: getEstablishmentAvailability,
-  });
+  })
 
   return (
     <div className="p-6">
       <Tabs
         value={tab || "geral"}
-        onValueChange={(value) => {
-          setTab(value);
+        onValueChange={value => {
+          setTab(value)
         }}
         className="w-full"
       >
@@ -88,5 +88,5 @@ function Store() {
         </TabsContent>
       </Tabs>
     </div>
-  );
+  )
 }

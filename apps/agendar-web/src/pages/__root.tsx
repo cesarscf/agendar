@@ -2,8 +2,8 @@ import {
   createRootRouteWithContext,
   HeadContent,
   Outlet,
-} from "@tanstack/react-router";
-import type { RouterContext } from "@/lib/router-context";
+} from "@tanstack/react-router"
+import type { RouterContext } from "@/lib/router-context"
 
 export const Route = createRootRouteWithContext<RouterContext>()({
   component: RootComponent,
@@ -24,7 +24,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
       },
     ],
   }),
-});
+})
 
 function RootComponent() {
   return (
@@ -32,5 +32,5 @@ function RootComponent() {
       <HeadContent />
       <Outlet />
     </>
-  );
+  )
 }

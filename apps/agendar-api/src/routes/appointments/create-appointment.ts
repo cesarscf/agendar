@@ -1,3 +1,9 @@
+import { addMinutes, format, isAfter, isBefore } from "date-fns"
+import { ptBR } from "date-fns/locale"
+import { and, eq, gt, lt } from "drizzle-orm"
+import type { FastifyInstance } from "fastify"
+import type { ZodTypeProvider } from "fastify-type-provider-zod"
+import { z } from "zod"
 import { messaging } from "@/clients/firebase"
 import { db } from "@/db"
 import {
@@ -13,12 +19,6 @@ import {
 import { customerAuth } from "@/middlewares/customer-auth"
 import { DateUtils } from "@/utils/get-date"
 import { customerHeaderSchema } from "@/utils/schemas/headers"
-import { addMinutes, format, isAfter, isBefore } from "date-fns"
-import { ptBR } from "date-fns/locale"
-import { and, eq, gt, lt } from "drizzle-orm"
-import type { FastifyInstance } from "fastify"
-import type { ZodTypeProvider } from "fastify-type-provider-zod"
-import { z } from "zod"
 
 export async function createAppointment(app: FastifyInstance) {
   await app.register(async app => {

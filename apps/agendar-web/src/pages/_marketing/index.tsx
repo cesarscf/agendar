@@ -1,18 +1,18 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router"
 
-import { About } from "./-components/about";
-import { FAQ } from "./-components/faq";
-import { Features } from "./-components/features";
-import { Footer } from "./-components/footer";
-import { Hero } from "./-components/hero";
-import { MarketingHeader } from "./-components/marketing-header";
-import { Pricing } from "./-components/pricing";
-import { TrainingVideos } from "./-components/training-videos";
-import { WhyUse } from "./-components/why-use";
+import { About } from "./-components/about"
+import { FAQ } from "./-components/faq"
+import { Features } from "./-components/features"
+import { Footer } from "./-components/footer"
+import { Hero } from "./-components/hero"
+import { MarketingHeader } from "./-components/marketing-header"
+import { Pricing } from "./-components/pricing"
+import { TrainingVideos } from "./-components/training-videos"
+import { WhyUse } from "./-components/why-use"
 
 export const Route = createFileRoute("/_marketing/")({
   component: RouteComponent,
-});
+})
 
 function RouteComponent() {
   return (
@@ -47,5 +47,5 @@ function RouteComponent() {
 
       <Footer />
     </div>
-  );
+  )
 }

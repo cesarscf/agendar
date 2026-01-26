@@ -1,4 +1,3 @@
-import { useServices } from "@/hooks/data/services"
 import { Link } from "expo-router"
 import { ChevronRight, Scissors } from "lucide-react-native"
 import {
@@ -11,6 +10,7 @@ import {
   View,
 } from "react-native"
 import { Empty } from "@/components/empty"
+import { useServices } from "@/hooks/data/services"
 import { formatCentsToReal } from "@/utils/currency"
 
 export default function Services() {

@@ -1,13 +1,13 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { ArrowUp, ChevronLeft, Loader2 } from "lucide-react";
-import React from "react";
-import { useForm } from "react-hook-form";
-import type z from "zod";
-import LogoUploader from "@/components/logo-uploader";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Button } from "@/components/ui/button";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router"
+import { ArrowUp, ChevronLeft, Loader2 } from "lucide-react"
+import React from "react"
+import { useForm } from "react-hook-form"
+import type z from "zod"
+import LogoUploader from "@/components/logo-uploader"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -15,47 +15,47 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { useSubscription } from "@/hooks/use-subscription";
-import { createEmployee } from "@/http/employees/create-employee";
-import { getEmployees } from "@/http/employees/get-employees";
-import { getPlan } from "@/http/payments/get-plan";
-import { maskPhone } from "@/lib/masks";
-import { queryKeys } from "@/lib/query-keys";
-import { uploadImage } from "@/lib/upload-image";
-import { createEmployeeSchema } from "@/lib/validations/employees";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import { useSubscription } from "@/hooks/use-subscription"
+import { createEmployee } from "@/http/employees/create-employee"
+import { getEmployees } from "@/http/employees/get-employees"
+import { getPlan } from "@/http/payments/get-plan"
+import { maskPhone } from "@/lib/masks"
+import { queryKeys } from "@/lib/query-keys"
+import { uploadImage } from "@/lib/upload-image"
+import { createEmployeeSchema } from "@/lib/validations/employees"
 
 export const Route = createFileRoute("/app/employees/new/")({
   component: NewEmployee,
-});
+})
 
-type Inputs = z.infer<typeof createEmployeeSchema>;
+type Inputs = z.infer<typeof createEmployeeSchema>
 
 function NewEmployee() {
-  const queryClient = useQueryClient();
-  const navigate = useNavigate();
+  const queryClient = useQueryClient()
+  const navigate = useNavigate()
 
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [imageFile, setImageFile] = React.useState<File | null>(null);
+  const [isLoading, setIsLoading] = React.useState(false)
+  const [imageFile, setImageFile] = React.useState<File | null>(null)
 
-  const { currentSubscription } = useSubscription();
+  const { currentSubscription } = useSubscription()
 
   const { data: employees } = useQuery({
     queryKey: ["employees"],
     queryFn: getEmployees,
-  });
+  })
 
   const { data: plan, isLoading: planIsLoading } = useQuery({
     queryKey: queryKeys.plan(currentSubscription?.plan.id ?? ""),
     queryFn: () => getPlan(currentSubscription?.plan.id!),
     enabled: !!currentSubscription?.plan.id,
-  });
+  })
 
-  const totalEmployees = employees?.length ?? 0;
-  const maxEmployees = plan?.maximumProfessionalsIncluded ?? 1;
-  const hasReachedLimit = totalEmployees >= maxEmployees;
+  const totalEmployees = employees?.length ?? 0
+  const maxEmployees = plan?.maximumProfessionalsIncluded ?? 1
+  const hasReachedLimit = totalEmployees >= maxEmployees
 
   const form = useForm<Inputs>({
     resolver: zodResolver(createEmployeeSchema),
@@ -68,32 +68,32 @@ function NewEmployee() {
       active: true,
       avatarUrl: "",
     },
-  });
+  })
 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: createEmployee,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["employees"] });
+      queryClient.invalidateQueries({ queryKey: ["employees"] })
     },
     onError: () => {
-      setIsLoading(false);
+      setIsLoading(false)
     },
-  });
+  })
 
   async function onSubmit(values: Inputs) {
-    setIsLoading(true);
-    let image: string | undefined;
+    setIsLoading(true)
+    let image: string | undefined
 
     if (imageFile) {
-      const imageUrl = await uploadImage(imageFile);
+      const imageUrl = await uploadImage(imageFile)
 
-      image = imageUrl;
+      image = imageUrl
     }
 
-    await mutateAsync({ ...values, avatarUrl: image ?? "", active: true });
+    await mutateAsync({ ...values, avatarUrl: image ?? "", active: true })
 
-    navigate({ to: "/app/employees" });
-    setIsLoading(false);
+    navigate({ to: "/app/employees" })
+    setIsLoading(false)
   }
 
   if (planIsLoading) {
@@ -105,7 +105,7 @@ function NewEmployee() {
           <div className="h-4 bg-muted rounded w-96" />
         </div>
       </div>
-    );
+    )
   }
 
   if (hasReachedLimit) {
@@ -140,7 +140,7 @@ function NewEmployee() {
             <Button
               className="w-full mt-2"
               onClick={() => {
-                navigate({ to: "/", href: "/#plans" });
+                navigate({ to: "/", href: "/#plans" })
               }}
             >
               <ArrowUp className="h-4 w-4 mr-2" />
@@ -149,7 +149,7 @@ function NewEmployee() {
           </AlertDescription>
         </Alert>
       </div>
-    );
+    )
   }
 
   return (
@@ -202,7 +202,7 @@ function NewEmployee() {
                     placeholder="(99) 99999-9999"
                     maxLength={15}
                     {...field}
-                    onChange={(e) => field.onChange(maskPhone(e.target.value))}
+                    onChange={e => field.onChange(maskPhone(e.target.value))}
                   />
                 </FormControl>
                 <FormMessage />
@@ -284,5 +284,5 @@ function NewEmployee() {
         </form>
       </Form>
     </div>
-  );
+  )
 }

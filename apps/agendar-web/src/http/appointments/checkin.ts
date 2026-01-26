@@ -1,6 +1,6 @@
-import { api } from "@/lib/api-client";
+import { api } from "@/lib/api-client"
 
-export type AppointmentStatus = "scheduled" | "completed" | "canceled";
+export type AppointmentStatus = "scheduled" | "completed" | "canceled"
 
 export type PaymentType =
   | "pix"
@@ -9,7 +9,7 @@ export type PaymentType =
   | "cash"
   | "package"
   | "loyalty"
-  | "other";
+  | "other"
 
 export async function checkin({
   appointmentId,
@@ -18,16 +18,16 @@ export async function checkin({
   paymentType,
   paymentAmount,
 }: {
-  appointmentId: string;
-  status: AppointmentStatus;
-  paymentType: PaymentType;
-  notes?: string;
-  paymentAmount: string;
+  appointmentId: string
+  status: AppointmentStatus
+  paymentType: PaymentType
+  notes?: string
+  paymentAmount: string
 }) {
   await api.patch(`/partner/appointments/${appointmentId}/status`, {
     status,
     paymentType,
     notes,
     paymentAmount,
-  });
+  })
 }

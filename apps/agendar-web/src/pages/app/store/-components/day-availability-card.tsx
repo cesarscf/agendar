@@ -1,16 +1,16 @@
-import { Clock2Icon, Coffee, Trash2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
-import { Switch } from "@/components/ui/switch";
-import type { Availability } from "@/lib/validations/availability";
+import { Clock2Icon, Coffee, Trash2 } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Separator } from "@/components/ui/separator"
+import { Switch } from "@/components/ui/switch"
+import type { Availability } from "@/lib/validations/availability"
 
 interface DayAvailabilityCardProps {
-  weekdayLabel: string;
-  availability: Availability;
-  onUpdate: (availability: Availability) => void;
+  weekdayLabel: string
+  availability: Availability
+  onUpdate: (availability: Availability) => void
 }
 
 export function DayAvailabilityCard({
@@ -18,8 +18,8 @@ export function DayAvailabilityCard({
   availability,
   onUpdate,
 }: DayAvailabilityCardProps) {
-  const isActive = !!(availability.opensAt && availability.closesAt);
-  const hasBreakTime = !!(availability.breakStart && availability.breakEnd);
+  const isActive = !!(availability.opensAt && availability.closesAt)
+  const hasBreakTime = !!(availability.breakStart && availability.breakEnd)
 
   const toggleDayActive = (active: boolean) => {
     if (active) {
@@ -27,7 +27,7 @@ export function DayAvailabilityCard({
         ...availability,
         opensAt: availability.opensAt || "09:00",
         closesAt: availability.closesAt || "18:00",
-      });
+      })
     } else {
       onUpdate({
         ...availability,
@@ -35,9 +35,9 @@ export function DayAvailabilityCard({
         closesAt: "",
         breakStart: "",
         breakEnd: "",
-      });
+      })
     }
-  };
+  }
 
   const toggleBreak = (hasBreak: boolean) => {
     if (hasBreak) {
@@ -45,15 +45,15 @@ export function DayAvailabilityCard({
         ...availability,
         breakStart: availability.breakStart || "12:00",
         breakEnd: availability.breakEnd || "13:00",
-      });
+      })
     } else {
       onUpdate({
         ...availability,
         breakStart: "",
         breakEnd: "",
-      });
+      })
     }
-  };
+  }
 
   const clearDay = () => {
     onUpdate({
@@ -62,15 +62,15 @@ export function DayAvailabilityCard({
       closesAt: "",
       breakStart: "",
       breakEnd: "",
-    });
-  };
+    })
+  }
 
   const updateField = (key: keyof Availability, value: string) => {
     onUpdate({
       ...availability,
       [key]: value,
-    });
-  };
+    })
+  }
 
   return (
     <Card className="p-4">
@@ -108,7 +108,7 @@ export function DayAvailabilityCard({
                     type="time"
                     className="appearance-none pl-8 [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
                     value={availability.opensAt}
-                    onChange={(e) => updateField("opensAt", e.target.value)}
+                    onChange={e => updateField("opensAt", e.target.value)}
                   />
                 </div>
               </div>
@@ -120,7 +120,7 @@ export function DayAvailabilityCard({
                     type="time"
                     className="appearance-none pl-8 [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
                     value={availability.closesAt}
-                    onChange={(e) => updateField("closesAt", e.target.value)}
+                    onChange={e => updateField("closesAt", e.target.value)}
                   />
                 </div>
               </div>
@@ -147,7 +147,7 @@ export function DayAvailabilityCard({
                         type="time"
                         className="appearance-none pl-8 [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
                         value={availability.breakStart}
-                        onChange={(e) =>
+                        onChange={e =>
                           updateField("breakStart", e.target.value)
                         }
                       />
@@ -161,9 +161,7 @@ export function DayAvailabilityCard({
                         type="time"
                         className="appearance-none pl-8 [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
                         value={availability.breakEnd}
-                        onChange={(e) =>
-                          updateField("breakEnd", e.target.value)
-                        }
+                        onChange={e => updateField("breakEnd", e.target.value)}
                       />
                     </div>
                   </div>
@@ -174,5 +172,5 @@ export function DayAvailabilityCard({
         )}
       </div>
     </Card>
-  );
+  )
 }

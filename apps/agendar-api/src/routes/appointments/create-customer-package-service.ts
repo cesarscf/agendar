@@ -1,9 +1,9 @@
-import { db } from "@/db"
-import { customerServicePackages, customers, packages } from "@/db/schema"
 import { and, eq, gt, isNull, or } from "drizzle-orm"
 import type { FastifyInstance } from "fastify"
 import type { ZodTypeProvider } from "fastify-type-provider-zod"
 import { z } from "zod"
+import { db } from "@/db"
+import { customerServicePackages, customers, packages } from "@/db/schema"
 
 import { BadRequestError } from "../_erros/bad-request-error"
 

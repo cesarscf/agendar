@@ -1,12 +1,12 @@
-import * as React from "react";
-import { Pie, PieChart } from "recharts";
+import * as React from "react"
+import { Pie, PieChart } from "recharts"
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@/components/ui/card"
 import {
   type ChartConfig,
   ChartContainer,
@@ -14,44 +14,44 @@ import {
   ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart";
-import { useTopServices } from "@/hooks/use-top-services";
-import type { GetTopServicesParams } from "@/http/reports/get-top-services";
-import { formatPriceFromCents } from "@/lib/utils";
+} from "@/components/ui/chart"
+import { useTopServices } from "@/hooks/use-top-services"
+import type { GetTopServicesParams } from "@/http/reports/get-top-services"
+import { formatPriceFromCents } from "@/lib/utils"
 
 interface TopServicesChartProps {
-  params: GetTopServicesParams;
+  params: GetTopServicesParams
 }
 
 export function TopServicesChart({ params }: TopServicesChartProps) {
-  const { data, isLoading, isError } = useTopServices(params);
+  const { data, isLoading, isError } = useTopServices(params)
 
   const { chartData, chartConfig } = React.useMemo(() => {
     if (!data?.items) {
       return {
         chartData: [],
         chartConfig: {} satisfies ChartConfig,
-      };
+      }
     }
 
-    const config: ChartConfig = {};
+    const config: ChartConfig = {}
 
     const chartData = data.items.map((item, index) => {
-      const serviceName = item.service.toLowerCase().replace(/\s+/g, "_");
+      const serviceName = item.service.toLowerCase().replace(/\s+/g, "_")
       config[serviceName] = {
         label: item.service,
         color: `var(--chart-${(index % 7) + 1})`,
-      };
+      }
 
       return {
         service: serviceName,
         revenue: Number(item.totalRevenueInCents),
         fill: `var(--color-${serviceName})`,
-      };
-    });
+      }
+    })
 
-    return { chartData, chartConfig: config };
-  }, [data]);
+    return { chartData, chartConfig: config }
+  }, [data])
 
   if (isLoading) {
     return (
@@ -66,7 +66,7 @@ export function TopServicesChart({ params }: TopServicesChartProps) {
           </div>
         </CardContent>
       </Card>
-    );
+    )
   }
 
   if (isError || !chartData.length) {
@@ -84,7 +84,7 @@ export function TopServicesChart({ params }: TopServicesChartProps) {
           </div>
         </CardContent>
       </Card>
-    );
+    )
   }
 
   return (
@@ -107,7 +107,7 @@ export function TopServicesChart({ params }: TopServicesChartProps) {
                   hideLabel
                   formatter={(value, name, item) => {
                     const serviceName =
-                      chartConfig[item.payload.service]?.label || name;
+                      chartConfig[item.payload.service]?.label || name
                     return (
                       <div className="flex w-full items-center justify-between gap-2">
                         <div className="flex items-center gap-2">
@@ -123,7 +123,7 @@ export function TopServicesChart({ params }: TopServicesChartProps) {
                           {formatPriceFromCents(String(value))}
                         </span>
                       </div>
-                    );
+                    )
                   }}
                 />
               }
@@ -137,5 +137,5 @@ export function TopServicesChart({ params }: TopServicesChartProps) {
         </ChartContainer>
       </CardContent>
     </Card>
-  );
+  )
 }

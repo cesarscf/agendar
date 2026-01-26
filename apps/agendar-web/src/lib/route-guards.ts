@@ -1,16 +1,16 @@
-import { redirect } from "@tanstack/react-router";
-import type { RouterContext } from "./router-context";
+import { redirect } from "@tanstack/react-router"
+import type { RouterContext } from "./router-context"
 
 interface BeforeLoadContext {
-  context: RouterContext;
+  context: RouterContext
   location: {
-    href: string;
-  };
+    href: string
+  }
 }
 
 export async function requireAuth({ context, location }: BeforeLoadContext) {
   if (context.auth.isLoading) {
-    return;
+    return
   }
 
   if (!context.auth.isAuthenticated) {
@@ -19,6 +19,6 @@ export async function requireAuth({ context, location }: BeforeLoadContext) {
       search: {
         redirect: location.href,
       },
-    });
+    })
   }
 }

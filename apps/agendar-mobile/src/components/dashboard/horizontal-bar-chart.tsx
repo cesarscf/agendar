@@ -1,5 +1,5 @@
-import { View, Text, ActivityIndicator, ScrollView } from "react-native"
 import { useMemo } from "react"
+import { ActivityIndicator, ScrollView, Text, View } from "react-native"
 
 type HorizontalBarData = {
   label: string

@@ -1,10 +1,10 @@
-import { db } from "@/db"
-import { employeeTimeBlocks, employees } from "@/db/schema" // importando employees
-import { auth } from "@/middlewares/auth"
 import { eq } from "drizzle-orm"
 import type { FastifyInstance } from "fastify"
 import type { ZodTypeProvider } from "fastify-type-provider-zod"
 import z from "zod"
+import { db } from "@/db"
+import { employees, employeeTimeBlocks } from "@/db/schema" // importando employees
+import { auth } from "@/middlewares/auth"
 
 export async function createEmployeeBlock(app: FastifyInstance) {
   await app.register(async app => {

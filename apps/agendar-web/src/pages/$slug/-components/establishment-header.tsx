@@ -1,13 +1,13 @@
-import { Button } from "@/components/ui/button";
-import type { PublicEstablishment } from "@/http/public/get-public-establishment";
-import { CustomerSearch } from "./customer-search";
+import { Button } from "@/components/ui/button"
+import type { PublicEstablishment } from "@/http/public/get-public-establishment"
+import { CustomerSearch } from "./customer-search"
 
 export function EstablishmentHeader({
   establishment,
   slug,
 }: {
-  establishment: PublicEstablishment;
-  slug: string;
+  establishment: PublicEstablishment
+  slug: string
 }) {
   return (
     <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 sm:p-6 bg-background">
@@ -32,12 +32,12 @@ export function EstablishmentHeader({
         <Button
           className="flex-1 sm:flex-none whitespace-nowrap"
           onClick={() => {
-            const tabsElement = document.getElementById("tabs");
+            const tabsElement = document.getElementById("tabs")
             if (tabsElement) {
               tabsElement.scrollIntoView({
                 behavior: "smooth",
                 block: "start",
-              });
+              })
             }
           }}
         >
@@ -45,5 +45,5 @@ export function EstablishmentHeader({
         </Button>
       </div>
     </div>
-  );
+  )
 }

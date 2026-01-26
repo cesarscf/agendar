@@ -1,11 +1,11 @@
-import { db } from "@/db"
-import { partners } from "@/db/schema"
-import { BadRequestError } from "@/routes/_erros/bad-request-error"
 import bcrypt from "bcrypt"
 import { eq } from "drizzle-orm"
 import type { FastifyInstance } from "fastify"
 import type { ZodTypeProvider } from "fastify-type-provider-zod"
 import z from "zod"
+import { db } from "@/db"
+import { partners } from "@/db/schema"
+import { BadRequestError } from "@/routes/_erros/bad-request-error"
 import { UnauthorizedError } from "../_erros/unauthorized-error"
 
 export async function login(app: FastifyInstance) {

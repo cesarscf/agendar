@@ -1,7 +1,7 @@
-import { createCustomerSchema } from "@/lib/validations/customer"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Controller, useForm } from "react-hook-form"
+import { router } from "expo-router"
 import React from "react"
+import { Controller, useForm } from "react-hook-form"
 import {
   Alert,
   KeyboardAvoidingView,
@@ -9,18 +9,17 @@ import {
   Text,
   View,
 } from "react-native"
-import { Input } from "../input"
-import { AppButton } from "../button"
-
-import { router } from "expo-router"
 import type { z } from "zod"
 import { useCreateCustomer } from "@/hooks/data/customers/use-create-customer"
+import { createCustomerSchema } from "@/lib/validations/customer"
 import {
   formatDate,
   formatDateToString,
   formatPhoneNumber,
   parseDateFromString,
 } from "@/utils"
+import { AppButton } from "../button"
+import { Input } from "../input"
 
 type Inputs = z.infer<typeof createCustomerSchema>
 

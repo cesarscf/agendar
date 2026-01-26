@@ -1,3 +1,7 @@
+import { and, desc, eq } from "drizzle-orm"
+import type { FastifyInstance } from "fastify"
+import type { ZodTypeProvider } from "fastify-type-provider-zod"
+import z from "zod"
 import { db } from "@/db"
 import {
   appointments,
@@ -10,11 +14,6 @@ import {
   packages,
   services,
 } from "@/db/schema"
-import type { FastifyInstance } from "fastify"
-import type { ZodTypeProvider } from "fastify-type-provider-zod"
-
-import { and, desc, eq } from "drizzle-orm"
-import z from "zod"
 
 export async function getCustomerInfoByPhone(app: FastifyInstance) {
   await app.register(async app => {

@@ -1,12 +1,12 @@
+import { eq } from "drizzle-orm"
+import type { FastifyInstance } from "fastify"
+import type { ZodTypeProvider } from "fastify-type-provider-zod"
+import z from "zod"
 import { stripe } from "@/clients/stripe"
 import { db } from "@/db"
 import { plans, subscriptions } from "@/db/schema"
 import { subscriptionStatusEnum } from "@/db/schema/subscriptions"
 import { auth } from "@/middlewares/auth"
-import { eq } from "drizzle-orm"
-import type { FastifyInstance } from "fastify"
-import type { ZodTypeProvider } from "fastify-type-provider-zod"
-import z from "zod"
 
 export async function changeSubscriptionPlan(app: FastifyInstance) {
   await app.register(async app => {

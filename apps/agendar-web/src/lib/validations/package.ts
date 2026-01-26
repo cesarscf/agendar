@@ -1,4 +1,4 @@
-import z from "zod";
+import z from "zod"
 
 export const packageSchema = z.object({
   id: z.uuid({ message: "ID inválido" }),
@@ -22,44 +22,44 @@ export const packageSchema = z.object({
     .number({ message: "Quantidade deve ser um número" })
     .int({ message: "Quantidade deve ser um número inteiro" })
     .positive({ message: "Quantidade deve ser maior que zero" }),
-});
+})
 
 export const updatePackageSchema = packageSchema.partial().extend({
   id: z.string().min(1, "ID obrigatório"),
-});
+})
 
 export const packageItemSchema = z.object({
   serviceId: z.string(),
   quantity: z.number(),
   name: z.string(),
-});
+})
 
 export const packageSchemaWithItems = packageSchema.extend({
   items: z.array(packageItemSchema),
-});
+})
 
 export const updatePackageItemsSchema = z.object({
   items: z.array(packageItemSchema),
-});
+})
 
 export const updatePackageItemsRequestSchema = z.object({
   items: z.array(
     packageItemSchema.omit({
       name: true,
-    }),
+    })
   ),
-});
+})
 
-export const createPackageSchema = packageSchema.omit({ id: true });
+export const createPackageSchema = packageSchema.omit({ id: true })
 
-export type Package = z.infer<typeof packageSchema>;
-export type UpdatePackageRequest = z.infer<typeof updatePackageSchema>;
-export type CreatePackageRequest = z.infer<typeof createPackageSchema>;
+export type Package = z.infer<typeof packageSchema>
+export type UpdatePackageRequest = z.infer<typeof updatePackageSchema>
+export type CreatePackageRequest = z.infer<typeof createPackageSchema>
 
-export type PackageWithItems = z.infer<typeof packageSchemaWithItems>;
+export type PackageWithItems = z.infer<typeof packageSchemaWithItems>
 
-export type PackageItem = z.infer<typeof packageItemSchema>;
-export type UpdatePackageItems = z.infer<typeof updatePackageItemsSchema>;
+export type PackageItem = z.infer<typeof packageItemSchema>
+export type UpdatePackageItems = z.infer<typeof updatePackageItemsSchema>
 export type UpdatePackageItemsRequest = z.infer<
   typeof updatePackageItemsRequestSchema
->;
+>

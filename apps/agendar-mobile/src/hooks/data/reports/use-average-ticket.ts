@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query"
 import {
-  getAverageTicket,
   type GetAverageTicketParams,
   type GetAverageTicketResponse,
+  getAverageTicket,
 } from "@/http/reports/get-average-ticket"
 
 export function useAverageTicket(params: GetAverageTicketParams) {

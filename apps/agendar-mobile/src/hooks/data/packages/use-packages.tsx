@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
-
-import type { Package } from "@/lib/validations/packages"
 import { getPackages } from "@/http/packages/get-packages"
+import type { Package } from "@/lib/validations/packages"
 
 export function usePackages() {
   return useQuery<Package[], string>({

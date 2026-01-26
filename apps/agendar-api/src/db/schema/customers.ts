@@ -1,5 +1,5 @@
-import { establishments } from "@/db/schema/establishments"
 import { pgTable, text, timestamp, unique, uuid } from "drizzle-orm/pg-core"
+import { establishments } from "@/db/schema/establishments"
 
 export const customers = pgTable(
   "customers",

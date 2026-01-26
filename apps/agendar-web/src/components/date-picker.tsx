@@ -1,5 +1,5 @@
-import { CalendarIcon } from "lucide-react";
-import type { DateValue } from "react-aria-components";
+import { CalendarIcon } from "lucide-react"
+import type { DateValue } from "react-aria-components"
 import {
   Button,
   DatePicker as DatePickerRac,
@@ -7,16 +7,16 @@ import {
   Group,
   Label,
   Popover,
-} from "react-aria-components";
-import { Calendar } from "@/components/ui/calendar-rac";
-import { DateInput, dateInputStyle } from "@/components/ui/datefield-rac";
-import { cn } from "@/lib/utils";
+} from "react-aria-components"
+import { Calendar } from "@/components/ui/calendar-rac"
+import { DateInput, dateInputStyle } from "@/components/ui/datefield-rac"
+import { cn } from "@/lib/utils"
 
 interface DatePickerProps {
-  label?: string;
-  value?: DateValue;
-  onChange?: (value: DateValue | null) => void;
-  className?: string;
+  label?: string
+  value?: DateValue
+  onChange?: (value: DateValue | null) => void
+  className?: string
 }
 
 export function DatePicker({
@@ -51,5 +51,5 @@ export function DatePicker({
         </Dialog>
       </Popover>
     </DatePickerRac>
-  );
+  )
 }

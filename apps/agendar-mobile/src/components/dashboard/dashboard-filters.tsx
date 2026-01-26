@@ -1,9 +1,9 @@
-import { View, Text, Pressable, Platform, Modal } from "react-native"
-import { useState } from "react"
 import DateTimePicker from "@react-native-community/datetimepicker"
 import { format, parse } from "date-fns"
 import { ptBR } from "date-fns/locale"
-import { Calendar, X, RefreshCw } from "lucide-react-native"
+import { Calendar, RefreshCw, X } from "lucide-react-native"
+import { useState } from "react"
+import { Modal, Platform, Pressable, Text, View } from "react-native"
 
 type DashboardFiltersProps = {
   startDate: string

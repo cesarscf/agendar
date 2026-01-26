@@ -1,43 +1,43 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { createFileRoute } from "@tanstack/react-router";
-import { Edit, Trash2 } from "lucide-react";
-import React from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { useMutation, useQuery } from "@tanstack/react-query"
+import { createFileRoute } from "@tanstack/react-router"
+import { Edit, Trash2 } from "lucide-react"
+import React from "react"
+import { Button } from "@/components/ui/button"
+import { Card, CardHeader, CardTitle } from "@/components/ui/card"
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { deleteCategory } from "@/http/categories/delete-category";
-import { getCategories } from "@/http/categories/get-categories";
-import { CreateCategoryForm } from "./-components/create-category-form";
-import { UpdateCategoryForm } from "./-components/update-category-form";
+} from "@/components/ui/dialog"
+import { deleteCategory } from "@/http/categories/delete-category"
+import { getCategories } from "@/http/categories/get-categories"
+import { CreateCategoryForm } from "./-components/create-category-form"
+import { UpdateCategoryForm } from "./-components/update-category-form"
 
 export const Route = createFileRoute("/app/categories/")({
   component: Categories,
-});
+})
 
 function Categories() {
   const [selectedCategoryId, setSelectedCategoryId] = React.useState<
     string | null
-  >(null);
-  const [showCreateCategory, setShowCreateCategory] = React.useState(false);
-  const [showEditCategory, setShowEditCategory] = React.useState(false);
+  >(null)
+  const [showCreateCategory, setShowCreateCategory] = React.useState(false)
+  const [showEditCategory, setShowEditCategory] = React.useState(false)
 
   const { data, isLoading, refetch } = useQuery({
     queryKey: ["categories"],
     queryFn: getCategories,
-  });
+  })
 
   const { mutateAsync: deleteCategoryMutate, isPending: deleteIsPending } =
     useMutation({
       mutationFn: deleteCategory,
-    });
+    })
 
-  if (isLoading) return null;
+  if (isLoading) return null
 
   return (
     <div className="p-6">
@@ -61,8 +61,8 @@ function Categories() {
             </DialogHeader>
             <CreateCategoryForm
               onSuccess={() => {
-                setShowCreateCategory(false);
-                refetch();
+                setShowCreateCategory(false)
+                refetch()
               }}
             />
           </DialogContent>
@@ -70,7 +70,7 @@ function Categories() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {data?.map((category) => (
+        {data?.map(category => (
           <Card key={category.id} className="p-3">
             <CardHeader className="flex flex-row justify-between items-center p-3">
               <CardTitle className="text-lg font-medium">
@@ -79,9 +79,9 @@ function Categories() {
               <div className="flex items-center gap-2">
                 <Dialog
                   open={showEditCategory && selectedCategoryId === category.id}
-                  onOpenChange={(open) => {
-                    setSelectedCategoryId(open ? category.id : null);
-                    setShowEditCategory(open);
+                  onOpenChange={open => {
+                    setSelectedCategoryId(open ? category.id : null)
+                    setShowEditCategory(open)
                   }}
                 >
                   <DialogTrigger asChild>
@@ -96,8 +96,8 @@ function Categories() {
                     <UpdateCategoryForm
                       category={category}
                       onSuccess={() => {
-                        setShowEditCategory(false);
-                        refetch();
+                        setShowEditCategory(false)
+                        refetch()
                       }}
                     />
                   </DialogContent>
@@ -110,10 +110,10 @@ function Categories() {
                   onClick={async () => {
                     if (
                       confirm(
-                        `Tem certeza que deseja excluir "${category.name}"?`,
+                        `Tem certeza que deseja excluir "${category.name}"?`
                       )
                     ) {
-                      await deleteCategoryMutate(category.id);
+                      await deleteCategoryMutate(category.id)
                     }
                   }}
                 >
@@ -125,5 +125,5 @@ function Categories() {
         ))}
       </div>
     </div>
-  );
+  )
 }

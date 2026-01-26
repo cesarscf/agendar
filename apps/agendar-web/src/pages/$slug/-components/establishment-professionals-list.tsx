@@ -1,28 +1,26 @@
-import { useNavigate, useParams } from "@tanstack/react-router";
-import { Search, User } from "lucide-react";
-import React from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import type { PublicProfessional } from "@/http/public/get-public-professionals";
+import { useNavigate, useParams } from "@tanstack/react-router"
+import { Search, User } from "lucide-react"
+import React from "react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import type { PublicProfessional } from "@/http/public/get-public-professionals"
 
 export function EstablishmentProfessionalsList({
   professionals,
 }: {
-  professionals: PublicProfessional[];
+  professionals: PublicProfessional[]
 }) {
-  const [searchTerm, setSearchTerm] = React.useState("");
+  const [searchTerm, setSearchTerm] = React.useState("")
 
   const filteredProfessionals = React.useMemo(() => {
-    if (!searchTerm.trim()) return professionals;
+    if (!searchTerm.trim()) return professionals
 
     return professionals.filter(
-      (professional) =>
+      professional =>
         professional.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        professional.biography
-          ?.toLowerCase()
-          .includes(searchTerm.toLowerCase()),
-    );
-  }, [professionals, searchTerm]);
+        professional.biography?.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+  }, [professionals, searchTerm])
 
   return (
     <div className="p-4 sm:p-6">
@@ -35,11 +33,11 @@ export function EstablishmentProfessionalsList({
           placeholder="Pesquisar"
           className="pl-10 bg-background border-border text-foreground"
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={e => setSearchTerm(e.target.value)}
         />
       </div>
       <div className="space-y-4">
-        {filteredProfessionals.map((prof) => (
+        {filteredProfessionals.map(prof => (
           <ProfessionalItem key={prof.id} prof={prof} />
         ))}
         {filteredProfessionals.length === 0 && searchTerm.trim() && (
@@ -49,12 +47,12 @@ export function EstablishmentProfessionalsList({
         )}
       </div>
     </div>
-  );
+  )
 }
 
 function ProfessionalItem({ prof }: { prof: PublicProfessional }) {
-  const navigate = useNavigate();
-  const { slug } = useParams({ from: "/$slug" });
+  const navigate = useNavigate()
+  const { slug } = useParams({ from: "/$slug" })
 
   return (
     <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 p-4 bg-card rounded-xl border border-border">
@@ -94,12 +92,12 @@ function ProfessionalItem({ prof }: { prof: PublicProfessional }) {
                 serviceId: undefined,
                 packageId: undefined,
               },
-            });
+            })
           }}
         >
           Agendar
         </Button>
       </div>
     </div>
-  );
+  )
 }

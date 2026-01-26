@@ -1,11 +1,11 @@
+import { and, eq } from "drizzle-orm"
+import type { FastifyInstance } from "fastify"
+import type Stripe from "stripe"
 import { stripe } from "@/clients/stripe"
 import { db } from "@/db"
 import { partners, plans, subscriptions } from "@/db/schema"
 import { partnerPaymentMethods } from "@/db/schema/partner-payment-methods"
 import { env } from "@/env"
-import { and, eq } from "drizzle-orm"
-import type { FastifyInstance } from "fastify"
-import type Stripe from "stripe"
 
 export async function stripeWebhook(app: FastifyInstance) {
   app.post(
@@ -41,7 +41,6 @@ export async function stripeWebhook(app: FastifyInstance) {
         case "customer.subscription.updated":
         case "customer.subscription.deleted": {
           const sub = event.data.object as Stripe.Subscription
-          // biome-ignore lint/suspicious/noExplicitAny: <explanation>
           const updateData: any = {
             status: sub.status,
           }

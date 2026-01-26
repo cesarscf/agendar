@@ -1,13 +1,13 @@
-import { api } from "@/lib/api-client";
+import { api } from "@/lib/api-client"
 
-import type { CreateEmployeeRecurringBlockRequest } from "@/lib/validations/blocks";
+import type { CreateEmployeeRecurringBlockRequest } from "@/lib/validations/blocks"
 
 export async function createEmployeeRecurringBlock(
-  inputs: CreateEmployeeRecurringBlockRequest & { employeeId: string },
+  inputs: CreateEmployeeRecurringBlockRequest & { employeeId: string }
 ) {
   const payload = {
     ...inputs,
-  };
+  }
 
-  await api.post(`/employees/${inputs.employeeId}/recurring-blocks`, payload);
+  await api.post(`/employees/${inputs.employeeId}/recurring-blocks`, payload)
 }

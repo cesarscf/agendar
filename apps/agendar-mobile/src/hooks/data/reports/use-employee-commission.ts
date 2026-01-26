@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query"
 import {
-  getEmployeeCommission,
   type GetEmployeeCommissionParams,
   type GetEmployeeCommissionResponse,
+  getEmployeeCommission,
 } from "@/http/reports/get-employee-commission"
 
 export function useEmployeeCommission(params: GetEmployeeCommissionParams) {

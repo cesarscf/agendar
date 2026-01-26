@@ -1,44 +1,44 @@
-import { Clock } from "lucide-react";
-import { useEffect, useState } from "react";
-import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Clock } from "lucide-react"
+import { useEffect, useState } from "react"
+import { Alert, AlertDescription } from "@/components/ui/alert"
 
 interface VerificationTimerProps {
-  expiresAt: Date;
-  onExpire?: () => void;
+  expiresAt: Date
+  onExpire?: () => void
 }
 
 export function VerificationTimer({
   expiresAt,
   onExpire,
 }: VerificationTimerProps) {
-  const [timeLeft, setTimeLeft] = useState<number>(0);
+  const [timeLeft, setTimeLeft] = useState<number>(0)
 
   useEffect(() => {
     const calculateTimeLeft = () => {
-      const now = Date.now();
-      const expiry = expiresAt.getTime();
-      const difference = expiry - now;
+      const now = Date.now()
+      const expiry = expiresAt.getTime()
+      const difference = expiry - now
 
       if (difference <= 0) {
-        setTimeLeft(0);
-        onExpire?.();
-        return;
+        setTimeLeft(0)
+        onExpire?.()
+        return
       }
 
-      setTimeLeft(Math.floor(difference / 1000));
-    };
+      setTimeLeft(Math.floor(difference / 1000))
+    }
 
-    calculateTimeLeft();
-    const interval = setInterval(calculateTimeLeft, 1000);
+    calculateTimeLeft()
+    const interval = setInterval(calculateTimeLeft, 1000)
 
-    return () => clearInterval(interval);
-  }, [expiresAt, onExpire]);
+    return () => clearInterval(interval)
+  }, [expiresAt, onExpire])
 
-  const minutes = Math.floor(timeLeft / 60);
-  const seconds = timeLeft % 60;
+  const minutes = Math.floor(timeLeft / 60)
+  const seconds = timeLeft % 60
 
-  const isExpired = timeLeft === 0;
-  const isExpiringSoon = timeLeft < 60 && timeLeft > 0;
+  const isExpired = timeLeft === 0
+  const isExpiringSoon = timeLeft < 60 && timeLeft > 0
 
   return (
     <Alert
@@ -61,5 +61,5 @@ export function VerificationTimer({
         )}
       </AlertDescription>
     </Alert>
-  );
+  )
 }

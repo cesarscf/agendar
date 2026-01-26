@@ -1,12 +1,12 @@
+import { eq } from "drizzle-orm"
+import type { FastifyInstance } from "fastify"
+import type { ZodTypeProvider } from "fastify-type-provider-zod"
+import z from "zod"
 import { db } from "@/db"
 import { employeeServices } from "@/db/schema/employee-services"
 import { auth } from "@/middlewares/auth"
 import { commissionToDb } from "@/utils/commission"
 import { establishmentHeaderSchema } from "@/utils/schemas/headers"
-import { eq } from "drizzle-orm"
-import type { FastifyInstance } from "fastify"
-import type { ZodTypeProvider } from "fastify-type-provider-zod"
-import z from "zod"
 
 export async function associateEmployeesToService(app: FastifyInstance) {
   await app.register(async app => {

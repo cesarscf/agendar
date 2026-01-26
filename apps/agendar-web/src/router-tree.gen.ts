@@ -8,378 +8,378 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from './pages/__root'
-import { Route as CheckoutLayoutRouteImport } from './pages/checkout/layout'
-import { Route as AppLayoutRouteImport } from './pages/app/layout'
-import { Route as AuthLayoutRouteImport } from './pages/_auth/layout'
-import { Route as SlugLayoutRouteImport } from './pages/$slug/layout'
-import { Route as CheckoutIndexRouteImport } from './pages/checkout/index'
-import { Route as AppIndexRouteImport } from './pages/app/index'
-import { Route as MarketingIndexRouteImport } from './pages/_marketing/index'
-import { Route as SlugIndexRouteImport } from './pages/$slug/index'
-import { Route as AuthRegisterRouteImport } from './pages/_auth/register'
-import { Route as AuthPreRegisterRouteImport } from './pages/_auth/pre-register'
-import { Route as AuthLoginRouteImport } from './pages/_auth/login'
-import { Route as AppStoreIndexRouteImport } from './pages/app/store/index'
-import { Route as AppServicesIndexRouteImport } from './pages/app/services/index'
-import { Route as AppPackagesIndexRouteImport } from './pages/app/packages/index'
-import { Route as AppLoyaltyProgramsIndexRouteImport } from './pages/app/loyalty-programs/index'
-import { Route as AppEmployeesIndexRouteImport } from './pages/app/employees/index'
-import { Route as AppDashboardIndexRouteImport } from './pages/app/dashboard/index'
-import { Route as AppCustomersIndexRouteImport } from './pages/app/customers/index'
-import { Route as AppCategoriesIndexRouteImport } from './pages/app/categories/index'
-import { Route as SlugSchedulingIndexRouteImport } from './pages/$slug/scheduling/index'
-import { Route as AppServicesNewIndexRouteImport } from './pages/app/services/new/index'
-import { Route as AppServicesServiceIdIndexRouteImport } from './pages/app/services/$serviceId/index'
-import { Route as AppPackagesNewIndexRouteImport } from './pages/app/packages/new/index'
-import { Route as AppPackagesPackageIdIndexRouteImport } from './pages/app/packages/$packageId/index'
-import { Route as AppLoyaltyProgramsNewIndexRouteImport } from './pages/app/loyalty-programs/new/index'
-import { Route as AppLoyaltyProgramsProgramIdIndexRouteImport } from './pages/app/loyalty-programs/$programId/index'
-import { Route as AppEmployeesNewIndexRouteImport } from './pages/app/employees/new/index'
-import { Route as AppEmployeesEmployeeIdIndexRouteImport } from './pages/app/employees/$employeeId/index'
-import { Route as AppCustomersNewIndexRouteImport } from './pages/app/customers/new/index'
-import { Route as AppCustomersCustomerIdIndexRouteImport } from './pages/app/customers/$customerId/index'
+import { Route as rootRouteImport } from "./pages/__root"
+import { Route as AuthLayoutRouteImport } from "./pages/_auth/layout"
+import { Route as AuthLoginRouteImport } from "./pages/_auth/login"
+import { Route as AuthPreRegisterRouteImport } from "./pages/_auth/pre-register"
+import { Route as AuthRegisterRouteImport } from "./pages/_auth/register"
+import { Route as MarketingIndexRouteImport } from "./pages/_marketing/index"
+import { Route as SlugIndexRouteImport } from "./pages/$slug/index"
+import { Route as SlugLayoutRouteImport } from "./pages/$slug/layout"
+import { Route as SlugSchedulingIndexRouteImport } from "./pages/$slug/scheduling/index"
+import { Route as AppCategoriesIndexRouteImport } from "./pages/app/categories/index"
+import { Route as AppCustomersCustomerIdIndexRouteImport } from "./pages/app/customers/$customerId/index"
+import { Route as AppCustomersIndexRouteImport } from "./pages/app/customers/index"
+import { Route as AppCustomersNewIndexRouteImport } from "./pages/app/customers/new/index"
+import { Route as AppDashboardIndexRouteImport } from "./pages/app/dashboard/index"
+import { Route as AppEmployeesEmployeeIdIndexRouteImport } from "./pages/app/employees/$employeeId/index"
+import { Route as AppEmployeesIndexRouteImport } from "./pages/app/employees/index"
+import { Route as AppEmployeesNewIndexRouteImport } from "./pages/app/employees/new/index"
+import { Route as AppIndexRouteImport } from "./pages/app/index"
+import { Route as AppLayoutRouteImport } from "./pages/app/layout"
+import { Route as AppLoyaltyProgramsProgramIdIndexRouteImport } from "./pages/app/loyalty-programs/$programId/index"
+import { Route as AppLoyaltyProgramsIndexRouteImport } from "./pages/app/loyalty-programs/index"
+import { Route as AppLoyaltyProgramsNewIndexRouteImport } from "./pages/app/loyalty-programs/new/index"
+import { Route as AppPackagesPackageIdIndexRouteImport } from "./pages/app/packages/$packageId/index"
+import { Route as AppPackagesIndexRouteImport } from "./pages/app/packages/index"
+import { Route as AppPackagesNewIndexRouteImport } from "./pages/app/packages/new/index"
+import { Route as AppServicesServiceIdIndexRouteImport } from "./pages/app/services/$serviceId/index"
+import { Route as AppServicesIndexRouteImport } from "./pages/app/services/index"
+import { Route as AppServicesNewIndexRouteImport } from "./pages/app/services/new/index"
+import { Route as AppStoreIndexRouteImport } from "./pages/app/store/index"
+import { Route as CheckoutIndexRouteImport } from "./pages/checkout/index"
+import { Route as CheckoutLayoutRouteImport } from "./pages/checkout/layout"
 
 const CheckoutLayoutRoute = CheckoutLayoutRouteImport.update({
-  id: '/checkout',
-  path: '/checkout',
+  id: "/checkout",
+  path: "/checkout",
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppLayoutRoute = AppLayoutRouteImport.update({
-  id: '/app',
-  path: '/app',
+  id: "/app",
+  path: "/app",
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthLayoutRoute = AuthLayoutRouteImport.update({
-  id: '/_auth',
+  id: "/_auth",
   getParentRoute: () => rootRouteImport,
 } as any)
 const SlugLayoutRoute = SlugLayoutRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
+  id: "/$slug",
+  path: "/$slug",
   getParentRoute: () => rootRouteImport,
 } as any)
 const CheckoutIndexRoute = CheckoutIndexRouteImport.update({
-  id: '/',
-  path: '/',
+  id: "/",
+  path: "/",
   getParentRoute: () => CheckoutLayoutRoute,
 } as any)
 const AppIndexRoute = AppIndexRouteImport.update({
-  id: '/',
-  path: '/',
+  id: "/",
+  path: "/",
   getParentRoute: () => AppLayoutRoute,
 } as any)
 const MarketingIndexRoute = MarketingIndexRouteImport.update({
-  id: '/_marketing/',
-  path: '/',
+  id: "/_marketing/",
+  path: "/",
   getParentRoute: () => rootRouteImport,
 } as any)
 const SlugIndexRoute = SlugIndexRouteImport.update({
-  id: '/',
-  path: '/',
+  id: "/",
+  path: "/",
   getParentRoute: () => SlugLayoutRoute,
 } as any)
 const AuthRegisterRoute = AuthRegisterRouteImport.update({
-  id: '/register',
-  path: '/register',
+  id: "/register",
+  path: "/register",
   getParentRoute: () => AuthLayoutRoute,
 } as any)
 const AuthPreRegisterRoute = AuthPreRegisterRouteImport.update({
-  id: '/pre-register',
-  path: '/pre-register',
+  id: "/pre-register",
+  path: "/pre-register",
   getParentRoute: () => AuthLayoutRoute,
 } as any)
 const AuthLoginRoute = AuthLoginRouteImport.update({
-  id: '/login',
-  path: '/login',
+  id: "/login",
+  path: "/login",
   getParentRoute: () => AuthLayoutRoute,
 } as any)
 const AppStoreIndexRoute = AppStoreIndexRouteImport.update({
-  id: '/store/',
-  path: '/store/',
+  id: "/store/",
+  path: "/store/",
   getParentRoute: () => AppLayoutRoute,
 } as any)
 const AppServicesIndexRoute = AppServicesIndexRouteImport.update({
-  id: '/services/',
-  path: '/services/',
+  id: "/services/",
+  path: "/services/",
   getParentRoute: () => AppLayoutRoute,
 } as any)
 const AppPackagesIndexRoute = AppPackagesIndexRouteImport.update({
-  id: '/packages/',
-  path: '/packages/',
+  id: "/packages/",
+  path: "/packages/",
   getParentRoute: () => AppLayoutRoute,
 } as any)
 const AppLoyaltyProgramsIndexRoute = AppLoyaltyProgramsIndexRouteImport.update({
-  id: '/loyalty-programs/',
-  path: '/loyalty-programs/',
+  id: "/loyalty-programs/",
+  path: "/loyalty-programs/",
   getParentRoute: () => AppLayoutRoute,
 } as any)
 const AppEmployeesIndexRoute = AppEmployeesIndexRouteImport.update({
-  id: '/employees/',
-  path: '/employees/',
+  id: "/employees/",
+  path: "/employees/",
   getParentRoute: () => AppLayoutRoute,
 } as any)
 const AppDashboardIndexRoute = AppDashboardIndexRouteImport.update({
-  id: '/dashboard/',
-  path: '/dashboard/',
+  id: "/dashboard/",
+  path: "/dashboard/",
   getParentRoute: () => AppLayoutRoute,
 } as any)
 const AppCustomersIndexRoute = AppCustomersIndexRouteImport.update({
-  id: '/customers/',
-  path: '/customers/',
+  id: "/customers/",
+  path: "/customers/",
   getParentRoute: () => AppLayoutRoute,
 } as any)
 const AppCategoriesIndexRoute = AppCategoriesIndexRouteImport.update({
-  id: '/categories/',
-  path: '/categories/',
+  id: "/categories/",
+  path: "/categories/",
   getParentRoute: () => AppLayoutRoute,
 } as any)
 const SlugSchedulingIndexRoute = SlugSchedulingIndexRouteImport.update({
-  id: '/scheduling/',
-  path: '/scheduling/',
+  id: "/scheduling/",
+  path: "/scheduling/",
   getParentRoute: () => SlugLayoutRoute,
 } as any)
 const AppServicesNewIndexRoute = AppServicesNewIndexRouteImport.update({
-  id: '/services/new/',
-  path: '/services/new/',
+  id: "/services/new/",
+  path: "/services/new/",
   getParentRoute: () => AppLayoutRoute,
 } as any)
 const AppServicesServiceIdIndexRoute =
   AppServicesServiceIdIndexRouteImport.update({
-    id: '/services/$serviceId/',
-    path: '/services/$serviceId/',
+    id: "/services/$serviceId/",
+    path: "/services/$serviceId/",
     getParentRoute: () => AppLayoutRoute,
   } as any)
 const AppPackagesNewIndexRoute = AppPackagesNewIndexRouteImport.update({
-  id: '/packages/new/',
-  path: '/packages/new/',
+  id: "/packages/new/",
+  path: "/packages/new/",
   getParentRoute: () => AppLayoutRoute,
 } as any)
 const AppPackagesPackageIdIndexRoute =
   AppPackagesPackageIdIndexRouteImport.update({
-    id: '/packages/$packageId/',
-    path: '/packages/$packageId/',
+    id: "/packages/$packageId/",
+    path: "/packages/$packageId/",
     getParentRoute: () => AppLayoutRoute,
   } as any)
 const AppLoyaltyProgramsNewIndexRoute =
   AppLoyaltyProgramsNewIndexRouteImport.update({
-    id: '/loyalty-programs/new/',
-    path: '/loyalty-programs/new/',
+    id: "/loyalty-programs/new/",
+    path: "/loyalty-programs/new/",
     getParentRoute: () => AppLayoutRoute,
   } as any)
 const AppLoyaltyProgramsProgramIdIndexRoute =
   AppLoyaltyProgramsProgramIdIndexRouteImport.update({
-    id: '/loyalty-programs/$programId/',
-    path: '/loyalty-programs/$programId/',
+    id: "/loyalty-programs/$programId/",
+    path: "/loyalty-programs/$programId/",
     getParentRoute: () => AppLayoutRoute,
   } as any)
 const AppEmployeesNewIndexRoute = AppEmployeesNewIndexRouteImport.update({
-  id: '/employees/new/',
-  path: '/employees/new/',
+  id: "/employees/new/",
+  path: "/employees/new/",
   getParentRoute: () => AppLayoutRoute,
 } as any)
 const AppEmployeesEmployeeIdIndexRoute =
   AppEmployeesEmployeeIdIndexRouteImport.update({
-    id: '/employees/$employeeId/',
-    path: '/employees/$employeeId/',
+    id: "/employees/$employeeId/",
+    path: "/employees/$employeeId/",
     getParentRoute: () => AppLayoutRoute,
   } as any)
 const AppCustomersNewIndexRoute = AppCustomersNewIndexRouteImport.update({
-  id: '/customers/new/',
-  path: '/customers/new/',
+  id: "/customers/new/",
+  path: "/customers/new/",
   getParentRoute: () => AppLayoutRoute,
 } as any)
 const AppCustomersCustomerIdIndexRoute =
   AppCustomersCustomerIdIndexRouteImport.update({
-    id: '/customers/$customerId/',
-    path: '/customers/$customerId/',
+    id: "/customers/$customerId/",
+    path: "/customers/$customerId/",
     getParentRoute: () => AppLayoutRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
-  '/$slug': typeof SlugLayoutRouteWithChildren
-  '/app': typeof AppLayoutRouteWithChildren
-  '/checkout': typeof CheckoutLayoutRouteWithChildren
-  '/login': typeof AuthLoginRoute
-  '/pre-register': typeof AuthPreRegisterRoute
-  '/register': typeof AuthRegisterRoute
-  '/$slug/': typeof SlugIndexRoute
-  '/': typeof MarketingIndexRoute
-  '/app/': typeof AppIndexRoute
-  '/checkout/': typeof CheckoutIndexRoute
-  '/$slug/scheduling': typeof SlugSchedulingIndexRoute
-  '/app/categories': typeof AppCategoriesIndexRoute
-  '/app/customers': typeof AppCustomersIndexRoute
-  '/app/dashboard': typeof AppDashboardIndexRoute
-  '/app/employees': typeof AppEmployeesIndexRoute
-  '/app/loyalty-programs': typeof AppLoyaltyProgramsIndexRoute
-  '/app/packages': typeof AppPackagesIndexRoute
-  '/app/services': typeof AppServicesIndexRoute
-  '/app/store': typeof AppStoreIndexRoute
-  '/app/customers/$customerId': typeof AppCustomersCustomerIdIndexRoute
-  '/app/customers/new': typeof AppCustomersNewIndexRoute
-  '/app/employees/$employeeId': typeof AppEmployeesEmployeeIdIndexRoute
-  '/app/employees/new': typeof AppEmployeesNewIndexRoute
-  '/app/loyalty-programs/$programId': typeof AppLoyaltyProgramsProgramIdIndexRoute
-  '/app/loyalty-programs/new': typeof AppLoyaltyProgramsNewIndexRoute
-  '/app/packages/$packageId': typeof AppPackagesPackageIdIndexRoute
-  '/app/packages/new': typeof AppPackagesNewIndexRoute
-  '/app/services/$serviceId': typeof AppServicesServiceIdIndexRoute
-  '/app/services/new': typeof AppServicesNewIndexRoute
+  "/$slug": typeof SlugLayoutRouteWithChildren
+  "/app": typeof AppLayoutRouteWithChildren
+  "/checkout": typeof CheckoutLayoutRouteWithChildren
+  "/login": typeof AuthLoginRoute
+  "/pre-register": typeof AuthPreRegisterRoute
+  "/register": typeof AuthRegisterRoute
+  "/$slug/": typeof SlugIndexRoute
+  "/": typeof MarketingIndexRoute
+  "/app/": typeof AppIndexRoute
+  "/checkout/": typeof CheckoutIndexRoute
+  "/$slug/scheduling": typeof SlugSchedulingIndexRoute
+  "/app/categories": typeof AppCategoriesIndexRoute
+  "/app/customers": typeof AppCustomersIndexRoute
+  "/app/dashboard": typeof AppDashboardIndexRoute
+  "/app/employees": typeof AppEmployeesIndexRoute
+  "/app/loyalty-programs": typeof AppLoyaltyProgramsIndexRoute
+  "/app/packages": typeof AppPackagesIndexRoute
+  "/app/services": typeof AppServicesIndexRoute
+  "/app/store": typeof AppStoreIndexRoute
+  "/app/customers/$customerId": typeof AppCustomersCustomerIdIndexRoute
+  "/app/customers/new": typeof AppCustomersNewIndexRoute
+  "/app/employees/$employeeId": typeof AppEmployeesEmployeeIdIndexRoute
+  "/app/employees/new": typeof AppEmployeesNewIndexRoute
+  "/app/loyalty-programs/$programId": typeof AppLoyaltyProgramsProgramIdIndexRoute
+  "/app/loyalty-programs/new": typeof AppLoyaltyProgramsNewIndexRoute
+  "/app/packages/$packageId": typeof AppPackagesPackageIdIndexRoute
+  "/app/packages/new": typeof AppPackagesNewIndexRoute
+  "/app/services/$serviceId": typeof AppServicesServiceIdIndexRoute
+  "/app/services/new": typeof AppServicesNewIndexRoute
 }
 export interface FileRoutesByTo {
-  '/login': typeof AuthLoginRoute
-  '/pre-register': typeof AuthPreRegisterRoute
-  '/register': typeof AuthRegisterRoute
-  '/$slug': typeof SlugIndexRoute
-  '/': typeof MarketingIndexRoute
-  '/app': typeof AppIndexRoute
-  '/checkout': typeof CheckoutIndexRoute
-  '/$slug/scheduling': typeof SlugSchedulingIndexRoute
-  '/app/categories': typeof AppCategoriesIndexRoute
-  '/app/customers': typeof AppCustomersIndexRoute
-  '/app/dashboard': typeof AppDashboardIndexRoute
-  '/app/employees': typeof AppEmployeesIndexRoute
-  '/app/loyalty-programs': typeof AppLoyaltyProgramsIndexRoute
-  '/app/packages': typeof AppPackagesIndexRoute
-  '/app/services': typeof AppServicesIndexRoute
-  '/app/store': typeof AppStoreIndexRoute
-  '/app/customers/$customerId': typeof AppCustomersCustomerIdIndexRoute
-  '/app/customers/new': typeof AppCustomersNewIndexRoute
-  '/app/employees/$employeeId': typeof AppEmployeesEmployeeIdIndexRoute
-  '/app/employees/new': typeof AppEmployeesNewIndexRoute
-  '/app/loyalty-programs/$programId': typeof AppLoyaltyProgramsProgramIdIndexRoute
-  '/app/loyalty-programs/new': typeof AppLoyaltyProgramsNewIndexRoute
-  '/app/packages/$packageId': typeof AppPackagesPackageIdIndexRoute
-  '/app/packages/new': typeof AppPackagesNewIndexRoute
-  '/app/services/$serviceId': typeof AppServicesServiceIdIndexRoute
-  '/app/services/new': typeof AppServicesNewIndexRoute
+  "/login": typeof AuthLoginRoute
+  "/pre-register": typeof AuthPreRegisterRoute
+  "/register": typeof AuthRegisterRoute
+  "/$slug": typeof SlugIndexRoute
+  "/": typeof MarketingIndexRoute
+  "/app": typeof AppIndexRoute
+  "/checkout": typeof CheckoutIndexRoute
+  "/$slug/scheduling": typeof SlugSchedulingIndexRoute
+  "/app/categories": typeof AppCategoriesIndexRoute
+  "/app/customers": typeof AppCustomersIndexRoute
+  "/app/dashboard": typeof AppDashboardIndexRoute
+  "/app/employees": typeof AppEmployeesIndexRoute
+  "/app/loyalty-programs": typeof AppLoyaltyProgramsIndexRoute
+  "/app/packages": typeof AppPackagesIndexRoute
+  "/app/services": typeof AppServicesIndexRoute
+  "/app/store": typeof AppStoreIndexRoute
+  "/app/customers/$customerId": typeof AppCustomersCustomerIdIndexRoute
+  "/app/customers/new": typeof AppCustomersNewIndexRoute
+  "/app/employees/$employeeId": typeof AppEmployeesEmployeeIdIndexRoute
+  "/app/employees/new": typeof AppEmployeesNewIndexRoute
+  "/app/loyalty-programs/$programId": typeof AppLoyaltyProgramsProgramIdIndexRoute
+  "/app/loyalty-programs/new": typeof AppLoyaltyProgramsNewIndexRoute
+  "/app/packages/$packageId": typeof AppPackagesPackageIdIndexRoute
+  "/app/packages/new": typeof AppPackagesNewIndexRoute
+  "/app/services/$serviceId": typeof AppServicesServiceIdIndexRoute
+  "/app/services/new": typeof AppServicesNewIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/$slug': typeof SlugLayoutRouteWithChildren
-  '/_auth': typeof AuthLayoutRouteWithChildren
-  '/app': typeof AppLayoutRouteWithChildren
-  '/checkout': typeof CheckoutLayoutRouteWithChildren
-  '/_auth/login': typeof AuthLoginRoute
-  '/_auth/pre-register': typeof AuthPreRegisterRoute
-  '/_auth/register': typeof AuthRegisterRoute
-  '/$slug/': typeof SlugIndexRoute
-  '/_marketing/': typeof MarketingIndexRoute
-  '/app/': typeof AppIndexRoute
-  '/checkout/': typeof CheckoutIndexRoute
-  '/$slug/scheduling/': typeof SlugSchedulingIndexRoute
-  '/app/categories/': typeof AppCategoriesIndexRoute
-  '/app/customers/': typeof AppCustomersIndexRoute
-  '/app/dashboard/': typeof AppDashboardIndexRoute
-  '/app/employees/': typeof AppEmployeesIndexRoute
-  '/app/loyalty-programs/': typeof AppLoyaltyProgramsIndexRoute
-  '/app/packages/': typeof AppPackagesIndexRoute
-  '/app/services/': typeof AppServicesIndexRoute
-  '/app/store/': typeof AppStoreIndexRoute
-  '/app/customers/$customerId/': typeof AppCustomersCustomerIdIndexRoute
-  '/app/customers/new/': typeof AppCustomersNewIndexRoute
-  '/app/employees/$employeeId/': typeof AppEmployeesEmployeeIdIndexRoute
-  '/app/employees/new/': typeof AppEmployeesNewIndexRoute
-  '/app/loyalty-programs/$programId/': typeof AppLoyaltyProgramsProgramIdIndexRoute
-  '/app/loyalty-programs/new/': typeof AppLoyaltyProgramsNewIndexRoute
-  '/app/packages/$packageId/': typeof AppPackagesPackageIdIndexRoute
-  '/app/packages/new/': typeof AppPackagesNewIndexRoute
-  '/app/services/$serviceId/': typeof AppServicesServiceIdIndexRoute
-  '/app/services/new/': typeof AppServicesNewIndexRoute
+  "/$slug": typeof SlugLayoutRouteWithChildren
+  "/_auth": typeof AuthLayoutRouteWithChildren
+  "/app": typeof AppLayoutRouteWithChildren
+  "/checkout": typeof CheckoutLayoutRouteWithChildren
+  "/_auth/login": typeof AuthLoginRoute
+  "/_auth/pre-register": typeof AuthPreRegisterRoute
+  "/_auth/register": typeof AuthRegisterRoute
+  "/$slug/": typeof SlugIndexRoute
+  "/_marketing/": typeof MarketingIndexRoute
+  "/app/": typeof AppIndexRoute
+  "/checkout/": typeof CheckoutIndexRoute
+  "/$slug/scheduling/": typeof SlugSchedulingIndexRoute
+  "/app/categories/": typeof AppCategoriesIndexRoute
+  "/app/customers/": typeof AppCustomersIndexRoute
+  "/app/dashboard/": typeof AppDashboardIndexRoute
+  "/app/employees/": typeof AppEmployeesIndexRoute
+  "/app/loyalty-programs/": typeof AppLoyaltyProgramsIndexRoute
+  "/app/packages/": typeof AppPackagesIndexRoute
+  "/app/services/": typeof AppServicesIndexRoute
+  "/app/store/": typeof AppStoreIndexRoute
+  "/app/customers/$customerId/": typeof AppCustomersCustomerIdIndexRoute
+  "/app/customers/new/": typeof AppCustomersNewIndexRoute
+  "/app/employees/$employeeId/": typeof AppEmployeesEmployeeIdIndexRoute
+  "/app/employees/new/": typeof AppEmployeesNewIndexRoute
+  "/app/loyalty-programs/$programId/": typeof AppLoyaltyProgramsProgramIdIndexRoute
+  "/app/loyalty-programs/new/": typeof AppLoyaltyProgramsNewIndexRoute
+  "/app/packages/$packageId/": typeof AppPackagesPackageIdIndexRoute
+  "/app/packages/new/": typeof AppPackagesNewIndexRoute
+  "/app/services/$serviceId/": typeof AppServicesServiceIdIndexRoute
+  "/app/services/new/": typeof AppServicesNewIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/$slug'
-    | '/app'
-    | '/checkout'
-    | '/login'
-    | '/pre-register'
-    | '/register'
-    | '/$slug/'
-    | '/'
-    | '/app/'
-    | '/checkout/'
-    | '/$slug/scheduling'
-    | '/app/categories'
-    | '/app/customers'
-    | '/app/dashboard'
-    | '/app/employees'
-    | '/app/loyalty-programs'
-    | '/app/packages'
-    | '/app/services'
-    | '/app/store'
-    | '/app/customers/$customerId'
-    | '/app/customers/new'
-    | '/app/employees/$employeeId'
-    | '/app/employees/new'
-    | '/app/loyalty-programs/$programId'
-    | '/app/loyalty-programs/new'
-    | '/app/packages/$packageId'
-    | '/app/packages/new'
-    | '/app/services/$serviceId'
-    | '/app/services/new'
+    | "/$slug"
+    | "/app"
+    | "/checkout"
+    | "/login"
+    | "/pre-register"
+    | "/register"
+    | "/$slug/"
+    | "/"
+    | "/app/"
+    | "/checkout/"
+    | "/$slug/scheduling"
+    | "/app/categories"
+    | "/app/customers"
+    | "/app/dashboard"
+    | "/app/employees"
+    | "/app/loyalty-programs"
+    | "/app/packages"
+    | "/app/services"
+    | "/app/store"
+    | "/app/customers/$customerId"
+    | "/app/customers/new"
+    | "/app/employees/$employeeId"
+    | "/app/employees/new"
+    | "/app/loyalty-programs/$programId"
+    | "/app/loyalty-programs/new"
+    | "/app/packages/$packageId"
+    | "/app/packages/new"
+    | "/app/services/$serviceId"
+    | "/app/services/new"
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/login'
-    | '/pre-register'
-    | '/register'
-    | '/$slug'
-    | '/'
-    | '/app'
-    | '/checkout'
-    | '/$slug/scheduling'
-    | '/app/categories'
-    | '/app/customers'
-    | '/app/dashboard'
-    | '/app/employees'
-    | '/app/loyalty-programs'
-    | '/app/packages'
-    | '/app/services'
-    | '/app/store'
-    | '/app/customers/$customerId'
-    | '/app/customers/new'
-    | '/app/employees/$employeeId'
-    | '/app/employees/new'
-    | '/app/loyalty-programs/$programId'
-    | '/app/loyalty-programs/new'
-    | '/app/packages/$packageId'
-    | '/app/packages/new'
-    | '/app/services/$serviceId'
-    | '/app/services/new'
+    | "/login"
+    | "/pre-register"
+    | "/register"
+    | "/$slug"
+    | "/"
+    | "/app"
+    | "/checkout"
+    | "/$slug/scheduling"
+    | "/app/categories"
+    | "/app/customers"
+    | "/app/dashboard"
+    | "/app/employees"
+    | "/app/loyalty-programs"
+    | "/app/packages"
+    | "/app/services"
+    | "/app/store"
+    | "/app/customers/$customerId"
+    | "/app/customers/new"
+    | "/app/employees/$employeeId"
+    | "/app/employees/new"
+    | "/app/loyalty-programs/$programId"
+    | "/app/loyalty-programs/new"
+    | "/app/packages/$packageId"
+    | "/app/packages/new"
+    | "/app/services/$serviceId"
+    | "/app/services/new"
   id:
-    | '__root__'
-    | '/$slug'
-    | '/_auth'
-    | '/app'
-    | '/checkout'
-    | '/_auth/login'
-    | '/_auth/pre-register'
-    | '/_auth/register'
-    | '/$slug/'
-    | '/_marketing/'
-    | '/app/'
-    | '/checkout/'
-    | '/$slug/scheduling/'
-    | '/app/categories/'
-    | '/app/customers/'
-    | '/app/dashboard/'
-    | '/app/employees/'
-    | '/app/loyalty-programs/'
-    | '/app/packages/'
-    | '/app/services/'
-    | '/app/store/'
-    | '/app/customers/$customerId/'
-    | '/app/customers/new/'
-    | '/app/employees/$employeeId/'
-    | '/app/employees/new/'
-    | '/app/loyalty-programs/$programId/'
-    | '/app/loyalty-programs/new/'
-    | '/app/packages/$packageId/'
-    | '/app/packages/new/'
-    | '/app/services/$serviceId/'
-    | '/app/services/new/'
+    | "__root__"
+    | "/$slug"
+    | "/_auth"
+    | "/app"
+    | "/checkout"
+    | "/_auth/login"
+    | "/_auth/pre-register"
+    | "/_auth/register"
+    | "/$slug/"
+    | "/_marketing/"
+    | "/app/"
+    | "/checkout/"
+    | "/$slug/scheduling/"
+    | "/app/categories/"
+    | "/app/customers/"
+    | "/app/dashboard/"
+    | "/app/employees/"
+    | "/app/loyalty-programs/"
+    | "/app/packages/"
+    | "/app/services/"
+    | "/app/store/"
+    | "/app/customers/$customerId/"
+    | "/app/customers/new/"
+    | "/app/employees/$employeeId/"
+    | "/app/employees/new/"
+    | "/app/loyalty-programs/$programId/"
+    | "/app/loyalty-programs/new/"
+    | "/app/packages/$packageId/"
+    | "/app/packages/new/"
+    | "/app/services/$serviceId/"
+    | "/app/services/new/"
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -390,215 +390,215 @@ export interface RootRouteChildren {
   MarketingIndexRoute: typeof MarketingIndexRoute
 }
 
-declare module '@tanstack/react-router' {
+declare module "@tanstack/react-router" {
   interface FileRoutesByPath {
-    '/checkout': {
-      id: '/checkout'
-      path: '/checkout'
-      fullPath: '/checkout'
+    "/checkout": {
+      id: "/checkout"
+      path: "/checkout"
+      fullPath: "/checkout"
       preLoaderRoute: typeof CheckoutLayoutRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/app': {
-      id: '/app'
-      path: '/app'
-      fullPath: '/app'
+    "/app": {
+      id: "/app"
+      path: "/app"
+      fullPath: "/app"
       preLoaderRoute: typeof AppLayoutRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_auth': {
-      id: '/_auth'
-      path: ''
-      fullPath: ''
+    "/_auth": {
+      id: "/_auth"
+      path: ""
+      fullPath: ""
       preLoaderRoute: typeof AuthLayoutRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/$slug': {
-      id: '/$slug'
-      path: '/$slug'
-      fullPath: '/$slug'
+    "/$slug": {
+      id: "/$slug"
+      path: "/$slug"
+      fullPath: "/$slug"
       preLoaderRoute: typeof SlugLayoutRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/checkout/': {
-      id: '/checkout/'
-      path: '/'
-      fullPath: '/checkout/'
+    "/checkout/": {
+      id: "/checkout/"
+      path: "/"
+      fullPath: "/checkout/"
       preLoaderRoute: typeof CheckoutIndexRouteImport
       parentRoute: typeof CheckoutLayoutRoute
     }
-    '/app/': {
-      id: '/app/'
-      path: '/'
-      fullPath: '/app/'
+    "/app/": {
+      id: "/app/"
+      path: "/"
+      fullPath: "/app/"
       preLoaderRoute: typeof AppIndexRouteImport
       parentRoute: typeof AppLayoutRoute
     }
-    '/_marketing/': {
-      id: '/_marketing/'
-      path: '/'
-      fullPath: '/'
+    "/_marketing/": {
+      id: "/_marketing/"
+      path: "/"
+      fullPath: "/"
       preLoaderRoute: typeof MarketingIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/$slug/': {
-      id: '/$slug/'
-      path: '/'
-      fullPath: '/$slug/'
+    "/$slug/": {
+      id: "/$slug/"
+      path: "/"
+      fullPath: "/$slug/"
       preLoaderRoute: typeof SlugIndexRouteImport
       parentRoute: typeof SlugLayoutRoute
     }
-    '/_auth/register': {
-      id: '/_auth/register'
-      path: '/register'
-      fullPath: '/register'
+    "/_auth/register": {
+      id: "/_auth/register"
+      path: "/register"
+      fullPath: "/register"
       preLoaderRoute: typeof AuthRegisterRouteImport
       parentRoute: typeof AuthLayoutRoute
     }
-    '/_auth/pre-register': {
-      id: '/_auth/pre-register'
-      path: '/pre-register'
-      fullPath: '/pre-register'
+    "/_auth/pre-register": {
+      id: "/_auth/pre-register"
+      path: "/pre-register"
+      fullPath: "/pre-register"
       preLoaderRoute: typeof AuthPreRegisterRouteImport
       parentRoute: typeof AuthLayoutRoute
     }
-    '/_auth/login': {
-      id: '/_auth/login'
-      path: '/login'
-      fullPath: '/login'
+    "/_auth/login": {
+      id: "/_auth/login"
+      path: "/login"
+      fullPath: "/login"
       preLoaderRoute: typeof AuthLoginRouteImport
       parentRoute: typeof AuthLayoutRoute
     }
-    '/app/store/': {
-      id: '/app/store/'
-      path: '/store'
-      fullPath: '/app/store'
+    "/app/store/": {
+      id: "/app/store/"
+      path: "/store"
+      fullPath: "/app/store"
       preLoaderRoute: typeof AppStoreIndexRouteImport
       parentRoute: typeof AppLayoutRoute
     }
-    '/app/services/': {
-      id: '/app/services/'
-      path: '/services'
-      fullPath: '/app/services'
+    "/app/services/": {
+      id: "/app/services/"
+      path: "/services"
+      fullPath: "/app/services"
       preLoaderRoute: typeof AppServicesIndexRouteImport
       parentRoute: typeof AppLayoutRoute
     }
-    '/app/packages/': {
-      id: '/app/packages/'
-      path: '/packages'
-      fullPath: '/app/packages'
+    "/app/packages/": {
+      id: "/app/packages/"
+      path: "/packages"
+      fullPath: "/app/packages"
       preLoaderRoute: typeof AppPackagesIndexRouteImport
       parentRoute: typeof AppLayoutRoute
     }
-    '/app/loyalty-programs/': {
-      id: '/app/loyalty-programs/'
-      path: '/loyalty-programs'
-      fullPath: '/app/loyalty-programs'
+    "/app/loyalty-programs/": {
+      id: "/app/loyalty-programs/"
+      path: "/loyalty-programs"
+      fullPath: "/app/loyalty-programs"
       preLoaderRoute: typeof AppLoyaltyProgramsIndexRouteImport
       parentRoute: typeof AppLayoutRoute
     }
-    '/app/employees/': {
-      id: '/app/employees/'
-      path: '/employees'
-      fullPath: '/app/employees'
+    "/app/employees/": {
+      id: "/app/employees/"
+      path: "/employees"
+      fullPath: "/app/employees"
       preLoaderRoute: typeof AppEmployeesIndexRouteImport
       parentRoute: typeof AppLayoutRoute
     }
-    '/app/dashboard/': {
-      id: '/app/dashboard/'
-      path: '/dashboard'
-      fullPath: '/app/dashboard'
+    "/app/dashboard/": {
+      id: "/app/dashboard/"
+      path: "/dashboard"
+      fullPath: "/app/dashboard"
       preLoaderRoute: typeof AppDashboardIndexRouteImport
       parentRoute: typeof AppLayoutRoute
     }
-    '/app/customers/': {
-      id: '/app/customers/'
-      path: '/customers'
-      fullPath: '/app/customers'
+    "/app/customers/": {
+      id: "/app/customers/"
+      path: "/customers"
+      fullPath: "/app/customers"
       preLoaderRoute: typeof AppCustomersIndexRouteImport
       parentRoute: typeof AppLayoutRoute
     }
-    '/app/categories/': {
-      id: '/app/categories/'
-      path: '/categories'
-      fullPath: '/app/categories'
+    "/app/categories/": {
+      id: "/app/categories/"
+      path: "/categories"
+      fullPath: "/app/categories"
       preLoaderRoute: typeof AppCategoriesIndexRouteImport
       parentRoute: typeof AppLayoutRoute
     }
-    '/$slug/scheduling/': {
-      id: '/$slug/scheduling/'
-      path: '/scheduling'
-      fullPath: '/$slug/scheduling'
+    "/$slug/scheduling/": {
+      id: "/$slug/scheduling/"
+      path: "/scheduling"
+      fullPath: "/$slug/scheduling"
       preLoaderRoute: typeof SlugSchedulingIndexRouteImport
       parentRoute: typeof SlugLayoutRoute
     }
-    '/app/services/new/': {
-      id: '/app/services/new/'
-      path: '/services/new'
-      fullPath: '/app/services/new'
+    "/app/services/new/": {
+      id: "/app/services/new/"
+      path: "/services/new"
+      fullPath: "/app/services/new"
       preLoaderRoute: typeof AppServicesNewIndexRouteImport
       parentRoute: typeof AppLayoutRoute
     }
-    '/app/services/$serviceId/': {
-      id: '/app/services/$serviceId/'
-      path: '/services/$serviceId'
-      fullPath: '/app/services/$serviceId'
+    "/app/services/$serviceId/": {
+      id: "/app/services/$serviceId/"
+      path: "/services/$serviceId"
+      fullPath: "/app/services/$serviceId"
       preLoaderRoute: typeof AppServicesServiceIdIndexRouteImport
       parentRoute: typeof AppLayoutRoute
     }
-    '/app/packages/new/': {
-      id: '/app/packages/new/'
-      path: '/packages/new'
-      fullPath: '/app/packages/new'
+    "/app/packages/new/": {
+      id: "/app/packages/new/"
+      path: "/packages/new"
+      fullPath: "/app/packages/new"
       preLoaderRoute: typeof AppPackagesNewIndexRouteImport
       parentRoute: typeof AppLayoutRoute
     }
-    '/app/packages/$packageId/': {
-      id: '/app/packages/$packageId/'
-      path: '/packages/$packageId'
-      fullPath: '/app/packages/$packageId'
+    "/app/packages/$packageId/": {
+      id: "/app/packages/$packageId/"
+      path: "/packages/$packageId"
+      fullPath: "/app/packages/$packageId"
       preLoaderRoute: typeof AppPackagesPackageIdIndexRouteImport
       parentRoute: typeof AppLayoutRoute
     }
-    '/app/loyalty-programs/new/': {
-      id: '/app/loyalty-programs/new/'
-      path: '/loyalty-programs/new'
-      fullPath: '/app/loyalty-programs/new'
+    "/app/loyalty-programs/new/": {
+      id: "/app/loyalty-programs/new/"
+      path: "/loyalty-programs/new"
+      fullPath: "/app/loyalty-programs/new"
       preLoaderRoute: typeof AppLoyaltyProgramsNewIndexRouteImport
       parentRoute: typeof AppLayoutRoute
     }
-    '/app/loyalty-programs/$programId/': {
-      id: '/app/loyalty-programs/$programId/'
-      path: '/loyalty-programs/$programId'
-      fullPath: '/app/loyalty-programs/$programId'
+    "/app/loyalty-programs/$programId/": {
+      id: "/app/loyalty-programs/$programId/"
+      path: "/loyalty-programs/$programId"
+      fullPath: "/app/loyalty-programs/$programId"
       preLoaderRoute: typeof AppLoyaltyProgramsProgramIdIndexRouteImport
       parentRoute: typeof AppLayoutRoute
     }
-    '/app/employees/new/': {
-      id: '/app/employees/new/'
-      path: '/employees/new'
-      fullPath: '/app/employees/new'
+    "/app/employees/new/": {
+      id: "/app/employees/new/"
+      path: "/employees/new"
+      fullPath: "/app/employees/new"
       preLoaderRoute: typeof AppEmployeesNewIndexRouteImport
       parentRoute: typeof AppLayoutRoute
     }
-    '/app/employees/$employeeId/': {
-      id: '/app/employees/$employeeId/'
-      path: '/employees/$employeeId'
-      fullPath: '/app/employees/$employeeId'
+    "/app/employees/$employeeId/": {
+      id: "/app/employees/$employeeId/"
+      path: "/employees/$employeeId"
+      fullPath: "/app/employees/$employeeId"
       preLoaderRoute: typeof AppEmployeesEmployeeIdIndexRouteImport
       parentRoute: typeof AppLayoutRoute
     }
-    '/app/customers/new/': {
-      id: '/app/customers/new/'
-      path: '/customers/new'
-      fullPath: '/app/customers/new'
+    "/app/customers/new/": {
+      id: "/app/customers/new/"
+      path: "/customers/new"
+      fullPath: "/app/customers/new"
       preLoaderRoute: typeof AppCustomersNewIndexRouteImport
       parentRoute: typeof AppLayoutRoute
     }
-    '/app/customers/$customerId/': {
-      id: '/app/customers/$customerId/'
-      path: '/customers/$customerId'
-      fullPath: '/app/customers/$customerId'
+    "/app/customers/$customerId/": {
+      id: "/app/customers/$customerId/"
+      path: "/customers/$customerId"
+      fullPath: "/app/customers/$customerId"
       preLoaderRoute: typeof AppCustomersCustomerIdIndexRouteImport
       parentRoute: typeof AppLayoutRoute
     }
@@ -616,7 +616,7 @@ const SlugLayoutRouteChildren: SlugLayoutRouteChildren = {
 }
 
 const SlugLayoutRouteWithChildren = SlugLayoutRoute._addFileChildren(
-  SlugLayoutRouteChildren,
+  SlugLayoutRouteChildren
 )
 
 interface AuthLayoutRouteChildren {
@@ -632,7 +632,7 @@ const AuthLayoutRouteChildren: AuthLayoutRouteChildren = {
 }
 
 const AuthLayoutRouteWithChildren = AuthLayoutRoute._addFileChildren(
-  AuthLayoutRouteChildren,
+  AuthLayoutRouteChildren
 )
 
 interface AppLayoutRouteChildren {
@@ -680,7 +680,7 @@ const AppLayoutRouteChildren: AppLayoutRouteChildren = {
 }
 
 const AppLayoutRouteWithChildren = AppLayoutRoute._addFileChildren(
-  AppLayoutRouteChildren,
+  AppLayoutRouteChildren
 )
 
 interface CheckoutLayoutRouteChildren {
@@ -692,7 +692,7 @@ const CheckoutLayoutRouteChildren: CheckoutLayoutRouteChildren = {
 }
 
 const CheckoutLayoutRouteWithChildren = CheckoutLayoutRoute._addFileChildren(
-  CheckoutLayoutRouteChildren,
+  CheckoutLayoutRouteChildren
 )
 
 const rootRouteChildren: RootRouteChildren = {

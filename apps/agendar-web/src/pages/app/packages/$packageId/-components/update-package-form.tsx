@@ -1,13 +1,13 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useNavigate } from "@tanstack/react-router";
-import { Loader2 } from "lucide-react";
-import React from "react";
-import { useForm } from "react-hook-form";
-import { toast } from "sonner";
-import type z from "zod";
-import LogoUploader from "@/components/logo-uploader";
-import { Button } from "@/components/ui/button";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { useNavigate } from "@tanstack/react-router"
+import { Loader2 } from "lucide-react"
+import React from "react"
+import { useForm } from "react-hook-form"
+import { toast } from "sonner"
+import type z from "zod"
+import LogoUploader from "@/components/logo-uploader"
+import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -15,43 +15,43 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { MaskInput } from "@/components/ui/mask-input";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { MaskInput } from "@/components/ui/mask-input"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Switch } from "@/components/ui/switch";
-import { Textarea } from "@/components/ui/textarea";
-import { deletePackage } from "@/http/packages/delete-package";
-import { updatePackage } from "@/http/packages/update-package";
-import { uploadImage } from "@/lib/upload-image";
-import { convertCentsToUnmasked } from "@/lib/utils";
+} from "@/components/ui/select"
+import { Switch } from "@/components/ui/switch"
+import { Textarea } from "@/components/ui/textarea"
+import { deletePackage } from "@/http/packages/delete-package"
+import { updatePackage } from "@/http/packages/update-package"
+import { uploadImage } from "@/lib/upload-image"
+import { convertCentsToUnmasked } from "@/lib/utils"
 import {
   type PackageWithItems,
   updatePackageSchema,
-} from "@/lib/validations/package";
-import type { Service } from "@/lib/validations/service";
+} from "@/lib/validations/package"
+import type { Service } from "@/lib/validations/service"
 
-type Inputs = z.infer<typeof updatePackageSchema>;
+type Inputs = z.infer<typeof updatePackageSchema>
 
 export function UpdatePackageForm({
   pkg,
   services,
 }: {
-  pkg: PackageWithItems;
-  services: Service[];
+  pkg: PackageWithItems
+  services: Service[]
 }) {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [imageFile, setImageFile] = React.useState<File | null>(null);
+  const [isLoading, setIsLoading] = React.useState(false)
+  const [imageFile, setImageFile] = React.useState<File | null>(null)
 
-  const queryClient = useQueryClient();
+  const queryClient = useQueryClient()
 
   const form = useForm<Inputs>({
     resolver: zodResolver(updatePackageSchema),
@@ -65,49 +65,49 @@ export function UpdatePackageForm({
       quantity: pkg.items[0]?.quantity ?? 0,
       serviceId: pkg.items[0]?.serviceId ?? "",
     },
-  });
+  })
 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: updatePackage,
-  });
+  })
 
   const { mutateAsync: deletePackageMutate, isPending: deleteIsPending } =
     useMutation({
       mutationFn: deletePackage,
-    });
+    })
 
-  const watchPrice = form.watch("price");
-  const watchQuantity = form.watch("quantity");
+  const watchPrice = form.watch("price")
+  const watchQuantity = form.watch("quantity")
 
   const unitValue =
     watchPrice && watchQuantity && !Number.isNaN(watchQuantity)
       ? Number(watchPrice) / Number(watchQuantity || 1)
-      : 0;
+      : 0
 
   async function onSubmit(values: Inputs) {
-    setIsLoading(true);
+    setIsLoading(true)
 
-    let image: string | undefined;
+    let image: string | undefined
 
     if (imageFile) {
-      const imageUrl = await uploadImage(imageFile);
-      image = imageUrl;
+      const imageUrl = await uploadImage(imageFile)
+      image = imageUrl
     }
 
-    await mutateAsync({ ...values, image });
+    await mutateAsync({ ...values, image })
 
-    queryClient.invalidateQueries({ queryKey: ["package", pkg.id] });
+    queryClient.invalidateQueries({ queryKey: ["package", pkg.id] })
 
-    toast.success("Alterações salvas com sucesso!");
+    toast.success("Alterações salvas com sucesso!")
 
-    setIsLoading(false);
+    setIsLoading(false)
   }
 
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit((values) => {
-          onSubmit(values);
+        onSubmit={form.handleSubmit(values => {
+          onSubmit(values)
         })}
         className="space-y-8 max-w-md"
       >
@@ -153,7 +153,7 @@ export function UpdatePackageForm({
                   placeholder="R$ 0,00"
                   value={field.value}
                   onValueChange={(_maskedValue, unmaskedValue) => {
-                    field.onChange(unmaskedValue);
+                    field.onChange(unmaskedValue)
                   }}
                 />
               </FormControl>
@@ -173,7 +173,7 @@ export function UpdatePackageForm({
                   mask="percentage"
                   value={field.value}
                   onValueChange={(_maskedValue, unmaskedValue) => {
-                    field.onChange(unmaskedValue);
+                    field.onChange(unmaskedValue)
                   }}
                   placeholder="0.00%"
                   invalid={!!form.formState.errors.commission}
@@ -196,7 +196,7 @@ export function UpdatePackageForm({
                     <SelectValue placeholder="Selecione um serviço" />
                   </SelectTrigger>
                   <SelectContent>
-                    {services.map((service) => (
+                    {services.map(service => (
                       <SelectItem key={service.id} value={service.id}>
                         {service.name}
                       </SelectItem>
@@ -221,7 +221,7 @@ export function UpdatePackageForm({
                   inputMode="numeric"
                   min="0"
                   value={Number.isNaN(field.value) ? "" : field.value}
-                  onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                  onChange={e => field.onChange(e.target.valueAsNumber)}
                 />
               </FormControl>
               <FormMessage />
@@ -291,14 +291,14 @@ export function UpdatePackageForm({
             onClick={async () => {
               if (
                 confirm(
-                  "Tem certeza que deseja excluir este pacote? Todos os dados relacionados serão excluídos.",
+                  "Tem certeza que deseja excluir este pacote? Todos os dados relacionados serão excluídos."
                 )
               ) {
-                await deletePackageMutate(pkg.id);
+                await deletePackageMutate(pkg.id)
 
-                queryClient.invalidateQueries({ queryKey: ["packages"] });
+                queryClient.invalidateQueries({ queryKey: ["packages"] })
 
-                navigate({ to: "/app/packages" });
+                navigate({ to: "/app/packages" })
               }
             }}
           >
@@ -310,5 +310,5 @@ export function UpdatePackageForm({
         </div>
       </form>
     </Form>
-  );
+  )
 }

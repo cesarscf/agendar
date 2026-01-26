@@ -1,8 +1,3 @@
-import { AppButton } from "@/components/button"
-import { Input } from "@/components/input"
-import { login } from "@/http/auth/login"
-import { loginSchema } from "@/lib/validations/auth"
-import { useSession } from "@/providers/auth-context"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { router } from "expo-router"
 import { StatusBar } from "expo-status-bar"
@@ -18,6 +13,11 @@ import {
   View,
 } from "react-native"
 import type { z } from "zod"
+import { AppButton } from "@/components/button"
+import { Input } from "@/components/input"
+import { login } from "@/http/auth/login"
+import { loginSchema } from "@/lib/validations/auth"
+import { useSession } from "@/providers/auth-context"
 
 type Inputs = z.infer<typeof loginSchema>
 

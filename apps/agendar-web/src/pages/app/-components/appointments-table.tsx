@@ -1,9 +1,9 @@
-import { format } from "date-fns";
-import { ptBR } from "date-fns/locale";
-import { Briefcase, Calendar, Clock } from "lucide-react";
-import { toast } from "sonner";
+import { format } from "date-fns"
+import { ptBR } from "date-fns/locale"
+import { Briefcase, Calendar, Clock } from "lucide-react"
+import { toast } from "sonner"
 
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "@/components/ui/badge"
 import {
   Table,
   TableBody,
@@ -11,36 +11,36 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from "@/components/ui/table"
 
-import type { Appointment } from "@/http/appointments/get-appointments";
-import { CancelDialog } from "./cancel-dialog";
-import { CheckinDialog } from "./checkin-dialog";
+import type { Appointment } from "@/http/appointments/get-appointments"
+import { CancelDialog } from "./cancel-dialog"
+import { CheckinDialog } from "./checkin-dialog"
 
 interface AppointmentsTableProps {
-  appointments: Appointment[];
-  onInvalidateQueries: () => void;
+  appointments: Appointment[]
+  onInvalidateQueries: () => void
 }
 
 const statusMap = {
   scheduled: { label: "Agendado", variant: "scheduled" as const },
   completed: { label: "Concluído", variant: "completed" as const },
   canceled: { label: "Cancelado", variant: "canceled" as const },
-};
+}
 
 export function AppointmentsTable({
   appointments,
   onInvalidateQueries,
 }: AppointmentsTableProps) {
   const handleCheckinSuccess = () => {
-    toast.success("Check-in realizado com sucesso!");
-    onInvalidateQueries();
-  };
+    toast.success("Check-in realizado com sucesso!")
+    onInvalidateQueries()
+  }
 
   const handleCancelSuccess = () => {
-    toast.success("Agendamento cancelado com sucesso!");
-    onInvalidateQueries();
-  };
+    toast.success("Agendamento cancelado com sucesso!")
+    onInvalidateQueries()
+  }
 
   return (
     <div className="overflow-x-auto">
@@ -56,7 +56,7 @@ export function AppointmentsTable({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {appointments.map((appointment) => (
+          {appointments.map(appointment => (
             <TableRow
               key={appointment.id}
               className="hover:bg-muted/50 transition-colors"
@@ -141,5 +141,5 @@ export function AppointmentsTable({
         </TableBody>
       </Table>
     </div>
-  );
+  )
 }

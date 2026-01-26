@@ -1,31 +1,31 @@
-import {
-  updatePackageSchema,
-  updatePackageItemsSchema,
-} from "@/lib/validations/packages"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { Picker } from "@react-native-picker/picker"
+import { useRouter } from "expo-router"
+import { Plus, Trash2 } from "lucide-react-native"
+import React from "react"
 import { Controller, useFieldArray, useForm } from "react-hook-form"
 import { Alert, ScrollView, Text, TouchableOpacity, View } from "react-native"
-import { Input } from "../input"
-import { AppButton } from "../button"
-import { IconButton } from "../icon-button"
-import { ImagePickerControl } from "../image-picker"
-import { Switch } from "../switch"
-import { uploadImageToFirebase, StorageEntity } from "@/lib/upload-image"
-import { useUpdatePackage } from "@/hooks/data/packages/use-update-package"
+import type { z } from "zod"
 import { useDeletePackage } from "@/hooks/data/packages/use-delete-package"
+import { useUpdatePackage } from "@/hooks/data/packages/use-update-package"
 import { useUpdatePackageItem } from "@/hooks/data/packages/use-update-package-item"
-import { useRouter } from "expo-router"
+import { StorageEntity, uploadImageToFirebase } from "@/lib/upload-image"
+import type { UpdatePackageItem } from "@/lib/validations/packages"
+import {
+  updatePackageItemsSchema,
+  updatePackageSchema,
+} from "@/lib/validations/packages"
+import type { Service } from "@/lib/validations/service"
 import {
   formatCentsToReal,
   formatCurrencyInput,
   formatPercentageInput,
 } from "@/utils/currency"
-import type { z } from "zod"
-import type { Service } from "@/lib/validations/service"
-import type { UpdatePackageItem } from "@/lib/validations/packages"
-import React from "react"
-import { Picker } from "@react-native-picker/picker"
-import { Plus, Trash2 } from "lucide-react-native"
+import { AppButton } from "../button"
+import { IconButton } from "../icon-button"
+import { ImagePickerControl } from "../image-picker"
+import { Input } from "../input"
+import { Switch } from "../switch"
 
 type Inputs = z.infer<typeof updatePackageSchema>
 

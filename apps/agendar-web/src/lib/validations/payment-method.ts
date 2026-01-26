@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "zod"
 
 export const paymentMethodSchema = z.object({
   id: z.uuid(),
@@ -7,6 +7,6 @@ export const paymentMethodSchema = z.object({
   expMonth: z.number(),
   expYear: z.number(),
   isDefault: z.boolean(),
-});
+})
 
-export type PaymentMethod = z.infer<typeof paymentMethodSchema>;
+export type PaymentMethod = z.infer<typeof paymentMethodSchema>

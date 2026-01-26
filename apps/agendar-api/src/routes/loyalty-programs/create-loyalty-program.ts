@@ -1,12 +1,11 @@
+import type { FastifyInstance } from "fastify"
+import type { ZodTypeProvider } from "fastify-type-provider-zod"
+import z from "zod"
 import { db } from "@/db"
-
 import { loyaltyPointRules, loyaltyPrograms } from "@/db/schema"
 import { auth } from "@/middlewares/auth"
 import { requireActiveSubscription } from "@/middlewares/require-active-subscription"
 import { establishmentHeaderSchema } from "@/utils/schemas/headers"
-import type { FastifyInstance } from "fastify"
-import type { ZodTypeProvider } from "fastify-type-provider-zod"
-import z from "zod"
 
 const pointRuleSchema = z.object({
   serviceId: z.string().uuid(),

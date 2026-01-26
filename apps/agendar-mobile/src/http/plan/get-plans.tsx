@@ -1,6 +1,6 @@
-import { api } from "../api-client"
 import type { Plan } from "@/lib/validations/plans"
 import { handleApiError } from "@/utils"
+import { api } from "../api-client"
 
 export async function getPlans() {
   try {

@@ -1,47 +1,47 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { toast } from "sonner";
-import { ThemeToggle } from "@/components/theme-toggle";
-import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
-import { SidebarTrigger } from "@/components/ui/sidebar";
-import { Switch } from "@/components/ui/switch";
-import { useEstablishment } from "@/hooks/use-establishment";
-import { updateEstablishment } from "@/http/establishment/update-establishment";
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { toast } from "sonner"
+import { ThemeToggle } from "@/components/theme-toggle"
+import { Label } from "@/components/ui/label"
+import { Separator } from "@/components/ui/separator"
+import { SidebarTrigger } from "@/components/ui/sidebar"
+import { Switch } from "@/components/ui/switch"
+import { useEstablishment } from "@/hooks/use-establishment"
+import { updateEstablishment } from "@/http/establishment/update-establishment"
 
 export function SiteHeader() {
-  const queryClient = useQueryClient();
-  const { establishment } = useEstablishment();
+  const queryClient = useQueryClient()
+  const { establishment } = useEstablishment()
 
   const { mutate, isPending } = useMutation({
     mutationFn: updateEstablishment,
-    onMutate: async (variables) => {
-      await queryClient.cancelQueries({ queryKey: ["establishment"] });
+    onMutate: async variables => {
+      await queryClient.cancelQueries({ queryKey: ["establishment"] })
 
-      const previousData = queryClient.getQueryData(["establishment"]);
+      const previousData = queryClient.getQueryData(["establishment"])
 
       queryClient.setQueryData(["establishment"], (old: any) => ({
         ...old,
         active: variables.active,
-      }));
+      }))
 
-      return { previousData };
+      return { previousData }
     },
     onError: (_err, _variables, context) => {
       if (context?.previousData) {
-        queryClient.setQueryData(["establishment"], context.previousData);
+        queryClient.setQueryData(["establishment"], context.previousData)
       }
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["establishment"] });
+      queryClient.invalidateQueries({ queryKey: ["establishment"] })
     },
     onSuccess: () => {
-      toast.success("Status atualizado!");
+      toast.success("Status atualizado!")
     },
-  });
+  })
 
   function onToggle(value: boolean) {
-    if (!establishment) return;
-    mutate({ id: establishment.id, active: value });
+    if (!establishment) return
+    mutate({ id: establishment.id, active: value })
   }
 
   return (
@@ -69,5 +69,5 @@ export function SiteHeader() {
         <img src="/agendar-logo.png" alt="Agendar" className="h-8 w-8" />
       </div>
     </header>
-  );
+  )
 }

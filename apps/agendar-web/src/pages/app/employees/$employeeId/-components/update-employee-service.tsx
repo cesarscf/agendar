@@ -1,12 +1,12 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
-import { Loader2, Trash2 } from "lucide-react";
-import React from "react";
-import { useFieldArray, useForm } from "react-hook-form";
-import { toast } from "sonner";
-import type z from "zod";
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useMutation } from "@tanstack/react-query"
+import { Loader2, Trash2 } from "lucide-react"
+import React from "react"
+import { useFieldArray, useForm } from "react-hook-form"
+import { toast } from "sonner"
+import type z from "zod"
+import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
 import {
   Form,
   FormControl,
@@ -14,29 +14,29 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { MaskInput } from "@/components/ui/mask-input";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { MaskInput } from "@/components/ui/mask-input"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { updateEmployeeServices } from "@/http/employees/update-employee-services";
+} from "@/components/ui/select"
+import { updateEmployeeServices } from "@/http/employees/update-employee-services"
 import {
   type Employee,
   updateEmployeeServicesFormSchema,
-} from "@/lib/validations/employees";
-import type { Service } from "@/lib/validations/service";
+} from "@/lib/validations/employees"
+import type { Service } from "@/lib/validations/service"
 
-type Inputs = z.infer<typeof updateEmployeeServicesFormSchema>;
+type Inputs = z.infer<typeof updateEmployeeServicesFormSchema>
 
 interface UpdateEmployeeServicesProps {
-  employeeServices: Employee["services"];
-  services: Service[];
-  employeeId: string;
+  employeeServices: Employee["services"]
+  services: Service[]
+  employeeId: string
 }
 
 export function UpdateEmployeeServices({
@@ -48,32 +48,32 @@ export function UpdateEmployeeServices({
     resolver: zodResolver(updateEmployeeServicesFormSchema),
     defaultValues: {
       employeeId,
-      services: employeeServices.map((item) => ({
+      services: employeeServices.map(item => ({
         serviceId: item.serviceId,
         serviceName: item.serviceName,
         commission: String(item.commission),
         active: item.active,
       })),
     },
-  });
+  })
 
   const { fields, append, remove } = useFieldArray({
     control: form.control,
     name: "services",
-  });
+  })
 
-  const [newServiceId, setNewServiceId] = React.useState<string>("");
-  const [newCommission, setNewCommission] = React.useState<string>("");
+  const [newServiceId, setNewServiceId] = React.useState<string>("")
+  const [newCommission, setNewCommission] = React.useState<string>("")
 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: updateEmployeeServices,
-  });
+  })
 
   function handleAddService() {
-    const selected = services.find((s) => s.id === newServiceId);
+    const selected = services.find(s => s.id === newServiceId)
     if (!selected) {
-      toast.error("Selecione um serviço válido para adicionar.");
-      return;
+      toast.error("Selecione um serviço válido para adicionar.")
+      return
     }
 
     append({
@@ -81,26 +81,26 @@ export function UpdateEmployeeServices({
       serviceName: selected.name,
       commission: newCommission,
       active: true,
-    });
+    })
 
-    setNewServiceId("");
-    setNewCommission("");
+    setNewServiceId("")
+    setNewCommission("")
   }
 
   async function onSubmit(data: Inputs) {
-    const serviceIds = data.services.map((s) => s.serviceId);
+    const serviceIds = data.services.map(s => s.serviceId)
 
-    const hasDuplicates = serviceIds.length !== new Set(serviceIds).size;
+    const hasDuplicates = serviceIds.length !== new Set(serviceIds).size
 
     if (hasDuplicates) {
       toast.warning(
-        "Existem serviços duplicados na lista. Remova os duplicados antes de salvar.",
-      );
-      return;
+        "Existem serviços duplicados na lista. Remova os duplicados antes de salvar."
+      )
+      return
     }
 
-    await mutateAsync(data);
-    toast.success("Serviços atualizados com sucesso!");
+    await mutateAsync(data)
+    toast.success("Serviços atualizados com sucesso!")
   }
 
   return (
@@ -123,7 +123,7 @@ export function UpdateEmployeeServices({
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
-                {services.map((service) => (
+                {services.map(service => (
                   <SelectItem key={service.id} value={service.id}>
                     {service.name}
                   </SelectItem>
@@ -139,7 +139,7 @@ export function UpdateEmployeeServices({
                 mask="percentage"
                 value={newCommission}
                 onValueChange={(_maskedValue, unmaskedValue) => {
-                  setNewCommission(unmaskedValue);
+                  setNewCommission(unmaskedValue)
                 }}
                 placeholder="0.00%"
               />
@@ -184,7 +184,7 @@ export function UpdateEmployeeServices({
                       mask="percentage"
                       value={f.value}
                       onValueChange={(_maskedValue, unmaskedValue) => {
-                        f.onChange(unmaskedValue);
+                        f.onChange(unmaskedValue)
                       }}
                       placeholder="10"
                       invalid={
@@ -205,7 +205,7 @@ export function UpdateEmployeeServices({
                     <FormControl>
                       <Checkbox
                         checked={f.value}
-                        onCheckedChange={(checked) =>
+                        onCheckedChange={checked =>
                           f.onChange(checked === true)
                         }
                       />
@@ -233,5 +233,5 @@ export function UpdateEmployeeServices({
         </Button>
       </form>
     </Form>
-  );
+  )
 }

@@ -1,7 +1,7 @@
-import { View, Text, Pressable, Alert } from "react-native"
 import { format } from "date-fns"
 import { ptBR } from "date-fns/locale"
 import { Trash2 } from "lucide-react-native"
+import { Alert, Pressable, Text, View } from "react-native"
 import type {
   EmployeeBlock,
   EmployeeRecurringBlock,

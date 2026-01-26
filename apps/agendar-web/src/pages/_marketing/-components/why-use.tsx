@@ -1,8 +1,8 @@
-import { Check } from "lucide-react";
+import { Check } from "lucide-react"
 
 interface Reason {
-  title: string;
-  description: string;
+  title: string
+  description: string
 }
 
 const reasons: Reason[] = [
@@ -37,7 +37,7 @@ const reasons: Reason[] = [
     description:
       "Perfeito para salões de beleza, barbearias, clínicas, estúdios, banho e tosa e qualquer serviço que dependa de agenda.",
   },
-];
+]
 
 export function WhyUse() {
   return (
@@ -49,7 +49,7 @@ export function WhyUse() {
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {reasons.map((reason) => (
+          {reasons.map(reason => (
             <div
               key={reason.title}
               className="flex gap-4 p-6 rounded-lg border-2 hover:border-[#F4C430]/50 transition-colors"
@@ -68,5 +68,5 @@ export function WhyUse() {
         </div>
       </div>
     </section>
-  );
+  )
 }

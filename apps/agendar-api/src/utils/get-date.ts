@@ -16,9 +16,6 @@ export function addMinutes(horaStr: string, minutesToAdd: number): Date {
 }
 
 export class DateUtils {
-  private static MS_PER_DAY = 1000 * 60 * 60 * 24
-  private static MS_PER_MINUTE = 1000 * 60
-
   private constructor() {}
 
   static now(): Date {
@@ -26,7 +23,7 @@ export class DateUtils {
   }
 
   static nowInSeconds(): number {
-    return Math.floor(new Date().getTime() / 1000)
+    return Math.floor(Date.now() / 1000)
   }
 
   static currentTimestamp(): number {

@@ -1,3 +1,7 @@
+import { and, eq } from "drizzle-orm"
+import type { FastifyInstance } from "fastify"
+import type { ZodTypeProvider } from "fastify-type-provider-zod"
+import z from "zod"
 import { stripe } from "@/clients/stripe"
 import { db } from "@/db"
 import {
@@ -8,10 +12,6 @@ import {
   subscriptions,
 } from "@/db/schema"
 import { auth } from "@/middlewares/auth"
-import { and, eq } from "drizzle-orm"
-import type { FastifyInstance } from "fastify"
-import type { ZodTypeProvider } from "fastify-type-provider-zod"
-import z from "zod"
 
 export async function createPartnerSubscribe(app: FastifyInstance) {
   await app.register(async app => {

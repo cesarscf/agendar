@@ -1,15 +1,15 @@
+import { Check, X } from "lucide-react-native"
 import React from "react"
 import {
-  View,
-  Text,
-  ScrollView,
-  Pressable,
-  Modal,
-  TouchableOpacity,
-  StyleSheet,
   Dimensions,
+  Modal,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native"
-import { X, Check } from "lucide-react-native"
 import { useCategories } from "@/hooks/data/category/use-categories"
 import type { Category } from "@/lib/validations/category"
 

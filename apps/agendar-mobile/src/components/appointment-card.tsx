@@ -1,9 +1,9 @@
-import { View, Text, TouchableOpacity } from "react-native"
 import { format } from "date-fns"
 import { ptBR } from "date-fns/locale"
-import { Clock, Briefcase, User, Users, Package } from "lucide-react-native"
-import { Badge } from "./badge"
+import { Briefcase, Clock, Package, User, Users } from "lucide-react-native"
+import { Text, TouchableOpacity, View } from "react-native"
 import type { Appointment } from "@/hooks/data/appointment/use-appointments"
+import { Badge } from "./badge"
 
 interface AppointmentCardProps {
   appointment: Appointment

@@ -1,10 +1,10 @@
-import { db } from "@/db"
-import { appointments } from "@/db/schema"
-import { auth } from "@/middlewares/auth"
 import { and, eq, gte, lte, sql } from "drizzle-orm"
 import type { FastifyInstance } from "fastify"
 import type { ZodTypeProvider } from "fastify-type-provider-zod"
 import z from "zod"
+import { db } from "@/db"
+import { appointments } from "@/db/schema"
+import { auth } from "@/middlewares/auth"
 
 export async function getMonthlyServices(app: FastifyInstance) {
   app
@@ -73,7 +73,7 @@ export async function getMonthlyServices(app: FastifyInstance) {
         const dataMap = new Map<string, number>()
         for (const row of result) {
           const key = `${row.year}-${row.month.padStart(2, "0")}`
-          dataMap.set(key, Number.parseInt(row.count))
+          dataMap.set(key, Number.parseInt(row.count, 10))
         }
 
         const monthNames = [

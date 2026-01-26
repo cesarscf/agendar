@@ -1,9 +1,9 @@
+import { useMutation } from "@tanstack/react-query"
 import {
-  updateSubscription,
   type UpdateSubscriptionResponse,
+  updateSubscription,
 } from "@/http/subscription/update-subscription"
 import { queryClient } from "@/lib/react-query"
-import { useMutation } from "@tanstack/react-query"
 
 export function useUpdateSubscription() {
   return useMutation<UpdateSubscriptionResponse, string, string>({

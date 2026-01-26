@@ -1,9 +1,9 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Clock2Icon, Loader2 } from "lucide-react";
-import { useForm } from "react-hook-form";
-import type z from "zod";
-import { Button } from "@/components/ui/button";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { Clock2Icon, Loader2 } from "lucide-react"
+import { useForm } from "react-hook-form"
+import type z from "zod"
+import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -11,31 +11,31 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
+} from "@/components/ui/select"
+import { Textarea } from "@/components/ui/textarea"
 
-import { createEmployeeRecurringBlock } from "@/http/employees/create-employee-recurring-block";
-import { convertLocalTimeToUTC, weekdays } from "@/lib/utils";
-import { createRecurringBlockSchema } from "@/lib/validations/blocks";
+import { createEmployeeRecurringBlock } from "@/http/employees/create-employee-recurring-block"
+import { convertLocalTimeToUTC, weekdays } from "@/lib/utils"
+import { createRecurringBlockSchema } from "@/lib/validations/blocks"
 
-type Inputs = z.infer<typeof createRecurringBlockSchema>;
+type Inputs = z.infer<typeof createRecurringBlockSchema>
 
 export function CreateEmployeeRecurringBlock({
   employeeId,
   onSuccess,
 }: {
-  employeeId: string;
-  onSuccess?: () => void;
+  employeeId: string
+  onSuccess?: () => void
 }) {
-  const queryClient = useQueryClient();
+  const queryClient = useQueryClient()
 
   const form = useForm<Inputs>({
     resolver: zodResolver(createRecurringBlockSchema),
@@ -45,11 +45,11 @@ export function CreateEmployeeRecurringBlock({
       startTime: "",
       weekday: 0,
     },
-  });
+  })
 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: createEmployeeRecurringBlock,
-  });
+  })
 
   async function onSubmit(values: Inputs) {
     await mutateAsync({
@@ -57,13 +57,13 @@ export function CreateEmployeeRecurringBlock({
       employeeId,
       startTime: convertLocalTimeToUTC(values.startTime),
       endTime: convertLocalTimeToUTC(values.endTime),
-    });
+    })
 
     queryClient.invalidateQueries({
       queryKey: ["employee", employeeId, "recurring-blocks"],
-    });
+    })
 
-    onSuccess?.();
+    onSuccess?.()
   }
 
   return (
@@ -79,7 +79,7 @@ export function CreateEmployeeRecurringBlock({
             <FormItem className="w-full">
               <FormLabel>Dia da semana</FormLabel>
               <Select
-                onValueChange={(value) => field.onChange(Number(value))}
+                onValueChange={value => field.onChange(Number(value))}
                 defaultValue={String(field.value)}
               >
                 <FormControl>
@@ -113,7 +113,7 @@ export function CreateEmployeeRecurringBlock({
                     type="time"
                     className="appearance-none pl-8 [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
                     value={field.value}
-                    onChange={(e) => field.onChange(e.target.value)}
+                    onChange={e => field.onChange(e.target.value)}
                   />
                 </div>
               </FormControl>
@@ -135,7 +135,7 @@ export function CreateEmployeeRecurringBlock({
                     type="time"
                     className="appearance-none pl-8 [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
                     value={field.value}
-                    onChange={(e) => field.onChange(e.target.value)}
+                    onChange={e => field.onChange(e.target.value)}
                   />
                 </div>
               </FormControl>
@@ -167,5 +167,5 @@ export function CreateEmployeeRecurringBlock({
         </Button>
       </form>
     </Form>
-  );
+  )
 }

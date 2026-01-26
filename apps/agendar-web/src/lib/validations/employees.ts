@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "zod"
 
 export const employeeSchema = z.object({
   id: z.uuid(),
@@ -26,18 +26,18 @@ export const employeeSchema = z.object({
       commission: z.string(),
       active: z.boolean(),
       serviceName: z.string(),
-    }),
+    })
   ),
-});
+})
 
 export const createEmployeeSchema = employeeSchema.omit({
   id: true,
   services: true,
-});
+})
 
 export const updateEmployeeSchema = employeeSchema.partial().extend({
   id: z.string().min(1, "ID obrigatório"),
-});
+})
 
 export const updateEmployeeServicesFormSchema = z.object({
   employeeId: z.string(),
@@ -47,9 +47,9 @@ export const updateEmployeeServicesFormSchema = z.object({
       serviceName: z.string(),
       commission: z.string(),
       active: z.boolean(),
-    }),
+    })
   ),
-});
+})
 
 export const updateEmployeeServicesSchema = z.object({
   services: z.array(
@@ -57,17 +57,17 @@ export const updateEmployeeServicesSchema = z.object({
       serviceId: z.string(),
       commission: z.string(),
       active: z.boolean(),
-    }),
+    })
   ),
-});
+})
 
-export type Employee = z.infer<typeof employeeSchema>;
-export type CreateEmployeeRequest = z.infer<typeof createEmployeeSchema>;
-export type UpdateEmployeeRequest = z.infer<typeof updateEmployeeSchema>;
+export type Employee = z.infer<typeof employeeSchema>
+export type CreateEmployeeRequest = z.infer<typeof createEmployeeSchema>
+export type UpdateEmployeeRequest = z.infer<typeof updateEmployeeSchema>
 
 export type UpdateEmployeeServicesForm = z.infer<
   typeof updateEmployeeServicesFormSchema
->;
+>
 export type UpdateEmployeeServicesRequest = z.infer<
   typeof updateEmployeeServicesSchema
->;
+>

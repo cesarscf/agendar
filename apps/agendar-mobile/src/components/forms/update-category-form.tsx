@@ -1,5 +1,5 @@
-import { categorySchema } from "@/lib/validations/category"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useRouter } from "expo-router"
 import { Controller, useForm } from "react-hook-form"
 import {
   Alert,
@@ -9,13 +9,13 @@ import {
   View,
 } from "react-native"
 import type { z } from "zod"
-import { Input } from "../input"
+import { useDeleteCategory } from "@/hooks/data/category/use-delete-category"
+import { useUpdateCategory } from "@/hooks/data/category/use-update-category"
+import { categorySchema } from "@/lib/validations/category"
 import { AppButton } from "../button"
 import { IconButton } from "../icon-button"
-import { useRouter } from "expo-router"
+import { Input } from "../input"
 
-import { useUpdateCategory } from "@/hooks/data/category/use-update-category"
-import { useDeleteCategory } from "@/hooks/data/category/use-delete-category"
 type Inputs = z.infer<typeof categorySchema>
 
 type EditCategoryFormProps = {

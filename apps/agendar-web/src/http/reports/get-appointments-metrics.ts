@@ -1,5 +1,5 @@
-import z from "zod";
-import { api } from "@/lib/api-client";
+import z from "zod"
+import { api } from "@/lib/api-client"
 
 const getAppointmentsMetricsParamsSchema = z.object({
   startDate: z
@@ -8,16 +8,16 @@ const getAppointmentsMetricsParamsSchema = z.object({
   endDate: z
     .string()
     .regex(/^\d{4}-\d{2}-\d{2}$/, "Formato deve ser YYYY-MM-DD"),
-});
+})
 
 export type GetAppointmentsMetricsParams = z.infer<
   typeof getAppointmentsMetricsParamsSchema
->;
+>
 
 export type GetAppointmentsMetricsResponse = {
-  value: number; // Clientes únicos atendidos
-  appointmentsCount: number; // Total de agendamentos realizados
-};
+  value: number // Clientes únicos atendidos
+  appointmentsCount: number // Total de agendamentos realizados
+}
 
 export async function getAppointmentsMetrics({
   endDate,
@@ -27,8 +27,8 @@ export async function getAppointmentsMetrics({
     "/establishments/appointments-metrics",
     {
       params: { endDate, startDate },
-    },
-  );
+    }
+  )
 
-  return response.data;
+  return response.data
 }

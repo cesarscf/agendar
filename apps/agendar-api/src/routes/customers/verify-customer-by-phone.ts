@@ -1,10 +1,10 @@
-import { db } from "@/db"
-import { customerServicePackages, customers, establishments } from "@/db/schema"
-import { customerSchema } from "@/utils/schemas/customers"
 import { and, eq, gt, isNull, or } from "drizzle-orm"
 import type { FastifyInstance } from "fastify"
 import type { ZodTypeProvider } from "fastify-type-provider-zod"
 import z from "zod"
+import { db } from "@/db"
+import { customerServicePackages, customers, establishments } from "@/db/schema"
+import { customerSchema } from "@/utils/schemas/customers"
 import { BadRequestError } from "../_erros/bad-request-error"
 
 export async function verifyCustomerByPhone(app: FastifyInstance) {

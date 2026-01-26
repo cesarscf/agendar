@@ -1,15 +1,15 @@
-import { Clock, MapPin, Phone } from "lucide-react";
+import { Clock, MapPin, Phone } from "lucide-react"
 
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import type { PublicEstablishment } from "@/http/public/get-public-establishment";
-import { maskPhone } from "@/lib/masks";
-import { convertUTCToLocalTime } from "@/lib/utils";
+import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
+import type { PublicEstablishment } from "@/http/public/get-public-establishment"
+import { maskPhone } from "@/lib/masks"
+import { convertUTCToLocalTime } from "@/lib/utils"
 
 export function EstablishmentSidebar({
   establishment,
 }: {
-  establishment: PublicEstablishment;
+  establishment: PublicEstablishment
 }) {
   return (
     <div className="w-full lg:w-96 p-4 sm:p-6 space-y-4 sm:space-y-6 lg:border-l border-border">
@@ -49,13 +49,13 @@ export function EstablishmentSidebar({
         </Card>
       )}
     </div>
-  );
+  )
 }
 
 function BusinessHours({
   availabilities,
 }: {
-  availabilities: PublicEstablishment["availabilities"];
+  availabilities: PublicEstablishment["availabilities"]
 }) {
   const weekdays: Record<number, string> = {
     0: "Domingo",
@@ -65,7 +65,7 @@ function BusinessHours({
     4: "Quinta-feira",
     5: "Sexta-feira",
     6: "Sábado",
-  };
+  }
 
   function HourRow({ day, hours }: { day: string; hours: string | null }) {
     return (
@@ -73,7 +73,7 @@ function BusinessHours({
         <span className="text-card-foreground">{day}</span>
         <span className="text-muted-foreground">{hours ?? "Fechado"}</span>
       </div>
-    );
+    )
   }
 
   return (
@@ -87,34 +87,34 @@ function BusinessHours({
       <div className="space-y-2">
         {Object.entries(weekdays).map(([key, label]) => {
           const availability = availabilities.find(
-            (a) => a.weekday === Number(key),
-          );
+            a => a.weekday === Number(key)
+          )
 
-          let hours: string | null = null;
+          let hours: string | null = null
 
           function formatHour(time: string) {
-            const localTime = convertUTCToLocalTime(time);
-            const [h, m] = localTime.split(":");
-            return `${h.padStart(2, "0")}:${m}`;
+            const localTime = convertUTCToLocalTime(time)
+            const [h, m] = localTime.split(":")
+            return `${h.padStart(2, "0")}:${m}`
           }
 
           if (availability) {
             if (availability.breakStart && availability.breakEnd) {
               hours = `${formatHour(availability.opensAt)} - ${formatHour(
-                availability.breakStart,
+                availability.breakStart
               )}, ${formatHour(availability.breakEnd)} - ${formatHour(
-                availability.closesAt,
-              )}`;
+                availability.closesAt
+              )}`
             } else {
               hours = `${formatHour(availability.opensAt)} - ${formatHour(
-                availability.closesAt,
-              )}`;
+                availability.closesAt
+              )}`
             }
           }
 
-          return <HourRow key={key} day={label} hours={hours} />;
+          return <HourRow key={key} day={label} hours={hours} />
         })}
       </div>
     </Card>
-  );
+  )
 }

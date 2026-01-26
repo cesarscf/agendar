@@ -1,7 +1,6 @@
 import type { GetAppointmentsReponse } from "@/hooks/data/appointment/use-appointments"
-import { api } from "../api-client"
-
 import { handleApiError } from "@/utils"
+import { api } from "../api-client"
 
 export interface GetAppointmentsParams {
   page?: number

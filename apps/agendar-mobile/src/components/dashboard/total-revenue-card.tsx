@@ -1,7 +1,7 @@
 import { DollarSign } from "lucide-react-native"
-import { MetricCard } from "./metric-card"
 import { useDailyRevenue } from "@/hooks/data/reports/use-daily-revenue"
 import { formatPriceFromCents } from "@/utils"
+import { MetricCard } from "./metric-card"
 
 type TotalRevenueCardProps = {
   startDate: string

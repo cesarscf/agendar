@@ -1,31 +1,31 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { set } from "date-fns";
-import { ArrowLeft, Check, Loader2, User } from "lucide-react";
-import React from "react";
-import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { set } from "date-fns"
+import { ArrowLeft, Check, Loader2, User } from "lucide-react"
+import React from "react"
+import { toast } from "sonner"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import {
   type CreateAppointmentWithPackageRequest,
   createAppointmentWithPackage,
-} from "@/http/appointments/create-appointment-with-package";
-import { getCustomersHasActivePackage } from "@/http/customers/get-customers-has-active-package";
-import { linkCustomerToPackage } from "@/http/customers/link-customer-to-package";
-import { createPublicCustomer } from "@/http/public/create-public-customer";
-import type { PublicEstablishment } from "@/http/public/get-public-establishment";
-import { getPublicPackageById } from "@/http/public/get-public-package-by-id";
-import { getPublicServiceProfessionals } from "@/http/public/get-public-service-professionals";
-import { formatDate, formatPriceFromCents, onlyNumbers } from "@/lib/utils";
-import type { CreateCustomerRequest } from "@/lib/validations/customer";
-import { CalendarBooking } from "./calendar-booking";
-import { CreateCustomerForm } from "./customer-form";
+} from "@/http/appointments/create-appointment-with-package"
+import { getCustomersHasActivePackage } from "@/http/customers/get-customers-has-active-package"
+import { linkCustomerToPackage } from "@/http/customers/link-customer-to-package"
+import { createPublicCustomer } from "@/http/public/create-public-customer"
+import type { PublicEstablishment } from "@/http/public/get-public-establishment"
+import { getPublicPackageById } from "@/http/public/get-public-package-by-id"
+import { getPublicServiceProfessionals } from "@/http/public/get-public-service-professionals"
+import { formatDate, formatPriceFromCents, onlyNumbers } from "@/lib/utils"
+import type { CreateCustomerRequest } from "@/lib/validations/customer"
+import { CalendarBooking } from "./calendar-booking"
+import { CreateCustomerForm } from "./customer-form"
 
-type Step = "professional" | "calendar" | "customer" | "summary" | "success";
+type Step = "professional" | "calendar" | "customer" | "summary" | "success"
 
 interface SchedulingProps {
-  slug: string;
-  packageId: string;
-  establishment: PublicEstablishment;
+  slug: string
+  packageId: string
+  establishment: PublicEstablishment
 }
 
 const steps = [
@@ -34,41 +34,41 @@ const steps = [
   { key: "customer", label: "Seus dados" },
   { key: "summary", label: "Resumo" },
   { key: "success", label: "Concluído" },
-] as const;
+] as const
 
 export function SchedulingFromPackage({
   slug,
   packageId,
   establishment,
 }: SchedulingProps) {
-  const [loading, setLoading] = React.useState(false);
-  const queryClient = useQueryClient();
+  const [loading, setLoading] = React.useState(false)
+  const queryClient = useQueryClient()
 
-  const [step, setStep] = React.useState<Step>("professional");
+  const [step, setStep] = React.useState<Step>("professional")
   const [selectedProfessionalId, setSelectedProfessionalId] = React.useState<
     string | null
-  >(null);
-  const [selectedDate, setSelectedDate] = React.useState<Date>();
-  const [selectedTime, setSelectedTime] = React.useState<string | null>(null);
+  >(null)
+  const [selectedDate, setSelectedDate] = React.useState<Date>()
+  const [selectedTime, setSelectedTime] = React.useState<string | null>(null)
   const [customerData, setCustomerData] =
-    React.useState<CreateCustomerRequest | null>(null);
-  const [hasPackageAvailable, setHasPackageAvailable] = React.useState(false);
+    React.useState<CreateCustomerRequest | null>(null)
+  const [hasPackageAvailable, setHasPackageAvailable] = React.useState(false)
 
-  const customerFormRef = React.useRef<any>(null);
+  const customerFormRef = React.useRef<any>(null)
 
   const { data: pkg, isLoading: packageLoading } = useQuery({
     queryKey: ["package", slug, packageId],
     queryFn: () => getPublicPackageById({ slug, packageId }),
-  });
+  })
 
-  const serviceId = pkg?.serviceId;
+  const serviceId = pkg?.serviceId
 
   const { data: professionals, isLoading: professionalsLoading } = useQuery({
     queryKey: ["service-professionals", slug, packageId],
     queryFn: () =>
       getPublicServiceProfessionals({ slug, serviceId: serviceId! }),
     enabled: !!serviceId,
-  });
+  })
 
   const { mutateAsync: createAppointmentWithPackageMutate, isPending } =
     useMutation({
@@ -76,20 +76,20 @@ export function SchedulingFromPackage({
       onSuccess: () => {
         queryClient.invalidateQueries({
           queryKey: ["public", "time-slots"],
-        });
+        })
         queryClient.invalidateQueries({
           queryKey: ["appointments"],
-        });
+        })
       },
-    });
+    })
 
-  const isLoading = packageLoading || professionalsLoading;
+  const isLoading = packageLoading || professionalsLoading
   const selectedProfessional = professionals?.find(
-    (p) => p.id === selectedProfessionalId,
-  );
+    p => p.id === selectedProfessionalId
+  )
 
   async function handleConfirmBooking() {
-    setLoading(true);
+    setLoading(true)
 
     if (
       !selectedProfessionalId ||
@@ -97,45 +97,45 @@ export function SchedulingFromPackage({
       !selectedTime ||
       !customerData
     ) {
-      setLoading(false);
-      return;
+      setLoading(false)
+      return
     }
 
     const customerCreated = await createPublicCustomer({
       ...customerData,
       slug,
-    });
+    })
     if (!customerCreated) {
-      setLoading(false);
-      return toast.error("Falha ao criar o usuário");
+      setLoading(false)
+      return toast.error("Falha ao criar o usuário")
     }
 
-    const [hours, minutes] = selectedTime.split(":").map(Number);
+    const [hours, minutes] = selectedTime.split(":").map(Number)
     const startTime = set(selectedDate, {
       hours,
       minutes,
       seconds: 0,
       milliseconds: 0,
-    });
+    })
 
     if (!serviceId) {
-      setLoading(false);
-      return;
+      setLoading(false)
+      return
     }
 
-    const customerPhone = onlyNumbers(customerData.phoneNumber!);
-    let hasActivePackage = false;
+    const customerPhone = onlyNumbers(customerData.phoneNumber!)
+    let hasActivePackage = false
 
     try {
       await getCustomersHasActivePackage({
         customerPhone,
         serviceId,
         establishmentId: establishment.id,
-      });
+      })
 
-      hasActivePackage = true;
+      hasActivePackage = true
     } catch {
-      hasActivePackage = false;
+      hasActivePackage = false
     }
 
     if (!hasActivePackage) {
@@ -143,10 +143,10 @@ export function SchedulingFromPackage({
         await linkCustomerToPackage({
           customerId: customerCreated.id,
           packageId,
-        });
+        })
       } catch {
-        setLoading(false);
-        return toast.error("Falha ao vincular o pacote ao cliente");
+        setLoading(false)
+        return toast.error("Falha ao vincular o pacote ao cliente")
       }
     }
 
@@ -157,11 +157,11 @@ export function SchedulingFromPackage({
       startTime,
       customerPhone: onlyNumbers(customerData.phoneNumber!),
       establishmentId: establishment.id,
-    };
+    }
 
-    await createAppointmentWithPackageMutate(payload);
-    setStep("success");
-    setLoading(false);
+    await createAppointmentWithPackageMutate(payload)
+    setStep("success")
+    setLoading(false)
   }
 
   if (isLoading) {
@@ -172,10 +172,10 @@ export function SchedulingFromPackage({
           <div className="h-32 bg-gray-200 rounded-lg"></div>
         </div>
       </div>
-    );
+    )
   }
 
-  const currentIndex = steps.findIndex((s) => s.key === step);
+  const currentIndex = steps.findIndex(s => s.key === step)
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-muted/30 p-4">
@@ -198,8 +198,8 @@ export function SchedulingFromPackage({
 
           <div className="flex items-center justify-between w-full max-w-sm px-2">
             {steps.map((s, index) => {
-              const isActive = index === currentIndex;
-              const isCompleted = index < currentIndex;
+              const isActive = index === currentIndex
+              const isCompleted = index < currentIndex
 
               return (
                 <div key={s.key} className="flex flex-col items-center flex-1">
@@ -234,7 +234,7 @@ export function SchedulingFromPackage({
                     {s.label}
                   </span>
                 </div>
-              );
+              )
             })}
           </div>
         </CardHeader>
@@ -271,7 +271,7 @@ export function SchedulingFromPackage({
                 Escolha o profissional
               </h3>
               <div className="space-y-3">
-                {professionals.map((p) => (
+                {professionals.map(p => (
                   <div
                     key={p.id}
                     className={`flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition ${
@@ -318,9 +318,9 @@ export function SchedulingFromPackage({
 
           {step === "customer" && (
             <CreateCustomerForm
-              onSubmit={(values) => {
-                setCustomerData(values);
-                setStep("summary");
+              onSubmit={values => {
+                setCustomerData(values)
+                setStep("summary")
               }}
               formRef={customerFormRef}
               establishmentSlug={establishment.slug}
@@ -443,12 +443,12 @@ export function SchedulingFromPackage({
               <Button
                 className="w-full"
                 onClick={() => {
-                  setStep("professional");
-                  setSelectedProfessionalId(null);
-                  setSelectedDate(undefined);
-                  setSelectedTime(null);
-                  setCustomerData(null);
-                  setHasPackageAvailable(false);
+                  setStep("professional")
+                  setSelectedProfessionalId(null)
+                  setSelectedDate(undefined)
+                  setSelectedTime(null)
+                  setCustomerData(null)
+                  setHasPackageAvailable(false)
                 }}
               >
                 Fazer novo agendamento
@@ -458,5 +458,5 @@ export function SchedulingFromPackage({
         </CardContent>
       </Card>
     </div>
-  );
+  )
 }

@@ -1,12 +1,12 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useNavigate } from "@tanstack/react-router";
-import { Loader2, Plus, Trash } from "lucide-react";
-import React from "react";
-import { useFieldArray, useForm } from "react-hook-form";
-import { toast } from "sonner";
-import type z from "zod";
-import { Button } from "@/components/ui/button";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { useNavigate } from "@tanstack/react-router"
+import { Loader2, Plus, Trash } from "lucide-react"
+import React from "react"
+import { useFieldArray, useForm } from "react-hook-form"
+import { toast } from "sonner"
+import type z from "zod"
+import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -14,39 +14,39 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Switch } from "@/components/ui/switch";
-import { activateLoyaltyProgram } from "@/http/loyalty/activate-loyalty-program";
-import { deleteLoyaltyProgram } from "@/http/loyalty/delete-loyalty-program";
-import { desactiveLoyaltyProgram } from "@/http/loyalty/desactive-loyalty-program";
-import { updateLoyaltyProgram } from "@/http/loyalty/update-loyalty-program";
+} from "@/components/ui/select"
+import { Switch } from "@/components/ui/switch"
+import { activateLoyaltyProgram } from "@/http/loyalty/activate-loyalty-program"
+import { deleteLoyaltyProgram } from "@/http/loyalty/delete-loyalty-program"
+import { desactiveLoyaltyProgram } from "@/http/loyalty/desactive-loyalty-program"
+import { updateLoyaltyProgram } from "@/http/loyalty/update-loyalty-program"
 import {
   type LoyaltyProgram,
   updateLoyaltyProgramSchema,
-} from "@/lib/validations/loyalty-program";
-import type { Service } from "@/lib/validations/service";
+} from "@/lib/validations/loyalty-program"
+import type { Service } from "@/lib/validations/service"
 
-type Inputs = z.infer<typeof updateLoyaltyProgramSchema>;
+type Inputs = z.infer<typeof updateLoyaltyProgramSchema>
 
 export function UpdateLoyaltyProgram({
   program,
   services,
 }: {
-  program: LoyaltyProgram;
-  services: Service[];
+  program: LoyaltyProgram
+  services: Service[]
 }) {
-  const navigate = useNavigate();
-  const queryClient = useQueryClient();
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [isActive, setIsActive] = React.useState(program.active);
+  const navigate = useNavigate()
+  const queryClient = useQueryClient()
+  const [isLoading, setIsLoading] = React.useState(false)
+  const [isActive, setIsActive] = React.useState(program.active)
 
   const form = useForm<Inputs>({
     resolver: zodResolver(updateLoyaltyProgramSchema),
@@ -55,76 +55,76 @@ export function UpdateLoyaltyProgram({
       name: program.name,
       requiredPoints: program.requiredPoints,
       serviceRewardId: program.serviceRewardId,
-      rules: program.rules.map((it) => ({
+      rules: program.rules.map(it => ({
         points: it.points,
         serviceId: it.serviceId,
         serviceName: it.serviceName,
       })),
     },
-  });
+  })
 
   const { fields, append, remove } = useFieldArray({
     control: form.control,
     name: "rules",
-  });
+  })
 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: updateLoyaltyProgram,
-    onError: (error) => {
-      setIsLoading(false);
-      toast.error(error.message || "Erro ao atualizar programa de fidelidade");
+    onError: error => {
+      setIsLoading(false)
+      toast.error(error.message || "Erro ao atualizar programa de fidelidade")
     },
-  });
+  })
 
   const toggleActivationMutation = useMutation({
     mutationFn: async (active: boolean) => {
       if (active) {
-        await activateLoyaltyProgram(program.id);
+        await activateLoyaltyProgram(program.id)
       } else {
-        await desactiveLoyaltyProgram(program.id);
+        await desactiveLoyaltyProgram(program.id)
       }
     },
     onSuccess: (_, active) => {
-      setIsActive(active);
+      setIsActive(active)
       queryClient.invalidateQueries({
         queryKey: ["loyalty-program", program.id],
-      });
-      queryClient.invalidateQueries({ queryKey: ["loyalty-programs"] });
+      })
+      queryClient.invalidateQueries({ queryKey: ["loyalty-programs"] })
       toast.success(
         active
           ? "Programa de fidelidade ativado com sucesso!"
-          : "Programa de fidelidade desativado com sucesso!",
-      );
+          : "Programa de fidelidade desativado com sucesso!"
+      )
     },
-    onError: (error) => {
-      toast.error(error.message || "Erro ao alterar status do programa");
+    onError: error => {
+      toast.error(error.message || "Erro ao alterar status do programa")
     },
-  });
+  })
 
   const {
     mutateAsync: deleteLoyaltyProgramMutate,
     isPending: deleteIsPending,
   } = useMutation({
     mutationFn: deleteLoyaltyProgram,
-  });
+  })
 
   const handleToggleActivation = (checked: boolean) => {
-    toggleActivationMutation.mutate(checked);
-  };
+    toggleActivationMutation.mutate(checked)
+  }
 
   async function onSubmit(values: Inputs) {
-    setIsLoading(true);
+    setIsLoading(true)
 
-    await mutateAsync(values);
+    await mutateAsync(values)
 
     queryClient.invalidateQueries({
       queryKey: ["loyalty-program", program.id],
-    });
-    queryClient.invalidateQueries({ queryKey: ["loyalty-programs"] });
+    })
+    queryClient.invalidateQueries({ queryKey: ["loyalty-programs"] })
 
-    toast.success("Programa de fidelidade atualizado com sucesso!");
+    toast.success("Programa de fidelidade atualizado com sucesso!")
 
-    setIsLoading(false);
+    setIsLoading(false)
   }
 
   return (
@@ -145,7 +145,7 @@ export function UpdateLoyaltyProgram({
                     <SelectValue placeholder="Selecione o serviço" />
                   </SelectTrigger>
                   <SelectContent>
-                    {services?.map((service) => (
+                    {services?.map(service => (
                       <SelectItem key={service.id} value={service.id}>
                         {service.name}
                       </SelectItem>
@@ -204,7 +204,7 @@ export function UpdateLoyaltyProgram({
                   type="number"
                   placeholder="Ex: 100"
                   {...field}
-                  onChange={(e) => field.onChange(Number(e.target.value))}
+                  onChange={e => field.onChange(Number(e.target.value))}
                 />
               </FormControl>
               <FormMessage />
@@ -252,7 +252,7 @@ export function UpdateLoyaltyProgram({
                           <SelectValue placeholder="Selecione o serviço" />
                         </SelectTrigger>
                         <SelectContent>
-                          {services?.map((service) => (
+                          {services?.map(service => (
                             <SelectItem key={service.id} value={service.id}>
                               {service.name}
                             </SelectItem>
@@ -275,7 +275,7 @@ export function UpdateLoyaltyProgram({
                       <Input
                         type="number"
                         {...field}
-                        onChange={(e) => field.onChange(Number(e.target.value))}
+                        onChange={e => field.onChange(Number(e.target.value))}
                       />
                     </FormControl>
                     <FormMessage />
@@ -309,16 +309,16 @@ export function UpdateLoyaltyProgram({
             onClick={async () => {
               if (
                 confirm(
-                  "Tem certeza que deseja excluir este programa de fidelidade? Todos os dados relacionados serão excluídos.",
+                  "Tem certeza que deseja excluir este programa de fidelidade? Todos os dados relacionados serão excluídos."
                 )
               ) {
-                await deleteLoyaltyProgramMutate(program.id);
+                await deleteLoyaltyProgramMutate(program.id)
 
                 queryClient.invalidateQueries({
                   queryKey: ["loyalty-programs"],
-                });
+                })
 
-                navigate({ to: "/app/loyalty-programs" });
+                navigate({ to: "/app/loyalty-programs" })
               }
             }}
           >
@@ -330,5 +330,5 @@ export function UpdateLoyaltyProgram({
         </div>
       </form>
     </Form>
-  );
+  )
 }

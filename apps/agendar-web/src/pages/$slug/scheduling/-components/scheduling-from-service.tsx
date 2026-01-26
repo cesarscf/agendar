@@ -1,31 +1,31 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { set } from "date-fns";
-import { ArrowLeft, Check, Loader2, User } from "lucide-react";
-import React from "react";
-import { toast } from "sonner";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { set } from "date-fns"
+import { ArrowLeft, Check, Loader2, User } from "lucide-react"
+import React from "react"
+import { toast } from "sonner"
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader } from "@/components/ui/card"
 
 import {
   type CreateAppointmentRequest,
   createAppointment,
-} from "@/http/appointments/create-appointment";
-import { createPublicCustomer } from "@/http/public/create-public-customer";
-import type { PublicEstablishment } from "@/http/public/get-public-establishment";
-import { getPublicServiceById } from "@/http/public/get-public-service-by-id";
-import { getPublicServiceProfessionals } from "@/http/public/get-public-service-professionals";
-import { formatDate, formatPriceFromCents, onlyNumbers } from "@/lib/utils";
-import type { CreateCustomerRequest } from "@/lib/validations/customer";
-import { CalendarBooking } from "./calendar-booking";
-import { CreateCustomerForm } from "./customer-form";
+} from "@/http/appointments/create-appointment"
+import { createPublicCustomer } from "@/http/public/create-public-customer"
+import type { PublicEstablishment } from "@/http/public/get-public-establishment"
+import { getPublicServiceById } from "@/http/public/get-public-service-by-id"
+import { getPublicServiceProfessionals } from "@/http/public/get-public-service-professionals"
+import { formatDate, formatPriceFromCents, onlyNumbers } from "@/lib/utils"
+import type { CreateCustomerRequest } from "@/lib/validations/customer"
+import { CalendarBooking } from "./calendar-booking"
+import { CreateCustomerForm } from "./customer-form"
 
-type Step = "professional" | "calendar" | "customer" | "summary" | "success";
+type Step = "professional" | "calendar" | "customer" | "summary" | "success"
 
 interface SchedulingProps {
-  slug: string;
-  serviceId: string;
-  establishment: PublicEstablishment;
+  slug: string
+  serviceId: string
+  establishment: PublicEstablishment
 }
 
 const steps = [
@@ -34,55 +34,55 @@ const steps = [
   { key: "customer", label: "Seus dados" },
   { key: "summary", label: "Resumo" },
   { key: "success", label: "Concluído" },
-] as const;
+] as const
 
 export function SchedulingFromService({
   slug,
   serviceId,
   establishment,
 }: SchedulingProps) {
-  const [loading, setLoading] = React.useState(false);
-  const queryClient = useQueryClient();
-  const [step, setStep] = React.useState<Step>("professional");
+  const [loading, setLoading] = React.useState(false)
+  const queryClient = useQueryClient()
+  const [step, setStep] = React.useState<Step>("professional")
   const [selectedProfessionalId, setSelectedProfessionalId] = React.useState<
     string | null
-  >(null);
-  const [selectedDate, setSelectedDate] = React.useState<Date>();
-  const [selectedTime, setSelectedTime] = React.useState<string | null>(null);
+  >(null)
+  const [selectedDate, setSelectedDate] = React.useState<Date>()
+  const [selectedTime, setSelectedTime] = React.useState<string | null>(null)
   const [customerData, setCustomerData] =
-    React.useState<CreateCustomerRequest | null>(null);
+    React.useState<CreateCustomerRequest | null>(null)
 
-  const customerFormRef = React.useRef<any>(null);
+  const customerFormRef = React.useRef<any>(null)
 
   const { data: service, isLoading: serviceLoading } = useQuery({
     queryKey: ["service", slug, serviceId],
     queryFn: () => getPublicServiceById({ slug, serviceId }),
-  });
+  })
 
   const { data: professionals, isLoading: professionalsLoading } = useQuery({
     queryKey: ["service-professionals", slug, serviceId],
     queryFn: () => getPublicServiceProfessionals({ slug, serviceId }),
-  });
+  })
 
   const { mutateAsync: createAppointmentMutate, isPending } = useMutation({
     mutationFn: createAppointment,
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["public", "time-slots"],
-      });
+      })
       queryClient.invalidateQueries({
         queryKey: ["appointments"],
-      });
+      })
     },
-  });
+  })
 
-  const isLoading = serviceLoading || professionalsLoading;
+  const isLoading = serviceLoading || professionalsLoading
   const selectedProfessional = professionals?.find(
-    (p) => p.id === selectedProfessionalId,
-  );
+    p => p.id === selectedProfessionalId
+  )
 
   async function handleConfirmBooking() {
-    setLoading(true);
+    setLoading(true)
 
     if (
       !selectedProfessionalId ||
@@ -90,25 +90,25 @@ export function SchedulingFromService({
       !selectedTime ||
       !customerData
     ) {
-      setLoading(false);
-      return;
+      setLoading(false)
+      return
     }
 
-    const [hours, minutes] = selectedTime.split(":").map(Number);
+    const [hours, minutes] = selectedTime.split(":").map(Number)
     const startTime = set(selectedDate, {
       hours,
       minutes,
       seconds: 0,
       milliseconds: 0,
-    });
+    })
 
     const customerCreated = await createPublicCustomer({
       ...customerData,
       slug,
-    });
+    })
     if (!customerCreated) {
-      setLoading(false);
-      return toast.error("Falha ao criar o usuário");
+      setLoading(false)
+      return toast.error("Falha ao criar o usuário")
     }
 
     const payload: CreateAppointmentRequest = {
@@ -118,11 +118,11 @@ export function SchedulingFromService({
       startTime,
       customerPhone: onlyNumbers(customerData.phoneNumber!),
       establishmentId: establishment.id,
-    };
+    }
 
-    await createAppointmentMutate(payload);
-    setStep("success");
-    setLoading(false);
+    await createAppointmentMutate(payload)
+    setStep("success")
+    setLoading(false)
   }
 
   if (isLoading) {
@@ -133,10 +133,10 @@ export function SchedulingFromService({
           <div className="h-32 bg-gray-200 rounded-lg"></div>
         </div>
       </div>
-    );
+    )
   }
 
-  const currentIndex = steps.findIndex((s) => s.key === step);
+  const currentIndex = steps.findIndex(s => s.key === step)
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-muted/30 p-4">
@@ -159,8 +159,8 @@ export function SchedulingFromService({
 
           <div className="flex items-center justify-between w-full max-w-sm px-2">
             {steps.map((s, index) => {
-              const isActive = index === currentIndex;
-              const isCompleted = index < currentIndex;
+              const isActive = index === currentIndex
+              const isCompleted = index < currentIndex
 
               return (
                 <div key={s.key} className="flex flex-col items-center flex-1">
@@ -195,7 +195,7 @@ export function SchedulingFromService({
                     {s.label}
                   </span>
                 </div>
-              );
+              )
             })}
           </div>
         </CardHeader>
@@ -216,7 +216,7 @@ export function SchedulingFromService({
                 Escolha o profissional
               </h3>
               <div className="space-y-3">
-                {professionals?.map((p) => (
+                {professionals?.map(p => (
                   <div
                     key={p.id}
                     className={`flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition ${
@@ -263,9 +263,9 @@ export function SchedulingFromService({
 
           {step === "customer" && (
             <CreateCustomerForm
-              onSubmit={(values) => {
-                setCustomerData(values);
-                setStep("summary");
+              onSubmit={values => {
+                setCustomerData(values)
+                setStep("summary")
               }}
               formRef={customerFormRef}
               establishmentSlug={establishment.slug}
@@ -389,11 +389,11 @@ export function SchedulingFromService({
               <Button
                 className="w-full"
                 onClick={() => {
-                  setStep("professional");
-                  setSelectedProfessionalId(null);
-                  setSelectedDate(undefined);
-                  setSelectedTime(null);
-                  setCustomerData(null);
+                  setStep("professional")
+                  setSelectedProfessionalId(null)
+                  setSelectedDate(undefined)
+                  setSelectedTime(null)
+                  setCustomerData(null)
                 }}
               >
                 Fazer novo agendamento
@@ -403,5 +403,5 @@ export function SchedulingFromService({
         </CardContent>
       </Card>
     </div>
-  );
+  )
 }

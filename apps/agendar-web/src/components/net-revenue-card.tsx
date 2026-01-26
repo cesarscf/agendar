@@ -4,17 +4,17 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { useNetRevenue } from "@/hooks/use-net-revenue";
-import type { GetNetRevenueParams } from "@/http/reports/get-net-revenue";
-import { formatPriceFromCents } from "@/lib/utils";
+} from "@/components/ui/card"
+import { useNetRevenue } from "@/hooks/use-net-revenue"
+import type { GetNetRevenueParams } from "@/http/reports/get-net-revenue"
+import { formatPriceFromCents } from "@/lib/utils"
 
 interface NetRevenueCardProps {
-  params: GetNetRevenueParams;
+  params: GetNetRevenueParams
 }
 
 export function NetRevenueCard({ params }: NetRevenueCardProps) {
-  const { data, isLoading, isError } = useNetRevenue(params);
+  const { data, isLoading, isError } = useNetRevenue(params)
 
   if (isLoading) {
     return (
@@ -29,7 +29,7 @@ export function NetRevenueCard({ params }: NetRevenueCardProps) {
           </CardTitle>
         </CardHeader>
       </Card>
-    );
+    )
   }
 
   if (isError || !data) {
@@ -50,7 +50,7 @@ export function NetRevenueCard({ params }: NetRevenueCardProps) {
           </div>
         </CardFooter>
       </Card>
-    );
+    )
   }
 
   return (
@@ -70,5 +70,5 @@ export function NetRevenueCard({ params }: NetRevenueCardProps) {
         </div>
       </CardFooter>
     </Card>
-  );
+  )
 }

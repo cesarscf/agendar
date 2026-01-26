@@ -1,7 +1,7 @@
-import { getEstablishmentAvailability } from "@/http/establishment/get-establishment-availability"
 import { useQuery } from "@tanstack/react-query"
 import { ActivityIndicator, View } from "react-native"
 import { UpdateAvailabilityForm } from "@/components/forms/update-availability-form"
+import { getEstablishmentAvailability } from "@/http/establishment/get-establishment-availability"
 
 export default function Availabilities() {
   const { data, isLoading } = useQuery({

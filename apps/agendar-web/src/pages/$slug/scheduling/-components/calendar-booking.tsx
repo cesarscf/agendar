@@ -1,19 +1,19 @@
-import { useQuery } from "@tanstack/react-query";
-import { ptBR } from "date-fns/locale";
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
-import { Card, CardContent } from "@/components/ui/card";
-import { getAvailability } from "@/http/public/get-public-availability";
-import { toISODateString } from "@/lib/utils";
+import { useQuery } from "@tanstack/react-query"
+import { ptBR } from "date-fns/locale"
+import { Button } from "@/components/ui/button"
+import { Calendar } from "@/components/ui/calendar"
+import { Card, CardContent } from "@/components/ui/card"
+import { getAvailability } from "@/http/public/get-public-availability"
+import { toISODateString } from "@/lib/utils"
 
 interface CalendarBookingProps {
-  selectedDate: Date | undefined;
-  setSelectedDate: (date: Date | undefined) => void;
-  selectedTime: string | null;
-  setSelectedTime: (time: string | null) => void;
-  employeeId: string | null;
-  serviceId: string | null;
-  establishmentId: string | null;
+  selectedDate: Date | undefined
+  setSelectedDate: (date: Date | undefined) => void
+  selectedTime: string | null
+  setSelectedTime: (time: string | null) => void
+  employeeId: string | null
+  serviceId: string | null
+  establishmentId: string | null
 }
 
 export function CalendarBooking({
@@ -44,24 +44,24 @@ export function CalendarBooking({
         serviceId: serviceId!,
       }),
     enabled: Boolean(
-      selectedDate && employeeId && establishmentId && serviceId,
+      selectedDate && employeeId && establishmentId && serviceId
     ),
-  });
+  })
 
-  const now = new Date();
+  const now = new Date()
 
   const timeSlots = rawTimeSlots
-    ?.filter((item) => {
-      const slotDate = new Date(item);
-      return slotDate > now;
+    ?.filter(item => {
+      const slotDate = new Date(item)
+      return slotDate > now
     })
-    .map((item) => {
-      const date = new Date(item);
+    .map(item => {
+      const date = new Date(item)
       return date.toLocaleTimeString("pt-BR", {
         hour: "2-digit",
         minute: "2-digit",
-      });
-    });
+      })
+    })
 
   return (
     <div className="space-y-4">
@@ -78,13 +78,13 @@ export function CalendarBooking({
                 modifiersClassNames={{
                   booked: "[&>button]:line-through opacity-100",
                 }}
-                disabled={(date) =>
+                disabled={date =>
                   date < new Date(new Date().setHours(0, 0, 0, 0))
                 }
                 className="bg-transparent p-0 w-full"
                 locale={ptBR}
                 formatters={{
-                  formatWeekdayName: (date) =>
+                  formatWeekdayName: date =>
                     date.toLocaleString("pt-BR", { weekday: "short" }),
                 }}
               />
@@ -103,7 +103,7 @@ export function CalendarBooking({
                       Nenhum horário disponível
                     </div>
                   )}
-                  {timeSlots?.map((time) => (
+                  {timeSlots?.map(time => (
                     <Button
                       key={time}
                       variant={selectedTime === time ? "default" : "outline"}
@@ -138,5 +138,5 @@ export function CalendarBooking({
         )}
       </div>
     </div>
-  );
+  )
 }

@@ -1,7 +1,11 @@
+import { and, eq } from "drizzle-orm"
+import type { FastifyInstance } from "fastify"
+import type { ZodTypeProvider } from "fastify-type-provider-zod"
+import z from "zod"
 import { db } from "@/db"
 import {
-  customerServicePackageUsages,
   customerServicePackages,
+  customerServicePackageUsages,
   loyaltyPointRules,
   loyaltyPrograms,
 } from "@/db/schema"
@@ -14,10 +18,6 @@ import { customerLoyaltyPoints } from "@/db/schema/customer-loyalty-points"
 import { auth } from "@/middlewares/auth"
 import { requireActiveSubscription } from "@/middlewares/require-active-subscription"
 import { BadRequestError } from "@/routes/_erros/bad-request-error"
-import { and, eq } from "drizzle-orm"
-import type { FastifyInstance } from "fastify"
-import type { ZodTypeProvider } from "fastify-type-provider-zod"
-import z from "zod"
 
 export async function updateAppointmentStatus(app: FastifyInstance) {
   await app.register(async app => {

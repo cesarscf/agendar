@@ -1,11 +1,11 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { ChevronLeft, Loader2, Plus, Trash } from "lucide-react";
-import React from "react";
-import { useFieldArray, useForm } from "react-hook-form";
-import type z from "zod";
-import { Button } from "@/components/ui/button";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router"
+import { ChevronLeft, Loader2, Plus, Trash } from "lucide-react"
+import React from "react"
+import { useFieldArray, useForm } from "react-hook-form"
+import type z from "zod"
+import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -13,35 +13,35 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { createLoyaltyProgram } from "@/http/loyalty/create-loyalty-program";
-import { getServices } from "@/http/services/get-services";
-import { createLoyaltyProgramSchema } from "@/lib/validations/loyalty-program";
+} from "@/components/ui/select"
+import { createLoyaltyProgram } from "@/http/loyalty/create-loyalty-program"
+import { getServices } from "@/http/services/get-services"
+import { createLoyaltyProgramSchema } from "@/lib/validations/loyalty-program"
 
 export const Route = createFileRoute("/app/loyalty-programs/new/")({
   component: NewLoyaltyProgram,
-});
+})
 
-type Inputs = z.infer<typeof createLoyaltyProgramSchema>;
+type Inputs = z.infer<typeof createLoyaltyProgramSchema>
 
 function NewLoyaltyProgram() {
-  const navigate = useNavigate();
-  const queryClient = useQueryClient();
+  const navigate = useNavigate()
+  const queryClient = useQueryClient()
 
   const { data: services } = useQuery({
     queryKey: ["services"],
     queryFn: getServices,
-  });
+  })
 
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false)
 
   const form = useForm<Inputs>({
     resolver: zodResolver(createLoyaltyProgramSchema),
@@ -51,29 +51,29 @@ function NewLoyaltyProgram() {
       requiredPoints: 0,
       rules: [],
     },
-  });
+  })
 
   const { fields, append, remove } = useFieldArray({
     control: form.control,
     name: "rules",
-  });
+  })
 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: createLoyaltyProgram,
     onError: () => {
-      setIsLoading(false);
+      setIsLoading(false)
     },
-  });
+  })
 
   async function onSubmit(values: Inputs) {
-    setIsLoading(true);
+    setIsLoading(true)
 
-    await mutateAsync(values);
+    await mutateAsync(values)
 
-    queryClient.invalidateQueries({ queryKey: ["loyalty-programs"] });
-    navigate({ to: "/app/loyalty-programs" });
+    queryClient.invalidateQueries({ queryKey: ["loyalty-programs"] })
+    navigate({ to: "/app/loyalty-programs" })
 
-    setIsLoading(false);
+    setIsLoading(false)
   }
 
   return (
@@ -110,7 +110,7 @@ function NewLoyaltyProgram() {
                       <SelectValue placeholder="Selecione o serviço" />
                     </SelectTrigger>
                     <SelectContent>
-                      {services?.map((service) => (
+                      {services?.map(service => (
                         <SelectItem key={service.id} value={service.id}>
                           {service.name}
                         </SelectItem>
@@ -148,7 +148,7 @@ function NewLoyaltyProgram() {
                     type="number"
                     placeholder="Ex: 100"
                     {...field}
-                    onChange={(e) => field.onChange(Number(e.target.value))}
+                    onChange={e => field.onChange(Number(e.target.value))}
                   />
                 </FormControl>
                 <FormMessage />
@@ -190,7 +190,7 @@ function NewLoyaltyProgram() {
                               <SelectValue placeholder="Selecione" />
                             </SelectTrigger>
                             <SelectContent>
-                              {services?.map((service) => (
+                              {services?.map(service => (
                                 <SelectItem key={service.id} value={service.id}>
                                   {service.name}
                                 </SelectItem>
@@ -215,7 +215,7 @@ function NewLoyaltyProgram() {
                             placeholder="Ex: 50"
                             min={1}
                             {...field}
-                            onChange={(e) =>
+                            onChange={e =>
                               field.onChange(Number(e.target.value))
                             }
                           />
@@ -251,5 +251,5 @@ function NewLoyaltyProgram() {
         </form>
       </Form>
     </div>
-  );
+  )
 }

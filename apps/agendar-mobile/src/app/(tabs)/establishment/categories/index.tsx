@@ -1,4 +1,3 @@
-import { useCategories } from "@/hooks/data/category/use-categories"
 import { Link } from "expo-router"
 import { ChevronRight, FolderOpen } from "lucide-react-native"
 import {
@@ -10,6 +9,7 @@ import {
   View,
 } from "react-native"
 import { Empty } from "@/components/empty"
+import { useCategories } from "@/hooks/data/category/use-categories"
 
 export default function Categories() {
   const { data: categories, isLoading } = useCategories()

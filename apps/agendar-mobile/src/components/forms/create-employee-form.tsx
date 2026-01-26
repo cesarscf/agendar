@@ -1,5 +1,6 @@
-import { createEmployeeSchema } from "@/lib/validations/employee"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { router } from "expo-router"
+import React from "react"
 import { Controller, useForm } from "react-hook-form"
 import {
   Alert,
@@ -10,14 +11,13 @@ import {
   View,
 } from "react-native"
 import type { z } from "zod"
-import { Input } from "../input"
+import { useCreateEmployee } from "@/hooks/data/employees"
+import { StorageEntity, uploadImageToFirebase } from "@/lib/upload-image"
+import { createEmployeeSchema } from "@/lib/validations/employee"
+import { formatPhoneNumber } from "@/utils"
 import { AppButton } from "../button"
 import { ImagePickerControl } from "../image-picker"
-import { useCreateEmployee } from "@/hooks/data/employees"
-import { router } from "expo-router"
-import { StorageEntity, uploadImageToFirebase } from "@/lib/upload-image"
-import { formatPhoneNumber } from "@/utils"
-import React from "react"
+import { Input } from "../input"
 
 type Inputs = z.infer<typeof createEmployeeSchema>
 

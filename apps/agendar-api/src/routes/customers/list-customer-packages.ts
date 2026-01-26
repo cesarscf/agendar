@@ -1,15 +1,15 @@
-import { db } from "@/db"
-import {
-  customerServicePackageUsages,
-  customerServicePackages,
-  packages,
-} from "@/db/schema"
-import { customerAuth } from "@/middlewares/customer-auth"
-import { customerHeaderSchema } from "@/utils/schemas/headers"
 import { eq, sql } from "drizzle-orm"
 import type { FastifyInstance } from "fastify"
 import type { ZodTypeProvider } from "fastify-type-provider-zod"
 import z from "zod"
+import { db } from "@/db"
+import {
+  customerServicePackages,
+  customerServicePackageUsages,
+  packages,
+} from "@/db/schema"
+import { customerAuth } from "@/middlewares/customer-auth"
+import { customerHeaderSchema } from "@/utils/schemas/headers"
 
 export async function listCustomerPackages(app: FastifyInstance) {
   await app.register(async app => {

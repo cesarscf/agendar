@@ -1,9 +1,9 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Plus, Trash } from "lucide-react";
-import { useQueryState } from "nuqs";
-import React from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { Plus, Trash } from "lucide-react"
+import { useQueryState } from "nuqs"
+import React from "react"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import {
   Dialog,
   DialogContent,
@@ -11,55 +11,55 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { deleteEmployeeBlock } from "@/http/employees/delete-employee-block";
-import { deleteEmployeeRecurringBlock } from "@/http/employees/delete-employee-recurring-block";
-import { getEmployeeBlocks } from "@/http/employees/get-employee-blocks";
-import { getEmployeeRecurringBlocks } from "@/http/employees/get-employee-recurring-blocks";
-import { formatDate, weekdays } from "@/lib/utils";
-import { CreateEmployeeBlock } from "./create-employee-block";
-import { CreateEmployeeRecurringBlock } from "./create-employee-recurring-block";
+} from "@/components/ui/dialog"
+import { Label } from "@/components/ui/label"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { deleteEmployeeBlock } from "@/http/employees/delete-employee-block"
+import { deleteEmployeeRecurringBlock } from "@/http/employees/delete-employee-recurring-block"
+import { getEmployeeBlocks } from "@/http/employees/get-employee-blocks"
+import { getEmployeeRecurringBlocks } from "@/http/employees/get-employee-recurring-blocks"
+import { formatDate, weekdays } from "@/lib/utils"
+import { CreateEmployeeBlock } from "./create-employee-block"
+import { CreateEmployeeRecurringBlock } from "./create-employee-recurring-block"
 
 export function EmployeeBlocks({ employeeId }: { employeeId: string }) {
-  const queryClient = useQueryClient();
-  const [showCreateBlock, setShowCreateBlock] = React.useState(false);
+  const queryClient = useQueryClient()
+  const [showCreateBlock, setShowCreateBlock] = React.useState(false)
   const [showCreateReccuringBlock, setShowCreateReccuringBlock] =
-    React.useState(false);
+    React.useState(false)
   const [blockType, setBlockType] = useQueryState("type", {
     defaultValue: "blocks",
-  });
+  })
 
   const { data: blocks } = useQuery({
     queryKey: ["employee", employeeId, "blocks"],
     queryFn: () => getEmployeeBlocks(employeeId),
-  });
+  })
 
   const { data: recurringBlocks } = useQuery({
     queryKey: ["employee", employeeId, "recurring-blocks"],
     queryFn: () => getEmployeeRecurringBlocks(employeeId),
-  });
+  })
 
   const {
     mutateAsync: deleteEmployeeRecurringBlockMutate,
     isPending: deleteEmployeeRecurringBlockIsPending,
   } = useMutation({
     mutationFn: deleteEmployeeRecurringBlock,
-  });
+  })
 
   const {
     mutateAsync: deleteEmployeeBlockMutate,
     isPending: deleteEmployeeBlockIsPending,
   } = useMutation({
     mutationFn: deleteEmployeeBlock,
-  });
+  })
 
   return (
     <Tabs
       value={blockType || "blocks"}
-      onValueChange={(value) => {
-        setBlockType(value);
+      onValueChange={value => {
+        setBlockType(value)
       }}
       className="w-full"
     >
@@ -90,7 +90,7 @@ export function EmployeeBlocks({ employeeId }: { employeeId: string }) {
               <CreateEmployeeBlock
                 employeeId={employeeId}
                 onSuccess={() => {
-                  setShowCreateBlock(false);
+                  setShowCreateBlock(false)
                 }}
               />
             </DialogContent>
@@ -120,7 +120,7 @@ export function EmployeeBlocks({ employeeId }: { employeeId: string }) {
               <CreateEmployeeRecurringBlock
                 employeeId={employeeId}
                 onSuccess={() => {
-                  setShowCreateReccuringBlock(false);
+                  setShowCreateReccuringBlock(false)
                 }}
               />
             </DialogContent>
@@ -129,7 +129,7 @@ export function EmployeeBlocks({ employeeId }: { employeeId: string }) {
       </div>
       <TabsContent value="blocks" className="mt-4">
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {blocks?.map((block) => (
+          {blocks?.map(block => (
             <Card key={block.id}>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-lg font-medium">
@@ -143,10 +143,10 @@ export function EmployeeBlocks({ employeeId }: { employeeId: string }) {
                     if (
                       confirm("Tem certeza que deseja excluir este bloqueio?")
                     ) {
-                      await deleteEmployeeBlockMutate(block.id);
+                      await deleteEmployeeBlockMutate(block.id)
                       queryClient.invalidateQueries({
                         queryKey: ["employee", employeeId, "blocks"],
-                      });
+                      })
                     }
                   }}
                   aria-label={`Excluir bloco para ${block.reason}`}
@@ -172,7 +172,7 @@ export function EmployeeBlocks({ employeeId }: { employeeId: string }) {
       </TabsContent>
       <TabsContent value="recurring-blocks" className="mt-4">
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {recurringBlocks?.map((block) => (
+          {recurringBlocks?.map(block => (
             <Card key={block.id}>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-lg font-medium">
@@ -185,13 +185,13 @@ export function EmployeeBlocks({ employeeId }: { employeeId: string }) {
                   onClick={async () => {
                     if (
                       confirm(
-                        "Tem certeza que deseja excluir este bloqueio recorrente?",
+                        "Tem certeza que deseja excluir este bloqueio recorrente?"
                       )
                     ) {
-                      await deleteEmployeeRecurringBlockMutate(block.id);
+                      await deleteEmployeeRecurringBlockMutate(block.id)
                       queryClient.invalidateQueries({
                         queryKey: ["employee", employeeId, "recurring-blocks"],
-                      });
+                      })
                     }
                   }}
                   aria-label={`Excluir bloco recorrente para ${block.reason} em ${weekdays[block.weekday]}`}
@@ -215,5 +215,5 @@ export function EmployeeBlocks({ employeeId }: { employeeId: string }) {
         </div>
       </TabsContent>
     </Tabs>
-  );
+  )
 }

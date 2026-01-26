@@ -1,5 +1,7 @@
-import { createLoyaltyProgramSchema } from "@/lib/validations/loyalty-program"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { router } from "expo-router"
+import { Plus, Trash2 } from "lucide-react-native"
+import React from "react"
 import { Controller, useFieldArray, useForm } from "react-hook-form"
 import {
   Alert,
@@ -11,14 +13,12 @@ import {
   View,
 } from "react-native"
 import type { z } from "zod"
-import { Input } from "@/components/input"
 import { AppButton } from "@/components/button"
+import { Input } from "@/components/input"
 import { Select } from "@/components/select"
 import { useCreateLoyaltyProgram } from "@/hooks/data/loyalty/use-create-loyalty-program"
 import { useServices } from "@/hooks/data/services/use-services"
-import { router } from "expo-router"
-import React from "react"
-import { Plus, Trash2 } from "lucide-react-native"
+import { createLoyaltyProgramSchema } from "@/lib/validations/loyalty-program"
 
 type Inputs = z.infer<typeof createLoyaltyProgramSchema>
 

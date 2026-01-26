@@ -1,27 +1,27 @@
-import * as React from "react";
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
+import * as React from "react"
+import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@/components/ui/card"
 import {
   type ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart";
+} from "@/components/ui/chart"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { useMonthlyServices } from "@/hooks/use-monthly-services";
-import { useServices } from "@/hooks/use-services";
+} from "@/components/ui/select"
+import { useMonthlyServices } from "@/hooks/use-monthly-services"
+import { useServices } from "@/hooks/use-services"
 
 const monthNames: Record<string, string> = {
   January: "Janeiro",
@@ -36,23 +36,23 @@ const monthNames: Record<string, string> = {
   October: "Outubro",
   November: "Novembro",
   December: "Dezembro",
-};
+}
 
 const chartConfig = {
   value: {
     label: "Serviços",
     color: "var(--chart-1)",
   },
-} satisfies ChartConfig;
+} satisfies ChartConfig
 
 export function MonthlyServicesChart() {
-  const [selectedService, setSelectedService] = React.useState<string>("all");
-  const { data: servicesData, isLoading: isLoadingServices } = useServices();
+  const [selectedService, setSelectedService] = React.useState<string>("all")
+  const { data: servicesData, isLoading: isLoadingServices } = useServices()
   const { data, isLoading, isError } = useMonthlyServices({
     serviceId: selectedService === "all" ? undefined : selectedService,
-  });
+  })
 
-  console.log(data);
+  console.log(data)
 
   const chartData = React.useMemo(() => {
     const allMonths = [
@@ -68,20 +68,20 @@ export function MonthlyServicesChart() {
       "Outubro",
       "Novembro",
       "Dezembro",
-    ];
+    ]
 
     const dataMap = new Map(
-      data?.items?.map((item) => [
+      data?.items?.map(item => [
         monthNames[item.month] || item.month,
         item.value,
-      ]) || [],
-    );
+      ]) || []
+    )
 
-    return allMonths.map((month) => ({
+    return allMonths.map(month => ({
       month,
       value: dataMap.get(month) || 0,
-    }));
-  }, [data]);
+    }))
+  }, [data])
 
   if (isLoading || isLoadingServices) {
     return (
@@ -96,7 +96,7 @@ export function MonthlyServicesChart() {
           </div>
         </CardContent>
       </Card>
-    );
+    )
   }
 
   if (isError) {
@@ -114,7 +114,7 @@ export function MonthlyServicesChart() {
           </div>
         </CardContent>
       </Card>
-    );
+    )
   }
 
   return (
@@ -135,7 +135,7 @@ export function MonthlyServicesChart() {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">Todos os serviços</SelectItem>
-              {servicesData?.map((service) => (
+              {servicesData?.map(service => (
                 <SelectItem key={service.id} value={service.id}>
                   {service.name}
                 </SelectItem>
@@ -153,7 +153,7 @@ export function MonthlyServicesChart() {
               tickLine={false}
               tickMargin={10}
               axisLine={false}
-              tickFormatter={(value) => value.slice(0, 3)}
+              tickFormatter={value => value.slice(0, 3)}
             />
             <ChartTooltip
               cursor={false}
@@ -164,5 +164,5 @@ export function MonthlyServicesChart() {
         </ChartContainer>
       </CardContent>
     </Card>
-  );
+  )
 }

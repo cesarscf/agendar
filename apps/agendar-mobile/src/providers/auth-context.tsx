@@ -1,11 +1,10 @@
+import messaging from "@react-native-firebase/messaging"
+import { useQueryClient } from "@tanstack/react-query"
+import { router } from "expo-router"
+import React from "react"
 import { useStorageState } from "@/hooks/use-storage-state"
 import { getPartner, type Partner } from "@/http/auth/get-partner"
-
-import messaging from "@react-native-firebase/messaging"
 import { saveToken } from "@/http/push/save-token"
-import React from "react"
-import { router } from "expo-router"
-import { useQueryClient } from "@tanstack/react-query"
 
 const AuthContext = React.createContext<{
   signIn: (token: string) => void

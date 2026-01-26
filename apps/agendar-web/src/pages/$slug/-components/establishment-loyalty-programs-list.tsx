@@ -1,10 +1,10 @@
-import { Card } from "@/components/ui/card";
-import type { PublicLoyaltyProgram } from "@/http/public/get-public-loyalties";
+import { Card } from "@/components/ui/card"
+import type { PublicLoyaltyProgram } from "@/http/public/get-public-loyalties"
 
 export function EstablishmentLoyaltyProgramsList({
   programs,
 }: {
-  programs: PublicLoyaltyProgram[];
+  programs: PublicLoyaltyProgram[]
 }) {
   if (!programs.length) {
     return (
@@ -16,7 +16,7 @@ export function EstablishmentLoyaltyProgramsList({
           Nenhum programa de fidelidade disponível no momento.
         </p>
       </div>
-    );
+    )
   }
 
   return (
@@ -30,7 +30,7 @@ export function EstablishmentLoyaltyProgramsList({
         ))}
       </div>
     </div>
-  );
+  )
 }
 
 function LoyaltyProgramItem({ program }: { program: PublicLoyaltyProgram }) {
@@ -78,5 +78,5 @@ function LoyaltyProgramItem({ program }: { program: PublicLoyaltyProgram }) {
         </ul>
       </div>
     </Card>
-  );
+  )
 }

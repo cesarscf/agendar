@@ -1,8 +1,8 @@
-import { View, Text, ActivityIndicator, Dimensions } from "react-native"
-import { useMemo, useState } from "react"
-import { BarChart } from "react-native-gifted-charts"
 import { format, parseISO } from "date-fns"
 import { ptBR } from "date-fns/locale"
+import { useMemo, useState } from "react"
+import { ActivityIndicator, Dimensions, Text, View } from "react-native"
+import { BarChart } from "react-native-gifted-charts"
 import { useDailyRevenue } from "@/hooks/data/reports/use-daily-revenue"
 import { formatPriceFromCents } from "@/utils"
 
@@ -15,7 +15,7 @@ export function DailyRevenueChart({
   startDate,
   endDate,
 }: DailyRevenueChartProps) {
-  const { data, isLoading,error } = useDailyRevenue({ startDate, endDate })
+  const { data, isLoading, error } = useDailyRevenue({ startDate, endDate })
   const [selectedBar, setSelectedBar] = useState<{
     value: number
     label: string

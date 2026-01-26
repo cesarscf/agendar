@@ -1,12 +1,12 @@
+import { asc, eq } from "drizzle-orm"
+import type { FastifyInstance } from "fastify"
+import type { ZodTypeProvider } from "fastify-type-provider-zod"
+import z from "zod"
 import { db } from "@/db"
 import { customers } from "@/db/schema"
 import { auth } from "@/middlewares/auth"
 import { customerSchema } from "@/utils/schemas/customers"
 import { establishmentHeaderSchema } from "@/utils/schemas/headers"
-import { asc, eq } from "drizzle-orm"
-import type { FastifyInstance } from "fastify"
-import type { ZodTypeProvider } from "fastify-type-provider-zod"
-import z from "zod"
 
 export async function getCustomers(app: FastifyInstance) {
   await app.register(async app => {

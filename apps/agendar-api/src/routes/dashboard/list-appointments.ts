@@ -1,4 +1,9 @@
 // routes/dashboard/list-appointments.ts
+
+import { and, asc, eq, gte, lte, sql } from "drizzle-orm"
+import type { FastifyInstance } from "fastify"
+import type { ZodTypeProvider } from "fastify-type-provider-zod"
+import z from "zod"
 import { db } from "@/db"
 import {
   appointmentStatusValues,
@@ -10,10 +15,6 @@ import {
   services,
 } from "@/db/schema"
 import { auth } from "@/middlewares/auth"
-import { and, asc, eq, gte, lte, sql } from "drizzle-orm"
-import type { FastifyInstance } from "fastify"
-import type { ZodTypeProvider } from "fastify-type-provider-zod"
-import z from "zod"
 
 const appointmentStatusSchema = z.enum(appointmentStatusValues)
 

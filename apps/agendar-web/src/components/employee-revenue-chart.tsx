@@ -1,58 +1,58 @@
-import * as React from "react";
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
+import * as React from "react"
+import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@/components/ui/card"
 import {
   type ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart";
-import { useEmployeeRevenue } from "@/hooks/use-employee-revenue";
-import type { GetEmployeeCommissionParams } from "@/http/reports/get-employee-revenue";
-import { abbreviateName, formatPriceFromCents } from "@/lib/utils";
+} from "@/components/ui/chart"
+import { useEmployeeRevenue } from "@/hooks/use-employee-revenue"
+import type { GetEmployeeCommissionParams } from "@/http/reports/get-employee-revenue"
+import { abbreviateName, formatPriceFromCents } from "@/lib/utils"
 
 interface EmployeeRevenueChartProps {
-  params: GetEmployeeCommissionParams;
+  params: GetEmployeeCommissionParams
 }
 
 export function EmployeeRevenueChart({ params }: EmployeeRevenueChartProps) {
-  const { data, isLoading, isError } = useEmployeeRevenue(params);
+  const { data, isLoading, isError } = useEmployeeRevenue(params)
 
   const { chartData, chartConfig } = React.useMemo(() => {
     if (!data?.items) {
       return {
         chartData: [],
         chartConfig: { revenue: { label: "Receita" } } satisfies ChartConfig,
-      };
+      }
     }
 
     const config: ChartConfig = {
       revenue: { label: "Receita" },
-    };
+    }
 
     const chartData = data.items.map((item, index) => {
-      const employeeName = item.employee.toLowerCase().replace(/\s+/g, "_");
+      const employeeName = item.employee.toLowerCase().replace(/\s+/g, "_")
       config[employeeName] = {
         label: abbreviateName(item.employee),
         color: `var(--chart-${(index % 7) + 1})`,
-      };
+      }
 
       return {
         employee: employeeName,
         employeeName: abbreviateName(item.employee),
         revenue: Number(item.revenueInCents),
         fill: `var(--chart-${(index % 7) + 1})`,
-      };
-    });
+      }
+    })
 
-    return { chartData, chartConfig: config };
-  }, [data]);
+    return { chartData, chartConfig: config }
+  }, [data])
 
   if (isLoading) {
     return (
@@ -67,7 +67,7 @@ export function EmployeeRevenueChart({ params }: EmployeeRevenueChartProps) {
           </div>
         </CardContent>
       </Card>
-    );
+    )
   }
 
   if (isError || !chartData.length) {
@@ -85,7 +85,7 @@ export function EmployeeRevenueChart({ params }: EmployeeRevenueChartProps) {
           </div>
         </CardContent>
       </Card>
-    );
+    )
   }
 
   return (
@@ -118,7 +118,7 @@ export function EmployeeRevenueChart({ params }: EmployeeRevenueChartProps) {
               content={
                 <ChartTooltipContent
                   hideLabel
-                  formatter={(value) => formatPriceFromCents(String(value))}
+                  formatter={value => formatPriceFromCents(String(value))}
                 />
               }
             />
@@ -127,5 +127,5 @@ export function EmployeeRevenueChart({ params }: EmployeeRevenueChartProps) {
         </ChartContainer>
       </CardContent>
     </Card>
-  );
+  )
 }

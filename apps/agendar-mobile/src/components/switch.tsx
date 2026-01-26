@@ -1,4 +1,4 @@
-import { Switch as RNSwitch, type SwitchProps, View, Text } from "react-native"
+import { Switch as RNSwitch, type SwitchProps, Text, View } from "react-native"
 import { cn } from "@/utils/cn"
 
 type CustomSwitchProps = {

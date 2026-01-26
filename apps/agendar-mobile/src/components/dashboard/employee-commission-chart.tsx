@@ -1,7 +1,7 @@
 import { useMemo } from "react"
-import { HorizontalBarChart } from "./horizontal-bar-chart"
 import { useEmployeeCommission } from "@/hooks/data/reports/use-employee-commission"
 import { formatPriceFromCents } from "@/utils"
+import { HorizontalBarChart } from "./horizontal-bar-chart"
 
 type EmployeeCommissionChartProps = {
   startDate: string

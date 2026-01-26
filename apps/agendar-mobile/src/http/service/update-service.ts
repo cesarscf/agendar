@@ -1,7 +1,7 @@
-import { api } from "../api-client"
 import type { UpdateServiceRequest } from "@/lib/validations/service"
 import { handleApiError } from "@/utils"
 import { parseBRLToCents } from "@/utils/currency"
+import { api } from "../api-client"
 
 export async function updateService(inputs: UpdateServiceRequest) {
   try {

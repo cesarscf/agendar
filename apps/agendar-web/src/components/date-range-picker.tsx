@@ -1,5 +1,5 @@
-import { CalendarIcon } from "lucide-react";
-import type { DateValue } from "react-aria-components";
+import { CalendarIcon } from "lucide-react"
+import type { DateValue } from "react-aria-components"
 import {
   Button,
   DateRangePicker as DateRangePickerRac,
@@ -7,19 +7,19 @@ import {
   Group,
   Label,
   Popover,
-} from "react-aria-components";
-import { RangeCalendar } from "@/components/ui/calendar-rac";
-import { DateInput, dateInputStyle } from "@/components/ui/datefield-rac";
-import { cn } from "@/lib/utils";
+} from "react-aria-components"
+import { RangeCalendar } from "@/components/ui/calendar-rac"
+import { DateInput, dateInputStyle } from "@/components/ui/datefield-rac"
+import { cn } from "@/lib/utils"
 
 interface DateRangePickerProps {
-  label?: string;
+  label?: string
   value?: {
-    start: DateValue;
-    end: DateValue;
-  };
-  onChange?: (value: { start: DateValue; end: DateValue } | null) => void;
-  className?: string;
+    start: DateValue
+    end: DateValue
+  }
+  onChange?: (value: { start: DateValue; end: DateValue } | null) => void
+  className?: string
 }
 
 export function DateRangePicker({
@@ -58,5 +58,5 @@ export function DateRangePicker({
         </Dialog>
       </Popover>
     </DateRangePickerRac>
-  );
+  )
 }

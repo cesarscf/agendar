@@ -1,14 +1,14 @@
-import { useForm, Controller, useFieldArray } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { updatePackageItemsSchema } from "@/lib/validations/packages"
-import { Input } from "../input"
-import { AppButton } from "../button"
-import { View, Text, ScrollView, TouchableOpacity } from "react-native"
 import { Picker } from "@react-native-picker/picker"
-import { useUpdatePackageItem } from "@/hooks/data/packages/use-update-package-item"
-import type { Service } from "@/lib/validations/service"
-import type { UpdatePackageItem } from "@/lib/validations/packages"
 import { Plus, Trash2 } from "lucide-react-native"
+import { Controller, useFieldArray, useForm } from "react-hook-form"
+import { ScrollView, Text, TouchableOpacity, View } from "react-native"
+import { useUpdatePackageItem } from "@/hooks/data/packages/use-update-package-item"
+import type { UpdatePackageItem } from "@/lib/validations/packages"
+import { updatePackageItemsSchema } from "@/lib/validations/packages"
+import type { Service } from "@/lib/validations/service"
+import { AppButton } from "../button"
+import { Input } from "../input"
 
 type Inputs = {
   items: UpdatePackageItem[]

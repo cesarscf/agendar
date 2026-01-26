@@ -1,8 +1,8 @@
-import { View, Text, ScrollView, ActivityIndicator } from "react-native"
+import { ActivityIndicator, ScrollView, Text, View } from "react-native"
 import { useCustomerLoyaltyPrograms } from "@/hooks/data/customers/use-customer-loyalty-programs"
 import type { CustomerLoyaltyProgram } from "@/http/customers/get-customer-loyalty-programs"
-import { Badge } from "./badge"
 import { cn } from "@/utils/cn"
+import { Badge } from "./badge"
 
 interface CustomerLoyaltyProgramsProps {
   customerPhone: string

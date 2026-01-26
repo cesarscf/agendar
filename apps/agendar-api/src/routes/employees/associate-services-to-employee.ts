@@ -1,13 +1,13 @@
+import { and, eq } from "drizzle-orm"
+import type { FastifyInstance } from "fastify"
+import type { ZodTypeProvider } from "fastify-type-provider-zod"
+import { z } from "zod"
 import { db } from "@/db"
 import { employeeServices, employees } from "@/db/schema"
 import { auth } from "@/middlewares/auth"
 import { requireActiveSubscription } from "@/middlewares/require-active-subscription"
 import { commissionToDb } from "@/utils/commission"
 import { establishmentHeaderSchema } from "@/utils/schemas/headers"
-import { and, eq } from "drizzle-orm"
-import type { FastifyInstance } from "fastify"
-import type { ZodTypeProvider } from "fastify-type-provider-zod"
-import { z } from "zod"
 
 const employeeServiceAssociationSchema = z.object({
   serviceId: z.string().uuid(),

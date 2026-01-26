@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
 import {
-  checkBonus,
   type CheckBonusParams,
+  checkBonus,
 } from "@/http/appointments/check-bonus"
 import type { BonusData } from "@/lib/validations/checkin"
 

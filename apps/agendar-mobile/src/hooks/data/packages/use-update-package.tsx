@@ -1,7 +1,7 @@
+import { useMutation } from "@tanstack/react-query"
 import { updatePackage } from "@/http/packages/update-package"
 import { queryClient } from "@/lib/react-query"
 import type { UpdatePackageRequest } from "@/lib/validations/packages"
-import { useMutation } from "@tanstack/react-query"
 
 export function useUpdatePackage() {
   return useMutation<boolean, string, UpdatePackageRequest>({

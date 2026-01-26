@@ -1,7 +1,7 @@
 import { Calendar } from "lucide-react-native"
-import { MetricCard } from "./metric-card"
 import { useAppointmentsMetrics } from "@/hooks/data/reports/use-appointments-metrics"
 import { formatNumber } from "@/utils"
+import { MetricCard } from "./metric-card"
 
 type AppointmentsCountCardProps = {
   startDate: string

@@ -1,6 +1,6 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import React from "react";
-import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod"
+import React from "react"
+import { useForm } from "react-hook-form"
 import {
   Form,
   FormControl,
@@ -8,24 +8,24 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { customerVerify } from "@/http/public/customer-verify";
-import { maskDate, maskPhone } from "@/lib/masks";
-import { formatIsoToDateBr, onlyNumbers } from "@/lib/utils";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import { customerVerify } from "@/http/public/customer-verify"
+import { maskDate, maskPhone } from "@/lib/masks"
+import { formatIsoToDateBr, onlyNumbers } from "@/lib/utils"
 import {
   type CreateCustomerRequest,
   createCustomerSchema,
-} from "@/lib/validations/customer";
+} from "@/lib/validations/customer"
 
 export interface CreateCustomerFormProps {
-  onSubmit: (values: CreateCustomerRequest) => void;
-  formRef?: React.Ref<any>;
-  establishmentSlug: string;
-  serviceId?: string;
-  packageId?: string;
-  onPackageAvailable?: (hasPackage: boolean) => void;
+  onSubmit: (values: CreateCustomerRequest) => void
+  formRef?: React.Ref<any>
+  establishmentSlug: string
+  serviceId?: string
+  packageId?: string
+  onPackageAvailable?: (hasPackage: boolean) => void
 }
 
 export function CreateCustomerForm({
@@ -48,51 +48,51 @@ export function CreateCustomerForm({
       city: "",
       address: "",
     },
-  });
+  })
 
   React.useImperativeHandle(formRef, () => ({
     submit: () => form.handleSubmit(onSubmit)(),
     getValues: () => form.getValues(),
-  }));
+  }))
 
-  const debounceRef = React.useRef<NodeJS.Timeout | null>(null);
+  const debounceRef = React.useRef<NodeJS.Timeout | null>(null)
 
   async function handlePhoneChange(value: string) {
-    const masked = maskPhone(value);
-    form.setValue("phoneNumber", masked);
+    const masked = maskPhone(value)
+    form.setValue("phoneNumber", masked)
 
-    const numbers = onlyNumbers(masked);
+    const numbers = onlyNumbers(masked)
 
     if (numbers.length >= 11) {
-      if (debounceRef.current) clearTimeout(debounceRef.current);
+      if (debounceRef.current) clearTimeout(debounceRef.current)
 
       debounceRef.current = setTimeout(async () => {
         const verified = await customerVerify(
           numbers,
           establishmentSlug,
-          packageId,
-        );
+          packageId
+        )
 
-        const birthDate = formatIsoToDateBr(verified.birthDate ?? "");
+        const birthDate = formatIsoToDateBr(verified.birthDate ?? "")
 
         if (verified) {
-          form.setValue("name", verified.name ?? "");
-          form.setValue("phoneNumber", maskPhone(verified.phoneNumber));
-          form.setValue("city", verified.city ?? "");
-          form.setValue("cpf", verified.cpf ?? "");
-          form.setValue("email", verified.email ?? "");
-          form.setValue("state", verified.state ?? "");
-          form.setValue("address", verified.address ?? "");
-          form.setValue("birthDate", birthDate);
+          form.setValue("name", verified.name ?? "")
+          form.setValue("phoneNumber", maskPhone(verified.phoneNumber))
+          form.setValue("city", verified.city ?? "")
+          form.setValue("cpf", verified.cpf ?? "")
+          form.setValue("email", verified.email ?? "")
+          form.setValue("state", verified.state ?? "")
+          form.setValue("address", verified.address ?? "")
+          form.setValue("birthDate", birthDate)
 
           if (
             onPackageAvailable &&
             verified.hasPackageAvailable !== undefined
           ) {
-            onPackageAvailable(verified.hasPackageAvailable);
+            onPackageAvailable(verified.hasPackageAvailable)
           }
         }
-      }, 500);
+      }, 500)
     }
   }
 
@@ -109,7 +109,7 @@ export function CreateCustomerForm({
                 <Input
                   placeholder="(XX) XXXXX-XXXX"
                   {...field}
-                  onChange={(e) => handlePhoneChange(e.target.value)}
+                  onChange={e => handlePhoneChange(e.target.value)}
                 />
               </FormControl>
               <FormMessage />
@@ -141,7 +141,7 @@ export function CreateCustomerForm({
                 <Input
                   placeholder="DD/MM/AAAA"
                   {...field}
-                  onChange={(e) => field.onChange(maskDate(e.target.value))}
+                  onChange={e => field.onChange(maskDate(e.target.value))}
                 />
               </FormControl>
               <FormMessage />
@@ -234,5 +234,5 @@ export function CreateCustomerForm({
         />
       </form>
     </Form>
-  );
+  )
 }

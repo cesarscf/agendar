@@ -1,10 +1,10 @@
-import { db } from "@/db"
-import { subscriptions } from "@/db/schema"
-import { auth } from "@/middlewares/auth"
 import { eq } from "drizzle-orm"
 import type { FastifyInstance } from "fastify"
 import type { ZodTypeProvider } from "fastify-type-provider-zod"
 import z from "zod"
+import { db } from "@/db"
+import { subscriptions } from "@/db/schema"
+import { auth } from "@/middlewares/auth"
 
 export async function listPartnerSubscriptions(app: FastifyInstance) {
   await app.register(async app => {
@@ -54,7 +54,7 @@ export async function listPartnerSubscriptions(app: FastifyInstance) {
           orderBy: (subs, { desc }) => [desc(subs.createdAt)],
         })
 
-        // @ts-ignore
+        // @ts-expect-error
         return reply.send(results)
       }
     )

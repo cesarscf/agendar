@@ -1,4 +1,4 @@
-import { Calendar } from "lucide-react";
+import { Calendar } from "lucide-react"
 
 export function AppointmentsEmpty() {
   return (
@@ -9,5 +9,5 @@ export function AppointmentsEmpty() {
       </p>
       <p className="text-sm text-muted-foreground">Tente ajustar os filtros</p>
     </div>
-  );
+  )
 }

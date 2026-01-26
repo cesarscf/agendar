@@ -1,5 +1,5 @@
-import z from "zod";
-import { api } from "@/lib/api-client";
+import z from "zod"
+import { api } from "@/lib/api-client"
 
 const getTopServicesParamsSchema = z.object({
   startDate: z
@@ -8,16 +8,16 @@ const getTopServicesParamsSchema = z.object({
   endDate: z
     .string()
     .regex(/^\d{4}-\d{2}-\d{2}$/, "Formato deve ser YYYY-MM-DD"),
-});
+})
 
-export type GetTopServicesParams = z.infer<typeof getTopServicesParamsSchema>;
+export type GetTopServicesParams = z.infer<typeof getTopServicesParamsSchema>
 
 export type GetTopServices = {
   items: {
-    service: string;
-    totalRevenueInCents: string;
-  }[];
-};
+    service: string
+    totalRevenueInCents: string
+  }[]
+}
 
 export async function getTopServices({
   endDate,
@@ -27,8 +27,8 @@ export async function getTopServices({
     "/establishments/top-services",
     {
       params: { endDate, startDate },
-    },
-  );
+    }
+  )
 
-  return response.data;
+  return response.data
 }

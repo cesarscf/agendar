@@ -1,6 +1,6 @@
-import { api } from "../api-client"
 import type { PaymentMethod } from "@/lib/validations/payment-method"
 import { handleApiError } from "@/utils"
+import { api } from "../api-client"
 
 export async function getPaymentMethods() {
   try {

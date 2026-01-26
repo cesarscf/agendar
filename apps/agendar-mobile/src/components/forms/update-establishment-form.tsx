@@ -1,4 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod"
+import * as Clipboard from "expo-clipboard"
+import { useRouter } from "expo-router"
+import { Copy } from "lucide-react-native"
+import React from "react"
 import { Controller, useForm } from "react-hook-form"
 import {
   Alert,
@@ -6,24 +10,19 @@ import {
   Pressable,
   ScrollView,
   Text,
-  View,
   TouchableOpacity,
+  View,
 } from "react-native"
-
-import { StorageEntity, uploadImageToFirebase } from "@/lib/upload-image"
-import { useRouter } from "expo-router"
-import React from "react"
-import { useUpdateEstablishment } from "@/hooks/data/establishment/use-update-establishment"
-import {
-  updateEstablishmentSchema,
-  type UpdateEstablishmentRequest,
-} from "@/lib/validations/establishment"
-import { Input } from "@/components/input"
-import { ImagePickerControl } from "@/components/image-picker"
 import { AppButton } from "@/components/button"
+import { ImagePickerControl } from "@/components/image-picker"
+import { Input } from "@/components/input"
+import { useUpdateEstablishment } from "@/hooks/data/establishment/use-update-establishment"
+import { StorageEntity, uploadImageToFirebase } from "@/lib/upload-image"
+import {
+  type UpdateEstablishmentRequest,
+  updateEstablishmentSchema,
+} from "@/lib/validations/establishment"
 import { formatPhoneNumber } from "@/utils"
-import * as Clipboard from "expo-clipboard"
-import { Copy } from "lucide-react-native"
 
 type Inputs = UpdateEstablishmentRequest
 

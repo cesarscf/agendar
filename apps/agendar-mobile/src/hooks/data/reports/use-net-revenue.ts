@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query"
 import {
-  getNetRevenue,
   type GetNetRevenueParams,
   type GetNetRevenueResponse,
+  getNetRevenue,
 } from "@/http/reports/get-net-revenue"
 
 export function useNetRevenue(params: GetNetRevenueParams) {

@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query"
 import {
-  getEmployeeRevenue,
   type GetEmployeeRevenueParams,
   type GetEmployeeRevenueResponse,
+  getEmployeeRevenue,
 } from "@/http/reports/get-employee-revenue"
 
 export function useEmployeeRevenue(params: GetEmployeeRevenueParams) {

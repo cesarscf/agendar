@@ -1,13 +1,13 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { format, setHours, setMinutes } from "date-fns";
-import { ptBR } from "date-fns/locale";
-import { CalendarIcon, Clock2Icon, Loader2 } from "lucide-react";
-import { useForm } from "react-hook-form";
-import type z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { format, setHours, setMinutes } from "date-fns"
+import { ptBR } from "date-fns/locale"
+import { CalendarIcon, Clock2Icon, Loader2 } from "lucide-react"
+import { useForm } from "react-hook-form"
+import type z from "zod"
 
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
+import { Button } from "@/components/ui/button"
+import { Calendar } from "@/components/ui/calendar"
 import {
   Form,
   FormControl,
@@ -15,28 +15,28 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
-import { Textarea } from "@/components/ui/textarea";
-import { createEmployeeBlock } from "@/http/employees/create-employee-block";
-import { cn, convertLocalDateToUTC } from "@/lib/utils";
-import { createBlockSchema } from "@/lib/validations/blocks";
+} from "@/components/ui/popover"
+import { Textarea } from "@/components/ui/textarea"
+import { createEmployeeBlock } from "@/http/employees/create-employee-block"
+import { cn, convertLocalDateToUTC } from "@/lib/utils"
+import { createBlockSchema } from "@/lib/validations/blocks"
 
-type Inputs = z.infer<typeof createBlockSchema>;
+type Inputs = z.infer<typeof createBlockSchema>
 
 export function CreateEmployeeBlock({
   employeeId,
   onSuccess,
 }: {
-  employeeId: string;
-  onSuccess?: () => void;
+  employeeId: string
+  onSuccess?: () => void
 }) {
-  const queryClient = useQueryClient();
+  const queryClient = useQueryClient()
   const form = useForm<Inputs>({
     resolver: zodResolver(createBlockSchema),
     defaultValues: {
@@ -44,11 +44,11 @@ export function CreateEmployeeBlock({
       endsAt: undefined,
       reason: "",
     },
-  });
+  })
 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: createEmployeeBlock,
-  });
+  })
 
   async function onSubmit(values: Inputs) {
     await mutateAsync({
@@ -56,12 +56,12 @@ export function CreateEmployeeBlock({
       employeeId,
       startsAt: convertLocalDateToUTC(values.startsAt),
       endsAt: convertLocalDateToUTC(values.endsAt),
-    });
+    })
     queryClient.invalidateQueries({
       queryKey: ["employee", employeeId, "blocks"],
-    });
+    })
 
-    onSuccess?.();
+    onSuccess?.()
   }
 
   return (
@@ -83,7 +83,7 @@ export function CreateEmployeeBlock({
                       variant={"outline"}
                       className={cn(
                         "w-full justify-start text-left font-normal",
-                        !field.value && "text-muted-foreground",
+                        !field.value && "text-muted-foreground"
                       )}
                     >
                       <CalendarIcon className="mr-2 h-4 w-4" />
@@ -97,16 +97,16 @@ export function CreateEmployeeBlock({
                   <Calendar
                     mode="single"
                     selected={field.value}
-                    onSelect={(date) => {
+                    onSelect={date => {
                       if (date) {
-                        const existingDate = field.value || new Date();
+                        const existingDate = field.value || new Date()
                         const newDateTime = setMinutes(
                           setHours(date, existingDate.getHours()),
-                          existingDate.getMinutes(),
-                        );
-                        field.onChange(newDateTime);
+                          existingDate.getMinutes()
+                        )
+                        field.onChange(newDateTime)
                       } else {
-                        field.onChange(undefined);
+                        field.onChange(undefined)
                       }
                     }}
                     locale={ptBR}
@@ -118,19 +118,19 @@ export function CreateEmployeeBlock({
                         type="time"
                         className="appearance-none pl-8 [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
                         value={field.value ? format(field.value, "HH:mm") : ""}
-                        onChange={(e) => {
-                          if (!e.target.value) return;
+                        onChange={e => {
+                          if (!e.target.value) return
                           const [hours, minutes] = e.target.value
                             .split(":")
-                            .map(Number);
+                            .map(Number)
                           if (Number.isNaN(hours) || Number.isNaN(minutes))
-                            return;
-                          const existingDate = field.value || new Date();
+                            return
+                          const existingDate = field.value || new Date()
                           const newDateTime = setMinutes(
                             setHours(existingDate, hours),
-                            minutes,
-                          );
-                          field.onChange(newDateTime);
+                            minutes
+                          )
+                          field.onChange(newDateTime)
                         }}
                       />
                     </div>
@@ -155,7 +155,7 @@ export function CreateEmployeeBlock({
                       variant={"outline"}
                       className={cn(
                         "w-full justify-start text-left font-normal",
-                        !field.value && "text-muted-foreground",
+                        !field.value && "text-muted-foreground"
                       )}
                     >
                       <CalendarIcon className="mr-2 h-4 w-4" />
@@ -169,16 +169,16 @@ export function CreateEmployeeBlock({
                   <Calendar
                     mode="single"
                     selected={field.value}
-                    onSelect={(date) => {
+                    onSelect={date => {
                       if (date) {
-                        const existingDate = field.value || new Date();
+                        const existingDate = field.value || new Date()
                         const newDateTime = setMinutes(
                           setHours(date, existingDate.getHours()),
-                          existingDate.getMinutes(),
-                        );
-                        field.onChange(newDateTime);
+                          existingDate.getMinutes()
+                        )
+                        field.onChange(newDateTime)
                       } else {
-                        field.onChange(undefined);
+                        field.onChange(undefined)
                       }
                     }}
                     initialFocus
@@ -191,19 +191,19 @@ export function CreateEmployeeBlock({
                         type="time"
                         className="appearance-none pl-8 [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
                         value={field.value ? format(field.value, "HH:mm") : ""}
-                        onChange={(e) => {
-                          if (!e.target.value) return;
+                        onChange={e => {
+                          if (!e.target.value) return
                           const [hours, minutes] = e.target.value
                             .split(":")
-                            .map(Number);
+                            .map(Number)
                           if (Number.isNaN(hours) || Number.isNaN(minutes))
-                            return;
-                          const existingDate = field.value || new Date();
+                            return
+                          const existingDate = field.value || new Date()
                           const newDateTime = setMinutes(
                             setHours(existingDate, hours),
-                            minutes,
-                          );
-                          field.onChange(newDateTime);
+                            minutes
+                          )
+                          field.onChange(newDateTime)
                         }}
                       />
                     </div>
@@ -238,5 +238,5 @@ export function CreateEmployeeBlock({
         </Button>
       </form>
     </Form>
-  );
+  )
 }

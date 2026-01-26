@@ -1,10 +1,10 @@
-import { updatePlanStatusOnStripe } from "@/clients/stripe"
-import { db } from "@/db"
-import { plans } from "@/db/schema"
 import { eq } from "drizzle-orm"
 import type { FastifyInstance } from "fastify"
 import type { ZodTypeProvider } from "fastify-type-provider-zod"
 import z from "zod"
+import { updatePlanStatusOnStripe } from "@/clients/stripe"
+import { db } from "@/db"
+import { plans } from "@/db/schema"
 
 export async function updatePlanStatus(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().patch(

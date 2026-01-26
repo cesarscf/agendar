@@ -1,8 +1,8 @@
-import { api } from "@/lib/api-client";
-import type { Service } from "@/lib/validations/service";
+import { api } from "@/lib/api-client"
+import type { Service } from "@/lib/validations/service"
 
 export async function getServices() {
-  const response = await api.get<Service[]>("/services");
+  const response = await api.get<Service[]>("/services")
 
-  return response.data;
+  return response.data
 }

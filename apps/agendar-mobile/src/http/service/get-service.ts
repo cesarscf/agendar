@@ -1,6 +1,6 @@
-import { api } from "../api-client"
 import type { Service } from "@/lib/validations/service"
 import { handleApiError } from "@/utils"
+import { api } from "../api-client"
 
 export async function getService(serviceId: string) {
   try {

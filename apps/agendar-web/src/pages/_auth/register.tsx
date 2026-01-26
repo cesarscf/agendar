@@ -1,14 +1,14 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { AxiosError } from "axios";
-import { Loader2, Mail } from "lucide-react";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { toast } from "sonner";
-import type z from "zod";
-import { PasswordInput } from "@/components/password-input";
-import { Button } from "@/components/ui/button";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useMutation } from "@tanstack/react-query"
+import { createFileRoute, useNavigate } from "@tanstack/react-router"
+import { AxiosError } from "axios"
+import { Loader2, Mail } from "lucide-react"
+import { useState } from "react"
+import { useForm } from "react-hook-form"
+import { toast } from "sonner"
+import type z from "zod"
+import { PasswordInput } from "@/components/password-input"
+import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -16,22 +16,22 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
 import {
   InputOTP,
   InputOTPGroup,
   InputOTPSlot,
-} from "@/components/ui/input-otp";
-import { VerificationTimer } from "@/components/verification-timer";
-import { preRegister, register } from "@/http/auth/register";
-import { registerSchema } from "@/lib/validations/auth";
+} from "@/components/ui/input-otp"
+import { VerificationTimer } from "@/components/verification-timer"
+import { preRegister, register } from "@/http/auth/register"
+import { registerSchema } from "@/lib/validations/auth"
 
 type SearchParams = {
-  name?: string;
-  email?: string;
-  redirect?: string;
-};
+  name?: string
+  email?: string
+  redirect?: string
+}
 
 export const Route = createFileRoute("/_auth/register")({
   component: Register,
@@ -40,23 +40,23 @@ export const Route = createFileRoute("/_auth/register")({
       name: search.name,
       email: search.email,
       redirect: search.redirect,
-    };
+    }
   },
-});
+})
 
-type Inputs = z.infer<typeof registerSchema>;
+type Inputs = z.infer<typeof registerSchema>
 
 function Register() {
-  const { name, email, redirect } = Route.useSearch();
-  const navigate = useNavigate();
+  const { name, email, redirect } = Route.useSearch()
+  const navigate = useNavigate()
 
   const [codeExpiresAt, setCodeExpiresAt] = useState(() => {
-    const expirationTime = new Date();
-    expirationTime.setMinutes(expirationTime.getMinutes() + 5);
-    return expirationTime;
-  });
+    const expirationTime = new Date()
+    expirationTime.setMinutes(expirationTime.getMinutes() + 5)
+    return expirationTime
+  })
 
-  const [isCodeExpired, setIsCodeExpired] = useState(false);
+  const [isCodeExpired, setIsCodeExpired] = useState(false)
 
   const form = useForm({
     resolver: zodResolver(registerSchema),
@@ -69,7 +69,7 @@ function Register() {
       state: "",
       city: "",
     },
-  });
+  })
 
   const { mutateAsync: authenticate, isPending } = useMutation({
     mutationFn: register,
@@ -77,65 +77,65 @@ function Register() {
       toast.success("Cadastro realizado!", {
         description:
           "Bem-vindo ao Agendar. Seu teste grátis de 7 dias começou!",
-      });
+      })
     },
     onError: (error: Error) => {
       toast.error("Erro no cadastro", {
         description: error.message,
-      });
+      })
     },
-  });
+  })
 
   const { mutateAsync: resendCode, isPending: isResending } = useMutation({
     mutationFn: preRegister,
     onSuccess: () => {
-      const newExpirationTime = new Date();
-      newExpirationTime.setMinutes(newExpirationTime.getMinutes() + 5);
-      setCodeExpiresAt(newExpirationTime);
-      setIsCodeExpired(false);
+      const newExpirationTime = new Date()
+      newExpirationTime.setMinutes(newExpirationTime.getMinutes() + 5)
+      setCodeExpiresAt(newExpirationTime)
+      setIsCodeExpired(false)
 
       toast.success("Código reenviado!", {
         description: "Um novo código foi enviado para seu e-mail.",
-      });
+      })
     },
-    onError: (error) => {
+    onError: error => {
       if (error instanceof AxiosError) {
         const message =
-          error.response?.data?.message ?? "Erro inesperado no servidor.";
+          error.response?.data?.message ?? "Erro inesperado no servidor."
 
-        toast.error(message);
-        return;
+        toast.error(message)
+        return
       }
 
-      toast.error("Erro desconhecido. Tente novamente mais tarde.");
+      toast.error("Erro desconhecido. Tente novamente mais tarde.")
     },
-  });
+  })
 
   async function onSubmit(values: Inputs) {
-    const { ...registerData } = values;
-    await authenticate(registerData);
+    const { ...registerData } = values
+    await authenticate(registerData)
 
-    const redirectTo = decodeURIComponent(redirect ?? "/app");
-    window.location.href = redirectTo;
+    const redirectTo = decodeURIComponent(redirect ?? "/app")
+    window.location.href = redirectTo
   }
 
   async function handleResendCode() {
-    const nameValue = form.getValues("name");
-    const emailValue = form.getValues("email");
+    const nameValue = form.getValues("name")
+    const emailValue = form.getValues("email")
 
     if (!nameValue || !emailValue) {
       toast.error("Dados incompletos", {
         description: "Nome e e-mail são necessários para reenviar o código.",
-      });
-      return;
+      })
+      return
     }
 
-    await resendCode({ name: nameValue, email: emailValue });
+    await resendCode({ name: nameValue, email: emailValue })
   }
 
   if (!name || !email) {
-    navigate({ to: "/pre-register" });
-    return null;
+    navigate({ to: "/pre-register" })
+    return null
   }
 
   return (
@@ -317,5 +317,5 @@ function Register() {
         </Button>
       </div>
     </div>
-  );
+  )
 }

@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query"
 import {
-  getMostBookedServices,
   type GetMostBookedServicesParams,
   type GetMostBookedServicesResponse,
+  getMostBookedServices,
 } from "@/http/reports/get-most-booked-services"
 
 export function useMostBookedServices(params: GetMostBookedServicesParams) {

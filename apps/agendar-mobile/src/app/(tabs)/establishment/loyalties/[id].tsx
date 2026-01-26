@@ -1,5 +1,8 @@
-import { updateLoyaltyProgramSchema } from "@/lib/validations/loyalty-program"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useMutation } from "@tanstack/react-query"
+import { router, useLocalSearchParams } from "expo-router"
+import { Plus, Trash2 } from "lucide-react-native"
+import React from "react"
 import { Controller, useFieldArray, useForm } from "react-hook-form"
 import {
   Alert,
@@ -12,20 +15,17 @@ import {
   View,
 } from "react-native"
 import type { z } from "zod"
-import { Input } from "@/components/input"
 import { AppButton } from "@/components/button"
+import { Input } from "@/components/input"
 import { Select } from "@/components/select"
-import { useUpdateLoyaltyProgram } from "@/hooks/data/loyalty/use-update-loyalty-program"
 import { useDeleteLoyaltyProgram } from "@/hooks/data/loyalty/use-delete-loyalty-program"
-import { useServices } from "@/hooks/data/services/use-services"
 import { useLoyaltyProgram } from "@/hooks/data/loyalty/use-loyalty-program"
-import { router, useLocalSearchParams } from "expo-router"
-import React from "react"
-import { Plus, Trash2 } from "lucide-react-native"
-import { useMutation } from "@tanstack/react-query"
+import { useUpdateLoyaltyProgram } from "@/hooks/data/loyalty/use-update-loyalty-program"
+import { useServices } from "@/hooks/data/services/use-services"
 import { activateLoyaltyProgram } from "@/http/loyalty/activate-loyalty-program"
 import { desactiveLoyaltyProgram } from "@/http/loyalty/desactivate-loyalty-program"
 import { queryClient } from "@/lib/react-query"
+import { updateLoyaltyProgramSchema } from "@/lib/validations/loyalty-program"
 
 type Inputs = z.infer<typeof updateLoyaltyProgramSchema>
 

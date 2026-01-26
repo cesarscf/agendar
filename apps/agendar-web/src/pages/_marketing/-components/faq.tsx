@@ -3,11 +3,11 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
+} from "@/components/ui/accordion"
 
 interface FAQ {
-  question: string;
-  answer: string;
+  question: string
+  answer: string
 }
 
 const faqs: FAQ[] = [
@@ -41,7 +41,7 @@ const faqs: FAQ[] = [
     answer:
       "Não! O Agendar é 100% online e funciona em qualquer navegador. Você também pode acessar através dos nossos aplicativos móveis para iOS e Android.",
   },
-];
+]
 
 export function FAQ() {
   return (
@@ -66,5 +66,5 @@ export function FAQ() {
         </Accordion>
       </div>
     </section>
-  );
+  )
 }

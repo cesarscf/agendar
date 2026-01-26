@@ -4,16 +4,16 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { useAppointmentsCount } from "@/hooks/use-appointments-count";
-import type { GetAppointmentsMetricsParams } from "@/http/reports/get-appointments-metrics";
+} from "@/components/ui/card"
+import { useAppointmentsCount } from "@/hooks/use-appointments-count"
+import type { GetAppointmentsMetricsParams } from "@/http/reports/get-appointments-metrics"
 
 interface AppointmentsCountCardProps {
-  params: GetAppointmentsMetricsParams;
+  params: GetAppointmentsMetricsParams
 }
 
 export function AppointmentsCountCard({ params }: AppointmentsCountCardProps) {
-  const { data, isLoading, isError } = useAppointmentsCount(params);
+  const { data, isLoading, isError } = useAppointmentsCount(params)
 
   if (isLoading) {
     return (
@@ -25,7 +25,7 @@ export function AppointmentsCountCard({ params }: AppointmentsCountCardProps) {
           </CardTitle>
         </CardHeader>
       </Card>
-    );
+    )
   }
 
   if (isError || !data) {
@@ -43,7 +43,7 @@ export function AppointmentsCountCard({ params }: AppointmentsCountCardProps) {
           </div>
         </CardFooter>
       </Card>
-    );
+    )
   }
 
   return (
@@ -60,5 +60,5 @@ export function AppointmentsCountCard({ params }: AppointmentsCountCardProps) {
         </div>
       </CardFooter>
     </Card>
-  );
+  )
 }

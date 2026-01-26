@@ -1,11 +1,11 @@
-import { stripe } from "@/clients/stripe"
-import { db } from "@/db"
-import { partners } from "@/db/schema"
-import { auth } from "@/middlewares/auth"
 import { eq } from "drizzle-orm"
 import type { FastifyInstance } from "fastify"
 import type { ZodTypeProvider } from "fastify-type-provider-zod"
 import z from "zod"
+import { stripe } from "@/clients/stripe"
+import { db } from "@/db"
+import { partners } from "@/db/schema"
+import { auth } from "@/middlewares/auth"
 
 export async function getSetupIntent(app: FastifyInstance) {
   await app.register(async app => {

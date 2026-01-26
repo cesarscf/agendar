@@ -1,5 +1,5 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useLocation, useNavigate } from "@tanstack/react-router";
+import { useQuery, useQueryClient } from "@tanstack/react-query"
+import { useLocation, useNavigate } from "@tanstack/react-router"
 import {
   Activity,
   Box,
@@ -12,8 +12,8 @@ import {
   ShoppingBag,
   UserCog,
   UserSquare,
-} from "lucide-react";
-import type * as React from "react";
+} from "lucide-react"
+import type * as React from "react"
 import {
   Sidebar,
   SidebarContent,
@@ -22,42 +22,42 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar";
-import { useEmployees } from "@/hooks/use-employees";
-import { useEstablishment } from "@/hooks/use-establishment";
-import { useSubscription } from "@/hooks/use-subscription";
-import { getPlan } from "@/http/payments/get-plan";
-import { clearToken } from "@/lib/auth";
-import { queryKeys } from "@/lib/query-keys";
-import { NavMain } from "./main-nav";
-import { NavUser } from "./nav-user";
-import { SimpleSubscriptionCard } from "./subscription-card";
+} from "@/components/ui/sidebar"
+import { useEmployees } from "@/hooks/use-employees"
+import { useEstablishment } from "@/hooks/use-establishment"
+import { useSubscription } from "@/hooks/use-subscription"
+import { getPlan } from "@/http/payments/get-plan"
+import { clearToken } from "@/lib/auth"
+import { queryKeys } from "@/lib/query-keys"
+import { NavMain } from "./main-nav"
+import { NavUser } from "./nav-user"
+import { SimpleSubscriptionCard } from "./subscription-card"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { pathname } = useLocation();
-  const navigate = useNavigate();
-  const queryClient = useQueryClient();
+  const { pathname } = useLocation()
+  const navigate = useNavigate()
+  const queryClient = useQueryClient()
 
-  const { establishment } = useEstablishment();
-  const { currentSubscription } = useSubscription();
-  const { data: employees } = useEmployees();
+  const { establishment } = useEstablishment()
+  const { currentSubscription } = useSubscription()
+  const { data: employees } = useEmployees()
 
   const { data: plan, isLoading: planIsLoading } = useQuery({
     queryKey: queryKeys.plan(currentSubscription?.plan.id ?? ""),
     queryFn: () => getPlan(currentSubscription?.plan.id!),
     enabled: !!currentSubscription?.plan.id,
-  });
+  })
 
-  const totalEmployees = employees?.length ?? 0;
+  const totalEmployees = employees?.length ?? 0
 
   function handleLogout() {
-    queryClient.clear();
-    clearToken();
+    queryClient.clear()
+    clearToken()
     navigate({
       to: "/login",
       replace: true,
       search: { redirect: undefined },
-    });
+    })
   }
 
   return (
@@ -168,7 +168,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             totalEmployees={totalEmployees}
             isLoading={planIsLoading}
             onUpgrade={() => {
-              navigate({ to: "/", href: "/#plans" });
+              navigate({ to: "/", href: "/#plans" })
             }}
           />
         </div>
@@ -177,5 +177,5 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavUser />
       </SidebarFooter>
     </Sidebar>
-  );
+  )
 }

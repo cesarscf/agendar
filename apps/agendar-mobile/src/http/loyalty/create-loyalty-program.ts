@@ -1,6 +1,6 @@
-import { api } from "../api-client"
 import type { CreateLoyaltyProgramRequest } from "@/lib/validations/loyalty-program"
 import { handleApiError } from "@/utils"
+import { api } from "../api-client"
 
 export async function createLoyaltyProgram(data: CreateLoyaltyProgramRequest) {
   try {

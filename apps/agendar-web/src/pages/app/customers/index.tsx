@@ -1,5 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query"
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router"
 import {
   ArrowRight,
   CalendarDays,
@@ -9,34 +9,32 @@ import {
   MapPin,
   Phone,
   Search,
-} from "lucide-react";
-import React from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { getCustomers } from "@/http/customers/get-customers";
+} from "lucide-react"
+import React from "react"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { getCustomers } from "@/http/customers/get-customers"
 
 export const Route = createFileRoute("/app/customers/")({
   component: Customers,
-});
+})
 
 function Customers() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
-  const [name, setName] = React.useState("");
+  const [name, setName] = React.useState("")
 
   const { data, isLoading } = useQuery({
     queryKey: ["customers"],
     queryFn: getCustomers,
-  });
+  })
 
   const filteredCustomers = React.useMemo(() => {
-    if (!data) return [];
-    const query = name.toLowerCase();
-    return data.filter((customer) =>
-      customer.name?.toLowerCase().includes(query),
-    );
-  }, [data, name]);
+    if (!data) return []
+    const query = name.toLowerCase()
+    return data.filter(customer => customer.name?.toLowerCase().includes(query))
+  }, [data, name])
 
   if (isLoading) {
     return (
@@ -66,7 +64,7 @@ function Customers() {
           ))}
         </div>
       </div>
-    );
+    )
   }
 
   return (
@@ -88,11 +86,11 @@ function Customers() {
           placeholder="Pesquisar"
           className="pl-10 bg-background border-border text-foreground"
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={e => setName(e.target.value)}
         />
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredCustomers?.map((customer) => (
+        {filteredCustomers?.map(customer => (
           <Card
             key={customer.id}
             className="group cursor-pointer hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-border/50 hover:border-border"
@@ -100,7 +98,7 @@ function Customers() {
               navigate({
                 to: "/app/customers/$customerId",
                 params: { customerId: customer.id },
-              });
+              })
             }}
           >
             <CardHeader className="pb-4">
@@ -197,5 +195,5 @@ function Customers() {
         </div>
       )}
     </div>
-  );
+  )
 }

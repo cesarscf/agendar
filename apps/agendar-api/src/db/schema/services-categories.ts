@@ -1,8 +1,8 @@
+import { relations } from "drizzle-orm"
+import { pgTable, uuid } from "drizzle-orm/pg-core"
 import { categories } from "@/db/schema/categories"
 import { services } from "@/db/schema/services"
 import { lifecycleDates } from "@/db/schema/utils"
-import { relations } from "drizzle-orm"
-import { pgTable, uuid } from "drizzle-orm/pg-core"
 
 export const serviceCategories = pgTable("service_categories", {
   id: uuid("id").notNull().primaryKey().defaultRandom(),

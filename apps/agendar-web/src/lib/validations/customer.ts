@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "zod"
 
 export const customerSchema = z.object({
   id: z.string().uuid({
@@ -27,13 +27,13 @@ export const customerSchema = z.object({
   state: z.string().optional(),
   city: z.string().optional(),
   address: z.string().optional(),
-});
+})
 
-export const createCustomerSchema = customerSchema.omit({ id: true });
+export const createCustomerSchema = customerSchema.omit({ id: true })
 export const updateCustomerSchema = customerSchema.partial().extend({
   id: z.string().min(1, "ID obrigatório"),
-});
+})
 
-export type Customer = z.infer<typeof customerSchema>;
-export type CreateCustomerRequest = z.infer<typeof createCustomerSchema>;
-export type UpdateCustomerRequest = z.infer<typeof updateCustomerSchema>;
+export type Customer = z.infer<typeof customerSchema>
+export type CreateCustomerRequest = z.infer<typeof createCustomerSchema>
+export type UpdateCustomerRequest = z.infer<typeof updateCustomerSchema>

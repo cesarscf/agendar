@@ -1,22 +1,22 @@
-import { useQuery } from "@tanstack/react-query";
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { ArrowRight, Gift, Hammer } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { getLoyaltyPrograms } from "@/http/loyalty/get-loyalty-programs";
+import { useQuery } from "@tanstack/react-query"
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router"
+import { ArrowRight, Gift, Hammer } from "lucide-react"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader } from "@/components/ui/card"
+import { getLoyaltyPrograms } from "@/http/loyalty/get-loyalty-programs"
 
 export const Route = createFileRoute("/app/loyalty-programs/")({
   component: LoyaltyPrograms,
-});
+})
 
 function LoyaltyPrograms() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const { data, isLoading } = useQuery({
     queryKey: ["loyalty-programs"],
     queryFn: getLoyaltyPrograms,
-  });
+  })
 
   if (isLoading) {
     return (
@@ -43,7 +43,7 @@ function LoyaltyPrograms() {
           ))}
         </div>
       </div>
-    );
+    )
   }
 
   return (
@@ -63,7 +63,7 @@ function LoyaltyPrograms() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {data?.map((program) => (
+        {data?.map(program => (
           <Card
             key={program.id}
             className="group cursor-pointer hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-border/50 hover:border-border"
@@ -113,7 +113,7 @@ function LoyaltyPrograms() {
                   Regras:
                 </span>
                 <ul className="text-xs space-y-1">
-                  {program.rules.map((rule) => (
+                  {program.rules.map(rule => (
                     <li key={rule.serviceId} className="flex justify-between">
                       <span>{rule.serviceName}</span>
                       <span className="font-medium">+{rule.points} pts</span>
@@ -149,5 +149,5 @@ function LoyaltyPrograms() {
         </div>
       )}
     </div>
-  );
+  )
 }

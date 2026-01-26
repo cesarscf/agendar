@@ -1,16 +1,15 @@
-import {
-  View,
-  Text,
-  Modal,
-  TouchableOpacity,
-  Alert,
-  TextInput,
-} from "react-native"
 import { X } from "lucide-react-native"
 import { useState } from "react"
-
-import { AppButton } from "./button"
+import {
+  Alert,
+  Modal,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native"
 import type { Appointment } from "@/hooks/data/appointment/use-appointments"
+import { AppButton } from "./button"
 
 interface CancelAppointmentDialogProps {
   visible: boolean

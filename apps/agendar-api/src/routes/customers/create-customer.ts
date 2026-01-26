@@ -1,13 +1,12 @@
+import { and, eq } from "drizzle-orm"
+import type { FastifyInstance } from "fastify"
+import type { ZodTypeProvider } from "fastify-type-provider-zod"
+import z from "zod"
 import { db } from "@/db"
 import { customers } from "@/db/schema"
 import { auth } from "@/middlewares/auth"
 import { customerSchema } from "@/utils/schemas/customers"
 import { establishmentHeaderSchema } from "@/utils/schemas/headers"
-import { and, eq } from "drizzle-orm"
-import {} from "drizzle-orm"
-import type { FastifyInstance } from "fastify"
-import type { ZodTypeProvider } from "fastify-type-provider-zod"
-import z from "zod"
 import { BadRequestError } from "../_erros/bad-request-error"
 
 export async function createCustomer(app: FastifyInstance) {

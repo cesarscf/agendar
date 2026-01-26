@@ -1,4 +1,3 @@
-import { usePackages } from "@/hooks/data/packages/use-packages"
 import { useRouter } from "expo-router"
 import { ChevronRight, Package } from "lucide-react-native"
 import {
@@ -11,6 +10,7 @@ import {
   View,
 } from "react-native"
 import { Empty } from "@/components/empty"
+import { usePackages } from "@/hooks/data/packages/use-packages"
 import { formatCentsToReal } from "@/utils/currency"
 
 export default function Packages() {

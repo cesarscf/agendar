@@ -1,8 +1,8 @@
-import { ListItem } from "@/components/list-item"
-import { useSession } from "@/providers/auth-context"
 import type { Href } from "expo-router"
 import { ChevronRight, Headset, LogOut } from "lucide-react-native"
 import { Pressable, Text, View } from "react-native"
+import { ListItem } from "@/components/list-item"
+import { useSession } from "@/providers/auth-context"
 
 export default function Settings() {
   const { signOut } = useSession()

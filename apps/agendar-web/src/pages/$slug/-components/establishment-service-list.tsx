@@ -1,27 +1,27 @@
-import { useNavigate, useParams } from "@tanstack/react-router";
-import { Clock, Scissors, Search } from "lucide-react";
-import React from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import type { PublicService } from "@/http/public/get-public-services";
-import { formatPriceFromCents } from "@/lib/utils";
+import { useNavigate, useParams } from "@tanstack/react-router"
+import { Clock, Scissors, Search } from "lucide-react"
+import React from "react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import type { PublicService } from "@/http/public/get-public-services"
+import { formatPriceFromCents } from "@/lib/utils"
 
 export function EstablishmentServicesList({
   services,
 }: {
-  services: PublicService[];
+  services: PublicService[]
 }) {
-  const [searchTerm, setSearchTerm] = React.useState("");
+  const [searchTerm, setSearchTerm] = React.useState("")
 
   const filteredServices = React.useMemo(() => {
-    if (!searchTerm.trim()) return services;
+    if (!searchTerm.trim()) return services
 
     return services.filter(
-      (service) =>
+      service =>
         service.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        service.description?.toLowerCase().includes(searchTerm.toLowerCase()),
-    );
-  }, [services, searchTerm]);
+        service.description?.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+  }, [services, searchTerm])
 
   return (
     <div className="p-4 sm:p-6">
@@ -33,12 +33,12 @@ export function EstablishmentServicesList({
           placeholder="Pesquisar"
           className="pl-10 bg-background border-border text-foreground"
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={e => setSearchTerm(e.target.value)}
         />
       </div>
 
       <div className="space-y-4">
-        {filteredServices.map((service) => (
+        {filteredServices.map(service => (
           <ServiceItem key={service.id} service={service} />
         ))}
         {filteredServices.length === 0 && searchTerm.trim() && (
@@ -48,15 +48,15 @@ export function EstablishmentServicesList({
         )}
       </div>
     </div>
-  );
+  )
 }
 
 function ServiceItem({ service }: { service: PublicService }) {
-  const navigate = useNavigate();
-  const { slug } = useParams({ from: "/$slug" });
+  const navigate = useNavigate()
+  const { slug } = useParams({ from: "/$slug" })
 
-  const formattedPrice = formatPriceFromCents(service.price);
-  const formattedDuration = `${service.durationInMinutes} min`;
+  const formattedPrice = formatPriceFromCents(service.price)
+  const formattedDuration = `${service.durationInMinutes} min`
 
   return (
     <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 p-4 bg-card rounded-xl border border-border">
@@ -107,12 +107,12 @@ function ServiceItem({ service }: { service: PublicService }) {
                 serviceId: service.id,
                 packageId: undefined,
               },
-            });
+            })
           }}
         >
           Agendar
         </Button>
       </div>
     </div>
-  );
+  )
 }

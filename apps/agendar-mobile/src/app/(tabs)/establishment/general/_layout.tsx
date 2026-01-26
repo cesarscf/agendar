@@ -1,6 +1,6 @@
 import { router, Stack } from "expo-router"
 import { ChevronLeft } from "lucide-react-native"
-import { Pressable, View, Image } from "react-native"
+import { Image, Pressable, View } from "react-native"
 
 function HeaderLeft() {
   return (

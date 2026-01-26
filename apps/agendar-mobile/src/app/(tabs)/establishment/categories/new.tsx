@@ -1,5 +1,5 @@
-import { CreateCategoryForm } from "@/components/forms/create-category-form"
 import { View } from "react-native"
+import { CreateCategoryForm } from "@/components/forms/create-category-form"
 
 export default function NewCategory() {
   return (

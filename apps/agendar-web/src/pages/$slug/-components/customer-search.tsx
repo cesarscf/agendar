@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import {
   AlertCircle,
   Calendar,
@@ -7,9 +7,9 @@ import {
   Search,
   Trophy,
   XCircle,
-} from "lucide-react";
-import React from "react";
-import { toast } from "sonner";
+} from "lucide-react"
+import React from "react"
+import { toast } from "sonner"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -19,127 +19,124 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+} from "@/components/ui/alert-dialog"
+import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+} from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import {
   GetCustomerInfoByPhone,
   type GetCustomerInfoByPhoneResponse,
-} from "@/http/customers/get-customer-info-by-phone";
-import { cancelAppointmentPublic } from "@/http/public/cancel-appointment-public";
-import { maskPhone } from "@/lib/masks";
-import { cn } from "@/lib/utils";
+} from "@/http/customers/get-customer-info-by-phone"
+import { cancelAppointmentPublic } from "@/http/public/cancel-appointment-public"
+import { maskPhone } from "@/lib/masks"
+import { cn } from "@/lib/utils"
 
 interface CustomerSearchProps {
-  slug: string;
-  compact?: boolean;
+  slug: string
+  compact?: boolean
 }
 
 export function CustomerSearch({ slug, compact = false }: CustomerSearchProps) {
-  const [phoneNumber, setPhoneNumber] = React.useState("");
-  const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [phoneNumber, setPhoneNumber] = React.useState("")
+  const [isModalOpen, setIsModalOpen] = React.useState(false)
   const [customerData, setCustomerData] =
-    React.useState<GetCustomerInfoByPhoneResponse | null>(null);
-  const [error, setError] = React.useState<string | null>(null);
-  const [cancelDialogOpen, setCancelDialogOpen] = React.useState(false);
+    React.useState<GetCustomerInfoByPhoneResponse | null>(null)
+  const [error, setError] = React.useState<string | null>(null)
+  const [cancelDialogOpen, setCancelDialogOpen] = React.useState(false)
   const [appointmentToCancel, setAppointmentToCancel] = React.useState<{
-    id: string;
-    serviceName: string;
-  } | null>(null);
+    id: string
+    serviceName: string
+  } | null>(null)
 
-  const queryClient = useQueryClient();
+  const queryClient = useQueryClient()
 
   const searchCustomerMutation = useMutation({
     mutationFn: async (phone: string) => {
-      return await GetCustomerInfoByPhone({ slug, phone });
+      return await GetCustomerInfoByPhone({ slug, phone })
     },
-    onSuccess: (data) => {
-      console.log(data);
-      setCustomerData(data);
+    onSuccess: data => {
+      console.log(data)
+      setCustomerData(data)
 
-      setIsModalOpen(true);
-      setError(null);
+      setIsModalOpen(true)
+      setError(null)
     },
     onError: () => {
-      setError("Cliente não encontrado. Verifique o número e tente novamente.");
+      setError("Cliente não encontrado. Verifique o número e tente novamente.")
     },
-  });
+  })
 
   const cancelAppointmentMutation = useMutation({
     mutationFn: async ({
       id,
       phoneNumber,
     }: {
-      id: string;
-      phoneNumber: string;
+      id: string
+      phoneNumber: string
     }) => {
-      return await cancelAppointmentPublic({ slug, id, phoneNumber });
+      return await cancelAppointmentPublic({ slug, id, phoneNumber })
     },
     onSuccess: () => {
-      toast.success("Agendamento cancelado com sucesso!");
-      setCancelDialogOpen(false);
-      setAppointmentToCancel(null);
-      const cleanPhone = phoneNumber.replace(/\D/g, "");
-      searchCustomerMutation.mutate(cleanPhone);
+      toast.success("Agendamento cancelado com sucesso!")
+      setCancelDialogOpen(false)
+      setAppointmentToCancel(null)
+      const cleanPhone = phoneNumber.replace(/\D/g, "")
+      searchCustomerMutation.mutate(cleanPhone)
       queryClient.invalidateQueries({
         queryKey: ["public", "customer", slug, cleanPhone],
-      });
+      })
     },
     onError: () => {
-      toast.error("Erro ao cancelar agendamento. Tente novamente.");
+      toast.error("Erro ao cancelar agendamento. Tente novamente.")
     },
-  });
+  })
 
   const handleSearch = () => {
-    setError(null);
-    const cleanPhone = phoneNumber.replace(/\D/g, "");
+    setError(null)
+    const cleanPhone = phoneNumber.replace(/\D/g, "")
     if (cleanPhone.length === 11) {
-      searchCustomerMutation.mutate(cleanPhone);
+      searchCustomerMutation.mutate(cleanPhone)
     } else {
-      setError(
-        "Por favor, insira um número de telefone válido com 11 dígitos.",
-      );
+      setError("Por favor, insira um número de telefone válido com 11 dígitos.")
     }
-  };
+  }
 
   const handleCancelClick = (appointmentId: string, serviceName: string) => {
-    setAppointmentToCancel({ id: appointmentId, serviceName });
-    setCancelDialogOpen(true);
-  };
+    setAppointmentToCancel({ id: appointmentId, serviceName })
+    setCancelDialogOpen(true)
+  }
 
   const handleConfirmCancel = () => {
     if (appointmentToCancel && customerData) {
-      const cleanPhone = customerData.customer.phoneNumber.replace(/\D/g, "");
+      const cleanPhone = customerData.customer.phoneNumber.replace(/\D/g, "")
       cancelAppointmentMutation.mutate({
         id: appointmentToCancel.id,
         phoneNumber: cleanPhone,
-      });
+      })
     }
-  };
+  }
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: debounced search effect
   React.useEffect(() => {
-    const cleanPhone = phoneNumber.replace(/\D/g, "");
+    const cleanPhone = phoneNumber.replace(/\D/g, "")
 
     if (cleanPhone.length === 11) {
       const debounceTimer = setTimeout(() => {
-        handleSearch();
-      }, 800);
+        handleSearch()
+      }, 800)
 
-      return () => clearTimeout(debounceTimer);
+      return () => clearTimeout(debounceTimer)
     } else if (cleanPhone.length > 0 && cleanPhone.length < 11) {
-      setError(null);
+      setError(null)
     }
-  }, [phoneNumber]);
+  }, [phoneNumber])
 
   if (compact) {
     return (
@@ -148,11 +145,11 @@ export function CustomerSearch({ slug, compact = false }: CustomerSearchProps) {
           <Input
             placeholder="Consulta de agendamos, pacotes e fidelidade"
             value={phoneNumber}
-            onChange={(e) => setPhoneNumber(maskPhone(e.target.value))}
+            onChange={e => setPhoneNumber(maskPhone(e.target.value))}
             className={cn("pr-9 h-10", error && "border-destructive")}
-            onKeyDown={(e) => {
+            onKeyDown={e => {
               if (e.key === "Enter") {
-                handleSearch();
+                handleSearch()
               }
             }}
           />
@@ -172,7 +169,7 @@ export function CustomerSearch({ slug, compact = false }: CustomerSearchProps) {
         <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
           <DialogContent
             className="max-w-3xl max-h-[85vh] overflow-hidden flex flex-col"
-            onInteractOutside={(e) => e.preventDefault()}
+            onInteractOutside={e => e.preventDefault()}
           >
             <DialogHeader>
               <DialogTitle>Informações do Cliente</DialogTitle>
@@ -239,7 +236,7 @@ export function CustomerSearch({ slug, compact = false }: CustomerSearchProps) {
                                       appointment.status === "scheduled" &&
                                         "bg-blue-100 text-blue-700",
                                       appointment.status === "canceled" &&
-                                        "bg-red-100 text-red-700",
+                                        "bg-red-100 text-red-700"
                                     )}
                                   >
                                     {appointment.status === "completed" &&
@@ -257,7 +254,7 @@ export function CustomerSearch({ slug, compact = false }: CustomerSearchProps) {
                                       onClick={() =>
                                         handleCancelClick(
                                           appointment.id,
-                                          appointment.serviceName,
+                                          appointment.serviceName
                                         )
                                       }
                                     >
@@ -274,7 +271,7 @@ export function CustomerSearch({ slug, compact = false }: CustomerSearchProps) {
                                   <p className="text-muted-foreground">Data</p>
                                   <p className="font-medium">
                                     {new Date(
-                                      appointment.date,
+                                      appointment.date
                                     ).toLocaleDateString("pt-BR")}
                                   </p>
                                 </div>
@@ -284,14 +281,14 @@ export function CustomerSearch({ slug, compact = false }: CustomerSearchProps) {
                                   </p>
                                   <p className="font-medium">
                                     {new Date(
-                                      appointment.startTime,
+                                      appointment.startTime
                                     ).toLocaleTimeString("pt-BR", {
                                       hour: "2-digit",
                                       minute: "2-digit",
                                     })}{" "}
                                     -{" "}
                                     {new Date(
-                                      appointment.endTime,
+                                      appointment.endTime
                                     ).toLocaleTimeString("pt-BR", {
                                       hour: "2-digit",
                                       minute: "2-digit",
@@ -307,7 +304,7 @@ export function CustomerSearch({ slug, compact = false }: CustomerSearchProps) {
                                       "font-medium",
                                       appointment.checkin
                                         ? "text-green-600"
-                                        : "text-muted-foreground",
+                                        : "text-muted-foreground"
                                     )}
                                   >
                                     {appointment.checkin ? "Sim" : "Não"}
@@ -322,7 +319,7 @@ export function CustomerSearch({ slug, compact = false }: CustomerSearchProps) {
                                       "font-medium",
                                       appointment.paid
                                         ? "text-green-600"
-                                        : "text-yellow-600",
+                                        : "text-yellow-600"
                                     )}
                                   >
                                     {appointment.paid ? "Pago" : "Pendente"}
@@ -367,7 +364,7 @@ export function CustomerSearch({ slug, compact = false }: CustomerSearchProps) {
                                     "text-xs px-2 py-1 rounded-full font-medium",
                                     pkg.paid
                                       ? "bg-green-100 text-green-700"
-                                      : "bg-yellow-100 text-yellow-700",
+                                      : "bg-yellow-100 text-yellow-700"
                                   )}
                                 >
                                   {pkg.paid ? "Pago" : "Pendente"}
@@ -389,7 +386,7 @@ export function CustomerSearch({ slug, compact = false }: CustomerSearchProps) {
                                   </p>
                                   <p className="font-medium">
                                     {new Date(
-                                      pkg.purchasedAt,
+                                      pkg.purchasedAt
                                     ).toLocaleDateString("pt-BR")}
                                   </p>
                                 </div>
@@ -410,7 +407,7 @@ export function CustomerSearch({ slug, compact = false }: CustomerSearchProps) {
                   <TabsContent value="loyalty" className="space-y-3 m-0 h-full">
                     {customerData.loyaltyPrograms.length > 0 ? (
                       <div className="space-y-3">
-                        {customerData.loyaltyPrograms.map((program) => (
+                        {customerData.loyaltyPrograms.map(program => (
                           <Card key={program.id} className="p-4">
                             <div className="space-y-2">
                               <div className="flex justify-between items-start">
@@ -497,7 +494,7 @@ export function CustomerSearch({ slug, compact = false }: CustomerSearchProps) {
           </AlertDialogContent>
         </AlertDialog>
       </>
-    );
+    )
   }
 
   return (
@@ -508,11 +505,11 @@ export function CustomerSearch({ slug, compact = false }: CustomerSearchProps) {
             <Input
               placeholder="Informações de clientes"
               value={phoneNumber}
-              onChange={(e) => setPhoneNumber(maskPhone(e.target.value))}
+              onChange={e => setPhoneNumber(maskPhone(e.target.value))}
               className={cn("pr-10", error && "border-destructive")}
-              onKeyDown={(e) => {
+              onKeyDown={e => {
                 if (e.key === "Enter") {
-                  handleSearch();
+                  handleSearch()
                 }
               }}
             />
@@ -544,13 +541,13 @@ export function CustomerSearch({ slug, compact = false }: CustomerSearchProps) {
 
       <Dialog
         open={isModalOpen}
-        onOpenChange={(open) => {
-          if (open) setIsModalOpen(true);
+        onOpenChange={open => {
+          if (open) setIsModalOpen(true)
         }}
       >
         <DialogContent
           className="max-w-3xl max-h-[85vh] overflow-hidden flex flex-col"
-          onInteractOutside={(e) => e.preventDefault()}
+          onInteractOutside={e => e.preventDefault()}
         >
           <DialogHeader>
             <DialogTitle>Informações do Cliente</DialogTitle>
@@ -618,7 +615,7 @@ export function CustomerSearch({ slug, compact = false }: CustomerSearchProps) {
                                     appointment.status === "scheduled" &&
                                       "bg-blue-100 text-blue-700",
                                     appointment.status === "canceled" &&
-                                      "bg-red-100 text-red-700",
+                                      "bg-red-100 text-red-700"
                                   )}
                                 >
                                   {appointment.status === "completed" &&
@@ -636,7 +633,7 @@ export function CustomerSearch({ slug, compact = false }: CustomerSearchProps) {
                                     onClick={() =>
                                       handleCancelClick(
                                         appointment.id,
-                                        appointment.serviceName,
+                                        appointment.serviceName
                                       )
                                     }
                                   >
@@ -653,7 +650,7 @@ export function CustomerSearch({ slug, compact = false }: CustomerSearchProps) {
                                 <p className="text-muted-foreground">Data</p>
                                 <p className="font-medium">
                                   {new Date(
-                                    appointment.date,
+                                    appointment.date
                                   ).toLocaleDateString("pt-BR")}
                                 </p>
                               </div>
@@ -661,14 +658,14 @@ export function CustomerSearch({ slug, compact = false }: CustomerSearchProps) {
                                 <p className="text-muted-foreground">Horário</p>
                                 <p className="font-medium">
                                   {new Date(
-                                    appointment.startTime,
+                                    appointment.startTime
                                   ).toLocaleTimeString("pt-BR", {
                                     hour: "2-digit",
                                     minute: "2-digit",
                                   })}{" "}
                                   -{" "}
                                   {new Date(
-                                    appointment.endTime,
+                                    appointment.endTime
                                   ).toLocaleTimeString("pt-BR", {
                                     hour: "2-digit",
                                     minute: "2-digit",
@@ -684,7 +681,7 @@ export function CustomerSearch({ slug, compact = false }: CustomerSearchProps) {
                                     "font-medium",
                                     appointment.checkin
                                       ? "text-green-600"
-                                      : "text-muted-foreground",
+                                      : "text-muted-foreground"
                                   )}
                                 >
                                   {appointment.checkin ? "Sim" : "Não"}
@@ -699,7 +696,7 @@ export function CustomerSearch({ slug, compact = false }: CustomerSearchProps) {
                                     "font-medium",
                                     appointment.paid
                                       ? "text-green-600"
-                                      : "text-yellow-600",
+                                      : "text-yellow-600"
                                   )}
                                 >
                                   {appointment.paid ? "Pago" : "Pendente"}
@@ -741,7 +738,7 @@ export function CustomerSearch({ slug, compact = false }: CustomerSearchProps) {
                                   "text-xs px-2 py-1 rounded-full font-medium",
                                   pkg.paid
                                     ? "bg-green-100 text-green-700"
-                                    : "bg-yellow-100 text-yellow-700",
+                                    : "bg-yellow-100 text-yellow-700"
                                 )}
                               >
                                 {pkg.paid ? "Pago" : "Pendente"}
@@ -761,7 +758,7 @@ export function CustomerSearch({ slug, compact = false }: CustomerSearchProps) {
                                 </p>
                                 <p className="font-medium">
                                   {new Date(pkg.purchasedAt).toLocaleDateString(
-                                    "pt-BR",
+                                    "pt-BR"
                                   )}
                                 </p>
                               </div>
@@ -782,7 +779,7 @@ export function CustomerSearch({ slug, compact = false }: CustomerSearchProps) {
                 <TabsContent value="loyalty" className="space-y-3 m-0 h-full">
                   {customerData.loyaltyPrograms.length > 0 ? (
                     <div className="space-y-3">
-                      {customerData.loyaltyPrograms.map((program) => (
+                      {customerData.loyaltyPrograms.map(program => (
                         <Card key={program.id} className="p-4">
                           <div className="space-y-2">
                             <div className="flex justify-between items-start">
@@ -869,5 +866,5 @@ export function CustomerSearch({ slug, compact = false }: CustomerSearchProps) {
         </AlertDialogContent>
       </AlertDialog>
     </>
-  );
+  )
 }

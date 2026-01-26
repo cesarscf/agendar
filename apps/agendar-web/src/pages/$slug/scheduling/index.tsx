@@ -1,20 +1,20 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { ThemeWrapper } from "@/components/theme-wrapper";
-import { getPublicEstablishment } from "@/http/public/get-public-establishment";
-import { SchedulingFromPackage } from "./-components/scheduling-from-package";
-import { SchedulingFromProfessional } from "./-components/scheduling-from-professional";
-import { SchedulingFromService } from "./-components/scheduling-from-service";
+import { createFileRoute } from "@tanstack/react-router"
+import { ThemeWrapper } from "@/components/theme-wrapper"
+import { getPublicEstablishment } from "@/http/public/get-public-establishment"
+import { SchedulingFromPackage } from "./-components/scheduling-from-package"
+import { SchedulingFromProfessional } from "./-components/scheduling-from-professional"
+import { SchedulingFromService } from "./-components/scheduling-from-service"
 
 export const Route = createFileRoute("/$slug/scheduling/")({
   component: RouteComponent,
   loader: async ({ params }) => {
-    const slug = params.slug;
+    const slug = params.slug
 
-    const data = await getPublicEstablishment(slug);
+    const data = await getPublicEstablishment(slug)
 
     return {
       ...data,
-    };
+    }
   },
   validateSearch: (search: Record<string, unknown>) => {
     return {
@@ -26,17 +26,17 @@ export const Route = createFileRoute("/$slug/scheduling/")({
         typeof search.serviceId === "string" ? search.serviceId : undefined,
       packageId:
         typeof search.packageId === "string" ? search.packageId : undefined,
-    };
+    }
   },
-});
+})
 
 function RouteComponent() {
-  const establishment = Route.useLoaderData();
+  const establishment = Route.useLoaderData()
 
-  const { slug } = Route.useParams();
-  const { professionalId, serviceId, packageId } = Route.useSearch();
+  const { slug } = Route.useParams()
+  const { professionalId, serviceId, packageId } = Route.useSearch()
 
-  if (!establishment) return;
+  if (!establishment) return
 
   return (
     <ThemeWrapper theme={establishment.theme}>
@@ -62,5 +62,5 @@ function RouteComponent() {
         />
       )}
     </ThemeWrapper>
-  );
+  )
 }

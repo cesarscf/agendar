@@ -1,32 +1,32 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { createFileRoute } from "@tanstack/react-router";
-import { format } from "date-fns";
-import { RefreshCw } from "lucide-react";
-import { parseAsInteger, parseAsString, useQueryStates } from "nuqs";
+import { useQuery, useQueryClient } from "@tanstack/react-query"
+import { createFileRoute } from "@tanstack/react-router"
+import { format } from "date-fns"
+import { RefreshCw } from "lucide-react"
+import { parseAsInteger, parseAsString, useQueryStates } from "nuqs"
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
 
 import {
   type GetAppointmentsParams,
   getAppointments,
-} from "@/http/appointments/get-appointments";
-import { getEmployees } from "@/http/employees/get-employees";
-import { getServices } from "@/http/services/get-services";
-import { AppointmentsEmpty } from "./-components/appointments-empty";
-import { AppointmentsFilters } from "./-components/appointments-filters";
-import { AppointmentsPagination } from "./-components/appointments-pagination";
-import { AppointmentsSkeleton } from "./-components/appointments-skeleton";
-import { AppointmentsTable } from "./-components/appointments-table";
+} from "@/http/appointments/get-appointments"
+import { getEmployees } from "@/http/employees/get-employees"
+import { getServices } from "@/http/services/get-services"
+import { AppointmentsEmpty } from "./-components/appointments-empty"
+import { AppointmentsFilters } from "./-components/appointments-filters"
+import { AppointmentsPagination } from "./-components/appointments-pagination"
+import { AppointmentsSkeleton } from "./-components/appointments-skeleton"
+import { AppointmentsTable } from "./-components/appointments-table"
 
 export const Route = createFileRoute("/app/")({
   component: RouteComponent,
-});
+})
 
 function RouteComponent() {
-  const queryClient = useQueryClient();
+  const queryClient = useQueryClient()
 
-  const today = format(new Date(), "yyyy-MM-dd");
+  const today = format(new Date(), "yyyy-MM-dd")
 
   const [filters, setFilters] = useQueryStates({
     page: parseAsInteger.withDefault(1),
@@ -37,7 +37,7 @@ function RouteComponent() {
     search: parseAsString,
     serviceId: parseAsString,
     employeeId: parseAsString,
-  });
+  })
 
   const queryParams: GetAppointmentsParams = {
     page: filters.page,
@@ -50,25 +50,25 @@ function RouteComponent() {
     ...(filters.search && { search: filters.search }),
     ...(filters.serviceId && { serviceId: filters.serviceId }),
     ...(filters.employeeId && { employeeId: filters.employeeId }),
-  };
+  }
 
   const { data, isLoading, refetch, isFetching } = useQuery({
     queryKey: ["appointments", queryParams],
     queryFn: () => getAppointments(queryParams),
     refetchInterval: 5 * 60 * 1000,
-  });
+  })
 
   const { data: services } = useQuery({
     queryKey: ["services"],
     queryFn: getServices,
-  });
+  })
 
   const { data: employees } = useQuery({
     queryKey: ["employees"],
     queryFn: getEmployees,
-  });
+  })
 
-  const totalPages = data ? Math.ceil(data.total / filters.perPage) : 0;
+  const totalPages = data ? Math.ceil(data.total / filters.perPage) : 0
 
   const clearFilters = () => {
     setFilters({
@@ -79,20 +79,20 @@ function RouteComponent() {
       search: null,
       serviceId: null,
       employeeId: null,
-    });
-  };
+    })
+  }
 
-  const handlePageChange = (page: number) => setFilters({ page });
+  const handlePageChange = (page: number) => setFilters({ page })
 
   const handleFiltersChange = (newFilters: any) => {
-    setFilters(newFilters);
-  };
+    setFilters(newFilters)
+  }
 
   const handleInvalidateQueries = () => {
     queryClient.invalidateQueries({
       queryKey: ["appointments", queryParams],
-    });
-  };
+    })
+  }
 
   return (
     <div className="container mx-auto py-8 px-4">
@@ -144,5 +144,5 @@ function RouteComponent() {
         </CardContent>
       </Card>
     </div>
-  );
+  )
 }

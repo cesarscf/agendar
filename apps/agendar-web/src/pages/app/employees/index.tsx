@@ -1,5 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query"
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router"
 import {
   ArrowRight,
   ArrowUp,
@@ -8,43 +8,43 @@ import {
   MapPin,
   Phone,
   User,
-} from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+} from "lucide-react"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
-import { useSubscription } from "@/hooks/use-subscription";
-import { getEmployees } from "@/http/employees/get-employees";
-import { getPlan } from "@/http/payments/get-plan";
-import { queryKeys } from "@/lib/query-keys";
+} from "@/components/ui/popover"
+import { useSubscription } from "@/hooks/use-subscription"
+import { getEmployees } from "@/http/employees/get-employees"
+import { getPlan } from "@/http/payments/get-plan"
+import { queryKeys } from "@/lib/query-keys"
 
 export const Route = createFileRoute("/app/employees/")({
   component: Employees,
-});
+})
 
 function Employees() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const { data: employees, isLoading } = useQuery({
     queryKey: ["employees"],
     queryFn: getEmployees,
-  });
+  })
 
-  const { currentSubscription } = useSubscription();
+  const { currentSubscription } = useSubscription()
 
   const { data: plan, isLoading: planIsLoading } = useQuery({
     queryKey: queryKeys.plan(currentSubscription?.plan.id ?? ""),
     queryFn: () => getPlan(currentSubscription?.plan.id!),
     enabled: !!currentSubscription?.plan.id,
-  });
+  })
 
-  const totalEmployees = employees?.length ?? 0;
-  const maxEmployees = plan?.maximumProfessionalsIncluded ?? 1;
-  const hasReachedLimit = totalEmployees >= maxEmployees;
+  const totalEmployees = employees?.length ?? 0
+  const maxEmployees = plan?.maximumProfessionalsIncluded ?? 1
+  const hasReachedLimit = totalEmployees >= maxEmployees
 
   if (isLoading) {
     return (
@@ -74,7 +74,7 @@ function Employees() {
           ))}
         </div>
       </div>
-    );
+    )
   }
 
   return (
@@ -113,7 +113,7 @@ function Employees() {
                 <Button
                   className="w-full"
                   onClick={() => {
-                    navigate({ to: "/", href: "/#plans" });
+                    navigate({ to: "/", href: "/#plans" })
                   }}
                 >
                   <ArrowUp className="h-4 w-4 mr-2" />
@@ -129,7 +129,7 @@ function Employees() {
         )}
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {employees?.map((employee) => (
+        {employees?.map(employee => (
           <Card
             key={employee.id}
             className="group cursor-pointer hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-border/50 hover:border-border"
@@ -137,7 +137,7 @@ function Employees() {
               navigate({
                 to: "/app/employees/$employeeId",
                 params: { employeeId: employee.id },
-              });
+              })
             }}
           >
             <CardHeader className="pb-4">
@@ -237,5 +237,5 @@ function Employees() {
         </div>
       )}
     </div>
-  );
+  )
 }

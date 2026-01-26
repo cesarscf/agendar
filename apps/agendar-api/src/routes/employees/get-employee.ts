@@ -1,3 +1,7 @@
+import { and, eq } from "drizzle-orm"
+import type { FastifyInstance } from "fastify"
+import type { ZodTypeProvider } from "fastify-type-provider-zod"
+import z from "zod"
 import { db } from "@/db"
 import { employees } from "@/db/schema"
 import { auth } from "@/middlewares/auth"
@@ -5,10 +9,6 @@ import { requireActiveSubscription } from "@/middlewares/require-active-subscrip
 import { commissionToFront } from "@/utils/commission"
 import { employeeSchema } from "@/utils/schemas/employees"
 import { establishmentHeaderSchema } from "@/utils/schemas/headers"
-import { and, eq } from "drizzle-orm"
-import type { FastifyInstance } from "fastify"
-import type { ZodTypeProvider } from "fastify-type-provider-zod"
-import z from "zod"
 import { BadRequestError } from "../_erros/bad-request-error"
 
 export async function getEmployee(app: FastifyInstance) {

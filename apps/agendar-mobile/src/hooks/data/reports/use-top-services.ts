@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query"
 import {
-  getTopServices,
   type GetTopServicesParams,
   type GetTopServicesResponse,
+  getTopServices,
 } from "@/http/reports/get-top-services"
 
 export function useTopServices(params: GetTopServicesParams) {

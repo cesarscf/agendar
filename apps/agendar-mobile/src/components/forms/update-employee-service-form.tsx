@@ -1,5 +1,5 @@
-import { useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useState } from "react"
 import { Controller, useFieldArray, useForm } from "react-hook-form"
 import {
   Alert,
@@ -10,15 +10,15 @@ import {
   View,
 } from "react-native"
 import type { z } from "zod"
-import { Input } from "../input"
-import { AppButton } from "../button"
-import { IconButton } from "../icon-button"
-import { Select } from "../select"
-import type { SelectOption } from "../select"
-import { updateEmployeeServicesSchema } from "@/lib/validations/employee"
 import { useUpdateEmployeeServices } from "@/hooks/data/employees/use-update-employee-services"
 import { useServices } from "@/hooks/data/services/use-services"
 import type { Employee } from "@/lib/validations/employee"
+import { updateEmployeeServicesSchema } from "@/lib/validations/employee"
+import { AppButton } from "../button"
+import { IconButton } from "../icon-button"
+import { Input } from "../input"
+import type { SelectOption } from "../select"
+import { Select } from "../select"
 
 type Inputs = z.infer<typeof updateEmployeeServicesSchema>
 
@@ -145,7 +145,7 @@ export function UpdateEmployeeServiceForm({
 
     // Limita a 100
     const numValue = parseFloat(cleaned)
-    if (!isNaN(numValue) && numValue > 100) {
+    if (!Number.isNaN(numValue) && numValue > 100) {
       return "100"
     }
 
@@ -252,7 +252,9 @@ export function UpdateEmployeeServiceForm({
                                 }}
                               />
                             </View>
-                            <Text className="text-lg font-medium text-gray-700">%</Text>
+                            <Text className="text-lg font-medium text-gray-700">
+                              %
+                            </Text>
                           </View>
                           {form.formState.errors.services?.[index]
                             ?.commission && (

@@ -1,17 +1,17 @@
-import { format } from "date-fns";
-import { api } from "@/lib/api-client";
+import { format } from "date-fns"
+import { api } from "@/lib/api-client"
 
 export type CreateAppointmentRequest = {
-  employeeId: string;
-  serviceId: string;
-  date: Date;
-  startTime: Date;
-  customerPhone: string;
-  establishmentId: string;
-};
+  employeeId: string
+  serviceId: string
+  date: Date
+  startTime: Date
+  customerPhone: string
+  establishmentId: string
+}
 
 export async function createAppointment(inputs: CreateAppointmentRequest) {
-  const utcTime = new Date(inputs.startTime.toISOString());
+  const utcTime = new Date(inputs.startTime.toISOString())
 
   const payload = {
     employeeId: inputs.employeeId,
@@ -24,12 +24,12 @@ export async function createAppointment(inputs: CreateAppointmentRequest) {
       hour12: false,
       timeZone: "UTC",
     }),
-  };
+  }
 
   await api.post("/appointments", payload, {
     headers: {
       "x-establishment-id": inputs.establishmentId,
       "x-customer-phone": inputs.customerPhone,
     },
-  });
+  })
 }

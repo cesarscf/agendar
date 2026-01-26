@@ -1,4 +1,4 @@
-import { CalendarIcon } from "lucide-react";
+import { CalendarIcon } from "lucide-react"
 import {
   Button,
   DateRangePicker,
@@ -6,10 +6,10 @@ import {
   Group,
   Label,
   Popover,
-} from "react-aria-components";
-import { RangeCalendar } from "@/components/ui/calendar-rac";
-import { DateInput, dateInputStyle } from "@/components/ui/datefield-rac";
-import { cn } from "@/lib/utils";
+} from "react-aria-components"
+import { RangeCalendar } from "@/components/ui/calendar-rac"
+import { DateInput, dateInputStyle } from "@/components/ui/datefield-rac"
+import { cn } from "@/lib/utils"
 
 export function DateRangePickerOrigin() {
   return (
@@ -38,5 +38,5 @@ export function DateRangePickerOrigin() {
         </Dialog>
       </Popover>
     </DateRangePicker>
-  );
+  )
 }

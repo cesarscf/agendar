@@ -1,28 +1,28 @@
-import { useQuery } from "@tanstack/react-query";
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { ChevronLeft } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { getService } from "@/http/services/get-service";
-import { UpdateServiceForm } from "./-components/update-service-form";
+import { useQuery } from "@tanstack/react-query"
+import { createFileRoute, Link } from "@tanstack/react-router"
+import { ChevronLeft } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { getService } from "@/http/services/get-service"
+import { UpdateServiceForm } from "./-components/update-service-form"
 
 export const Route = createFileRoute("/app/services/$serviceId/")({
   component: Service,
-});
+})
 
 function Service() {
-  const { serviceId } = Route.useParams();
+  const { serviceId } = Route.useParams()
 
   const { data, isLoading } = useQuery({
     queryKey: ["services", serviceId],
     queryFn: () => getService(serviceId),
-  });
+  })
 
   if (!data || isLoading) {
-    return null;
+    return null
   }
 
   if (!data) {
-    return null;
+    return null
   }
 
   return (
@@ -42,5 +42,5 @@ function Service() {
 
       <UpdateServiceForm service={data} />
     </div>
-  );
+  )
 }

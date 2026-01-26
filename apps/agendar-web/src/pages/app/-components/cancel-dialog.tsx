@@ -1,12 +1,12 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
-import { Loader2, X } from "lucide-react";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { toast } from "sonner";
-import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useMutation } from "@tanstack/react-query"
+import { Loader2, X } from "lucide-react"
+import { useState } from "react"
+import { useForm } from "react-hook-form"
+import { toast } from "sonner"
+import { z } from "zod"
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button"
 import {
   Dialog,
   DialogContent,
@@ -15,58 +15,58 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
+} from "@/components/ui/dialog"
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
-} from "@/components/ui/form";
-import { Textarea } from "@/components/ui/textarea";
-import { cancelAppointment } from "@/http/appointments/cancel-appointment";
-import type { Appointment } from "@/http/appointments/get-appointments";
+} from "@/components/ui/form"
+import { Textarea } from "@/components/ui/textarea"
+import { cancelAppointment } from "@/http/appointments/cancel-appointment"
+import type { Appointment } from "@/http/appointments/get-appointments"
 
 const cancelSchema = z.object({
   reason: z.string().optional(),
-});
+})
 
-type CancelFormValues = z.infer<typeof cancelSchema>;
+type CancelFormValues = z.infer<typeof cancelSchema>
 
 export function CancelDialog({
   data,
   onSuccess,
 }: {
-  data: Appointment;
-  onSuccess: () => void;
+  data: Appointment
+  onSuccess: () => void
 }) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false)
 
   const form = useForm<CancelFormValues>({
     resolver: zodResolver(cancelSchema),
     defaultValues: {
       reason: "",
     },
-  });
+  })
 
   const { mutate, isPending } = useMutation({
     mutationFn: cancelAppointment,
     onSuccess: () => {
-      onSuccess();
-      setOpen(false);
-      form.reset();
+      onSuccess()
+      setOpen(false)
+      form.reset()
     },
     onError: () => {
-      toast.error("Falha ao cancelar agendamento. Tente novamente.");
+      toast.error("Falha ao cancelar agendamento. Tente novamente.")
     },
-  });
+  })
 
   const handleSubmit = (values: CancelFormValues) => {
     mutate({
       appointmentId: data.id,
       reason: values.reason,
-    });
-  };
+    })
+  }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -124,5 +124,5 @@ export function CancelDialog({
         </Form>
       </DialogContent>
     </Dialog>
-  );
+  )
 }

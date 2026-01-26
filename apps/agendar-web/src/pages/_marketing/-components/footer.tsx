@@ -1,6 +1,6 @@
-import { Link } from "@tanstack/react-router";
-import { Mail, MapPin, Phone } from "lucide-react";
-import { Separator } from "@/components/ui/separator";
+import { Link } from "@tanstack/react-router"
+import { Mail, MapPin, Phone } from "lucide-react"
+import { Separator } from "@/components/ui/separator"
 
 export function Footer() {
   return (
@@ -111,5 +111,5 @@ export function Footer() {
         </div>
       </div>
     </footer>
-  );
+  )
 }

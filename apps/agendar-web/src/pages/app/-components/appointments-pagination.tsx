@@ -5,14 +5,14 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@/components/ui/pagination";
+} from "@/components/ui/pagination"
 
 interface AppointmentsPaginationProps {
-  currentPage: number;
-  totalPages: number;
-  perPage: number;
-  total: number;
-  onPageChange: (page: number) => void;
+  currentPage: number
+  totalPages: number
+  perPage: number
+  total: number
+  onPageChange: (page: number) => void
 }
 
 export function AppointmentsPagination({
@@ -22,7 +22,7 @@ export function AppointmentsPagination({
   total,
   onPageChange,
 }: AppointmentsPaginationProps) {
-  if (totalPages <= 1) return null;
+  if (totalPages <= 1) return null
 
   return (
     <div className="pt-4 border-t">
@@ -46,13 +46,13 @@ export function AppointmentsPagination({
             </PaginationItem>
 
             {Array.from({ length: totalPages }, (_, i) => i + 1)
-              .filter((page) => {
-                const current = currentPage;
+              .filter(page => {
+                const current = currentPage
                 return (
                   page === 1 ||
                   page === totalPages ||
                   (page >= current - 1 && page <= current + 1)
-                );
+                )
               })
               .map((page, index, array) => (
                 <PaginationItem key={page}>
@@ -83,5 +83,5 @@ export function AppointmentsPagination({
         </Pagination>
       </div>
     </div>
-  );
+  )
 }

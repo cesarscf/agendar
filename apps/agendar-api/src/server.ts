@@ -1,3 +1,15 @@
+import { fastifyCors } from "@fastify/cors"
+import fastifyJwt from "@fastify/jwt"
+import { fastifySwagger } from "@fastify/swagger"
+import { fastifySwaggerUi } from "@fastify/swagger-ui"
+import { eq } from "drizzle-orm"
+import { fastify } from "fastify"
+import fastifyRawBody from "fastify-raw-body"
+import {
+  jsonSchemaTransform,
+  serializerCompiler,
+  validatorCompiler,
+} from "fastify-type-provider-zod"
 import { db } from "@/db"
 import { fcmTokens } from "@/db/schema"
 import { env } from "@/env"
@@ -21,18 +33,6 @@ import { servicesRoutes } from "@/routes/services"
 import { subscriptionRoutes } from "@/routes/subscription"
 import { stripeWebhook } from "@/routes/subscription/stripe-webhook"
 import { errorHandler } from "@/utils/error-handler"
-import { fastifyCors } from "@fastify/cors"
-import fastifyJwt from "@fastify/jwt"
-import { fastifySwagger } from "@fastify/swagger"
-import { fastifySwaggerUi } from "@fastify/swagger-ui"
-import { eq } from "drizzle-orm"
-import { fastify } from "fastify"
-import fastifyRawBody from "fastify-raw-body"
-import {
-  jsonSchemaTransform,
-  serializerCompiler,
-  validatorCompiler,
-} from "fastify-type-provider-zod"
 
 const app = fastify({
   logger: {

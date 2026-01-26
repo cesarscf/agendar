@@ -1,11 +1,11 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useNavigate } from "@tanstack/react-router";
-import { Loader2 } from "lucide-react";
-import { useForm } from "react-hook-form";
-import { toast } from "sonner";
-import type z from "zod";
-import { Button } from "@/components/ui/button";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { useNavigate } from "@tanstack/react-router"
+import { Loader2 } from "lucide-react"
+import { useForm } from "react-hook-form"
+import { toast } from "sonner"
+import type z from "zod"
+import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -13,24 +13,21 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
 
-import { Textarea } from "@/components/ui/textarea";
-import { deleteCustomer } from "@/http/customers/delete-customer";
-import { updateCustomer } from "@/http/customers/update-customer";
-import { maskCPF, maskDate, maskPhone } from "@/lib/masks";
-import { formatIsoToDateBr } from "@/lib/utils";
-import {
-  type Customer,
-  updateCustomerSchema,
-} from "@/lib/validations/customer";
+import { Textarea } from "@/components/ui/textarea"
+import { deleteCustomer } from "@/http/customers/delete-customer"
+import { updateCustomer } from "@/http/customers/update-customer"
+import { maskCPF, maskDate, maskPhone } from "@/lib/masks"
+import { formatIsoToDateBr } from "@/lib/utils"
+import { type Customer, updateCustomerSchema } from "@/lib/validations/customer"
 
-type Inputs = z.infer<typeof updateCustomerSchema>;
+type Inputs = z.infer<typeof updateCustomerSchema>
 
 export function UpdateCustomerForm({ customer }: { customer: Customer }) {
-  const navigate = useNavigate();
-  const queryClient = useQueryClient();
+  const navigate = useNavigate()
+  const queryClient = useQueryClient()
 
   const form = useForm<Inputs>({
     resolver: zodResolver(updateCustomerSchema),
@@ -46,24 +43,24 @@ export function UpdateCustomerForm({ customer }: { customer: Customer }) {
       state: customer.state ?? "",
       notes: customer.notes ?? "",
     },
-  });
+  })
 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: updateCustomer,
-  });
+  })
 
   const { mutateAsync: deleteCustomerMutate, isPending: deleteIsPending } =
     useMutation({
       mutationFn: deleteCustomer,
-    });
+    })
 
   async function onSubmit(values: Inputs) {
-    await mutateAsync({ ...values, id: customer.id });
+    await mutateAsync({ ...values, id: customer.id })
 
-    queryClient.invalidateQueries({ queryKey: ["customer", customer.id] });
-    queryClient.invalidateQueries({ queryKey: ["customers"] });
+    queryClient.invalidateQueries({ queryKey: ["customer", customer.id] })
+    queryClient.invalidateQueries({ queryKey: ["customers"] })
 
-    toast.success("Cliente atualizado com sucesso!");
+    toast.success("Cliente atualizado com sucesso!")
   }
 
   return (
@@ -99,7 +96,7 @@ export function UpdateCustomerForm({ customer }: { customer: Customer }) {
                 <Input
                   placeholder="Digite aqui o telefone do cliente"
                   {...field}
-                  onChange={(e) => field.onChange(maskPhone(e.target.value))}
+                  onChange={e => field.onChange(maskPhone(e.target.value))}
                 />
               </FormControl>
               <FormMessage />
@@ -117,7 +114,7 @@ export function UpdateCustomerForm({ customer }: { customer: Customer }) {
                 <Input
                   placeholder="12/34/5678"
                   {...field}
-                  onChange={(e) => field.onChange(maskDate(e.target.value))}
+                  onChange={e => field.onChange(maskDate(e.target.value))}
                 />
               </FormControl>
               <FormMessage />
@@ -153,7 +150,7 @@ export function UpdateCustomerForm({ customer }: { customer: Customer }) {
                   placeholder="000.000.000-00"
                   maxLength={14}
                   {...field}
-                  onChange={(e) => field.onChange(maskCPF(e.target.value))}
+                  onChange={e => field.onChange(maskCPF(e.target.value))}
                 />
               </FormControl>
               <FormMessage />
@@ -237,14 +234,14 @@ export function UpdateCustomerForm({ customer }: { customer: Customer }) {
             onClick={async () => {
               if (
                 confirm(
-                  "Tem certeza que deseja excluir este cliente? Todos os dados relacionados serão excluídos.",
+                  "Tem certeza que deseja excluir este cliente? Todos os dados relacionados serão excluídos."
                 )
               ) {
-                await deleteCustomerMutate(customer.id);
+                await deleteCustomerMutate(customer.id)
 
-                queryClient.invalidateQueries({ queryKey: ["customers"] });
+                queryClient.invalidateQueries({ queryKey: ["customers"] })
 
-                navigate({ to: "/app/customers" });
+                navigate({ to: "/app/customers" })
               }
             }}
           >
@@ -256,5 +253,5 @@ export function UpdateCustomerForm({ customer }: { customer: Customer }) {
         </div>
       </form>
     </Form>
-  );
+  )
 }

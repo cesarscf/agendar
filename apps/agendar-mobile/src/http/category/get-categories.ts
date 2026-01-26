@@ -1,6 +1,6 @@
-import { api } from "../api-client"
 import type { Category } from "@/lib/validations/category"
 import { handleApiError } from "@/utils"
+import { api } from "../api-client"
 
 export async function getCategories() {
   try {

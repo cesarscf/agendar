@@ -1,5 +1,6 @@
-import { createServiceSchema } from "@/lib/validations/service"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { router } from "expo-router"
+import React from "react"
 import { Controller, useForm } from "react-hook-form"
 import {
   Alert,
@@ -9,15 +10,14 @@ import {
   View,
 } from "react-native"
 import type { z } from "zod"
-import { Input } from "../input"
-import { AppButton } from "../button"
-import { ImagePickerControl } from "../image-picker"
-import { CategorySelector } from "../category-selector"
 import { useCreateService } from "@/hooks/data/services"
-import { router } from "expo-router"
 import { StorageEntity, uploadImageToFirebase } from "@/lib/upload-image"
+import { createServiceSchema } from "@/lib/validations/service"
 import { formatCurrencyInput } from "@/utils/currency"
-import React from "react"
+import { AppButton } from "../button"
+import { CategorySelector } from "../category-selector"
+import { ImagePickerControl } from "../image-picker"
+import { Input } from "../input"
 
 type Inputs = z.infer<typeof createServiceSchema>
 

@@ -95,4 +95,4 @@ export const queryKeys = {
     timeSlots: (slug: string, params: Record<string, unknown>) =>
       ["public", "time-slots", slug, params] as const,
   },
-} as const;
+} as const

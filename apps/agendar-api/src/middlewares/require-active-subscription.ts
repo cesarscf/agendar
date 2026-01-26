@@ -1,10 +1,10 @@
+import { desc, eq } from "drizzle-orm"
+import type { FastifyInstance } from "fastify"
+import fastifyPlugin from "fastify-plugin"
 import { db } from "@/db"
 import { subscriptions } from "@/db/schema"
 import { env } from "@/env"
 import { ForbiddenError } from "@/routes/_erros/forbidden-request-error"
-import { desc, eq } from "drizzle-orm"
-import type { FastifyInstance } from "fastify"
-import fastifyPlugin from "fastify-plugin"
 
 export const requireActiveSubscription = fastifyPlugin(
   async (app: FastifyInstance) => {

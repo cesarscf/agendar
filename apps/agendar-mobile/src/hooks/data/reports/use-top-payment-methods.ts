@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query"
 import {
-  getTopPaymentMethods,
   type GetTopPaymentMethodsParams,
   type GetTopPaymentMethodsResponse,
+  getTopPaymentMethods,
 } from "@/http/reports/get-top-payment-methods"
 
 export function useTopPaymentMethods(params: GetTopPaymentMethodsParams) {

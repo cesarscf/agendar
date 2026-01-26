@@ -1,5 +1,5 @@
-import * as React from "react";
-import { Pie, PieChart } from "recharts";
+import * as React from "react"
+import { Pie, PieChart } from "recharts"
 
 import {
   Card,
@@ -7,7 +7,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@/components/ui/card"
 import {
   type ChartConfig,
   ChartContainer,
@@ -15,9 +15,9 @@ import {
   ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart";
-import { useTopPaymentMethods } from "@/hooks/use-top-payment-methods";
-import type { GetTopPaymentMethodsParams } from "@/http/reports/get-top-payment-methods";
+} from "@/components/ui/chart"
+import { useTopPaymentMethods } from "@/hooks/use-top-payment-methods"
+import type { GetTopPaymentMethodsParams } from "@/http/reports/get-top-payment-methods"
 
 const chartConfig = {
   usage: {
@@ -51,25 +51,25 @@ const chartConfig = {
     label: "Outros",
     color: "var(--chart-7)",
   },
-} satisfies ChartConfig;
+} satisfies ChartConfig
 
 interface TopPaymentMethodsChartProps {
-  params: GetTopPaymentMethodsParams;
+  params: GetTopPaymentMethodsParams
 }
 
 export function TopPaymentMethodsChart({
   params,
 }: TopPaymentMethodsChartProps) {
-  const { data, isLoading, isError } = useTopPaymentMethods(params);
+  const { data, isLoading, isError } = useTopPaymentMethods(params)
 
   const chartData = React.useMemo(() => {
-    if (!data?.items) return [];
-    return data.items.map((item) => ({
+    if (!data?.items) return []
+    return data.items.map(item => ({
       method: item.method,
       usage: item.usage,
       fill: `var(--color-${item.method})`,
-    }));
-  }, [data]);
+    }))
+  }, [data])
 
   if (isLoading) {
     return (
@@ -84,7 +84,7 @@ export function TopPaymentMethodsChart({
           </div>
         </CardContent>
       </Card>
-    );
+    )
   }
 
   if (isError || !chartData.length) {
@@ -102,7 +102,7 @@ export function TopPaymentMethodsChart({
           </div>
         </CardContent>
       </Card>
-    );
+    )
   }
 
   return (
@@ -132,5 +132,5 @@ export function TopPaymentMethodsChart({
         </ChartContainer>
       </CardContent>
     </Card>
-  );
+  )
 }

@@ -1,5 +1,5 @@
-import { View, Text, ActivityIndicator, Pressable } from "react-native"
 import type { LucideIcon } from "lucide-react-native"
+import { ActivityIndicator, Pressable, Text, View } from "react-native"
 import { cn } from "@/utils/cn"
 
 type MetricCardProps = {

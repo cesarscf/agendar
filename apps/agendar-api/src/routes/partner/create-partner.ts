@@ -1,3 +1,8 @@
+import bcrypt from "bcrypt"
+import { and, eq } from "drizzle-orm"
+import type { FastifyInstance } from "fastify"
+import type { ZodTypeProvider } from "fastify-type-provider-zod"
+import z from "zod"
 import { stripe } from "@/clients/stripe"
 import { db } from "@/db"
 import {
@@ -10,11 +15,6 @@ import {
 import { BadRequestError } from "@/routes/_erros/bad-request-error"
 import { generateRandomString } from "@/utils/generate-random-string"
 import { slugify } from "@/utils/slug"
-import bcrypt from "bcrypt"
-import { and, eq } from "drizzle-orm"
-import type { FastifyInstance } from "fastify"
-import type { ZodTypeProvider } from "fastify-type-provider-zod"
-import z from "zod"
 
 export async function createPartner(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(

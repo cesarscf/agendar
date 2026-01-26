@@ -1,7 +1,7 @@
-import { api } from "../api-client"
 import type { CreatePackageRequest, Package } from "@/lib/validations/packages"
 import { handleApiError } from "@/utils"
 import { parseBRLToCents } from "@/utils/currency"
+import { api } from "../api-client"
 
 export async function createPackage(inputs: CreatePackageRequest) {
   try {

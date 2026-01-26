@@ -1,12 +1,12 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { ChevronLeft, Loader2 } from "lucide-react";
-import React from "react";
-import { useForm } from "react-hook-form";
-import type z from "zod";
-import LogoUploader from "@/components/logo-uploader";
-import { Button } from "@/components/ui/button";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router"
+import { ChevronLeft, Loader2 } from "lucide-react"
+import React from "react"
+import { useForm } from "react-hook-form"
+import type z from "zod"
+import LogoUploader from "@/components/logo-uploader"
+import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -14,41 +14,41 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { MaskInput } from "@/components/ui/mask-input";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { MaskInput } from "@/components/ui/mask-input"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import { getCategories } from "@/http/categories/get-categories";
-import { createService } from "@/http/services/create-service";
-import { uploadImage } from "@/lib/upload-image";
-import { createServiceSchema } from "@/lib/validations/service";
+} from "@/components/ui/select"
+import { Textarea } from "@/components/ui/textarea"
+import { getCategories } from "@/http/categories/get-categories"
+import { createService } from "@/http/services/create-service"
+import { uploadImage } from "@/lib/upload-image"
+import { createServiceSchema } from "@/lib/validations/service"
 
 export const Route = createFileRoute("/app/services/new/")({
   component: NewService,
-});
-type Inputs = z.infer<typeof createServiceSchema>;
+})
+type Inputs = z.infer<typeof createServiceSchema>
 
 function NewService() {
-  const queryClient = useQueryClient();
-  const navigate = useNavigate();
+  const queryClient = useQueryClient()
+  const navigate = useNavigate()
 
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [imageFile, setImageFile] = React.useState<File | null>(null);
+  const [isLoading, setIsLoading] = React.useState(false)
+  const [imageFile, setImageFile] = React.useState<File | null>(null)
   const [selectedCategories, setSelectedCategories] = React.useState<string[]>(
-    [],
-  );
+    []
+  )
 
   const { data: categories = [] } = useQuery({
     queryKey: ["categories"],
     queryFn: getCategories,
-  });
+  })
 
   const form = useForm<Inputs>({
     resolver: zodResolver(createServiceSchema),
@@ -59,28 +59,28 @@ function NewService() {
       durationInMinutes: "",
       active: true,
     },
-  });
+  })
 
   const { mutate, isPending } = useMutation({
     mutationFn: createService,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["services"] });
-      navigate({ to: "/app/services" });
-      setIsLoading(false);
+      queryClient.invalidateQueries({ queryKey: ["services"] })
+      navigate({ to: "/app/services" })
+      setIsLoading(false)
     },
     onError: () => {
-      setIsLoading(false);
+      setIsLoading(false)
     },
-  });
+  })
 
   async function onSubmit(values: Inputs) {
-    setIsLoading(true);
-    let image: string | undefined;
+    setIsLoading(true)
+    let image: string | undefined
 
     if (imageFile) {
-      const imageUrl = await uploadImage(imageFile);
+      const imageUrl = await uploadImage(imageFile)
 
-      image = imageUrl;
+      image = imageUrl
     }
 
     mutate({
@@ -89,7 +89,7 @@ function NewService() {
       active: true,
       categoryIds:
         selectedCategories.length > 0 ? selectedCategories : undefined,
-    });
+    })
   }
 
   return (
@@ -136,9 +136,9 @@ function NewService() {
             <FormControl>
               <Select
                 value={selectedCategories[0] || ""}
-                onValueChange={(value) => {
+                onValueChange={value => {
                   if (value && !selectedCategories.includes(value)) {
-                    setSelectedCategories([...selectedCategories, value]);
+                    setSelectedCategories([...selectedCategories, value])
                   }
                 }}
               >
@@ -148,9 +148,9 @@ function NewService() {
                 <SelectContent>
                   {categories
                     .filter(
-                      (category) => !selectedCategories.includes(category.id),
+                      category => !selectedCategories.includes(category.id)
                     )
-                    .map((category) => (
+                    .map(category => (
                       <SelectItem key={category.id} value={category.id}>
                         {category.name}
                       </SelectItem>
@@ -160,8 +160,8 @@ function NewService() {
             </FormControl>
             {selectedCategories.length > 0 && (
               <div className="flex flex-wrap gap-2 mt-2">
-                {selectedCategories.map((categoryId) => {
-                  const category = categories.find((c) => c.id === categoryId);
+                {selectedCategories.map(categoryId => {
+                  const category = categories.find(c => c.id === categoryId)
                   return (
                     <div
                       key={categoryId}
@@ -172,17 +172,15 @@ function NewService() {
                         type="button"
                         onClick={() => {
                           setSelectedCategories(
-                            selectedCategories.filter(
-                              (id) => id !== categoryId,
-                            ),
-                          );
+                            selectedCategories.filter(id => id !== categoryId)
+                          )
                         }}
                         className="text-muted-foreground hover:text-foreground"
                       >
                         ×
                       </button>
                     </div>
-                  );
+                  )
                 })}
               </div>
             )}
@@ -213,7 +211,7 @@ function NewService() {
                     placeholder="R$ 0,00"
                     value={field.value}
                     onValueChange={(_maskedValue, unmaskedValue) => {
-                      field.onChange(unmaskedValue);
+                      field.onChange(unmaskedValue)
                     }}
                   />
                 </FormControl>
@@ -266,5 +264,5 @@ function NewService() {
         </form>
       </Form>
     </div>
-  );
+  )
 }

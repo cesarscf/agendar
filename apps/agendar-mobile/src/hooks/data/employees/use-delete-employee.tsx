@@ -1,7 +1,6 @@
 import { useMutation } from "@tanstack/react-query"
-
-import { queryClient } from "@/lib/react-query"
 import { deleteEmployee } from "@/http/employee/delete-employee"
+import { queryClient } from "@/lib/react-query"
 
 export function useDeleteEmployee() {
   return useMutation<boolean, string, string>({

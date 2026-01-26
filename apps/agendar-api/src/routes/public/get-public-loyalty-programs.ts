@@ -1,3 +1,7 @@
+import { eq, inArray } from "drizzle-orm"
+import type { FastifyInstance } from "fastify"
+import type { ZodTypeProvider } from "fastify-type-provider-zod"
+import z from "zod"
 import { db } from "@/db"
 import {
   establishments,
@@ -5,10 +9,6 @@ import {
   loyaltyPrograms,
   services,
 } from "@/db/schema"
-import { eq, inArray } from "drizzle-orm"
-import type { FastifyInstance } from "fastify"
-import type { ZodTypeProvider } from "fastify-type-provider-zod"
-import z from "zod"
 
 export async function getPublicLoyaltyPrograms(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().get(

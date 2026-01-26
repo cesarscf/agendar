@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
-
-import type { PaymentMethod } from "@/lib/validations/payment-method"
 import { getPaymentMethods } from "@/http/payment-methods/get-payment-methods"
+import type { PaymentMethod } from "@/lib/validations/payment-method"
 
 export function usePaymentMethods() {
   return useQuery<PaymentMethod[], string>({

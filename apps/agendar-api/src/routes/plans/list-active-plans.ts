@@ -1,9 +1,9 @@
-import { db } from "@/db"
-import { plans } from "@/db/schema"
 import { asc, eq } from "drizzle-orm"
 import type { FastifyInstance } from "fastify"
 import type { ZodTypeProvider } from "fastify-type-provider-zod"
 import z from "zod"
+import { db } from "@/db"
+import { plans } from "@/db/schema"
 
 export async function listActivePlans(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().get(

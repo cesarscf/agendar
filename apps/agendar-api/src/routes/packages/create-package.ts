@@ -1,3 +1,5 @@
+import type { FastifyInstance } from "fastify"
+import type { ZodTypeProvider } from "fastify-type-provider-zod"
 import { db } from "@/db"
 import { packages } from "@/db/schema"
 import { auth } from "@/middlewares/auth"
@@ -5,8 +7,6 @@ import { commissionToDb, commissionToFront } from "@/utils/commission"
 import { centsToReais, reaisToCents } from "@/utils/price"
 import { establishmentHeaderSchema } from "@/utils/schemas/headers"
 import { packageSchema } from "@/utils/schemas/packages"
-import type { FastifyInstance } from "fastify"
-import type { ZodTypeProvider } from "fastify-type-provider-zod"
 
 import { BadRequestError } from "../_erros/bad-request-error"
 

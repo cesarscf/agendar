@@ -1,3 +1,7 @@
+import { asc, eq } from "drizzle-orm"
+import type { FastifyInstance } from "fastify"
+import type { ZodTypeProvider } from "fastify-type-provider-zod"
+import z from "zod"
 import { db } from "@/db"
 import { packages } from "@/db/schema"
 import { auth } from "@/middlewares/auth"
@@ -5,10 +9,6 @@ import { commissionToFront } from "@/utils/commission"
 import { reaisToCents } from "@/utils/price"
 import { establishmentHeaderSchema } from "@/utils/schemas/headers"
 import { packageSchema } from "@/utils/schemas/packages"
-import { asc, eq } from "drizzle-orm"
-import type { FastifyInstance } from "fastify"
-import type { ZodTypeProvider } from "fastify-type-provider-zod"
-import z from "zod"
 
 export async function getPackages(app: FastifyInstance) {
   await app.register(async app => {

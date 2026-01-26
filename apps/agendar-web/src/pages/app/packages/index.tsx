@@ -1,23 +1,23 @@
-import { useQuery } from "@tanstack/react-query";
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { ArrowRight, Hammer, PackageSearch } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { getPackages } from "@/http/packages/get-packages";
-import { formatPriceFromCents } from "@/lib/utils";
+import { useQuery } from "@tanstack/react-query"
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router"
+import { ArrowRight, Hammer, PackageSearch } from "lucide-react"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader } from "@/components/ui/card"
+import { getPackages } from "@/http/packages/get-packages"
+import { formatPriceFromCents } from "@/lib/utils"
 
 export const Route = createFileRoute("/app/packages/")({
   component: Packages,
-});
+})
 
 function Packages() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const { data, isLoading } = useQuery({
     queryKey: ["packages"],
     queryFn: getPackages,
-  });
+  })
 
   if (isLoading) {
     return (
@@ -44,7 +44,7 @@ function Packages() {
           ))}
         </div>
       </div>
-    );
+    )
   }
 
   return (
@@ -62,7 +62,7 @@ function Packages() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {data?.map((pkg) => (
+        {data?.map(pkg => (
           <Card
             key={pkg.id}
             className="group cursor-pointer hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-border/50 hover:border-border"
@@ -148,5 +148,5 @@ function Packages() {
         </div>
       )}
     </div>
-  );
+  )
 }

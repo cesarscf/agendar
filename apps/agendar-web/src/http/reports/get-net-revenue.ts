@@ -1,5 +1,5 @@
-import z from "zod";
-import { api } from "@/lib/api-client";
+import z from "zod"
+import { api } from "@/lib/api-client"
 
 const getNetRevenueParamsSchema = z.object({
   startDate: z
@@ -8,13 +8,13 @@ const getNetRevenueParamsSchema = z.object({
   endDate: z
     .string()
     .regex(/^\d{4}-\d{2}-\d{2}$/, "Formato deve ser YYYY-MM-DD"),
-});
+})
 
-export type GetNetRevenueParams = z.infer<typeof getNetRevenueParamsSchema>;
+export type GetNetRevenueParams = z.infer<typeof getNetRevenueParamsSchema>
 
 export type GetNetRevenue = {
-  value: number;
-};
+  value: number
+}
 
 export async function getNetRevenue({
   endDate,
@@ -22,7 +22,7 @@ export async function getNetRevenue({
 }: GetNetRevenueParams) {
   const response = await api.get<GetNetRevenue>("/establishments/net-revenue", {
     params: { endDate, startDate },
-  });
+  })
 
-  return response.data;
+  return response.data
 }

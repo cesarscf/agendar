@@ -1,5 +1,5 @@
-import { Link } from "@tanstack/react-router";
-import type { LucideIcon } from "lucide-react";
+import { Link } from "@tanstack/react-router"
+import type { LucideIcon } from "lucide-react"
 import {
   SidebarGroup,
   SidebarGroupContent,
@@ -7,32 +7,32 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@/components/ui/sidebar";
+} from "@/components/ui/sidebar"
 
 export function NavMain({
   items,
 }: {
   items: {
-    title: string;
-    url: string;
-    icon?: LucideIcon;
-    isActive?: boolean;
-  }[];
+    title: string
+    url: string
+    icon?: LucideIcon
+    isActive?: boolean
+  }[]
 }) {
-  const { setOpenMobile } = useSidebar();
+  const { setOpenMobile } = useSidebar()
 
   return (
     <SidebarGroup>
       <SidebarGroupContent className="flex flex-col gap-2">
         <SidebarMenu>
-          {items.map((item) => (
+          {items.map(item => (
             <SidebarMenuItem key={item.title}>
               <Link to={item.url}>
                 <SidebarMenuButton
                   tooltip={item.title}
                   isActive={item.isActive}
                   onClick={() => {
-                    setOpenMobile(false);
+                    setOpenMobile(false)
                   }}
                 >
                   {item.icon && <item.icon />}
@@ -44,5 +44,5 @@ export function NavMain({
         </SidebarMenu>
       </SidebarGroupContent>
     </SidebarGroup>
-  );
+  )
 }

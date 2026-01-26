@@ -1,6 +1,6 @@
-import { api } from "../api-client"
 import type { UpdateEstablishmentRequest } from "@/lib/validations/establishment"
 import { handleApiError } from "@/utils"
+import { api } from "../api-client"
 
 export async function updateEstablishment(inputs: UpdateEstablishmentRequest) {
   try {

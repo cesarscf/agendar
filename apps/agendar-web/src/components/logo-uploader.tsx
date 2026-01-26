@@ -1,40 +1,40 @@
-import { Image, XIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { useFileUpload } from "@/hooks/use-file-upload";
+import { Image, XIcon } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { useFileUpload } from "@/hooks/use-file-upload"
 
 type Props = {
-  value?: File | null;
-  imageUrl?: string | null;
-  onChange: (file: File | null) => void;
-};
+  value?: File | null
+  imageUrl?: string | null
+  onChange: (file: File | null) => void
+}
 
 export default function LogoUploader({ value, imageUrl, onChange }: Props) {
   const [{ files }, { removeFile, openFileDialog, getInputProps }] =
     useFileUpload({
       accept: "image/*",
-    });
+    })
 
-  const file = files[0]?.file;
+  const file = files[0]?.file
 
   if (file && file !== value) {
-    // @ts-ignore
-    onChange(file);
+    // @ts-expect-error
+    onChange(file)
   }
 
   const previewUrl =
     files[0]?.preview ||
     (value ? URL.createObjectURL(value) : null) ||
     imageUrl ||
-    null;
+    null
 
-  const isFromUpload = files[0]?.preview || value;
+  const isFromUpload = files[0]?.preview || value
 
   const handleRemove = () => {
     if (files[0]) {
-      removeFile(files[0].id);
+      removeFile(files[0].id)
     }
-    onChange(null);
-  };
+    onChange(null)
+  }
 
   return (
     <div className="flex flex-col items-center gap-2">
@@ -81,5 +81,5 @@ export default function LogoUploader({ value, imageUrl, onChange }: Props) {
         />
       </div>
     </div>
-  );
+  )
 }

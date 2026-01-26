@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query"
 import {
-  getAppointmentsMetrics,
   type GetAppointmentsMetricsParams,
   type GetAppointmentsMetricsResponse,
+  getAppointmentsMetrics,
 } from "@/http/reports/get-appointments-metrics"
 
 export function useAppointmentsMetrics(params: GetAppointmentsMetricsParams) {

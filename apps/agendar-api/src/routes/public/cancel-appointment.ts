@@ -1,11 +1,11 @@
-import { db } from "@/db"
-import { appointments, customers, establishments } from "@/db/schema"
-import { customerServicePackageUsages } from "@/db/schema/customer-service-packages-usages"
-import { BadRequestError } from "@/routes/_erros/bad-request-error"
 import { and, eq } from "drizzle-orm"
 import type { FastifyInstance } from "fastify"
 import type { ZodTypeProvider } from "fastify-type-provider-zod"
 import z from "zod"
+import { db } from "@/db"
+import { appointments, customers, establishments } from "@/db/schema"
+import { customerServicePackageUsages } from "@/db/schema/customer-service-packages-usages"
+import { BadRequestError } from "@/routes/_erros/bad-request-error"
 
 export async function cancelAppointmentPublic(app: FastifyInstance) {
   await app.register(async app => {

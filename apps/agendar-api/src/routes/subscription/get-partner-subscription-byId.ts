@@ -1,9 +1,9 @@
-import { db } from "@/db"
-import { auth } from "@/middlewares/auth"
 import { and, eq } from "drizzle-orm"
 import type { FastifyInstance } from "fastify"
 import type { ZodTypeProvider } from "fastify-type-provider-zod"
 import { z } from "zod"
+import { db } from "@/db"
+import { auth } from "@/middlewares/auth"
 
 export async function getPartnerSubscriptionById(app: FastifyInstance) {
   await app.register(async app => {

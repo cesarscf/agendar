@@ -1,8 +1,8 @@
-import { Check } from "lucide-react";
+import { Check } from "lucide-react"
 
 interface Video {
-  title: string;
-  videoId: string; // YouTube video ID
+  title: string
+  videoId: string // YouTube video ID
 }
 
 const videos: Video[] = [
@@ -66,7 +66,7 @@ const videos: Video[] = [
     title: "Fila de espera nunca mais",
     videoId: "dQw4w9WgXcQ",
   },
-];
+]
 
 export function TrainingVideos() {
   return (
@@ -108,5 +108,5 @@ export function TrainingVideos() {
         </div>
       </div>
     </section>
-  );
+  )
 }

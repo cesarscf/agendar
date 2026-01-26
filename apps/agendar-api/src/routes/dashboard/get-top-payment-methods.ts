@@ -1,10 +1,10 @@
-import { db } from "@/db"
-import { appointments } from "@/db/schema"
-import { auth } from "@/middlewares/auth"
 import { and, desc, eq, gte, lte, sql } from "drizzle-orm"
 import type { FastifyInstance } from "fastify"
 import type { ZodTypeProvider } from "fastify-type-provider-zod"
 import z from "zod"
+import { db } from "@/db"
+import { appointments } from "@/db/schema"
+import { auth } from "@/middlewares/auth"
 
 export async function getTopPaymentMethods(app: FastifyInstance) {
   app
@@ -64,7 +64,7 @@ export async function getTopPaymentMethods(app: FastifyInstance) {
 
         const items = result.map(row => ({
           method: row.method || "other",
-          usage: Number.parseInt(row.usage),
+          usage: Number.parseInt(row.usage, 10),
         }))
 
         return reply.send({ items })

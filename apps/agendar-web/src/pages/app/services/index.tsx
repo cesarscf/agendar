@@ -1,23 +1,23 @@
-import { useQuery } from "@tanstack/react-query";
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { ArrowRight, Clock, DollarSign, Hammer } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { getServices } from "@/http/services/get-services";
-import { formatDuration, formatPriceFromCents } from "@/lib/utils";
+import { useQuery } from "@tanstack/react-query"
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router"
+import { ArrowRight, Clock, DollarSign, Hammer } from "lucide-react"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader } from "@/components/ui/card"
+import { getServices } from "@/http/services/get-services"
+import { formatDuration, formatPriceFromCents } from "@/lib/utils"
 
 export const Route = createFileRoute("/app/services/")({
   component: Services,
-});
+})
 
 function Services() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const { data, isLoading } = useQuery({
     queryKey: ["services"],
     queryFn: getServices,
-  });
+  })
 
   if (isLoading) {
     return (
@@ -47,7 +47,7 @@ function Services() {
           ))}
         </div>
       </div>
-    );
+    )
   }
 
   return (
@@ -65,7 +65,7 @@ function Services() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {data?.map((service) => (
+        {data?.map(service => (
           <Card
             key={service.id}
             className="group cursor-pointer hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-border/50 hover:border-border"
@@ -73,7 +73,7 @@ function Services() {
               navigate({
                 to: "/app/services/$serviceId",
                 params: { serviceId: service.id },
-              });
+              })
             }}
           >
             <CardHeader className="pb-4">
@@ -162,5 +162,5 @@ function Services() {
         </div>
       )}
     </div>
-  );
+  )
 }

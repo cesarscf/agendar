@@ -1,6 +1,6 @@
-import { api } from "../api-client"
 import type { UpdatePackageItemRequest } from "@/lib/validations/packages"
 import { handleApiError } from "@/utils"
+import { api } from "../api-client"
 
 export async function updatePackageItem(
   inputs: UpdatePackageItemRequest & { packageId: string }

@@ -1,10 +1,10 @@
-import { db } from "@/db"
-import { employeeServices, establishments, services } from "@/db/schema"
-import { reaisToCents } from "@/utils/price"
 import { and, eq } from "drizzle-orm"
 import type { FastifyInstance } from "fastify"
 import type { ZodTypeProvider } from "fastify-type-provider-zod"
 import z from "zod"
+import { db } from "@/db"
+import { employeeServices, establishments, services } from "@/db/schema"
+import { reaisToCents } from "@/utils/price"
 
 export async function getProfessionalServices(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().get(

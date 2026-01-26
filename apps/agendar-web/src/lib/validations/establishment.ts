@@ -1,4 +1,4 @@
-import z from "zod";
+import z from "zod"
 
 export const establishmentSchema = z.object({
   id: z.string(),
@@ -15,13 +15,13 @@ export const establishmentSchema = z.object({
   googleMapsLink: z.string(),
   address: z.string(),
   active: z.boolean(),
-});
+})
 
 export const updateEstablishmentSchema = establishmentSchema.partial().extend({
   id: z.string().min(1, "ID obrigatório"),
-});
+})
 
-export type Establishment = z.infer<typeof establishmentSchema>;
+export type Establishment = z.infer<typeof establishmentSchema>
 export type UpdateEstablishmentRequest = z.infer<
   typeof updateEstablishmentSchema
->;
+>

@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query"
 import { createLoyaltyProgram } from "@/http/loyalty/create-loyalty-program"
-import type { CreateLoyaltyProgramRequest } from "@/lib/validations/loyalty-program"
 import { queryClient } from "@/lib/react-query"
+import type { CreateLoyaltyProgramRequest } from "@/lib/validations/loyalty-program"
 
 export function useCreateLoyaltyProgram() {
   return useMutation<{ id: string }, string, CreateLoyaltyProgramRequest>({

@@ -1,11 +1,11 @@
-import { useState } from "react"
 import { useLocalSearchParams } from "expo-router"
-import { View, Text, Pressable } from "react-native"
+import { useState } from "react"
+import { Pressable, Text, View } from "react-native"
+import { EditEmployeeForm } from "@/components/forms/update-employee-form"
+import { UpdateEmployeeServiceForm } from "@/components/forms/update-employee-service-form"
 import { useEmployee } from "@/hooks/data/employees"
 import { cn } from "@/utils/cn"
-import { EditEmployeeForm } from "@/components/forms/update-employee-form"
 import { EmployeeBlocksTab } from "../../../../components/forms/blocks"
-import { UpdateEmployeeServiceForm } from "@/components/forms/update-employee-service-form"
 
 export default function EmployeeDetailScreen() {
   const { id } = useLocalSearchParams()

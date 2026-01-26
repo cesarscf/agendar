@@ -1,11 +1,11 @@
-import { db } from "@/db"
-import { admins } from "@/db/schema/admins"
-import { UnauthorizedError } from "@/routes/_erros/unauthorized-error"
 import bcrypt from "bcrypt"
 import { eq } from "drizzle-orm"
 import type { FastifyInstance } from "fastify"
 import type { ZodTypeProvider } from "fastify-type-provider-zod"
 import z from "zod"
+import { db } from "@/db"
+import { admins } from "@/db/schema/admins"
+import { UnauthorizedError } from "@/routes/_erros/unauthorized-error"
 
 export async function adminLogin(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(

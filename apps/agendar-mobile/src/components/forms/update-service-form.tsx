@@ -1,5 +1,6 @@
-import { updateServiceSchema } from "@/lib/validations/service"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useRouter } from "expo-router"
+import React from "react"
 import { Controller, useForm } from "react-hook-form"
 import {
   Alert,
@@ -10,19 +11,17 @@ import {
   View,
 } from "react-native"
 import type { z } from "zod"
-import { Input } from "../input"
-import { AppButton } from "../button"
-import { IconButton } from "../icon-button"
-import { ImagePickerControl } from "../image-picker"
-import { CategorySelector } from "../category-selector"
-import { StorageEntity, uploadImageToFirebase } from "@/lib/upload-image"
-import { useRouter } from "expo-router"
-import { formatCentsToReal, formatCurrencyInput } from "@/utils/currency"
-
 import { useUpdateService } from "@/hooks/data/services"
 import { useDeleteService } from "@/hooks/data/services/use-delete-service"
-import React from "react"
+import { StorageEntity, uploadImageToFirebase } from "@/lib/upload-image"
 import type { Service } from "@/lib/validations/service"
+import { updateServiceSchema } from "@/lib/validations/service"
+import { formatCentsToReal, formatCurrencyInput } from "@/utils/currency"
+import { AppButton } from "../button"
+import { CategorySelector } from "../category-selector"
+import { IconButton } from "../icon-button"
+import { ImagePickerControl } from "../image-picker"
+import { Input } from "../input"
 
 type Inputs = z.infer<typeof updateServiceSchema>
 

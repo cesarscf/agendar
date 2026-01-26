@@ -1,29 +1,29 @@
-import { ArrowUp, Users } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
+import { ArrowUp, Users } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
+import { Progress } from "@/components/ui/progress"
 
 interface Subscription {
-  id: string;
-  status: string;
+  id: string
+  status: string
   plan: {
-    id: string;
-    name: string;
-    price: string;
-  };
+    id: string
+    name: string
+    price: string
+  }
 }
 
 interface Plan {
-  maximumProfessionalsIncluded: number;
-  minimumProfessionalsIncluded: number;
+  maximumProfessionalsIncluded: number
+  minimumProfessionalsIncluded: number
 }
 
 interface SimpleSubscriptionCardProps {
-  subscription?: Subscription;
-  plan?: Plan;
-  totalEmployees: number;
-  isLoading?: boolean;
-  onUpgrade?: () => void;
+  subscription?: Subscription
+  plan?: Plan
+  totalEmployees: number
+  isLoading?: boolean
+  onUpgrade?: () => void
 }
 
 export function SimpleSubscriptionCard({
@@ -44,7 +44,7 @@ export function SimpleSubscriptionCard({
           </div>
         </CardContent>
       </Card>
-    );
+    )
   }
 
   if (!subscription || !plan) {
@@ -59,12 +59,12 @@ export function SimpleSubscriptionCard({
           </Button>
         </CardContent>
       </Card>
-    );
+    )
   }
 
-  const maxEmployees = plan.maximumProfessionalsIncluded;
-  const usagePercentage = (totalEmployees / maxEmployees) * 100;
-  const isNearLimit = usagePercentage >= 80;
+  const maxEmployees = plan.maximumProfessionalsIncluded
+  const usagePercentage = (totalEmployees / maxEmployees) * 100
+  const isNearLimit = usagePercentage >= 80
 
   return (
     <Card className="w-full py-2">
@@ -103,5 +103,5 @@ export function SimpleSubscriptionCard({
         </Button>
       </CardContent>
     </Card>
-  );
+  )
 }

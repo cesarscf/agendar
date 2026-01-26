@@ -1,27 +1,27 @@
-import { useNavigate, useParams } from "@tanstack/react-router";
-import { Gift, Search } from "lucide-react";
-import React from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import type { PublicPackage } from "@/http/public/get-public-packages";
-import { formatPriceFromCents } from "@/lib/utils";
+import { useNavigate, useParams } from "@tanstack/react-router"
+import { Gift, Search } from "lucide-react"
+import React from "react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import type { PublicPackage } from "@/http/public/get-public-packages"
+import { formatPriceFromCents } from "@/lib/utils"
 
 export function EstablishmentPackagesList({
   packages,
 }: {
-  packages: PublicPackage[];
+  packages: PublicPackage[]
 }) {
-  const [searchTerm, setSearchTerm] = React.useState("");
+  const [searchTerm, setSearchTerm] = React.useState("")
 
   const filteredPackages = React.useMemo(() => {
-    if (!searchTerm.trim()) return packages;
+    if (!searchTerm.trim()) return packages
 
     return packages.filter(
-      (pkg) =>
+      pkg =>
         pkg.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        pkg.description?.toLowerCase().includes(searchTerm.toLowerCase()),
-    );
-  }, [packages, searchTerm]);
+        pkg.description?.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+  }, [packages, searchTerm])
 
   return (
     <div className="p-4 sm:p-6">
@@ -33,12 +33,12 @@ export function EstablishmentPackagesList({
           placeholder="Pesquisar"
           className="pl-10 bg-background border-border text-foreground"
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={e => setSearchTerm(e.target.value)}
         />
       </div>
 
       <div className="space-y-4">
-        {filteredPackages.map((pkg) => (
+        {filteredPackages.map(pkg => (
           <PackageItem key={pkg.id} pkg={pkg} />
         ))}
         {filteredPackages.length === 0 && searchTerm.trim() && (
@@ -48,12 +48,12 @@ export function EstablishmentPackagesList({
         )}
       </div>
     </div>
-  );
+  )
 }
 
 function PackageItem({ pkg }: { pkg: PublicPackage }) {
-  const navigate = useNavigate();
-  const { slug } = useParams({ from: "/$slug" });
+  const navigate = useNavigate()
+  const { slug } = useParams({ from: "/$slug" })
 
   return (
     <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 p-4 bg-card rounded-xl border border-border">
@@ -94,12 +94,12 @@ function PackageItem({ pkg }: { pkg: PublicPackage }) {
                 serviceId: undefined,
                 packageId: pkg.id,
               },
-            });
+            })
           }}
         >
           Agendar
         </Button>
       </div>
     </div>
-  );
+  )
 }
