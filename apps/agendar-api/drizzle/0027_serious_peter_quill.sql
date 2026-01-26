@@ -1,0 +1,1 @@
+ALTER TABLE "pre_partners" RENAME COLUMN "emai" TO "email";

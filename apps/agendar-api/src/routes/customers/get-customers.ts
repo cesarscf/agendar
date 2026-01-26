@@ -1,0 +1,52 @@
+import { db } from "@/db"
+import { customers } from "@/db/schema"
+import { auth } from "@/middlewares/auth"
+import { customerSchema } from "@/utils/schemas/customers"
+import { establishmentHeaderSchema } from "@/utils/schemas/headers"
+import { asc, eq } from "drizzle-orm"
+import type { FastifyInstance } from "fastify"
+import type { ZodTypeProvider } from "fastify-type-provider-zod"
+import z from "zod"
+
+export async function getCustomers(app: FastifyInstance) {
+  await app.register(async app => {
+    const typedApp = app.withTypeProvider<ZodTypeProvider>()
+    typedApp.register(auth)
+    typedApp.get(
+      "/customers",
+      {
+        schema: {
+          tags: ["Customer"],
+          summary: "Get establishment customers",
+          security: [{ bearerAuth: [] }],
+          headers: establishmentHeaderSchema,
+          response: {
+            200: z.array(customerSchema),
+          },
+        },
+      },
+      async (request, reply) => {
+        const { establishmentId } = await request.getCurrentEstablishmentId()
+
+        const result = await db.query.customers.findMany({
+          where: eq(customers.establishmentId, establishmentId),
+          columns: {
+            id: true,
+            name: true,
+            phoneNumber: true,
+            email: true,
+            birthDate: true,
+            address: true,
+            cpf: true,
+            notes: true,
+            city: true,
+            state: true,
+          },
+          orderBy: asc(customers.name),
+        })
+
+        return reply.status(201).send(result)
+      }
+    )
+  })
+}

@@ -1,0 +1,1 @@
+ALTER TABLE "establishments" ADD CONSTRAINT "establishments_slug_unique" UNIQUE("slug");

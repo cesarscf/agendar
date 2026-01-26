@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "787006319304",
+    "project_id": "agendar-dev-d7450",
+    "storage_bucket": "agendar-dev-d7450.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:787006319304:android:0187cdb3269a89e37013fd",
+        "android_client_info": {
+          "package_name": "br.tec.agendar.dev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAj9_Q92DTQguevQ5Moe-sPzzuBXAgN9Sg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

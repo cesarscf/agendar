@@ -1,0 +1,92 @@
+import { db } from "@/db"
+import { partners } from "@/db/schema"
+import { auth } from "@/middlewares/auth"
+import { BadRequestError } from "@/routes/_erros/bad-request-error"
+import { establishmentHeaderSchema } from "@/utils/schemas/headers"
+import { eq } from "drizzle-orm"
+import type { FastifyInstance } from "fastify"
+import type { ZodTypeProvider } from "fastify-type-provider-zod"
+import z from "zod"
+
+export async function getPartner(app: FastifyInstance) {
+  await app.register(async app => {
+    const typedApp = app.withTypeProvider<ZodTypeProvider>()
+    typedApp.register(auth)
+    typedApp.get(
+      "/partner",
+      {
+        schema: {
+          tags: ["Partner"],
+          summary:
+            "Get authenticated partner data with establishments and subscriptions",
+          security: [{ bearerAuth: [] }],
+          headers: establishmentHeaderSchema,
+          response: {
+            200: z.object({
+              partner: z.object({
+                id: z.string(),
+                name: z.string(),
+                email: z.string(),
+                establishments: z.array(
+                  z.object({
+                    id: z.string(),
+                    name: z.string(),
+                    logoUrl: z.string().nullable(),
+                    slug: z.string().nullable(),
+                  })
+                ),
+                subscriptions: z.array(
+                  z.object({
+                    id: z.string(),
+                    status: z.string(),
+                    endedAt: z.date().nullable(),
+                    createdAt: z.date(),
+                  })
+                ),
+              }),
+            }),
+          },
+        },
+      },
+      async (request, reply) => {
+        const partnerId = await request.getCurrentPartnerId()
+
+        const partner = await db.query.partners.findFirst({
+          where: eq(partners.id, partnerId),
+          columns: {
+            id: true,
+            name: true,
+            email: true,
+          },
+          with: {
+            establishments: {
+              columns: {
+                id: true,
+                name: true,
+                slug: true,
+                logoUrl: true,
+              },
+            },
+            subscriptions: {
+              columns: {
+                id: true,
+                status: true,
+                endedAt: true,
+                createdAt: true,
+              },
+              orderBy: (subs, { desc }) => [desc(subs.createdAt)],
+            },
+          },
+        })
+
+        if (!partner) {
+          throw new BadRequestError("User not found")
+        }
+
+        console.log({ partner })
+
+        return reply.status(200).send({ partner })
+      }
+    )
+  })
+}
