@@ -52,7 +52,6 @@ Usa **Stripe Checkout** e **Customer Portal** para simplificar o fluxo:
 | `checkout.session.completed` | Cria subscription no banco |
 | `customer.subscription.updated` | Atualiza status, plano, período |
 | `customer.subscription.deleted` | Marca como cancelada |
-| `setup_intent.succeeded` | Salva cartão do cliente |
 | `invoice.payment_failed` | Marca como past_due |
 | `invoice.paid` | Atualiza status e período |
 

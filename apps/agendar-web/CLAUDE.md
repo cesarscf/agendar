@@ -61,3 +61,9 @@ Axios configurado em `src/http/` com interceptors para:
 
 - Suporte a dark/light mode (`next-themes`)
 - CSS variables para cores customizáveis por estabelecimento
+
+## Variáveis de Ambiente
+
+Validadas via Zod em `src/env.ts`:
+- VITE_API_URL
+- VITE_STRIPE_PUBLISHABLE_KEY
