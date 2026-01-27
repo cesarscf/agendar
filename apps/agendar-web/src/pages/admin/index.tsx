@@ -1,48 +1,167 @@
+import { useQuery } from "@tanstack/react-query"
 import { createFileRoute } from "@tanstack/react-router"
-import { useAdminAuth } from "@/hooks/use-admin-auth"
+import { format } from "date-fns"
+import { ptBR } from "date-fns/locale"
+import { Badge } from "@/components/ui/badge"
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
+import { getPartners } from "@/http/admin/get-partners"
 import { requireAdminAuth } from "@/lib/admin-route-guards"
+import { cn } from "@/lib/utils"
 
 export const Route = createFileRoute("/admin/")({
   beforeLoad: requireAdminAuth,
   component: AdminDashboard,
 })
 
+const statusLabels: Record<string, string> = {
+  active: "Ativo",
+  canceled: "Cancelado",
+  past_due: "Vencido",
+  trialing: "Trial",
+  unpaid: "Nao pago",
+  incomplete: "Incompleto",
+  incomplete_expired: "Expirado",
+  paused: "Pausado",
+}
+
+const statusVariants: Record<string, "completed" | "canceled" | "scheduled" | "secondary"> = {
+  active: "completed",
+  trialing: "scheduled",
+  canceled: "canceled",
+  past_due: "canceled",
+  unpaid: "canceled",
+  incomplete: "secondary",
+  incomplete_expired: "canceled",
+  paused: "secondary",
+}
+
 function AdminDashboard() {
-  const { admin } = useAdminAuth()
+  const { data, isLoading } = useQuery({
+    queryKey: ["admin", "partners"],
+    queryFn: getPartners,
+  })
+
+  const partners = data?.partners ?? []
 
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold">Dashboard</h2>
+        <h2 className="text-2xl font-bold">Partners</h2>
         <p className="text-muted-foreground">
-          Bem-vindo ao painel administrativo
+          {partners.length} parceiros cadastrados
         </p>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-3">
-        <div className="rounded-lg border p-4">
-          <h3 className="font-medium">Admin ID</h3>
-          <p className="text-muted-foreground text-sm">{admin?.id}</p>
+      {isLoading ? (
+        <div className="flex items-center justify-center py-10">
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
         </div>
-        <div className="rounded-lg border p-4">
-          <h3 className="font-medium">Role</h3>
-          <p className="text-muted-foreground text-sm">{admin?.role}</p>
+      ) : (
+        <div className="rounded-lg border">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Nome</TableHead>
+                <TableHead>Email</TableHead>
+                <TableHead>Localizacao</TableHead>
+                <TableHead>Plano</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Validade</TableHead>
+                <TableHead className="text-center">Estabelecimentos</TableHead>
+                <TableHead>Cadastro</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {partners.length === 0 ? (
+                <TableRow>
+                  <TableCell
+                    colSpan={8}
+                    className="text-muted-foreground text-center py-10"
+                  >
+                    Nenhum parceiro cadastrado
+                  </TableCell>
+                </TableRow>
+              ) : (
+                partners.map(partner => (
+                  <TableRow key={partner.id}>
+                    <TableCell className="font-medium">
+                      {partner.name}
+                    </TableCell>
+                    <TableCell>{partner.email}</TableCell>
+                    <TableCell>
+                      {partner.city && partner.state
+                        ? `${partner.city}, ${partner.state}`
+                        : "-"}
+                    </TableCell>
+                    <TableCell>
+                      {partner.subscription ? (
+                        <div>
+                          <div className="font-medium">
+                            {partner.subscription.plan.name}
+                          </div>
+                          <div className="text-muted-foreground text-xs">
+                            R$ {partner.subscription.plan.price}
+                          </div>
+                        </div>
+                      ) : (
+                        <span className="text-muted-foreground">-</span>
+                      )}
+                    </TableCell>
+                    <TableCell>
+                      {partner.subscription ? (
+                        <Badge
+                          variant={
+                            statusVariants[partner.subscription.status] ??
+                            "secondary"
+                          }
+                        >
+                          {statusLabels[partner.subscription.status] ??
+                            partner.subscription.status}
+                        </Badge>
+                      ) : (
+                        <Badge variant="secondary">Sem plano</Badge>
+                      )}
+                    </TableCell>
+                    <TableCell>
+                      {partner.subscription ? (
+                        <span
+                          className={cn(
+                            new Date(partner.subscription.currentPeriodEnd) <
+                              new Date() && "text-red-500"
+                          )}
+                        >
+                          {format(
+                            new Date(partner.subscription.currentPeriodEnd),
+                            "dd/MM/yyyy",
+                            { locale: ptBR }
+                          )}
+                        </span>
+                      ) : (
+                        "-"
+                      )}
+                    </TableCell>
+                    <TableCell className="text-center">
+                      {partner.establishmentsCount}
+                    </TableCell>
+                    <TableCell>
+                      {format(new Date(partner.createdAt), "dd/MM/yyyy", {
+                        locale: ptBR,
+                      })}
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
+            </TableBody>
+          </Table>
         </div>
-        <div className="rounded-lg border p-4">
-          <h3 className="font-medium">Status</h3>
-          <p className="text-sm text-green-500">Autenticado</p>
-        </div>
-      </div>
-
-      <div className="rounded-lg border p-6">
-        <h3 className="mb-4 font-medium">Funcionalidades em desenvolvimento</h3>
-        <ul className="text-muted-foreground space-y-2 text-sm">
-          <li>- Gerenciamento de partners</li>
-          <li>- Relatorios da plataforma</li>
-          <li>- Configuracoes do sistema</li>
-          <li>- Logs e auditoria</li>
-        </ul>
-      </div>
+      )}
     </div>
   )
 }
