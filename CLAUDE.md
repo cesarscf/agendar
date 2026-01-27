@@ -93,3 +93,31 @@ Descontos: Semestral 10% | Anual 20%
 1. Marca appointment como "completed"
 2. Sistema processa pacotes (se usado) ou pontos de fidelidade
 3. Registra pagamento e calcula comissão do profissional
+
+## Documentação (CLAUDE.md)
+
+Arquivos `CLAUDE.md` documentam contexto específico de cada módulo/pasta.
+
+### Regras
+
+- **Autocontido**: Cada arquivo deve ser compreensível sem depender de outros CLAUDE.md
+- **Específico**: Documentar apenas o que é relevante para aquele escopo
+- **Atualizado**: Manter sincronizado com o código (remover referências obsoletas)
+- **Sem duplicação**: Não repetir informações do CLAUDE.md raiz
+
+### Estrutura Sugerida
+
+```markdown
+# Nome do Módulo
+
+Breve descrição do propósito.
+
+## Endpoints / Componentes / Schema
+(o que existe neste módulo)
+
+## Fluxos
+(como as coisas funcionam)
+
+## Regras de Negócio
+(validações, constraints, comportamentos especiais)
+```
