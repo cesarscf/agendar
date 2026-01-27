@@ -11,12 +11,12 @@ export interface Partner {
     id: string
     status: string
     currentPeriodEnd: string
-    cancelAtPeriodEnd: boolean | null
+    cancelAtPeriodEnd: boolean
     plan: {
       id: string
       name: string
       price: string
-    }
+    } | null
   } | null
   establishmentsCount: number
 }

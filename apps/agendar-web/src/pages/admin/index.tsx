@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
 import { createFileRoute } from "@tanstack/react-router"
-import { format } from "date-fns"
+import { differenceInDays, format } from "date-fns"
 import { ptBR } from "date-fns/locale"
 import { Badge } from "@/components/ui/badge"
 import {
@@ -14,6 +14,12 @@ import {
 import { getPartners } from "@/http/admin/get-partners"
 import { requireAdminAuth } from "@/lib/admin-route-guards"
 import { cn } from "@/lib/utils"
+
+function getTrialDaysRemaining(currentPeriodEnd: string): number {
+  const endDate = new Date(currentPeriodEnd)
+  const now = new Date()
+  return Math.max(0, differenceInDays(endDate, now))
+}
 
 export const Route = createFileRoute("/admin/")({
   beforeLoad: requireAdminAuth,
@@ -102,14 +108,30 @@ function AdminDashboard() {
                     </TableCell>
                     <TableCell>
                       {partner.subscription ? (
-                        <div>
-                          <div className="font-medium">
-                            {partner.subscription.plan.name}
+                        partner.subscription.status === "trialing" ? (
+                          <div>
+                            <div className="font-medium text-blue-600">
+                              Trial Gratuito
+                            </div>
+                            <div className="text-muted-foreground text-xs">
+                              {getTrialDaysRemaining(
+                                partner.subscription.currentPeriodEnd
+                              )}{" "}
+                              dias restantes
+                            </div>
                           </div>
-                          <div className="text-muted-foreground text-xs">
-                            R$ {partner.subscription.plan.price}
+                        ) : partner.subscription.plan ? (
+                          <div>
+                            <div className="font-medium">
+                              {partner.subscription.plan.name}
+                            </div>
+                            <div className="text-muted-foreground text-xs">
+                              R$ {partner.subscription.plan.price}
+                            </div>
                           </div>
-                        </div>
+                        ) : (
+                          <span className="text-muted-foreground">-</span>
+                        )
                       ) : (
                         <span className="text-muted-foreground">-</span>
                       )}
@@ -131,18 +153,25 @@ function AdminDashboard() {
                     </TableCell>
                     <TableCell>
                       {partner.subscription ? (
-                        <span
-                          className={cn(
-                            new Date(partner.subscription.currentPeriodEnd) <
-                              new Date() && "text-red-500"
+                        <div>
+                          <span
+                            className={cn(
+                              new Date(partner.subscription.currentPeriodEnd) <
+                                new Date() && "text-red-500"
+                            )}
+                          >
+                            {format(
+                              new Date(partner.subscription.currentPeriodEnd),
+                              "dd/MM/yyyy",
+                              { locale: ptBR }
+                            )}
+                          </span>
+                          {partner.subscription.status === "trialing" && (
+                            <div className="text-muted-foreground text-xs">
+                              Fim do trial
+                            </div>
                           )}
-                        >
-                          {format(
-                            new Date(partner.subscription.currentPeriodEnd),
-                            "dd/MM/yyyy",
-                            { locale: ptBR }
-                          )}
-                        </span>
+                        </div>
                       ) : (
                         "-"
                       )}
