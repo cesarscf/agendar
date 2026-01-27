@@ -10,6 +10,7 @@ import { toast } from "sonner"
 import { routeTree } from "@/router-tree.gen"
 import { ThemeProvider } from "./components/theme-provider"
 import { Toaster } from "./components/ui/sonner"
+import { useAdminAuth } from "./hooks/use-admin-auth"
 import { useAuth } from "./hooks/use-auth"
 
 const router = createRouter({
@@ -18,6 +19,11 @@ const router = createRouter({
     auth: {
       isAuthenticated: false,
       partner: null,
+      isLoading: false,
+    },
+    adminAuth: {
+      isAuthenticated: false,
+      admin: null,
       isLoading: false,
     },
   },
@@ -31,8 +37,9 @@ declare module "@tanstack/react-router" {
 
 function InnerApp() {
   const auth = useAuth()
+  const adminAuth = useAdminAuth()
 
-  return <RouterProvider router={router} context={{ auth }} />
+  return <RouterProvider router={router} context={{ auth, adminAuth }} />
 }
 
 export function App() {

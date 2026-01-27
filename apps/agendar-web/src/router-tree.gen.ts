@@ -11,10 +11,12 @@
 import { Route as rootRouteImport } from './pages/__root'
 import { Route as CheckoutLayoutRouteImport } from './pages/checkout/layout'
 import { Route as AppLayoutRouteImport } from './pages/app/layout'
+import { Route as AdminLayoutRouteImport } from './pages/admin/layout'
 import { Route as AuthLayoutRouteImport } from './pages/_auth/layout'
 import { Route as SlugLayoutRouteImport } from './pages/$slug/layout'
 import { Route as CheckoutIndexRouteImport } from './pages/checkout/index'
 import { Route as AppIndexRouteImport } from './pages/app/index'
+import { Route as AdminIndexRouteImport } from './pages/admin/index'
 import { Route as MarketingIndexRouteImport } from './pages/_marketing/index'
 import { Route as SlugIndexRouteImport } from './pages/$slug/index'
 import { Route as CheckoutSuccessRouteImport } from './pages/checkout/success'
@@ -31,6 +33,7 @@ import { Route as AppDashboardIndexRouteImport } from './pages/app/dashboard/ind
 import { Route as AppCustomersIndexRouteImport } from './pages/app/customers/index'
 import { Route as AppCategoriesIndexRouteImport } from './pages/app/categories/index'
 import { Route as SlugSchedulingIndexRouteImport } from './pages/$slug/scheduling/index'
+import { Route as AdminPublicLoginRouteImport } from './pages/admin/_public/login'
 import { Route as AppServicesNewIndexRouteImport } from './pages/app/services/new/index'
 import { Route as AppServicesServiceIdIndexRouteImport } from './pages/app/services/$serviceId/index'
 import { Route as AppPackagesNewIndexRouteImport } from './pages/app/packages/new/index'
@@ -52,6 +55,11 @@ const AppLayoutRoute = AppLayoutRouteImport.update({
   path: '/app',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminLayoutRoute = AdminLayoutRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthLayoutRoute = AuthLayoutRouteImport.update({
   id: '/_auth',
   getParentRoute: () => rootRouteImport,
@@ -70,6 +78,11 @@ const AppIndexRoute = AppIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AppLayoutRoute,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminLayoutRoute,
 } as any)
 const MarketingIndexRoute = MarketingIndexRouteImport.update({
   id: '/_marketing/',
@@ -151,6 +164,11 @@ const SlugSchedulingIndexRoute = SlugSchedulingIndexRouteImport.update({
   path: '/scheduling/',
   getParentRoute: () => SlugLayoutRoute,
 } as any)
+const AdminPublicLoginRoute = AdminPublicLoginRouteImport.update({
+  id: '/_public/login',
+  path: '/login',
+  getParentRoute: () => AdminLayoutRoute,
+} as any)
 const AppServicesNewIndexRoute = AppServicesNewIndexRouteImport.update({
   id: '/services/new/',
   path: '/services/new/',
@@ -211,6 +229,7 @@ const AppCustomersCustomerIdIndexRoute =
 export interface FileRoutesByFullPath {
   '/$slug': typeof SlugLayoutRouteWithChildren
   '/': typeof MarketingIndexRoute
+  '/admin': typeof AdminLayoutRouteWithChildren
   '/app': typeof AppLayoutRouteWithChildren
   '/checkout': typeof CheckoutLayoutRouteWithChildren
   '/login': typeof AuthLoginRoute
@@ -219,8 +238,10 @@ export interface FileRoutesByFullPath {
   '/checkout/cancel': typeof CheckoutCancelRoute
   '/checkout/success': typeof CheckoutSuccessRoute
   '/$slug/': typeof SlugIndexRoute
+  '/admin/': typeof AdminIndexRoute
   '/app/': typeof AppIndexRoute
   '/checkout/': typeof CheckoutIndexRoute
+  '/admin/login': typeof AdminPublicLoginRoute
   '/$slug/scheduling/': typeof SlugSchedulingIndexRoute
   '/app/categories/': typeof AppCategoriesIndexRoute
   '/app/customers/': typeof AppCustomersIndexRoute
@@ -249,8 +270,10 @@ export interface FileRoutesByTo {
   '/checkout/cancel': typeof CheckoutCancelRoute
   '/checkout/success': typeof CheckoutSuccessRoute
   '/$slug': typeof SlugIndexRoute
+  '/admin': typeof AdminIndexRoute
   '/app': typeof AppIndexRoute
   '/checkout': typeof CheckoutIndexRoute
+  '/admin/login': typeof AdminPublicLoginRoute
   '/$slug/scheduling': typeof SlugSchedulingIndexRoute
   '/app/categories': typeof AppCategoriesIndexRoute
   '/app/customers': typeof AppCustomersIndexRoute
@@ -275,6 +298,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/$slug': typeof SlugLayoutRouteWithChildren
   '/_auth': typeof AuthLayoutRouteWithChildren
+  '/admin': typeof AdminLayoutRouteWithChildren
   '/app': typeof AppLayoutRouteWithChildren
   '/checkout': typeof CheckoutLayoutRouteWithChildren
   '/_auth/login': typeof AuthLoginRoute
@@ -284,8 +308,10 @@ export interface FileRoutesById {
   '/checkout/success': typeof CheckoutSuccessRoute
   '/$slug/': typeof SlugIndexRoute
   '/_marketing/': typeof MarketingIndexRoute
+  '/admin/': typeof AdminIndexRoute
   '/app/': typeof AppIndexRoute
   '/checkout/': typeof CheckoutIndexRoute
+  '/admin/_public/login': typeof AdminPublicLoginRoute
   '/$slug/scheduling/': typeof SlugSchedulingIndexRoute
   '/app/categories/': typeof AppCategoriesIndexRoute
   '/app/customers/': typeof AppCustomersIndexRoute
@@ -311,6 +337,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/$slug'
     | '/'
+    | '/admin'
     | '/app'
     | '/checkout'
     | '/login'
@@ -319,8 +346,10 @@ export interface FileRouteTypes {
     | '/checkout/cancel'
     | '/checkout/success'
     | '/$slug/'
+    | '/admin/'
     | '/app/'
     | '/checkout/'
+    | '/admin/login'
     | '/$slug/scheduling/'
     | '/app/categories/'
     | '/app/customers/'
@@ -349,8 +378,10 @@ export interface FileRouteTypes {
     | '/checkout/cancel'
     | '/checkout/success'
     | '/$slug'
+    | '/admin'
     | '/app'
     | '/checkout'
+    | '/admin/login'
     | '/$slug/scheduling'
     | '/app/categories'
     | '/app/customers'
@@ -374,6 +405,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/$slug'
     | '/_auth'
+    | '/admin'
     | '/app'
     | '/checkout'
     | '/_auth/login'
@@ -383,8 +415,10 @@ export interface FileRouteTypes {
     | '/checkout/success'
     | '/$slug/'
     | '/_marketing/'
+    | '/admin/'
     | '/app/'
     | '/checkout/'
+    | '/admin/_public/login'
     | '/$slug/scheduling/'
     | '/app/categories/'
     | '/app/customers/'
@@ -409,6 +443,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   SlugLayoutRoute: typeof SlugLayoutRouteWithChildren
   AuthLayoutRoute: typeof AuthLayoutRouteWithChildren
+  AdminLayoutRoute: typeof AdminLayoutRouteWithChildren
   AppLayoutRoute: typeof AppLayoutRouteWithChildren
   CheckoutLayoutRoute: typeof CheckoutLayoutRouteWithChildren
   MarketingIndexRoute: typeof MarketingIndexRoute
@@ -428,6 +463,13 @@ declare module '@tanstack/react-router' {
       path: '/app'
       fullPath: '/app'
       preLoaderRoute: typeof AppLayoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminLayoutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_auth': {
@@ -457,6 +499,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/app/'
       preLoaderRoute: typeof AppIndexRouteImport
       parentRoute: typeof AppLayoutRoute
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminLayoutRoute
     }
     '/_marketing/': {
       id: '/_marketing/'
@@ -570,6 +619,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SlugSchedulingIndexRouteImport
       parentRoute: typeof SlugLayoutRoute
     }
+    '/admin/_public/login': {
+      id: '/admin/_public/login'
+      path: '/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminPublicLoginRouteImport
+      parentRoute: typeof AdminLayoutRoute
+    }
     '/app/services/new/': {
       id: '/app/services/new/'
       path: '/services/new'
@@ -673,6 +729,20 @@ const AuthLayoutRouteWithChildren = AuthLayoutRoute._addFileChildren(
   AuthLayoutRouteChildren,
 )
 
+interface AdminLayoutRouteChildren {
+  AdminIndexRoute: typeof AdminIndexRoute
+  AdminPublicLoginRoute: typeof AdminPublicLoginRoute
+}
+
+const AdminLayoutRouteChildren: AdminLayoutRouteChildren = {
+  AdminIndexRoute: AdminIndexRoute,
+  AdminPublicLoginRoute: AdminPublicLoginRoute,
+}
+
+const AdminLayoutRouteWithChildren = AdminLayoutRoute._addFileChildren(
+  AdminLayoutRouteChildren,
+)
+
 interface AppLayoutRouteChildren {
   AppIndexRoute: typeof AppIndexRoute
   AppCategoriesIndexRoute: typeof AppCategoriesIndexRoute
@@ -740,6 +810,7 @@ const CheckoutLayoutRouteWithChildren = CheckoutLayoutRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   SlugLayoutRoute: SlugLayoutRouteWithChildren,
   AuthLayoutRoute: AuthLayoutRouteWithChildren,
+  AdminLayoutRoute: AdminLayoutRouteWithChildren,
   AppLayoutRoute: AppLayoutRouteWithChildren,
   CheckoutLayoutRoute: CheckoutLayoutRouteWithChildren,
   MarketingIndexRoute: MarketingIndexRoute,
