@@ -1,1 +1,0 @@
-ALTER TABLE "pre_partners" ADD COLUMN "code_expire_at" timestamp NOT NULL;

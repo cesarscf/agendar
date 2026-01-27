@@ -1,1 +1,0 @@
-ALTER TABLE "loyalty_programs" ADD COLUMN "name" varchar;

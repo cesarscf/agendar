@@ -1,1 +1,0 @@
-ALTER TABLE "appointments" ADD COLUMN "date" date NOT NULL;

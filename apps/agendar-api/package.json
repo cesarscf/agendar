@@ -10,7 +10,9 @@
     "build": "tsup-node",
     "start": "node dist/server.mjs",
     "format": "biome check . --write",
-    "db:seed": "tsx --env-file .env src/db/seed.ts"
+    "db:seed": "tsx --env-file .env src/db/seed.ts",
+    "db:seed:plans": "tsx --env-file .env src/db/seed-plans.ts",
+    "stripe:setup-portal": "tsx --env-file .env src/scripts/setup-customer-portal.ts"
   },
   "keywords": [],
   "author": "",

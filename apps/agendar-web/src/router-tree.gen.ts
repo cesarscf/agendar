@@ -17,6 +17,8 @@ import { Route as CheckoutIndexRouteImport } from './pages/checkout/index'
 import { Route as AppIndexRouteImport } from './pages/app/index'
 import { Route as MarketingIndexRouteImport } from './pages/_marketing/index'
 import { Route as SlugIndexRouteImport } from './pages/$slug/index'
+import { Route as CheckoutSuccessRouteImport } from './pages/checkout/success'
+import { Route as CheckoutCancelRouteImport } from './pages/checkout/cancel'
 import { Route as AuthRegisterRouteImport } from './pages/_auth/register'
 import { Route as AuthPreRegisterRouteImport } from './pages/_auth/pre-register'
 import { Route as AuthLoginRouteImport } from './pages/_auth/login'
@@ -78,6 +80,16 @@ const SlugIndexRoute = SlugIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => SlugLayoutRoute,
+} as any)
+const CheckoutSuccessRoute = CheckoutSuccessRouteImport.update({
+  id: '/success',
+  path: '/success',
+  getParentRoute: () => CheckoutLayoutRoute,
+} as any)
+const CheckoutCancelRoute = CheckoutCancelRouteImport.update({
+  id: '/cancel',
+  path: '/cancel',
+  getParentRoute: () => CheckoutLayoutRoute,
 } as any)
 const AuthRegisterRoute = AuthRegisterRouteImport.update({
   id: '/register',
@@ -198,41 +210,45 @@ const AppCustomersCustomerIdIndexRoute =
 
 export interface FileRoutesByFullPath {
   '/$slug': typeof SlugLayoutRouteWithChildren
+  '/': typeof MarketingIndexRoute
   '/app': typeof AppLayoutRouteWithChildren
   '/checkout': typeof CheckoutLayoutRouteWithChildren
   '/login': typeof AuthLoginRoute
   '/pre-register': typeof AuthPreRegisterRoute
   '/register': typeof AuthRegisterRoute
+  '/checkout/cancel': typeof CheckoutCancelRoute
+  '/checkout/success': typeof CheckoutSuccessRoute
   '/$slug/': typeof SlugIndexRoute
-  '/': typeof MarketingIndexRoute
   '/app/': typeof AppIndexRoute
   '/checkout/': typeof CheckoutIndexRoute
-  '/$slug/scheduling': typeof SlugSchedulingIndexRoute
-  '/app/categories': typeof AppCategoriesIndexRoute
-  '/app/customers': typeof AppCustomersIndexRoute
-  '/app/dashboard': typeof AppDashboardIndexRoute
-  '/app/employees': typeof AppEmployeesIndexRoute
-  '/app/loyalty-programs': typeof AppLoyaltyProgramsIndexRoute
-  '/app/packages': typeof AppPackagesIndexRoute
-  '/app/services': typeof AppServicesIndexRoute
-  '/app/store': typeof AppStoreIndexRoute
-  '/app/customers/$customerId': typeof AppCustomersCustomerIdIndexRoute
-  '/app/customers/new': typeof AppCustomersNewIndexRoute
-  '/app/employees/$employeeId': typeof AppEmployeesEmployeeIdIndexRoute
-  '/app/employees/new': typeof AppEmployeesNewIndexRoute
-  '/app/loyalty-programs/$programId': typeof AppLoyaltyProgramsProgramIdIndexRoute
-  '/app/loyalty-programs/new': typeof AppLoyaltyProgramsNewIndexRoute
-  '/app/packages/$packageId': typeof AppPackagesPackageIdIndexRoute
-  '/app/packages/new': typeof AppPackagesNewIndexRoute
-  '/app/services/$serviceId': typeof AppServicesServiceIdIndexRoute
-  '/app/services/new': typeof AppServicesNewIndexRoute
+  '/$slug/scheduling/': typeof SlugSchedulingIndexRoute
+  '/app/categories/': typeof AppCategoriesIndexRoute
+  '/app/customers/': typeof AppCustomersIndexRoute
+  '/app/dashboard/': typeof AppDashboardIndexRoute
+  '/app/employees/': typeof AppEmployeesIndexRoute
+  '/app/loyalty-programs/': typeof AppLoyaltyProgramsIndexRoute
+  '/app/packages/': typeof AppPackagesIndexRoute
+  '/app/services/': typeof AppServicesIndexRoute
+  '/app/store/': typeof AppStoreIndexRoute
+  '/app/customers/$customerId/': typeof AppCustomersCustomerIdIndexRoute
+  '/app/customers/new/': typeof AppCustomersNewIndexRoute
+  '/app/employees/$employeeId/': typeof AppEmployeesEmployeeIdIndexRoute
+  '/app/employees/new/': typeof AppEmployeesNewIndexRoute
+  '/app/loyalty-programs/$programId/': typeof AppLoyaltyProgramsProgramIdIndexRoute
+  '/app/loyalty-programs/new/': typeof AppLoyaltyProgramsNewIndexRoute
+  '/app/packages/$packageId/': typeof AppPackagesPackageIdIndexRoute
+  '/app/packages/new/': typeof AppPackagesNewIndexRoute
+  '/app/services/$serviceId/': typeof AppServicesServiceIdIndexRoute
+  '/app/services/new/': typeof AppServicesNewIndexRoute
 }
 export interface FileRoutesByTo {
+  '/': typeof MarketingIndexRoute
   '/login': typeof AuthLoginRoute
   '/pre-register': typeof AuthPreRegisterRoute
   '/register': typeof AuthRegisterRoute
+  '/checkout/cancel': typeof CheckoutCancelRoute
+  '/checkout/success': typeof CheckoutSuccessRoute
   '/$slug': typeof SlugIndexRoute
-  '/': typeof MarketingIndexRoute
   '/app': typeof AppIndexRoute
   '/checkout': typeof CheckoutIndexRoute
   '/$slug/scheduling': typeof SlugSchedulingIndexRoute
@@ -264,6 +280,8 @@ export interface FileRoutesById {
   '/_auth/login': typeof AuthLoginRoute
   '/_auth/pre-register': typeof AuthPreRegisterRoute
   '/_auth/register': typeof AuthRegisterRoute
+  '/checkout/cancel': typeof CheckoutCancelRoute
+  '/checkout/success': typeof CheckoutSuccessRoute
   '/$slug/': typeof SlugIndexRoute
   '/_marketing/': typeof MarketingIndexRoute
   '/app/': typeof AppIndexRoute
@@ -292,41 +310,45 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/$slug'
+    | '/'
     | '/app'
     | '/checkout'
     | '/login'
     | '/pre-register'
     | '/register'
+    | '/checkout/cancel'
+    | '/checkout/success'
     | '/$slug/'
-    | '/'
     | '/app/'
     | '/checkout/'
-    | '/$slug/scheduling'
-    | '/app/categories'
-    | '/app/customers'
-    | '/app/dashboard'
-    | '/app/employees'
-    | '/app/loyalty-programs'
-    | '/app/packages'
-    | '/app/services'
-    | '/app/store'
-    | '/app/customers/$customerId'
-    | '/app/customers/new'
-    | '/app/employees/$employeeId'
-    | '/app/employees/new'
-    | '/app/loyalty-programs/$programId'
-    | '/app/loyalty-programs/new'
-    | '/app/packages/$packageId'
-    | '/app/packages/new'
-    | '/app/services/$serviceId'
-    | '/app/services/new'
+    | '/$slug/scheduling/'
+    | '/app/categories/'
+    | '/app/customers/'
+    | '/app/dashboard/'
+    | '/app/employees/'
+    | '/app/loyalty-programs/'
+    | '/app/packages/'
+    | '/app/services/'
+    | '/app/store/'
+    | '/app/customers/$customerId/'
+    | '/app/customers/new/'
+    | '/app/employees/$employeeId/'
+    | '/app/employees/new/'
+    | '/app/loyalty-programs/$programId/'
+    | '/app/loyalty-programs/new/'
+    | '/app/packages/$packageId/'
+    | '/app/packages/new/'
+    | '/app/services/$serviceId/'
+    | '/app/services/new/'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/'
     | '/login'
     | '/pre-register'
     | '/register'
+    | '/checkout/cancel'
+    | '/checkout/success'
     | '/$slug'
-    | '/'
     | '/app'
     | '/checkout'
     | '/$slug/scheduling'
@@ -357,6 +379,8 @@ export interface FileRouteTypes {
     | '/_auth/login'
     | '/_auth/pre-register'
     | '/_auth/register'
+    | '/checkout/cancel'
+    | '/checkout/success'
     | '/$slug/'
     | '/_marketing/'
     | '/app/'
@@ -409,7 +433,7 @@ declare module '@tanstack/react-router' {
     '/_auth': {
       id: '/_auth'
       path: ''
-      fullPath: ''
+      fullPath: '/'
       preLoaderRoute: typeof AuthLayoutRouteImport
       parentRoute: typeof rootRouteImport
     }
@@ -448,6 +472,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SlugIndexRouteImport
       parentRoute: typeof SlugLayoutRoute
     }
+    '/checkout/success': {
+      id: '/checkout/success'
+      path: '/success'
+      fullPath: '/checkout/success'
+      preLoaderRoute: typeof CheckoutSuccessRouteImport
+      parentRoute: typeof CheckoutLayoutRoute
+    }
+    '/checkout/cancel': {
+      id: '/checkout/cancel'
+      path: '/cancel'
+      fullPath: '/checkout/cancel'
+      preLoaderRoute: typeof CheckoutCancelRouteImport
+      parentRoute: typeof CheckoutLayoutRoute
+    }
     '/_auth/register': {
       id: '/_auth/register'
       path: '/register'
@@ -472,133 +510,133 @@ declare module '@tanstack/react-router' {
     '/app/store/': {
       id: '/app/store/'
       path: '/store'
-      fullPath: '/app/store'
+      fullPath: '/app/store/'
       preLoaderRoute: typeof AppStoreIndexRouteImport
       parentRoute: typeof AppLayoutRoute
     }
     '/app/services/': {
       id: '/app/services/'
       path: '/services'
-      fullPath: '/app/services'
+      fullPath: '/app/services/'
       preLoaderRoute: typeof AppServicesIndexRouteImport
       parentRoute: typeof AppLayoutRoute
     }
     '/app/packages/': {
       id: '/app/packages/'
       path: '/packages'
-      fullPath: '/app/packages'
+      fullPath: '/app/packages/'
       preLoaderRoute: typeof AppPackagesIndexRouteImport
       parentRoute: typeof AppLayoutRoute
     }
     '/app/loyalty-programs/': {
       id: '/app/loyalty-programs/'
       path: '/loyalty-programs'
-      fullPath: '/app/loyalty-programs'
+      fullPath: '/app/loyalty-programs/'
       preLoaderRoute: typeof AppLoyaltyProgramsIndexRouteImport
       parentRoute: typeof AppLayoutRoute
     }
     '/app/employees/': {
       id: '/app/employees/'
       path: '/employees'
-      fullPath: '/app/employees'
+      fullPath: '/app/employees/'
       preLoaderRoute: typeof AppEmployeesIndexRouteImport
       parentRoute: typeof AppLayoutRoute
     }
     '/app/dashboard/': {
       id: '/app/dashboard/'
       path: '/dashboard'
-      fullPath: '/app/dashboard'
+      fullPath: '/app/dashboard/'
       preLoaderRoute: typeof AppDashboardIndexRouteImport
       parentRoute: typeof AppLayoutRoute
     }
     '/app/customers/': {
       id: '/app/customers/'
       path: '/customers'
-      fullPath: '/app/customers'
+      fullPath: '/app/customers/'
       preLoaderRoute: typeof AppCustomersIndexRouteImport
       parentRoute: typeof AppLayoutRoute
     }
     '/app/categories/': {
       id: '/app/categories/'
       path: '/categories'
-      fullPath: '/app/categories'
+      fullPath: '/app/categories/'
       preLoaderRoute: typeof AppCategoriesIndexRouteImport
       parentRoute: typeof AppLayoutRoute
     }
     '/$slug/scheduling/': {
       id: '/$slug/scheduling/'
       path: '/scheduling'
-      fullPath: '/$slug/scheduling'
+      fullPath: '/$slug/scheduling/'
       preLoaderRoute: typeof SlugSchedulingIndexRouteImport
       parentRoute: typeof SlugLayoutRoute
     }
     '/app/services/new/': {
       id: '/app/services/new/'
       path: '/services/new'
-      fullPath: '/app/services/new'
+      fullPath: '/app/services/new/'
       preLoaderRoute: typeof AppServicesNewIndexRouteImport
       parentRoute: typeof AppLayoutRoute
     }
     '/app/services/$serviceId/': {
       id: '/app/services/$serviceId/'
       path: '/services/$serviceId'
-      fullPath: '/app/services/$serviceId'
+      fullPath: '/app/services/$serviceId/'
       preLoaderRoute: typeof AppServicesServiceIdIndexRouteImport
       parentRoute: typeof AppLayoutRoute
     }
     '/app/packages/new/': {
       id: '/app/packages/new/'
       path: '/packages/new'
-      fullPath: '/app/packages/new'
+      fullPath: '/app/packages/new/'
       preLoaderRoute: typeof AppPackagesNewIndexRouteImport
       parentRoute: typeof AppLayoutRoute
     }
     '/app/packages/$packageId/': {
       id: '/app/packages/$packageId/'
       path: '/packages/$packageId'
-      fullPath: '/app/packages/$packageId'
+      fullPath: '/app/packages/$packageId/'
       preLoaderRoute: typeof AppPackagesPackageIdIndexRouteImport
       parentRoute: typeof AppLayoutRoute
     }
     '/app/loyalty-programs/new/': {
       id: '/app/loyalty-programs/new/'
       path: '/loyalty-programs/new'
-      fullPath: '/app/loyalty-programs/new'
+      fullPath: '/app/loyalty-programs/new/'
       preLoaderRoute: typeof AppLoyaltyProgramsNewIndexRouteImport
       parentRoute: typeof AppLayoutRoute
     }
     '/app/loyalty-programs/$programId/': {
       id: '/app/loyalty-programs/$programId/'
       path: '/loyalty-programs/$programId'
-      fullPath: '/app/loyalty-programs/$programId'
+      fullPath: '/app/loyalty-programs/$programId/'
       preLoaderRoute: typeof AppLoyaltyProgramsProgramIdIndexRouteImport
       parentRoute: typeof AppLayoutRoute
     }
     '/app/employees/new/': {
       id: '/app/employees/new/'
       path: '/employees/new'
-      fullPath: '/app/employees/new'
+      fullPath: '/app/employees/new/'
       preLoaderRoute: typeof AppEmployeesNewIndexRouteImport
       parentRoute: typeof AppLayoutRoute
     }
     '/app/employees/$employeeId/': {
       id: '/app/employees/$employeeId/'
       path: '/employees/$employeeId'
-      fullPath: '/app/employees/$employeeId'
+      fullPath: '/app/employees/$employeeId/'
       preLoaderRoute: typeof AppEmployeesEmployeeIdIndexRouteImport
       parentRoute: typeof AppLayoutRoute
     }
     '/app/customers/new/': {
       id: '/app/customers/new/'
       path: '/customers/new'
-      fullPath: '/app/customers/new'
+      fullPath: '/app/customers/new/'
       preLoaderRoute: typeof AppCustomersNewIndexRouteImport
       parentRoute: typeof AppLayoutRoute
     }
     '/app/customers/$customerId/': {
       id: '/app/customers/$customerId/'
       path: '/customers/$customerId'
-      fullPath: '/app/customers/$customerId'
+      fullPath: '/app/customers/$customerId/'
       preLoaderRoute: typeof AppCustomersCustomerIdIndexRouteImport
       parentRoute: typeof AppLayoutRoute
     }
@@ -684,10 +722,14 @@ const AppLayoutRouteWithChildren = AppLayoutRoute._addFileChildren(
 )
 
 interface CheckoutLayoutRouteChildren {
+  CheckoutCancelRoute: typeof CheckoutCancelRoute
+  CheckoutSuccessRoute: typeof CheckoutSuccessRoute
   CheckoutIndexRoute: typeof CheckoutIndexRoute
 }
 
 const CheckoutLayoutRouteChildren: CheckoutLayoutRouteChildren = {
+  CheckoutCancelRoute: CheckoutCancelRoute,
+  CheckoutSuccessRoute: CheckoutSuccessRoute,
   CheckoutIndexRoute: CheckoutIndexRoute,
 }
 

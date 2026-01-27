@@ -2,6 +2,14 @@
 
 Plataforma SaaS multi-tenant para agendamento de serviços, focada em salões de beleza e negócios similares.
 
+## Ambiente
+
+**Status**: Em desenvolvimento (não está em produção)
+
+- Pode limpar dados do banco sem preocupação
+- Pode atualizar/recriar tabelas livremente
+- Dados são de teste
+
 ## Domínio do Negócio
 
 O sistema permite que **Partners** (donos de negócio) gerenciem seus **Establishments** (estabelecimentos/filiais), onde **Employees** (profissionais) prestam **Services** (serviços) para **Customers** (clientes) através de **Appointments** (agendamentos).

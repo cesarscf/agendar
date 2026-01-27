@@ -1,1 +1,0 @@
-ALTER TABLE "pre_partners" ADD COLUMN "status" text DEFAULT 'pending' NOT NULL;

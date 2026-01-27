@@ -1,0 +1,1 @@
+DROP TABLE "partner_payment_methods" CASCADE;

@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm"
-import { pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core"
+import { boolean, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core"
 import { partners } from "./partners"
 import { plans } from "./plans"
 import { lifecycleDates } from "./utils"
@@ -19,17 +19,20 @@ export const subscriptions = pgTable("subscriptions", {
   id: uuid("id").defaultRandom().primaryKey(),
   partnerId: uuid("partner_id")
     .notNull()
-    .references(() => partners.id, { onDelete: "cascade" }),
+    .references(() => partners.id, { onDelete: "cascade" })
+    .unique(),
   planId: uuid("plan_id")
     .notNull()
     .references(() => plans.id),
-  integrationSubscriptionId: text("integration_subscription_id").notNull(),
+  integrationSubscriptionId: text("integration_subscription_id")
+    .notNull()
+    .unique(),
   status: text("status").notNull(),
   currentPeriodEnd: timestamp("current_period_end", {
     withTimezone: true,
   }).notNull(),
+  cancelAtPeriodEnd: boolean("cancel_at_period_end").default(false),
   endedAt: timestamp("ended_at", { withTimezone: true }),
-  changedFromSubscriptionId: text("changed_from_subscription_id"),
   ...lifecycleDates,
 })
 

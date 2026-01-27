@@ -13,16 +13,16 @@ declare module "fastify" {
       customerId: string
     }>
     getActiveSubscription(): {
-      status: string
       id: string
-      createdAt: Date
-      updatedAt: Date | null
       partnerId: string
       planId: string
       integrationSubscriptionId: string
+      status: string
       currentPeriodEnd: Date
+      cancelAtPeriodEnd: boolean | null
       endedAt: Date | null
-      changedFromSubscriptionId: string | null
+      createdAt: Date
+      updatedAt: Date | null
     }
     getCurrentAdminId(): string
     getCurrentAdminRole(): string | null

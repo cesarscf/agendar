@@ -1,1 +1,0 @@
-ALTER TABLE "pre_partners" RENAME COLUMN "password" TO "emai";

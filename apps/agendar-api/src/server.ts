@@ -26,7 +26,6 @@ import { establishmentsRoutes } from "@/routes/establishments"
 import { loyaltyProgramsRoutes } from "@/routes/loyalty-programs"
 import { packagesRoutes } from "@/routes/packages"
 import { partnerRoutes } from "@/routes/partner"
-import { paymentMethodRoutes } from "@/routes/payment-method"
 import { planRoutes } from "@/routes/plans"
 import { publicRoutes } from "@/routes/public"
 import { servicesRoutes } from "@/routes/services"
@@ -112,7 +111,6 @@ app.register(establishmentsRoutes)
 app.register(loyaltyProgramsRoutes)
 app.register(packagesRoutes)
 app.register(employeesRoutes)
-app.register(paymentMethodRoutes)
 app.register(adminLogin)
 app.register(servicesRoutes)
 app.register(publicRoutes, { prefix: "/public" })

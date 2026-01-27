@@ -5,24 +5,27 @@ import z from "zod"
 import { stripe } from "@/clients/stripe"
 import { db } from "@/db"
 import { partners } from "@/db/schema"
+import { env } from "@/env"
 import { auth } from "@/middlewares/auth"
+import { BadRequestError } from "@/routes/_erros/bad-request-error"
 
-export async function getSetupIntent(app: FastifyInstance) {
+export async function createCustomerPortal(app: FastifyInstance) {
   await app.register(async app => {
     const typedApp = app.withTypeProvider<ZodTypeProvider>()
     typedApp.register(auth)
-    typedApp.get(
-      "/payment-methods/setup-intent",
+
+    typedApp.post(
+      "/subscriptions/customer-portal",
       {
         schema: {
-          tags: ["Payment Methods"],
-          summary: "Generate SetupIntent to add a card",
+          tags: ["Subscriptions"],
+          summary: "Create Stripe Customer Portal session",
           security: [{ bearerAuth: [] }],
           response: {
             200: z.object({
-              clientSecret: z.string(),
+              url: z.string(),
             }),
-            500: z.object({
+            400: z.object({
               message: z.string(),
             }),
           },
@@ -36,18 +39,23 @@ export async function getSetupIntent(app: FastifyInstance) {
           .from(partners)
           .where(eq(partners.id, partnerId))
 
-        if (!partner) return reply.status(404).send()
+        if (!partner) {
+          throw new BadRequestError("Partner not found")
+        }
 
-        const setupIntent = await stripe.setupIntents.create({
+        if (!partner.integrationPaymentId) {
+          throw new BadRequestError("Partner has no Stripe customer")
+        }
+
+        const session = await stripe.billingPortal.sessions.create({
           customer: partner.integrationPaymentId,
-          usage: "off_session",
+          return_url: `${env.FRONTEND_URL}/app/settings`,
+          ...(env.STRIPE_PORTAL_CONFIG_ID && {
+            configuration: env.STRIPE_PORTAL_CONFIG_ID,
+          }),
         })
-        if (!setupIntent.client_secret)
-          return reply
-            .status(500)
-            .send({ message: "Failed to generate SetupIntent" })
 
-        return reply.send({ clientSecret: setupIntent.client_secret })
+        return reply.send({ url: session.url })
       }
     )
   })

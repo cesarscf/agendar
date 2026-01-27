@@ -1,1 +1,0 @@
-ALTER TABLE "pre_partners" ADD COLUMN "name" text NOT NULL;
