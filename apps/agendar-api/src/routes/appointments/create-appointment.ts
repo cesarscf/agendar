@@ -5,6 +5,7 @@ import type { FastifyInstance } from "fastify"
 import type { ZodTypeProvider } from "fastify-type-provider-zod"
 import { z } from "zod"
 import { messaging } from "@/clients/firebase"
+import { sendWhatsAppMessage } from "@/clients/zapi"
 import { db } from "@/db"
 import {
   appointments,
@@ -12,6 +13,7 @@ import {
   employeeRecurringBlocks,
   employeeServices,
   employeeTimeBlocks,
+  employees,
   establishments,
   fcmTokens,
   services,
@@ -85,6 +87,11 @@ export async function createAppointment(app: FastifyInstance) {
         if (!service) {
           return reply.status(400).send({ message: "Serviço inválido" })
         }
+
+        const employee = await db.query.employees.findFirst({
+          where: eq(employees.id, employeeId),
+          columns: { name: true },
+        })
 
         const formattedDate = format(date, "yyyy-MM-dd")
         const duration = service.durationInMinutes
@@ -196,6 +203,36 @@ export async function createAppointment(app: FastifyInstance) {
               request.log.error(err, "Erro ao enviar notificação FCM")
               console.error(err, "Erro ao enviar notificação FCM")
             })
+        }
+
+        // 📱 Envia confirmação via WhatsApp para o cliente
+        if (customer.phoneNumber) {
+          const appointmentDate = format(
+            startDatetime,
+            "dd/MM/yyyy 'às' HH:mm",
+            { locale: ptBR }
+          )
+          const whatsappMessage = `✅ *Agendamento Confirmado!*
+
+Olá, ${customer.name}!
+
+Seu agendamento foi confirmado:
+
+📍 *${establishment.name}*
+💇 *Serviço:* ${service.name}
+👤 *Profissional:* ${employee?.name ?? "A definir"}
+📅 *Data:* ${appointmentDate}
+
+Qualquer dúvida, entre em contato conosco.
+
+_Mensagem automática - Agendar_`
+
+          sendWhatsAppMessage({
+            phone: customer.phoneNumber,
+            message: whatsappMessage,
+          }).catch(err => {
+            request.log.error(err, "Erro ao enviar WhatsApp")
+          })
         }
       }
     )

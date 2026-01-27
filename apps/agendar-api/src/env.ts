@@ -14,6 +14,24 @@ const envSchema = z.object({
   RESEND_API_KEY: z.string(),
   RESEND_EMAIL: z.string(),
   FRONTEND_URL: z.string().default("http://localhost:3000"),
+  // Z-API (opcional)
+  ZAPI_INSTANCE_ID: z.string().optional(),
+  ZAPI_TOKEN: z.string().optional(),
+  ZAPI_CLIENT_TOKEN: z.string().optional(),
 })
 
-export const env = envSchema.parse(process.env)
+const parsedEnv = envSchema.parse(process.env)
+
+export const env = {
+  ...parsedEnv,
+  ZAPI:
+    parsedEnv.ZAPI_INSTANCE_ID &&
+    parsedEnv.ZAPI_TOKEN &&
+    parsedEnv.ZAPI_CLIENT_TOKEN
+      ? {
+          instanceId: parsedEnv.ZAPI_INSTANCE_ID,
+          token: parsedEnv.ZAPI_TOKEN,
+          clientToken: parsedEnv.ZAPI_CLIENT_TOKEN,
+        }
+      : undefined,
+}
