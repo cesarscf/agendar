@@ -1,7 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router"
 import { useAdminAuth } from "@/hooks/use-admin-auth"
+import { requireAdminAuth } from "@/lib/admin-route-guards"
 
 export const Route = createFileRoute("/admin/")({
+  beforeLoad: requireAdminAuth,
   component: AdminDashboard,
 })
 

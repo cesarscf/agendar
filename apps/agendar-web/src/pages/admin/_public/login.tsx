@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useMutation } from "@tanstack/react-query"
-import { createFileRoute, useNavigate } from "@tanstack/react-router"
+import { createFileRoute } from "@tanstack/react-router"
 import { Loader2 } from "lucide-react"
 import { useForm } from "react-hook-form"
 import type z from "zod"
@@ -18,25 +18,13 @@ import { Input } from "@/components/ui/input"
 import { adminLogin } from "@/http/admin/login"
 import { adminLoginSchema } from "@/lib/validations/admin-auth"
 
-type SearchParams = {
-  redirect?: string
-}
-
 export const Route = createFileRoute("/admin/_public/login")({
   component: AdminLogin,
-  validateSearch: (search: SearchParams) => {
-    return {
-      redirect: search.redirect,
-    }
-  },
 })
 
 type Inputs = z.infer<typeof adminLoginSchema>
 
 function AdminLogin() {
-  const navigate = useNavigate()
-  const { redirect } = Route.useSearch()
-
   const { mutateAsync: authenticate, isPending } = useMutation({
     mutationFn: adminLogin,
   })
@@ -51,9 +39,7 @@ function AdminLogin() {
 
   async function onSubmit(values: Inputs) {
     await authenticate(values)
-
-    const redirectTo = redirect ? decodeURIComponent(redirect) : "/admin"
-    navigate({ to: redirectTo })
+    window.location.href = "/admin"
   }
 
   return (

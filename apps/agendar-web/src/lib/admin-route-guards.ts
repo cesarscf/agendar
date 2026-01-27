@@ -3,15 +3,9 @@ import type { RouterContext } from "./router-context"
 
 interface BeforeLoadContext {
   context: RouterContext
-  location: {
-    href: string
-  }
 }
 
-export async function requireAdminAuth({
-  context,
-  location,
-}: BeforeLoadContext) {
+export async function requireAdminAuth({ context }: BeforeLoadContext) {
   if (context.adminAuth.isLoading) {
     return
   }
@@ -19,9 +13,6 @@ export async function requireAdminAuth({
   if (!context.adminAuth.isAuthenticated) {
     throw redirect({
       to: "/admin/login",
-      search: {
-        redirect: location.href,
-      },
     })
   }
 }

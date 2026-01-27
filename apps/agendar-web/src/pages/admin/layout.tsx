@@ -6,17 +6,15 @@ import React from "react"
 import { useAdminAuth } from "@/hooks/use-admin-auth"
 import { adminApi } from "@/lib/admin-api-client"
 import { clearAdminToken } from "@/lib/admin-auth"
-import { requireAdminAuth } from "@/lib/admin-route-guards"
 
 export const Route = createFileRoute("/admin")({
-  beforeLoad: requireAdminAuth,
   component: AdminLayout,
 })
 
 function AdminLayout() {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
-  const { admin, isLoading } = useAdminAuth()
+  const { admin, isAuthenticated } = useAdminAuth()
 
   React.useLayoutEffect(() => {
     const interceptorId = adminApi.interceptors.response.use(
@@ -31,7 +29,6 @@ function AdminLayout() {
             navigate({
               to: "/admin/login",
               replace: true,
-              search: { redirect: undefined },
             })
           }
         }
@@ -44,12 +41,9 @@ function AdminLayout() {
     }
   }, [navigate, queryClient])
 
-  if (isLoading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
-      </div>
-    )
+  // Se não autenticado, renderiza apenas o Outlet (login page tem seu próprio layout)
+  if (!isAuthenticated) {
+    return <Outlet />
   }
 
   return (
@@ -65,7 +59,7 @@ function AdminLayout() {
               type="button"
               onClick={() => {
                 clearAdminToken()
-                navigate({ to: "/admin/login", search: { redirect: undefined } })
+                navigate({ to: "/admin/login" })
               }}
               className="text-sm text-red-500 hover:underline"
             >
