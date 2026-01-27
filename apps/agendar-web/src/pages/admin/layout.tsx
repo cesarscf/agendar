@@ -1,5 +1,5 @@
 import { useQueryClient } from "@tanstack/react-query"
-import { createFileRoute, Outlet, useNavigate } from "@tanstack/react-router"
+import { createFileRoute, Outlet } from "@tanstack/react-router"
 import { AxiosError } from "axios"
 import React from "react"
 
@@ -12,7 +12,6 @@ export const Route = createFileRoute("/admin")({
 })
 
 function AdminLayout() {
-  const navigate = useNavigate()
   const queryClient = useQueryClient()
   const { admin, isAuthenticated } = useAdminAuth()
 
@@ -26,10 +25,7 @@ function AdminLayout() {
           if (status === 401) {
             queryClient.clear()
             clearAdminToken()
-            navigate({
-              to: "/admin/login",
-              replace: true,
-            })
+            window.location.href = "/admin/login"
           }
         }
         return Promise.reject(error)
@@ -39,7 +35,7 @@ function AdminLayout() {
     return () => {
       adminApi.interceptors.response.eject(interceptorId)
     }
-  }, [navigate, queryClient])
+  }, [queryClient])
 
   // Se não autenticado, renderiza apenas o Outlet (login page tem seu próprio layout)
   if (!isAuthenticated) {
@@ -59,7 +55,7 @@ function AdminLayout() {
               type="button"
               onClick={() => {
                 clearAdminToken()
-                navigate({ to: "/admin/login" })
+                window.location.href = "/admin/login"
               }}
               className="text-sm text-red-500 hover:underline"
             >
