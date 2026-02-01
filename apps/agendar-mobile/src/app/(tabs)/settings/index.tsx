@@ -1,33 +1,36 @@
-import type { Href } from "expo-router"
 import { ChevronRight, Headset, LogOut } from "lucide-react-native"
-import { Pressable, Text, View } from "react-native"
-import { ListItem } from "@/components/list-item"
+import { Linking, Pressable, Text, View } from "react-native"
 import { useSession } from "@/providers/auth-context"
+
+const WHATSAPP_URL = "https://wa.me/5527992024223"
 
 export default function Settings() {
   const { signOut } = useSession()
 
-  const items = [
-    {
-      label: "Suporte",
-      description: "Fale com o suporte",
-      route: "/(tabs)/settings/billing" as Href,
-      icon: Headset,
-    },
-  ]
-
   return (
     <View className="flex-1 bg-white">
       <View className="mt-2 px-4">
-        {items.map(item => (
-          <ListItem
-            key={item.label}
-            Icon={item.icon}
-            description={item.description}
-            label={item.label}
-            route={item.route}
+        <Pressable
+          onPress={() => Linking.openURL(WHATSAPP_URL)}
+          className="flex-row items-center justify-between p-2 py-6 border-gray-100"
+        >
+          <View className="flex-row gap-4 flex-1 items-center">
+            <Headset size={24} color={"#25D366"} className="mt-1" />
+            <View className="flex-1">
+              <Text className="text-base font-medium">
+                Suporte
+              </Text>
+              <Text className="text-sm text-gray-500">
+                Fale com o suporte via WhatsApp
+              </Text>
+            </View>
+          </View>
+          <ChevronRight
+            size={20}
+            className="mt-1 text-gray-400"
+            color={"#9ca3af"}
           />
-        ))}
+        </Pressable>
         <Pressable
           onPress={() => {
             signOut()

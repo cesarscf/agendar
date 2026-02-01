@@ -4,6 +4,7 @@ import { AxiosError } from "axios"
 import React from "react"
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
 
+import { WhatsAppButton } from "@/components/whatsapp-button"
 import { useAuth } from "@/hooks/use-auth"
 import { useSubscription } from "@/hooks/use-subscription"
 import { api } from "@/lib/api-client"
@@ -81,6 +82,7 @@ function RouteComponent() {
           <Outlet />
         </div>
       </SidebarInset>
+      <WhatsAppButton />
     </SidebarProvider>
   )
 }

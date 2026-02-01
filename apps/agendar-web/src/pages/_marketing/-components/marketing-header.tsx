@@ -26,9 +26,18 @@ export function MarketingHeader() {
             <span className="text-yellow-300 text-xl font-bold">Agendar</span>
           </Link>
 
-          {/* Mobile Menu Button */}
-          <Sheet open={open} onOpenChange={setOpen}>
-            <SheetTrigger asChild className="lg:hidden">
+          <div className="flex items-center gap-2 lg:hidden">
+            <Link
+              search={{ redirect: undefined }}
+              to="/login"
+              className="text-white hover:text-yellow-200 bg-[#2d4a8e] hover:bg-[#3d5a9e] transition-all text-sm font-bold py-2 px-4 rounded-full"
+            >
+              Entrar
+            </Link>
+
+            {/* Mobile Menu Button */}
+            <Sheet open={open} onOpenChange={setOpen}>
+              <SheetTrigger asChild>
               <Button
                 variant="ghost"
                 size="icon"
@@ -100,7 +109,8 @@ export function MarketingHeader() {
                 </div>
               </nav>
             </SheetContent>
-          </Sheet>
+            </Sheet>
+          </div>
 
           {/* Desktop Menu */}
           <nav className="hidden lg:flex items-center gap-6">

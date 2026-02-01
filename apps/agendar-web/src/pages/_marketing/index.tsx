@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router"
 
+import { WhatsAppButton } from "@/components/whatsapp-button"
 import { About } from "./-components/about"
 import { FAQ } from "./-components/faq"
 import { Features } from "./-components/features"
@@ -46,6 +47,8 @@ function RouteComponent() {
       </div>
 
       <Footer />
+
+      <WhatsAppButton />
     </div>
   )
 }
