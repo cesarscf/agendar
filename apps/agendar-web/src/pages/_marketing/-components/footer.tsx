@@ -108,7 +108,7 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-2 text-gray-300">
                 <MapPin className="w-4 h-4" />
-                São Paulo, Brasil
+                Vila Velha - ES, Brasil
               </li>
             </ul>
           </div>

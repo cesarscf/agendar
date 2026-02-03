@@ -72,7 +72,7 @@ export function App() {
     <I18nProvider locale="pt-BR">
       <NuqsAdapter>
         <QueryClientProvider client={queryClient}>
-          <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+          <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
             <InnerApp />
             <Toaster richColors />
           </ThemeProvider>

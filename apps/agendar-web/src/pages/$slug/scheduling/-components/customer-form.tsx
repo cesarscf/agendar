@@ -198,7 +198,7 @@ export function CreateCustomerForm({
             <FormItem>
               <FormLabel>Estado</FormLabel>
               <FormControl>
-                <Input placeholder="SP" {...field} />
+                <Input placeholder="ES" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -212,7 +212,7 @@ export function CreateCustomerForm({
             <FormItem>
               <FormLabel>Cidade</FormLabel>
               <FormControl>
-                <Input placeholder="São Paulo" {...field} />
+                <Input placeholder="Vila Velha" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
