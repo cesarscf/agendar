@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query"
 import { createFileRoute, useNavigate } from "@tanstack/react-router"
 import { AxiosError } from "axios"
 import { Loader2, Mail } from "lucide-react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import type z from "zod"
@@ -23,8 +23,17 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { VerificationTimer } from "@/components/verification-timer"
+import { useCities } from "@/hooks/use-cities"
 import { preRegister, register } from "@/http/auth/register"
+import { BRAZILIAN_STATES } from "@/lib/constants/brazilian-states"
 import { registerSchema } from "@/lib/validations/auth"
 
 type SearchParams = {
@@ -57,6 +66,9 @@ function Register() {
   })
 
   const [isCodeExpired, setIsCodeExpired] = useState(false)
+  const [selectedState, setSelectedState] = useState<string>()
+
+  const { data: cities, isLoading: isLoadingCities } = useCities(selectedState)
 
   const form = useForm({
     resolver: zodResolver(registerSchema),
@@ -70,6 +82,12 @@ function Register() {
       city: "",
     },
   })
+
+  useEffect(() => {
+    if (selectedState) {
+      form.setValue("city", "")
+    }
+  }, [selectedState, form])
 
   const { mutateAsync: authenticate, isPending } = useMutation({
     mutationFn: register,
@@ -252,9 +270,26 @@ function Register() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Estado</FormLabel>
-                    <FormControl>
-                      <Input maxLength={2} {...field} />
-                    </FormControl>
+                    <Select
+                      onValueChange={value => {
+                        field.onChange(value)
+                        setSelectedState(value)
+                      }}
+                      value={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Selecione" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {BRAZILIAN_STATES.map(state => (
+                          <SelectItem key={state.uf} value={state.uf}>
+                            {state.uf} - {state.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -266,9 +301,28 @@ function Register() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Cidade</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
+                    <Select
+                      onValueChange={field.onChange}
+                      value={field.value}
+                      disabled={!selectedState || isLoadingCities}
+                    >
+                      <FormControl>
+                        <SelectTrigger className="w-full">
+                          <SelectValue
+                            placeholder={
+                              isLoadingCities ? "Carregando..." : "Selecione"
+                            }
+                          />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {cities?.map(city => (
+                          <SelectItem key={city} value={city}>
+                            {city}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                     <FormMessage />
                   </FormItem>
                 )}
