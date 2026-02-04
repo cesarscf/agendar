@@ -62,9 +62,10 @@ export function SimpleSubscriptionCard({
     )
   }
 
+  const isFreePlan = subscription.plan.price === "0.00"
   const maxEmployees = plan.maximumProfessionalsIncluded
-  const usagePercentage = (totalEmployees / maxEmployees) * 100
-  const isNearLimit = usagePercentage >= 80
+  const usagePercentage = isFreePlan ? 0 : (totalEmployees / maxEmployees) * 100
+  const isNearLimit = !isFreePlan && usagePercentage >= 80
 
   return (
     <Card className="w-full py-2">
@@ -76,21 +77,23 @@ export function SimpleSubscriptionCard({
           <Users className="h-4 w-4 text-muted-foreground" />
         </div>
 
-        <div className="space-y-2">
-          <div className="flex justify-between text-xs">
-            <span className="text-muted-foreground">Funcionários</span>
-            <span
-              className={`font-medium ${isNearLimit ? "text-orange-600" : "text-muted-foreground"}`}
-            >
-              {totalEmployees}/{maxEmployees}
-            </span>
-          </div>
+        {!isFreePlan && (
+          <div className="space-y-2">
+            <div className="flex justify-between text-xs">
+              <span className="text-muted-foreground">Funcionários</span>
+              <span
+                className={`font-medium ${isNearLimit ? "text-orange-600" : "text-muted-foreground"}`}
+              >
+                {totalEmployees}/{maxEmployees}
+              </span>
+            </div>
 
-          <Progress
-            value={usagePercentage}
-            className={`h-1.5 ${isNearLimit ? "[&>div]:bg-orange-500" : "[&>div]:bg-green-500"}`}
-          />
-        </div>
+            <Progress
+              value={usagePercentage}
+              className={`h-1.5 ${isNearLimit ? "[&>div]:bg-orange-500" : "[&>div]:bg-green-500"}`}
+            />
+          </div>
+        )}
 
         <Button
           size="sm"

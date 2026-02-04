@@ -116,7 +116,7 @@ export async function createPartner(app: FastifyInstance) {
       const [trialPlan] = await db
         .select()
         .from(plans)
-        .where(and(eq(plans.status, "inactive"), eq(plans.name, "Trial Plan")))
+        .where(and(eq(plans.status, "inactive"), eq(plans.name, "Plano Gratuito")))
         .limit(1)
 
       if (trialPlan) {

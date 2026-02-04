@@ -116,9 +116,9 @@ const PLANS_DATA = [
     minProfessionals: 16,
     maxProfessionals: 100,
   },
-  // Trial Plan (gratuito - sem limite de funcionários)
+  // Plano Gratuito (sem limite de funcionários)
   {
-    name: "Trial Plan",
+    name: "Plano Gratuito",
     description: "PLANO GRATUITO, NÃO PODE SER REMOVIDO",
     price: 0,
     intervalMonth: 1,
