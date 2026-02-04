@@ -132,7 +132,7 @@ export function UpdatePackageItemForm({
                       type="number"
                       inputMode="numeric"
                       min="0"
-                      placeholder="0"
+                     
                       value={
                         Number.isNaN(itemField.value) ? "" : itemField.value
                       }

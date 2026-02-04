@@ -265,7 +265,7 @@ export function CheckinDialog({
                       <FormLabel>Motivo do cancelamento (opcional)</FormLabel>
                       <FormControl>
                         <Textarea
-                          placeholder="Digite o motivo do cancelamento..."
+                         
                           {...field}
                         />
                       </FormControl>
@@ -366,7 +366,7 @@ export function CheckinDialog({
                           mask="currency"
                           currency="BRL"
                           locale="pt-BR"
-                          placeholder="R$ 0,00"
+                         
                           value={field.value}
                           onValueChange={(_maskedValue, unmaskedValue) => {
                             field.onChange(unmaskedValue)
@@ -387,7 +387,7 @@ export function CheckinDialog({
                       <FormLabel>Anotações</FormLabel>
                       <FormControl>
                         <Textarea
-                          placeholder="Digite alguma observação..."
+                         
                           {...field}
                         />
                       </FormControl>

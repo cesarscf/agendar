@@ -181,7 +181,7 @@ export function UpdateStoreForm({
             <FormItem>
               <FormLabel>Nome do estabelecimento</FormLabel>
               <FormControl>
-                <Input placeholder="Digite aqui o nome da loja" {...field} />
+                <Input {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -196,7 +196,7 @@ export function UpdateStoreForm({
               <FormLabel>Link da loja</FormLabel>
               <FormControl>
                 <div className="flex gap-2">
-                  <Input placeholder="acme-me" {...field} />
+                  <Input {...field} />
                   <Button
                     type="button"
                     variant="outline"
@@ -261,7 +261,7 @@ export function UpdateStoreForm({
               <FormLabel>Telefone</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Digite o telefone da loja aqui"
+                 
                   {...field}
                   onChange={e => field.onChange(maskPhone(e.target.value))}
                 />
@@ -278,7 +278,7 @@ export function UpdateStoreForm({
             <FormItem>
               <FormLabel>Sobre nós</FormLabel>
               <FormControl>
-                <Textarea placeholder="Digite sobre sua loja aqui" {...field} />
+                <Textarea {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -293,7 +293,7 @@ export function UpdateStoreForm({
               <FormItem>
                 <FormLabel>Clientes ativos</FormLabel>
                 <FormControl>
-                  <Input placeholder="+100" {...field} />
+                  <Input {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -307,7 +307,7 @@ export function UpdateStoreForm({
               <FormItem>
                 <FormLabel>Serviços realizados</FormLabel>
                 <FormControl>
-                  <Input placeholder="+500" {...field} />
+                  <Input {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -321,7 +321,7 @@ export function UpdateStoreForm({
               <FormItem>
                 <FormLabel>Tempo de experiência</FormLabel>
                 <FormControl>
-                  <Input placeholder="10 anos" {...field} />
+                  <Input {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -337,7 +337,7 @@ export function UpdateStoreForm({
               <FormLabel>Link do Google Maps</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Cole aqui o link do Google Maps"
+                 
                   {...field}
                 />
               </FormControl>
@@ -359,7 +359,7 @@ export function UpdateStoreForm({
               <FormLabel>Endereço da loja</FormLabel>
               <FormControl>
                 <Textarea
-                  placeholder="Digite o endereço da loja aqui"
+                 
                   {...field}
                 />
               </FormControl>

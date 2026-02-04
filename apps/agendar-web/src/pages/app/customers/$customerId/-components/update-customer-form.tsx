@@ -77,7 +77,7 @@ export function UpdateCustomerForm({ customer }: { customer: Customer }) {
               <FormLabel>Nome</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Digite aqui o nome do profissional"
+                 
                   {...field}
                 />
               </FormControl>
@@ -94,7 +94,7 @@ export function UpdateCustomerForm({ customer }: { customer: Customer }) {
               <FormLabel>Telefone</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Digite aqui o telefone do cliente"
+                 
                   {...field}
                   onChange={e => field.onChange(maskPhone(e.target.value))}
                 />
@@ -112,7 +112,7 @@ export function UpdateCustomerForm({ customer }: { customer: Customer }) {
               <FormLabel>Data de aniversário</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="12/34/5678"
+                 
                   {...field}
                   onChange={e => field.onChange(maskDate(e.target.value))}
                 />
@@ -130,7 +130,7 @@ export function UpdateCustomerForm({ customer }: { customer: Customer }) {
               <FormLabel>Email</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Digite aqui o email do profissional"
+                 
                   {...field}
                 />
               </FormControl>
@@ -147,7 +147,7 @@ export function UpdateCustomerForm({ customer }: { customer: Customer }) {
               <FormLabel>CPF</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="000.000.000-00"
+                 
                   maxLength={14}
                   {...field}
                   onChange={e => field.onChange(maskCPF(e.target.value))}
@@ -194,7 +194,7 @@ export function UpdateCustomerForm({ customer }: { customer: Customer }) {
               <FormLabel>Complemento</FormLabel>
               <FormControl>
                 <Textarea
-                  placeholder="Digite aqui a complemento do endereço"
+                 
                   {...field}
                 />
               </FormControl>
@@ -211,7 +211,7 @@ export function UpdateCustomerForm({ customer }: { customer: Customer }) {
               <FormLabel>Anotações</FormLabel>
               <FormControl>
                 <Textarea
-                  placeholder="Digite aqui as anotações para esse cliente"
+                 
                   {...field}
                 />
               </FormControl>

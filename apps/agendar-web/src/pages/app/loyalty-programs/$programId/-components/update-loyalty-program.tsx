@@ -165,7 +165,7 @@ export function UpdateLoyaltyProgram({
             <FormItem>
               <FormLabel>Nome</FormLabel>
               <FormControl>
-                <Input placeholder="Digite aqui o nome do pacote" {...field} />
+                <Input {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -202,7 +202,7 @@ export function UpdateLoyaltyProgram({
               <FormControl>
                 <Input
                   type="number"
-                  placeholder="Ex: 100"
+                 
                   {...field}
                   onChange={e => field.onChange(Number(e.target.value))}
                 />

@@ -50,7 +50,7 @@ export function CreateCategoryForm({ onSuccess }: { onSuccess?: () => void }) {
               <FormLabel>Nome</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Digite aqui o nome da categoria"
+                 
                   {...field}
                 />
               </FormControl>

@@ -111,7 +111,7 @@ export function UpdateServiceForm({ service }: { service: Service }) {
             <FormItem>
               <FormLabel>Nome</FormLabel>
               <FormControl>
-                <Input placeholder="Digite aqui o nome do serviço" {...field} />
+                <Input {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -194,7 +194,7 @@ export function UpdateServiceForm({ service }: { service: Service }) {
               <FormLabel>Descrição</FormLabel>
               <FormControl>
                 <Textarea
-                  placeholder="Digite aqui a descrição do serviço"
+                 
                   {...field}
                 />
               </FormControl>
@@ -232,7 +232,7 @@ export function UpdateServiceForm({ service }: { service: Service }) {
                   mask="currency"
                   currency="BRL"
                   locale="pt-BR"
-                  placeholder="R$ 0,00"
+                 
                   value={field.value}
                   onValueChange={(_maskedValue, unmaskedValue) => {
                     field.onChange(unmaskedValue)
@@ -252,7 +252,7 @@ export function UpdateServiceForm({ service }: { service: Service }) {
               <FormLabel>Duração do serviço</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Digite aqui a duração do serviço"
+                 
                   {...field}
                 />
               </FormControl>

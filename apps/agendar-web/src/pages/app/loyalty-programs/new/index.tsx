@@ -130,7 +130,7 @@ function NewLoyaltyProgram() {
               <FormItem>
                 <FormLabel>Nome do programa</FormLabel>
                 <FormControl>
-                  <Input placeholder="Digite o nome do programa" {...field} />
+                  <Input {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -146,7 +146,7 @@ function NewLoyaltyProgram() {
                 <FormControl>
                   <Input
                     type="number"
-                    placeholder="Ex: 100"
+                   
                     {...field}
                     onChange={e => field.onChange(Number(e.target.value))}
                   />
@@ -212,7 +212,7 @@ function NewLoyaltyProgram() {
                         <FormControl>
                           <Input
                             type="number"
-                            placeholder="Ex: 50"
+                           
                             min={1}
                             {...field}
                             onChange={e =>

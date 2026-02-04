@@ -141,7 +141,7 @@ export function UpdateEmployeeServices({
                 onValueChange={(_maskedValue, unmaskedValue) => {
                   setNewCommission(unmaskedValue)
                 }}
-                placeholder="0.00%"
+               
               />
             </FormControl>
           </FormItem>
@@ -186,7 +186,7 @@ export function UpdateEmployeeServices({
                       onValueChange={(_maskedValue, unmaskedValue) => {
                         f.onChange(unmaskedValue)
                       }}
-                      placeholder="10"
+                     
                       invalid={
                         !!form.formState.errors.services?.[index]?.commission
                       }

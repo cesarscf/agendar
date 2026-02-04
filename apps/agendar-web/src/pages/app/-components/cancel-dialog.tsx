@@ -99,7 +99,7 @@ export function CancelDialog({
                   <FormLabel>Motivo do cancelamento (opcional)</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="Digite o motivo do cancelamento..."
+                     
                       {...field}
                     />
                   </FormControl>

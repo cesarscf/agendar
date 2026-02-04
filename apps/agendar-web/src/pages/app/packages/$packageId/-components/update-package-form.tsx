@@ -132,7 +132,7 @@ export function UpdatePackageForm({
             <FormItem>
               <FormLabel>Nome</FormLabel>
               <FormControl>
-                <Input placeholder="Digite aqui o nome do pacote" {...field} />
+                <Input {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -150,7 +150,7 @@ export function UpdatePackageForm({
                   mask="currency"
                   currency="BRL"
                   locale="pt-BR"
-                  placeholder="R$ 0,00"
+                 
                   value={field.value}
                   onValueChange={(_maskedValue, unmaskedValue) => {
                     field.onChange(unmaskedValue)
@@ -175,7 +175,7 @@ export function UpdatePackageForm({
                   onValueChange={(_maskedValue, unmaskedValue) => {
                     field.onChange(unmaskedValue)
                   }}
-                  placeholder="0.00%"
+                 
                   invalid={!!form.formState.errors.commission}
                 />
               </FormControl>
@@ -267,7 +267,7 @@ export function UpdatePackageForm({
               <FormLabel>Descrição</FormLabel>
               <FormControl>
                 <Textarea
-                  placeholder="Digite a descrição do pacote aqui"
+                 
                   {...field}
                 />
               </FormControl>

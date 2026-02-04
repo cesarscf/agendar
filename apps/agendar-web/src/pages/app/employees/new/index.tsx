@@ -182,7 +182,7 @@ function NewEmployee() {
                 <FormLabel>Nome*</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="Digite aqui o nome do profissional"
+                   
                     {...field}
                   />
                 </FormControl>
@@ -199,7 +199,7 @@ function NewEmployee() {
                 <FormLabel>Telefone*</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="(99) 99999-9999"
+                   
                     maxLength={15}
                     {...field}
                     onChange={e => field.onChange(maskPhone(e.target.value))}
@@ -218,7 +218,7 @@ function NewEmployee() {
                 <FormLabel>Email*</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="Digite aqui o email do profissional"
+                   
                     {...field}
                   />
                 </FormControl>
@@ -245,7 +245,7 @@ function NewEmployee() {
                 <FormLabel>Endereço</FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder="Digite aqui o endereço do profissional"
+                   
                     {...field}
                   />
                 </FormControl>
@@ -262,7 +262,7 @@ function NewEmployee() {
                 <FormLabel>Biografia</FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder="Digite aqui o biografia do profissional"
+                   
                     {...field}
                   />
                 </FormControl>

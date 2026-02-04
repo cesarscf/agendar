@@ -86,7 +86,7 @@ function NewCustomer() {
                 <FormLabel>Nome</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="Digite aqui o nome do cliente"
+                   
                     {...field}
                   />
                 </FormControl>
@@ -103,7 +103,7 @@ function NewCustomer() {
                 <FormLabel>Telefone</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="(99) 99999-9999"
+                   
                     maxLength={15}
                     {...field}
                     onChange={e => field.onChange(maskPhone(e.target.value))}
@@ -122,7 +122,7 @@ function NewCustomer() {
                 <FormLabel>Data de aniversário</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="XX/XX/XXXX"
+                   
                     {...field}
                     onChange={e => field.onChange(maskDate(e.target.value))}
                   />
@@ -139,7 +139,7 @@ function NewCustomer() {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input placeholder="exemplo@gmail.com" {...field} />
+                  <Input {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -154,7 +154,7 @@ function NewCustomer() {
                 <FormLabel>CPF</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="000.000.000-00"
+                   
                     maxLength={14}
                     {...field}
                     onChange={e => field.onChange(maskCPF(e.target.value))}
@@ -201,7 +201,7 @@ function NewCustomer() {
                 <FormLabel>Complemento</FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder="Digite aqui a complemento do endereço"
+                   
                     {...field}
                   />
                 </FormControl>
@@ -218,7 +218,7 @@ function NewCustomer() {
                 <FormLabel>Anotações</FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder="Digite aqui as anotações para esse cliente"
+                   
                     {...field}
                   />
                 </FormControl>

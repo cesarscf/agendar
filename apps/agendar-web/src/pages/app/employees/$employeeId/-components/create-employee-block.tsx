@@ -223,7 +223,7 @@ export function CreateEmployeeBlock({
               <FormLabel>Motivo</FormLabel>
               <FormControl>
                 <Textarea
-                  placeholder="Digite aqui o motivo do bloqueio"
+                 
                   {...field}
                 />
               </FormControl>

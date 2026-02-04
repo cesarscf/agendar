@@ -135,7 +135,7 @@ function NewPackage() {
                 <FormLabel>Nome</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="Digite aqui o nome do pacote"
+                   
                     {...field}
                   />
                 </FormControl>
@@ -155,7 +155,7 @@ function NewPackage() {
                     mask="currency"
                     currency="BRL"
                     locale="pt-BR"
-                    placeholder="R$ 0,00"
+                   
                     value={field.value}
                     onValueChange={(_maskedValue, unmaskedValue) => {
                       field.onChange(unmaskedValue)
@@ -180,7 +180,7 @@ function NewPackage() {
                     onValueChange={(_maskedValue, unmaskedValue) => {
                       field.onChange(unmaskedValue)
                     }}
-                    placeholder="0.00%"
+                   
                     invalid={!!form.formState.errors.commission}
                   />
                 </FormControl>
@@ -225,7 +225,7 @@ function NewPackage() {
                     type="number"
                     inputMode="numeric"
                     min="0"
-                    placeholder="0"
+                   
                     value={Number.isNaN(field.value) ? "" : field.value}
                     onChange={e => field.onChange(e.target.valueAsNumber)}
                   />
@@ -254,7 +254,7 @@ function NewPackage() {
                 <FormLabel>Descrição</FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder="Digite a descrição do pacote aqui"
+                   
                     {...field}
                   />
                 </FormControl>

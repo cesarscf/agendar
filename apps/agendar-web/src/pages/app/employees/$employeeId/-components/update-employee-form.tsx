@@ -91,7 +91,7 @@ export function UpdateEmployeeForm({ employee }: { employee: Employee }) {
               <FormLabel>Nome</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Digite aqui o nome do profissional"
+                 
                   {...field}
                 />
               </FormControl>
@@ -108,7 +108,7 @@ export function UpdateEmployeeForm({ employee }: { employee: Employee }) {
               <FormLabel>Email</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Digite aqui o email do profissional"
+                 
                   {...field}
                 />
               </FormControl>
@@ -125,7 +125,7 @@ export function UpdateEmployeeForm({ employee }: { employee: Employee }) {
               <FormLabel>Telefone</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Digite aqui o telefone do profissional"
+                 
                   {...field}
                   onChange={e => field.onChange(maskPhone(e.target.value))}
                 />
@@ -157,7 +157,7 @@ export function UpdateEmployeeForm({ employee }: { employee: Employee }) {
               <FormLabel>Biografia</FormLabel>
               <FormControl>
                 <Textarea
-                  placeholder="Digite aqui a biografia do profissional"
+                 
                   {...field}
                 />
               </FormControl>

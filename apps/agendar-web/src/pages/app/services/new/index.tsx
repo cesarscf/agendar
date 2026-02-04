@@ -122,7 +122,7 @@ function NewService() {
                 <FormLabel>Nome</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="Digite aqui o nome do serviço"
+                   
                     {...field}
                   />
                 </FormControl>
@@ -208,7 +208,7 @@ function NewService() {
                     mask="currency"
                     currency="BRL"
                     locale="pt-BR"
-                    placeholder="R$ 0,00"
+                   
                     value={field.value}
                     onValueChange={(_maskedValue, unmaskedValue) => {
                       field.onChange(unmaskedValue)
@@ -227,7 +227,7 @@ function NewService() {
               <FormItem>
                 <FormLabel>Duração do serviço*</FormLabel>
                 <FormControl>
-                  <Input placeholder="40 minutos" {...field} />
+                  <Input {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -242,7 +242,7 @@ function NewService() {
                 <FormLabel>Descrição</FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder="Digite aqui a descrição do serviço"
+                   
                     {...field}
                   />
                 </FormControl>

@@ -57,7 +57,7 @@ export function UpdateCategoryForm({
               <FormLabel>Nome</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Digite aqui o nome da categoria"
+                 
                   {...field}
                 />
               </FormControl>
