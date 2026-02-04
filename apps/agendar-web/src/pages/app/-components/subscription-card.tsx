@@ -62,7 +62,7 @@ export function SimpleSubscriptionCard({
     )
   }
 
-  const isFreePlan = subscription.plan.price === "0.00"
+  const isFreePlan = subscription.plan.name === "Plano Gratuito"
   const maxEmployees = plan.maximumProfessionalsIncluded
   const usagePercentage = isFreePlan ? 0 : (totalEmployees / maxEmployees) * 100
   const isNearLimit = !isFreePlan && usagePercentage >= 80
