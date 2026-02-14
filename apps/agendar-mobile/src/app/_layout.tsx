@@ -1,7 +1,7 @@
 import { Stack } from "expo-router"
 import { SplashScreenController } from "@/components/splash"
 import { SessionProvider, useSession } from "@/providers/auth-context"
-import "../../global.css"
+import "@/styles/global.css"
 import messaging from "@react-native-firebase/messaging"
 import { QueryClientProvider } from "@tanstack/react-query"
 import { StatusBar } from "expo-status-bar"

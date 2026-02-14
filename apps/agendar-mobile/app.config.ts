@@ -40,11 +40,11 @@ const config: ExpoConfig = {
     googleServicesFile: googleServicesFileAndroid,
     softwareKeyboardLayoutMode: "resize",
   },
-  web: {
-    bundler: "metro",
-    output: "static",
-    favicon: "./assets/favicon.png",
-  },
+  // web: {
+  //   bundler: "metro",
+  //   output: "static",
+  //   favicon: "./assets/favicon.png",
+  // },
   plugins: [
     "expo-router",
     "expo-secure-store",
@@ -55,6 +55,9 @@ const config: ExpoConfig = {
         ios: {
           useFrameworks: "static",
           buildReactNativeFromSource: true,
+          extraPodfileFlags: {
+            disableFollyCoroutines: true,
+          },
         },
       },
     ],
