@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useMutation } from "@tanstack/react-query"
-import { createFileRoute } from "@tanstack/react-router"
+import { createFileRoute, Link } from "@tanstack/react-router"
 import { Loader2 } from "lucide-react"
 import { useForm } from "react-hook-form"
 import type z from "zod"
@@ -106,6 +106,14 @@ function Login() {
               </FormItem>
             )}
           />
+          <div className="text-right text-sm">
+            <Link
+              to="/forgot-password"
+              className="underline underline-offset-4"
+            >
+              Esqueci minha senha
+            </Link>
+          </div>
           <FormField
             control={form.control}
             name="rememberMe"

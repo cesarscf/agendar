@@ -27,6 +27,29 @@ export const preRegisterSchema = z.object({
   }),
 })
 
+export const forgotPasswordSchema = z.object({
+  email: z.string().email({
+    message: "Por favor, insira um endereço de e-mail válido",
+  }),
+})
+
+export const resetPasswordSchema = z
+  .object({
+    password: z
+      .string()
+      .min(8, { message: "A senha deve ter no mínimo 8 caracteres" })
+      .max(100, { message: "A senha deve ter no máximo 100 caracteres" }),
+    confirmPassword: z
+      .string()
+      .min(8, {
+        message: "A confirmação de senha deve ter no mínimo 8 caracteres",
+      }),
+  })
+  .refine(data => data.password === data.confirmPassword, {
+    message: "As senhas não coincidem",
+    path: ["confirmPassword"],
+  })
+
 export const registerSchema = z
   .object({
     code: z
