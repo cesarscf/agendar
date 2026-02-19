@@ -113,7 +113,7 @@ export default function Appointments() {
         <View className="flex-row items-center justify-between mb-6">
           <Pressable
             onPress={() => {
-              const url = `https://agendar-web-omega.vercel.app/${establishment?.slug}`
+              const url = `${process.env.EXPO_PUBLIC_WEB_URL}/${establishment?.slug}`
               Linking.openURL(url)
             }}
             className="flex-row items-center flex-1"
