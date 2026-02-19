@@ -21,9 +21,11 @@ import { Route as MarketingIndexRouteImport } from './pages/_marketing/index'
 import { Route as SlugIndexRouteImport } from './pages/$slug/index'
 import { Route as CheckoutSuccessRouteImport } from './pages/checkout/success'
 import { Route as CheckoutCancelRouteImport } from './pages/checkout/cancel'
+import { Route as AuthResetPasswordRouteImport } from './pages/_auth/reset-password'
 import { Route as AuthRegisterRouteImport } from './pages/_auth/register'
 import { Route as AuthPreRegisterRouteImport } from './pages/_auth/pre-register'
 import { Route as AuthLoginRouteImport } from './pages/_auth/login'
+import { Route as AuthForgotPasswordRouteImport } from './pages/_auth/forgot-password'
 import { Route as AppStoreIndexRouteImport } from './pages/app/store/index'
 import { Route as AppServicesIndexRouteImport } from './pages/app/services/index'
 import { Route as AppPackagesIndexRouteImport } from './pages/app/packages/index'
@@ -104,6 +106,11 @@ const CheckoutCancelRoute = CheckoutCancelRouteImport.update({
   path: '/cancel',
   getParentRoute: () => CheckoutLayoutRoute,
 } as any)
+const AuthResetPasswordRoute = AuthResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => AuthLayoutRoute,
+} as any)
 const AuthRegisterRoute = AuthRegisterRouteImport.update({
   id: '/register',
   path: '/register',
@@ -117,6 +124,11 @@ const AuthPreRegisterRoute = AuthPreRegisterRouteImport.update({
 const AuthLoginRoute = AuthLoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => AuthLayoutRoute,
+} as any)
+const AuthForgotPasswordRoute = AuthForgotPasswordRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
   getParentRoute: () => AuthLayoutRoute,
 } as any)
 const AppStoreIndexRoute = AppStoreIndexRouteImport.update({
@@ -232,9 +244,11 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminLayoutRouteWithChildren
   '/app': typeof AppLayoutRouteWithChildren
   '/checkout': typeof CheckoutLayoutRouteWithChildren
+  '/forgot-password': typeof AuthForgotPasswordRoute
   '/login': typeof AuthLoginRoute
   '/pre-register': typeof AuthPreRegisterRoute
   '/register': typeof AuthRegisterRoute
+  '/reset-password': typeof AuthResetPasswordRoute
   '/checkout/cancel': typeof CheckoutCancelRoute
   '/checkout/success': typeof CheckoutSuccessRoute
   '/$slug/': typeof SlugIndexRoute
@@ -264,9 +278,11 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof MarketingIndexRoute
+  '/forgot-password': typeof AuthForgotPasswordRoute
   '/login': typeof AuthLoginRoute
   '/pre-register': typeof AuthPreRegisterRoute
   '/register': typeof AuthRegisterRoute
+  '/reset-password': typeof AuthResetPasswordRoute
   '/checkout/cancel': typeof CheckoutCancelRoute
   '/checkout/success': typeof CheckoutSuccessRoute
   '/$slug': typeof SlugIndexRoute
@@ -301,9 +317,11 @@ export interface FileRoutesById {
   '/admin': typeof AdminLayoutRouteWithChildren
   '/app': typeof AppLayoutRouteWithChildren
   '/checkout': typeof CheckoutLayoutRouteWithChildren
+  '/_auth/forgot-password': typeof AuthForgotPasswordRoute
   '/_auth/login': typeof AuthLoginRoute
   '/_auth/pre-register': typeof AuthPreRegisterRoute
   '/_auth/register': typeof AuthRegisterRoute
+  '/_auth/reset-password': typeof AuthResetPasswordRoute
   '/checkout/cancel': typeof CheckoutCancelRoute
   '/checkout/success': typeof CheckoutSuccessRoute
   '/$slug/': typeof SlugIndexRoute
@@ -340,9 +358,11 @@ export interface FileRouteTypes {
     | '/admin'
     | '/app'
     | '/checkout'
+    | '/forgot-password'
     | '/login'
     | '/pre-register'
     | '/register'
+    | '/reset-password'
     | '/checkout/cancel'
     | '/checkout/success'
     | '/$slug/'
@@ -372,9 +392,11 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/forgot-password'
     | '/login'
     | '/pre-register'
     | '/register'
+    | '/reset-password'
     | '/checkout/cancel'
     | '/checkout/success'
     | '/$slug'
@@ -408,9 +430,11 @@ export interface FileRouteTypes {
     | '/admin'
     | '/app'
     | '/checkout'
+    | '/_auth/forgot-password'
     | '/_auth/login'
     | '/_auth/pre-register'
     | '/_auth/register'
+    | '/_auth/reset-password'
     | '/checkout/cancel'
     | '/checkout/success'
     | '/$slug/'
@@ -535,6 +559,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CheckoutCancelRouteImport
       parentRoute: typeof CheckoutLayoutRoute
     }
+    '/_auth/reset-password': {
+      id: '/_auth/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof AuthResetPasswordRouteImport
+      parentRoute: typeof AuthLayoutRoute
+    }
     '/_auth/register': {
       id: '/_auth/register'
       path: '/register'
@@ -554,6 +585,13 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof AuthLoginRouteImport
+      parentRoute: typeof AuthLayoutRoute
+    }
+    '/_auth/forgot-password': {
+      id: '/_auth/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof AuthForgotPasswordRouteImport
       parentRoute: typeof AuthLayoutRoute
     }
     '/app/store/': {
@@ -714,15 +752,19 @@ const SlugLayoutRouteWithChildren = SlugLayoutRoute._addFileChildren(
 )
 
 interface AuthLayoutRouteChildren {
+  AuthForgotPasswordRoute: typeof AuthForgotPasswordRoute
   AuthLoginRoute: typeof AuthLoginRoute
   AuthPreRegisterRoute: typeof AuthPreRegisterRoute
   AuthRegisterRoute: typeof AuthRegisterRoute
+  AuthResetPasswordRoute: typeof AuthResetPasswordRoute
 }
 
 const AuthLayoutRouteChildren: AuthLayoutRouteChildren = {
+  AuthForgotPasswordRoute: AuthForgotPasswordRoute,
   AuthLoginRoute: AuthLoginRoute,
   AuthPreRegisterRoute: AuthPreRegisterRoute,
   AuthRegisterRoute: AuthRegisterRoute,
+  AuthResetPasswordRoute: AuthResetPasswordRoute,
 }
 
 const AuthLayoutRouteWithChildren = AuthLayoutRoute._addFileChildren(

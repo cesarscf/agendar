@@ -62,7 +62,11 @@ function ForgotPassword() {
           redefinir sua senha em breve.
         </p>
         <div className="text-center text-sm">
-          <Link to="/login" className="underline underline-offset-4">
+          <Link
+            to="/login"
+            search={{ redirect: undefined }}
+            className="underline underline-offset-4"
+          >
             Voltar ao login
           </Link>
         </div>
@@ -111,7 +115,11 @@ function ForgotPassword() {
         </form>
       </Form>
       <div className="text-center text-sm">
-        <Link to="/login" className="underline underline-offset-4">
+        <Link
+          to="/login"
+          search={{ redirect: undefined }}
+          className="underline underline-offset-4"
+        >
           Voltar ao login
         </Link>
       </div>

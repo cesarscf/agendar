@@ -59,7 +59,7 @@ function ResetPassword() {
       resetPassword(token as string, values.password),
     onSuccess: () => {
       toast.success("Senha redefinida com sucesso!")
-      navigate({ to: "/login" })
+      navigate({ to: "/login", search: { redirect: undefined } })
     },
   })
 
@@ -93,12 +93,9 @@ function ResetPassword() {
         <div className="rounded-md bg-destructive/10 px-4 py-3 text-sm text-destructive">
           <p>{errorMessage}</p>
           <p className="mt-1">
-            <Link
-              to="/forgot-password"
-              className="underline underline-offset-4"
-            >
+            <a href="/forgot-password" className="underline underline-offset-4">
               Solicitar um novo link
-            </Link>
+            </a>
           </p>
         </div>
       )}
@@ -141,7 +138,11 @@ function ResetPassword() {
         </form>
       </Form>
       <div className="text-center text-sm">
-        <Link to="/login" className="underline underline-offset-4">
+        <Link
+          to="/login"
+          search={{ redirect: undefined }}
+          className="underline underline-offset-4"
+        >
           Voltar ao login
         </Link>
       </div>
