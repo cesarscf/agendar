@@ -152,7 +152,7 @@ export function SchedulingFromProfessional({
             {professional?.name}
           </h2>
 
-          <div className="flex items-center justify-between w-full max-w-sm px-2">
+          <div className="flex items-start justify-between w-full max-w-sm px-2">
             {steps.map((s, index) => {
               const isActive = index === currentIndex
               const isCompleted = index < currentIndex
@@ -161,10 +161,10 @@ export function SchedulingFromProfessional({
                 <div key={s.key} className="flex flex-col items-center flex-1">
                   <div
                     className={`
-                      flex items-center justify-center w-9 h-9 rounded-full border-2 transition-all
+                      flex items-center justify-center w-9 h-9 shrink-0 rounded-full border-2 transition-all
                       ${
                         isActive
-                          ? "border-primary bg-primary text-white scale-110"
+                          ? "border-primary bg-primary text-white"
                           : ""
                       }
                       ${
@@ -183,7 +183,7 @@ export function SchedulingFromProfessional({
                   </div>
 
                   <span
-                    className={`mt-2 text-xs font-medium text-center min-h-[1rem] transition-colors duration-200 ${
+                    className={`mt-1 text-[10px] font-medium text-center leading-tight min-h-[1rem] transition-colors duration-200 ${
                       isActive ? "text-primary" : "text-transparent"
                     }`}
                   >
