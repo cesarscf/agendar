@@ -377,10 +377,11 @@ export function SchedulingFromService({
                   onClick={handleConfirmBooking}
                   disabled={isPending || loading}
                 >
-                  {isPending && (
-                    <Loader2 className="animate-spin w-4 h-4 mr-2 inline" />
+                  {isPending ? (
+                    <Loader2 className="animate-spin w-4 h-4" />
+                  ) : (
+                    "Confirmar"
                   )}
-                  Confirmar
                 </Button>
               </>
             )}

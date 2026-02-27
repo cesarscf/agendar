@@ -349,10 +349,11 @@ export function SchedulingFromProfessional({
                   onClick={handleConfirmBooking}
                   disabled={isPending || loading}
                 >
-                  {(isPending || loading) && (
-                    <Loader2 className="animate-spin w-4 h-4 mr-2 inline" />
+                  {(isPending || loading) ? (
+                    <Loader2 className="animate-spin w-4 h-4" />
+                  ) : (
+                    "Confirmar"
                   )}
-                  Confirmar
                 </Button>
               </>
             )}
