@@ -7,6 +7,7 @@ import {
   Alert,
   Image,
   KeyboardAvoidingView,
+  Linking,
   Platform,
   ScrollView,
   Text,
@@ -118,6 +119,17 @@ export default function Login() {
             theme="primary"
             onPress={form.handleSubmit(onSubmit)}
           />
+
+          <Text
+            className="text-center text-white/70 text-sm"
+            onPress={() => {
+              Linking.openURL(
+                `${process.env.EXPO_PUBLIC_WEB_URL}/forgot-password`
+              )
+            }}
+          >
+            Esqueci minha senha
+          </Text>
 
           <Text
             className="text-center mt-2 text-white"

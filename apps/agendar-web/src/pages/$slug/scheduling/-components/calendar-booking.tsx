@@ -92,7 +92,7 @@ export function CalendarBooking({
 
             <div className="w-full border-t">
               <div className="p-4">
-                <div className="grid grid-cols-5 gap-2">
+                <div className="grid grid-cols-4 sm:grid-cols-5 gap-2">
                   {isLoading && (
                     <div className="col-span-5 text-sm text-muted-foreground text-center">
                       Carregando horários...
