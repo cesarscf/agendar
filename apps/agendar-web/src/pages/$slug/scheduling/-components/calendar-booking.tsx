@@ -75,6 +75,7 @@ export function CalendarBooking({
                 onSelect={setSelectedDate}
                 defaultMonth={selectedDate}
                 showOutsideDays={false}
+                fixedWeeks
                 modifiersClassNames={{
                   booked: "[&>button]:line-through opacity-100",
                 }}
