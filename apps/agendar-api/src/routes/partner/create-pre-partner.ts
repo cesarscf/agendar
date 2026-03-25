@@ -5,7 +5,7 @@ import type { ZodTypeProvider } from "fastify-type-provider-zod"
 import z from "zod"
 import { sendEmail } from "@/clients/resend"
 import { db } from "@/db"
-import { prePartners } from "@/db/schema"
+import { partners, prePartners } from "@/db/schema"
 import { BadRequestError } from "@/routes/_erros/bad-request-error"
 import { sendCodeTemplate } from "@/utils/template-html"
 
@@ -34,7 +34,15 @@ export async function createPrePartner(app: FastifyInstance) {
       })
 
       if (existingPartner && existingPartner.status === "confirmed") {
-        throw new BadRequestError("Este usuário já está registrado")
+        const actualPartner = await db.query.partners.findFirst({
+          where: eq(partners.email, formatedEmail),
+        })
+
+        if (actualPartner) {
+          throw new BadRequestError(
+            "Este usuário já está registrado"
+          )
+        }
       }
       const generateCode = randomInt(1000000).toString().padStart(6, "0")
       const generateExpireAtCode = new Date()
@@ -43,12 +51,13 @@ export async function createPrePartner(app: FastifyInstance) {
         generateExpireAtCode.getMinutes() + EXPIRES_IN_MINUTES
       )
       const body = sendCodeTemplate(generateCode, EXPIRES_IN_MINUTES, name)
-      if (existingPartner && existingPartner.status === "pending") {
+      if (existingPartner) {
         await db
           .update(prePartners)
           .set({
             code: generateCode,
             codeExpireAt: generateExpireAtCode,
+            status: "pending",
             name,
           })
           .where(eq(prePartners.email, formatedEmail))
