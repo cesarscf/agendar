@@ -22,7 +22,7 @@ export const Route = createFileRoute("/app")({
 function RouteComponent() {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
-  const { isLoading: authIsLoading } = useAuth()
+  const { isLoading: authIsLoading, role } = useAuth()
   const { hasActiveSubscription, isLoading: subscriptionIsLoading } =
     useSubscription()
 
@@ -52,7 +52,9 @@ function RouteComponent() {
     }
   }, [navigate, queryClient])
 
-  const isLoading = authIsLoading || subscriptionIsLoading
+  const isEmployee = role === "employee"
+  const isLoading =
+    authIsLoading || (!isEmployee && subscriptionIsLoading)
 
   if (isLoading) {
     return (
@@ -62,7 +64,7 @@ function RouteComponent() {
     )
   }
 
-  if (!hasActiveSubscription) {
+  if (!isEmployee && !hasActiveSubscription) {
     return <PlanExpiredWarning />
   }
 

@@ -24,6 +24,11 @@ declare module "fastify" {
       createdAt: Date
       updatedAt: Date | null
     }
+    getCurrentEmployeeId(): Promise<string>
+    getCurrentEmployeeEstablishmentId(): Promise<{
+      employeeId: string
+      establishmentId: string
+    }>
     getCurrentAdminId(): string
     getCurrentAdminRole(): string | null
   }

@@ -1,5 +1,10 @@
 import { useQuery } from "@tanstack/react-query"
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router"
+import {
+  createFileRoute,
+  Link,
+  useNavigate,
+} from "@tanstack/react-router"
+import { requirePartner } from "@/lib/route-guards"
 import { ArrowRight, Hammer, PackageSearch } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -8,6 +13,7 @@ import { getPackages } from "@/http/packages/get-packages"
 import { formatPriceFromCents } from "@/lib/utils"
 
 export const Route = createFileRoute("/app/packages/")({
+  beforeLoad: requirePartner,
   component: Packages,
 })
 

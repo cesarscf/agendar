@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
 import { createFileRoute, Link } from "@tanstack/react-router"
+import { requirePartner } from "@/lib/route-guards"
 import { ChevronLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { getLoyaltyProgram } from "@/http/loyalty/get-loyalty-program"
@@ -7,6 +8,7 @@ import { getServices } from "@/http/services/get-services"
 import { UpdateLoyaltyProgram } from "./-components/update-loyalty-program"
 
 export const Route = createFileRoute("/app/loyalty-programs/$programId/")({
+  beforeLoad: requirePartner,
   component: LoyaltyProgram,
 })
 

@@ -6,6 +6,7 @@ import {
   ShoppingBag,
 } from "lucide-react-native"
 import { Image, View } from "react-native"
+import { useSession } from "@/providers/auth-context"
 
 function HeaderRight() {
   return (
@@ -20,14 +21,19 @@ function HeaderRight() {
 }
 
 export default function Layout() {
+  const { role } = useSession()
+  const isEmployee = role === "employee"
+
   return (
     <Tabs>
       <Tabs.Screen
         name="index"
         options={{
-          title: "Agenda",
+          title: isEmployee ? "Minha Agenda" : "Agenda",
           headerShown: false,
-          tabBarIcon: ({ color }) => <CalendarDays color={color} />,
+          tabBarIcon: ({ color }) => (
+            <CalendarDays color={color} />
+          ),
         }}
       />
       <Tabs.Screen
@@ -36,7 +42,22 @@ export default function Layout() {
           title: "Relatórios",
           headerShown: true,
           headerRight: () => <HeaderRight />,
-          tabBarIcon: ({ color }) => <Activity color={color} />,
+          tabBarIcon: ({ color }) => (
+            <Activity color={color} />
+          ),
+          href: isEmployee ? null : undefined,
+        }}
+      />
+      <Tabs.Screen
+        name="my-dashboard"
+        options={{
+          title: "Meus Relatórios",
+          headerShown: true,
+          headerRight: () => <HeaderRight />,
+          tabBarIcon: ({ color }) => (
+            <Activity color={color} />
+          ),
+          href: isEmployee ? undefined : null,
         }}
       />
       <Tabs.Screen
@@ -44,7 +65,10 @@ export default function Layout() {
         options={{
           title: "Loja",
           headerShown: false,
-          tabBarIcon: ({ color }) => <ShoppingBag color={color} />,
+          tabBarIcon: ({ color }) => (
+            <ShoppingBag color={color} />
+          ),
+          href: isEmployee ? null : undefined,
         }}
       />
       <Tabs.Screen
@@ -52,7 +76,10 @@ export default function Layout() {
         options={{
           title: "Configurações",
           headerShown: false,
-          tabBarIcon: ({ color }) => <Settings color={color} />,
+          tabBarIcon: ({ color }) => (
+            <Settings color={color} />
+          ),
+          href: isEmployee ? null : undefined,
         }}
       />
     </Tabs>

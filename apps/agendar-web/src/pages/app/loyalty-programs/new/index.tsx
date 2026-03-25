@@ -1,6 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router"
+import { requirePartner } from "@/lib/route-guards"
 import { ChevronLeft, Loader2, Plus, Trash } from "lucide-react"
 import React from "react"
 import { useFieldArray, useForm } from "react-hook-form"
@@ -27,6 +28,7 @@ import { getServices } from "@/http/services/get-services"
 import { createLoyaltyProgramSchema } from "@/lib/validations/loyalty-program"
 
 export const Route = createFileRoute("/app/loyalty-programs/new/")({
+  beforeLoad: requirePartner,
   component: NewLoyaltyProgram,
 })
 

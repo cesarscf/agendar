@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
 import { createFileRoute } from "@tanstack/react-router"
+import { requirePartner } from "@/lib/route-guards"
 
 import { useQueryState } from "nuqs"
 
@@ -9,6 +10,7 @@ import { getServices } from "@/http/services/get-services"
 import { UpdatePackageForm } from "./-components/update-package-form"
 
 export const Route = createFileRoute("/app/packages/$packageId/")({
+  beforeLoad: requirePartner,
   component: Package,
 })
 

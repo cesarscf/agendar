@@ -1,6 +1,8 @@
 import { handleApiError } from "@/utils"
 import { api } from "../api-client"
 
+export type UserRole = "partner" | "employee"
+
 interface LoginRequest {
   email: string
   password: string
@@ -8,14 +10,21 @@ interface LoginRequest {
 
 interface LoginResponse {
   token: string
+  role: UserRole
 }
 
-export async function login({ email, password }: LoginRequest) {
+export async function login({
+  email,
+  password,
+}: LoginRequest) {
   try {
-    const response = await api.post<LoginResponse>("/login", {
-      email: email,
-      password: password,
-    })
+    const response = await api.post<LoginResponse>(
+      "/login",
+      {
+        email,
+        password,
+      }
+    )
 
     return {
       data: response.data,

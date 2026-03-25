@@ -20,6 +20,7 @@ import { categoriesRoutes } from "@/routes/categories"
 import { customersRoutes } from "@/routes/customers"
 import { dashboardRoutes } from "@/routes/dashboard"
 import { employeeBlocksRoutes } from "@/routes/employee-blocks"
+import { employeeSelfRoutes } from "@/routes/employee"
 import { employeesRoutes } from "@/routes/employees"
 import { availabilityRoutes } from "@/routes/establishment-availability"
 import { establishmentsRoutes } from "@/routes/establishments"
@@ -111,6 +112,7 @@ app.register(establishmentsRoutes)
 app.register(loyaltyProgramsRoutes)
 app.register(packagesRoutes)
 app.register(employeesRoutes)
+app.register(employeeSelfRoutes)
 app.register(adminLogin)
 app.register(servicesRoutes)
 app.register(publicRoutes, { prefix: "/public" })

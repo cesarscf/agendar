@@ -30,7 +30,16 @@ export const employeeSchema = z.object({
   services: z.array(employeeServiceSchema).optional(),
 })
 
-export const createEmployeeSchema = employeeSchema.omit({ id: true })
+export const createEmployeeSchema = employeeSchema
+  .omit({ id: true })
+  .extend({
+    email: z
+      .string()
+      .email({ message: "E-mail obrigatório" }),
+    password: z.string().min(6, {
+      message: "Senha deve ter no mínimo 6 caracteres",
+    }),
+  })
 
 export const updateEmployeeSchema = employeeSchema.partial().extend({
   id: z.string().min(1, "ID obrigatório"),

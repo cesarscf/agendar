@@ -1,6 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router"
+import { requirePartner } from "@/lib/route-guards"
 import { ArrowUp, ChevronLeft, Loader2 } from "lucide-react"
 import React from "react"
 import { useForm } from "react-hook-form"
@@ -18,6 +19,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
+import { PasswordInput } from "@/components/password-input"
 import { useSubscription } from "@/hooks/use-subscription"
 import { createEmployee } from "@/http/employees/create-employee"
 import { getEmployees } from "@/http/employees/get-employees"
@@ -28,6 +30,7 @@ import { uploadImage } from "@/lib/upload-image"
 import { createEmployeeSchema } from "@/lib/validations/employees"
 
 export const Route = createFileRoute("/app/employees/new/")({
+  beforeLoad: requirePartner,
   component: NewEmployee,
 })
 
@@ -62,6 +65,7 @@ function NewEmployee() {
     defaultValues: {
       name: "",
       email: "",
+      password: "",
       address: "",
       biography: "",
       phone: "",
@@ -218,9 +222,23 @@ function NewEmployee() {
                 <FormLabel>Email*</FormLabel>
                 <FormControl>
                   <Input
-                   
+
                     {...field}
                   />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Senha de acesso*</FormLabel>
+                <FormControl>
+                  <PasswordInput {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

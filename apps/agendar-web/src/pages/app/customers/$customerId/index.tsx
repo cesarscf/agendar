@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
 import { createFileRoute, Link } from "@tanstack/react-router"
+import { requirePartner } from "@/lib/route-guards"
 import { ChevronLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -10,6 +11,7 @@ import { CustomerPackages } from "./-components/customer-packages"
 import { UpdateCustomerForm } from "./-components/update-customer-form"
 
 export const Route = createFileRoute("/app/customers/$customerId/")({
+  beforeLoad: requirePartner,
   component: Customer,
 })
 

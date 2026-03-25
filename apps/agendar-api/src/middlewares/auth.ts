@@ -10,10 +10,20 @@ export const auth = fastifyPlugin(async (app: FastifyInstance) => {
   app.addHook("preHandler", async request => {
     request.getCurrentPartnerId = async () => {
       try {
-        const { sub } = await request.jwtVerify<{ sub: string }>()
+        const { sub, role } = await request.jwtVerify<{
+          sub: string
+          role?: string
+        }>()
+
+        if (role === "employee") {
+          throw new ForbiddenError(
+            "Employees cannot access this resource"
+          )
+        }
 
         return sub
-      } catch {
+      } catch (error) {
+        if (error instanceof ForbiddenError) throw error
         throw new UnauthorizedError("Invalid token")
       }
     }

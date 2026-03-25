@@ -39,7 +39,7 @@ export default function Login() {
     const { data, error } = await login(inputs)
 
     if (data) {
-      signIn(data.token)
+      signIn(data.token, data.role)
     }
 
     if (error) {
