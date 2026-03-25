@@ -17,9 +17,9 @@ O sistema permite que **Partners** (donos de negócio) gerenciem seus **Establis
 ### Modelo Multi-Tenancy
 
 ```
-Partner (Dono da conta)
+Partner (Dono da conta) — acesso total
   └── Establishments (1 ou mais filiais)
-       ├── Employees (Profissionais)
+       ├── Employees (Profissionais) — acesso operacional (apenas dados próprios)
        │    └── Services que prestam (com comissão individual)
        ├── Services (Catálogo de serviços)
        ├── Packages (Pacotes de serviços)
@@ -27,6 +27,16 @@ Partner (Dono da conta)
        └── Customers (Clientes - identificados por telefone)
             └── Appointments (Agendamentos)
 ```
+
+### Permissionamento (Roles)
+
+2 níveis de acesso:
+- **Partner (Dono)**: Acesso total — métricas, financeiro, gestão completa
+- **Employee (Profissional)**: Acesso operacional — visualiza apenas seus próprios agendamentos, comissões e ganhos
+
+Employee **não** pode ver: faturamento total, dados de outros funcionários, config do salão, plano, pacotes, fidelidade, relatórios gerenciais.
+
+O Partner cria a conta do Employee (email + senha) ao cadastrar o profissional. Login unificado no mesmo endpoint.
 
 ## Stack Tecnológica
 

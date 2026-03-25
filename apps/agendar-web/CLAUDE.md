@@ -51,11 +51,23 @@ Axios configurado em `src/http/` com interceptors para:
 - Token JWT automático
 - Header `x-establishment-id`
 
-## Autenticação
+## Autenticação e Permissionamento
 
-- Token JWT armazenado em cookies (`js-cookie`)
+- Token JWT + role armazenados em cookies (`js-cookie`)
 - Interceptor adiciona token em requests
-- Refresh token quando expira
+- `useAuth()` retorna `{ isAuthenticated, partner, employee, role, isLoading }`
+- Role `"partner"` ou `"employee"` — determina layout e acesso
+
+### Route Guards (`lib/route-guards.ts`):
+- `requireAuth` — redireciona para `/login` se não autenticado
+- `requirePartner` — redireciona para `/app` se role é employee
+
+### Navegação por Role:
+- **Partner**: Agenda, Relatórios gerenciais, Profissionais, Categorias, Serviços, Clientes, Pacotes, Fidelidade, Loja
+- **Employee**: Minha Agenda (`/app`), Meus Relatórios (`/app/my-dashboard`)
+
+### Rotas protegidas com `requirePartner`:
+Todas as rotas de gestão (dashboard, employees, services, categories, customers, packages, loyalty-programs, store) e suas sub-rotas
 
 ## Temas
 

@@ -24,8 +24,15 @@ bun run ios      # Run no iOS
 
 File-based routing em `src/app/`:
 - `(tabs)/` - Tabs principais do app
-- `(tabs)/establishment/` - Gestão do estabelecimento
-- `(tabs)/settings/` - Configurações
+- `(tabs)/establishment/` - Gestão do estabelecimento (partner only)
+- `(tabs)/dashboard` - Relatórios gerenciais (partner only)
+- `(tabs)/my-dashboard` - Meus Relatórios (employee only)
+- `(tabs)/settings/` - Configurações (partner only)
+
+### Permissionamento por Tabs:
+- **Partner**: Agenda, Relatórios, Loja, Configurações
+- **Employee**: Minha Agenda, Meus Relatórios
+- Tabs ocultos via `href: null` no `_layout.tsx` baseado no role
 
 ## Padrões
 
@@ -53,6 +60,14 @@ Axios em `src/http/api-client.ts` com:
 - Base URL da API
 - Token automático
 - Header establishment
+
+## Autenticação e Permissionamento
+
+- Token JWT + role armazenados em Secure Store
+- `useSession()` retorna `{ session, partner, employee, role, signIn, signOut }`
+- `signIn(token, role)` — armazena token e role
+- Role `"partner"`: carrega partner via `GET /partner`, verifica subscription
+- Role `"employee"`: carrega employee via `GET /employee/me`, skip subscription check
 
 ## Push Notifications
 
