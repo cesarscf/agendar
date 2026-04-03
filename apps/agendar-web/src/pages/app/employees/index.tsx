@@ -1,5 +1,10 @@
 import { useQuery } from "@tanstack/react-query"
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router"
+import {
+  createFileRoute,
+  Link,
+  useNavigate,
+} from "@tanstack/react-router"
+import { requirePartner } from "@/lib/route-guards"
 import {
   ArrowRight,
   ArrowUp,
@@ -23,6 +28,7 @@ import { getPlan } from "@/http/payments/get-plan"
 import { queryKeys } from "@/lib/query-keys"
 
 export const Route = createFileRoute("/app/employees/")({
+  beforeLoad: requirePartner,
   component: Employees,
 })
 

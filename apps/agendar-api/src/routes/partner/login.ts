@@ -1,11 +1,10 @@
 import bcrypt from "bcrypt"
-import { eq } from "drizzle-orm"
+import { and, eq, isNotNull } from "drizzle-orm"
 import type { FastifyInstance } from "fastify"
 import type { ZodTypeProvider } from "fastify-type-provider-zod"
 import z from "zod"
 import { db } from "@/db"
-import { partners } from "@/db/schema"
-import { BadRequestError } from "@/routes/_erros/bad-request-error"
+import { employees, partners } from "@/db/schema"
 import { UnauthorizedError } from "../_erros/unauthorized-error"
 
 export async function login(app: FastifyInstance) {
@@ -13,8 +12,8 @@ export async function login(app: FastifyInstance) {
     "/login",
     {
       schema: {
-        tags: ["Partner"],
-        summary: "Login",
+        tags: ["Auth"],
+        summary: "Login (Partner or Employee)",
         body: z.object({
           email: z.string().email(),
           password: z.string(),
@@ -22,45 +21,69 @@ export async function login(app: FastifyInstance) {
         response: {
           201: z.object({
             token: z.string(),
+            role: z.enum(["partner", "employee"]),
           }),
         },
       },
     },
     async (request, reply) => {
       const { email, password } = request.body
+      const normalizedEmail = email.toLowerCase()
 
       const existingPartner = await db.query.partners.findFirst({
-        where: eq(partners.email, email.toLowerCase()),
-        with: {
-          establishments: true,
-        },
+        where: eq(partners.email, normalizedEmail),
       })
 
-      if (!existingPartner) {
-        throw new BadRequestError("Credências inválidas")
+      if (existingPartner) {
+        const isPasswordValid = await bcrypt.compare(
+          password,
+          existingPartner.password
+        )
+
+        if (!isPasswordValid) {
+          throw new UnauthorizedError("Credenciais inválidas")
+        }
+
+        const token = await reply.jwtSign(
+          { sub: existingPartner.id, role: "partner" },
+          { sign: { expiresIn: "7d" } }
+        )
+
+        return reply.status(201).send({ token, role: "partner" })
+      }
+
+      const existingEmployee = await db.query.employees.findFirst({
+        where: and(
+          eq(employees.email, normalizedEmail),
+          isNotNull(employees.password)
+        ),
+      })
+
+      if (!existingEmployee?.password) {
+        throw new UnauthorizedError("Credenciais inválidas")
       }
 
       const isPasswordValid = await bcrypt.compare(
         password,
-        existingPartner.password
+        existingEmployee.password
       )
 
       if (!isPasswordValid) {
-        throw new UnauthorizedError("Credências inválidas")
+        throw new UnauthorizedError("Credenciais inválidas")
       }
 
       const token = await reply.jwtSign(
         {
-          sub: existingPartner.id,
+          sub: existingEmployee.id,
+          role: "employee",
+          establishmentId: existingEmployee.establishmentId,
         },
-        {
-          sign: {
-            expiresIn: "7d",
-          },
-        }
+        { sign: { expiresIn: "7d" } }
       )
 
-      return reply.status(201).send({ token })
+      return reply
+        .status(201)
+        .send({ token, role: "employee" })
     }
   )
 }

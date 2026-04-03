@@ -1,5 +1,5 @@
 import { api } from "@/lib/api-client"
-import { setToken } from "@/lib/auth"
+import { type UserRole, setRole, setToken } from "@/lib/auth"
 
 export interface SignInRequest {
   email: string
@@ -9,12 +9,21 @@ export interface SignInRequest {
 
 export type AuthResponse = {
   token: string
+  role: UserRole
 }
 
-export async function login({ email, password, rememberMe }: SignInRequest) {
-  const response = await api.post<AuthResponse>("/login", { email, password })
+export async function login({
+  email,
+  password,
+  rememberMe,
+}: SignInRequest) {
+  const response = await api.post<AuthResponse>("/login", {
+    email,
+    password,
+  })
 
   setToken(response.data.token, rememberMe)
+  setRole(response.data.role, rememberMe)
 
   return response.data
 }

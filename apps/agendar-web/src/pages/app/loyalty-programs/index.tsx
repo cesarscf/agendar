@@ -1,5 +1,10 @@
 import { useQuery } from "@tanstack/react-query"
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router"
+import {
+  createFileRoute,
+  Link,
+  useNavigate,
+} from "@tanstack/react-router"
+import { requirePartner } from "@/lib/route-guards"
 import { ArrowRight, Gift, Hammer } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -7,6 +12,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { getLoyaltyPrograms } from "@/http/loyalty/get-loyalty-programs"
 
 export const Route = createFileRoute("/app/loyalty-programs/")({
+  beforeLoad: requirePartner,
   component: LoyaltyPrograms,
 })
 

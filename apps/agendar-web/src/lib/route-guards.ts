@@ -8,7 +8,10 @@ interface BeforeLoadContext {
   }
 }
 
-export async function requireAuth({ context, location }: BeforeLoadContext) {
+export async function requireAuth({
+  context,
+  location,
+}: BeforeLoadContext) {
   if (context.auth.isLoading) {
     return
   }
@@ -19,6 +22,20 @@ export async function requireAuth({ context, location }: BeforeLoadContext) {
       search: {
         redirect: location.href,
       },
+    })
+  }
+}
+
+export async function requirePartner({
+  context,
+}: BeforeLoadContext) {
+  if (context.auth.isLoading) {
+    return
+  }
+
+  if (context.auth.role === "employee") {
+    throw redirect({
+      to: "/app",
     })
   }
 }

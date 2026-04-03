@@ -29,6 +29,7 @@ import { Route as AuthForgotPasswordRouteImport } from './pages/_auth/forgot-pas
 import { Route as AppStoreIndexRouteImport } from './pages/app/store/index'
 import { Route as AppServicesIndexRouteImport } from './pages/app/services/index'
 import { Route as AppPackagesIndexRouteImport } from './pages/app/packages/index'
+import { Route as AppMyDashboardIndexRouteImport } from './pages/app/my-dashboard/index'
 import { Route as AppLoyaltyProgramsIndexRouteImport } from './pages/app/loyalty-programs/index'
 import { Route as AppEmployeesIndexRouteImport } from './pages/app/employees/index'
 import { Route as AppDashboardIndexRouteImport } from './pages/app/dashboard/index'
@@ -144,6 +145,11 @@ const AppServicesIndexRoute = AppServicesIndexRouteImport.update({
 const AppPackagesIndexRoute = AppPackagesIndexRouteImport.update({
   id: '/packages/',
   path: '/packages/',
+  getParentRoute: () => AppLayoutRoute,
+} as any)
+const AppMyDashboardIndexRoute = AppMyDashboardIndexRouteImport.update({
+  id: '/my-dashboard/',
+  path: '/my-dashboard/',
   getParentRoute: () => AppLayoutRoute,
 } as any)
 const AppLoyaltyProgramsIndexRoute = AppLoyaltyProgramsIndexRouteImport.update({
@@ -262,6 +268,7 @@ export interface FileRoutesByFullPath {
   '/app/dashboard/': typeof AppDashboardIndexRoute
   '/app/employees/': typeof AppEmployeesIndexRoute
   '/app/loyalty-programs/': typeof AppLoyaltyProgramsIndexRoute
+  '/app/my-dashboard/': typeof AppMyDashboardIndexRoute
   '/app/packages/': typeof AppPackagesIndexRoute
   '/app/services/': typeof AppServicesIndexRoute
   '/app/store/': typeof AppStoreIndexRoute
@@ -296,6 +303,7 @@ export interface FileRoutesByTo {
   '/app/dashboard': typeof AppDashboardIndexRoute
   '/app/employees': typeof AppEmployeesIndexRoute
   '/app/loyalty-programs': typeof AppLoyaltyProgramsIndexRoute
+  '/app/my-dashboard': typeof AppMyDashboardIndexRoute
   '/app/packages': typeof AppPackagesIndexRoute
   '/app/services': typeof AppServicesIndexRoute
   '/app/store': typeof AppStoreIndexRoute
@@ -336,6 +344,7 @@ export interface FileRoutesById {
   '/app/dashboard/': typeof AppDashboardIndexRoute
   '/app/employees/': typeof AppEmployeesIndexRoute
   '/app/loyalty-programs/': typeof AppLoyaltyProgramsIndexRoute
+  '/app/my-dashboard/': typeof AppMyDashboardIndexRoute
   '/app/packages/': typeof AppPackagesIndexRoute
   '/app/services/': typeof AppServicesIndexRoute
   '/app/store/': typeof AppStoreIndexRoute
@@ -376,6 +385,7 @@ export interface FileRouteTypes {
     | '/app/dashboard/'
     | '/app/employees/'
     | '/app/loyalty-programs/'
+    | '/app/my-dashboard/'
     | '/app/packages/'
     | '/app/services/'
     | '/app/store/'
@@ -410,6 +420,7 @@ export interface FileRouteTypes {
     | '/app/dashboard'
     | '/app/employees'
     | '/app/loyalty-programs'
+    | '/app/my-dashboard'
     | '/app/packages'
     | '/app/services'
     | '/app/store'
@@ -449,6 +460,7 @@ export interface FileRouteTypes {
     | '/app/dashboard/'
     | '/app/employees/'
     | '/app/loyalty-programs/'
+    | '/app/my-dashboard/'
     | '/app/packages/'
     | '/app/services/'
     | '/app/store/'
@@ -613,6 +625,13 @@ declare module '@tanstack/react-router' {
       path: '/packages'
       fullPath: '/app/packages/'
       preLoaderRoute: typeof AppPackagesIndexRouteImport
+      parentRoute: typeof AppLayoutRoute
+    }
+    '/app/my-dashboard/': {
+      id: '/app/my-dashboard/'
+      path: '/my-dashboard'
+      fullPath: '/app/my-dashboard/'
+      preLoaderRoute: typeof AppMyDashboardIndexRouteImport
       parentRoute: typeof AppLayoutRoute
     }
     '/app/loyalty-programs/': {
@@ -792,6 +811,7 @@ interface AppLayoutRouteChildren {
   AppDashboardIndexRoute: typeof AppDashboardIndexRoute
   AppEmployeesIndexRoute: typeof AppEmployeesIndexRoute
   AppLoyaltyProgramsIndexRoute: typeof AppLoyaltyProgramsIndexRoute
+  AppMyDashboardIndexRoute: typeof AppMyDashboardIndexRoute
   AppPackagesIndexRoute: typeof AppPackagesIndexRoute
   AppServicesIndexRoute: typeof AppServicesIndexRoute
   AppStoreIndexRoute: typeof AppStoreIndexRoute
@@ -814,6 +834,7 @@ const AppLayoutRouteChildren: AppLayoutRouteChildren = {
   AppDashboardIndexRoute: AppDashboardIndexRoute,
   AppEmployeesIndexRoute: AppEmployeesIndexRoute,
   AppLoyaltyProgramsIndexRoute: AppLoyaltyProgramsIndexRoute,
+  AppMyDashboardIndexRoute: AppMyDashboardIndexRoute,
   AppPackagesIndexRoute: AppPackagesIndexRoute,
   AppServicesIndexRoute: AppServicesIndexRoute,
   AppStoreIndexRoute: AppStoreIndexRoute,

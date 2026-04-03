@@ -31,6 +31,7 @@ export function CreateEmployeeForm() {
     defaultValues: {
       name: "",
       email: "",
+      password: "",
       address: "",
       phone: "",
       biography: "",
@@ -130,6 +131,31 @@ export function CreateEmployeeForm() {
             {form.formState.errors.email && (
               <Text className="text-red-500 text-xs">
                 {form.formState.errors.email.message}
+              </Text>
+            )}
+          </View>
+
+          <View className="gap-1">
+            <Text className="text-sm font-medium">
+              Senha de acesso
+            </Text>
+            <Controller
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <Input
+                  placeholder="Senha do profissional"
+                  secureTextEntry
+                  {...field}
+                  onBlur={field.onBlur}
+                  onChangeText={field.onChange}
+                  value={field.value}
+                />
+              )}
+            />
+            {form.formState.errors.password && (
+              <Text className="text-red-500 text-xs">
+                {form.formState.errors.password.message}
               </Text>
             )}
           </View>

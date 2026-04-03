@@ -62,22 +62,37 @@ db.query.appointments.findFirst({
 })
 ```
 
-## Autenticação (3 Camadas)
+## Autenticação (4 Camadas)
 
 ### Partner Auth (JWT)
-- Token contém `sub` (partnerId)
+- Token contém `{ sub: partnerId, role: "partner" }`
 - Header `x-establishment-id` roteia para estabelecimento
 - `request.getCurrentPartnerId()` e `request.getCurrentEstablishmentId()`
+- Rejeita tokens com `role: "employee"` (ForbiddenError)
+- Tokens antigos sem `role` são tratados como partner (backward compat)
+
+### Employee Auth (JWT)
+- Token contém `{ sub: employeeId, role: "employee", establishmentId }`
+- Middleware `employee-auth.ts`
+- `request.getCurrentEmployeeId()` e `request.getCurrentEmployeeEstablishmentId()`
+- Rejeita tokens que não sejam de employee (ForbiddenError)
+- Endpoints: `GET /employee/me`, `GET /employee/appointments`, `GET /employee/earnings`
 
 ### Customer Auth (Headers - sem JWT)
 - Header `x-customer-phone` identifica cliente
 - Header `x-establishment-id` define contexto
 - Cliente identificado por telefone + establishment
 
+### Login Unificado
+- `POST /login` — tenta partner primeiro, depois employee
+- Retorna `{ token, role: "partner" | "employee" }`
+- Email validado como único entre partners e employees na criação
+
 ### Subscription Validation
 - Middleware `requireActiveSubscription`
 - Verifica status ("active" | "trialing") e `currentPeriodEnd > now`
 - Bypass em `NODE_ENV === "development"`
+- Não se aplica a employees (apenas partners têm subscription)
 
 ## Classes de Erro
 

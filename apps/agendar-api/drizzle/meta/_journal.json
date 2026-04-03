@@ -15,6 +15,13 @@
       "when": 1769466809334,
       "tag": "0001_outgoing_lord_tyger",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1774473814724,
+      "tag": "0002_funny_gorgon",
+      "breakpoints": true
     }
   ]
 }

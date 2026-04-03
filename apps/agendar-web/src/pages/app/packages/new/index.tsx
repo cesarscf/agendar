@@ -1,6 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router"
+import { requirePartner } from "@/lib/route-guards"
 import { ChevronLeft, Loader2 } from "lucide-react"
 import React from "react"
 import { useForm } from "react-hook-form"
@@ -31,6 +32,7 @@ import { uploadImage } from "@/lib/upload-image"
 import { createPackageSchema } from "@/lib/validations/package"
 
 export const Route = createFileRoute("/app/packages/new/")({
+  beforeLoad: requirePartner,
   component: NewPackage,
 })
 

@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
 import { createFileRoute, Link } from "@tanstack/react-router"
+import { requirePartner } from "@/lib/route-guards"
 import { ChevronLeft } from "lucide-react"
 import { useQueryState } from "nuqs"
 import { Button } from "@/components/ui/button"
@@ -10,6 +11,7 @@ import { UpdateAvailabilityForm } from "./-components/update-availability-form"
 import { UpdateStoreForm } from "./-components/update-store-form"
 
 export const Route = createFileRoute("/app/store/")({
+  beforeLoad: requirePartner,
   component: Store,
 })
 

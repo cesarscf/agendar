@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
 import { createFileRoute, Link } from "@tanstack/react-router"
+import { requirePartner } from "@/lib/route-guards"
 import { ChevronLeft } from "lucide-react"
 import { useQueryState } from "nuqs"
 import { Button } from "@/components/ui/button"
@@ -12,6 +13,7 @@ import { UpdateEmployeeForm } from "./-components/update-employee-form"
 import { UpdateEmployeeServices } from "./-components/update-employee-service"
 
 export const Route = createFileRoute("/app/employees/$employeeId/")({
+  beforeLoad: requirePartner,
   component: Employee,
 })
 

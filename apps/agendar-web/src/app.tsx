@@ -19,6 +19,9 @@ const router = createRouter({
     auth: {
       isAuthenticated: false,
       partner: null,
+      employee: null,
+      employeeEstablishment: null,
+      role: null,
       isLoading: false,
     },
     adminAuth: {

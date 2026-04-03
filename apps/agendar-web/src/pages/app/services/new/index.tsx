@@ -1,6 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router"
+import { requirePartner } from "@/lib/route-guards"
 import { ChevronLeft, Loader2 } from "lucide-react"
 import React from "react"
 import { useForm } from "react-hook-form"
@@ -31,6 +32,7 @@ import { uploadImage } from "@/lib/upload-image"
 import { createServiceSchema } from "@/lib/validations/service"
 
 export const Route = createFileRoute("/app/services/new/")({
+  beforeLoad: requirePartner,
   component: NewService,
 })
 type Inputs = z.infer<typeof createServiceSchema>

@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router"
+import { requirePartner } from "@/lib/route-guards"
 import { endOfMonth, format, startOfMonth } from "date-fns"
 import { parseAsIsoDate, useQueryState } from "nuqs"
 import { AppointmentsCountCard } from "@/components/appointments-count-card"
@@ -17,6 +18,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { DashboardFilters } from "./-components/dashboard-filters"
 
 export const Route = createFileRoute("/app/dashboard/")({
+  beforeLoad: requirePartner,
   component: Dashboard,
 })
 

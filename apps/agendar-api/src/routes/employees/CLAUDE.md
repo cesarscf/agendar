@@ -7,6 +7,7 @@ Gerenciamento de profissionais/funcionários do estabelecimento.
 ```
 Employee
 ├── name, email, phone, avatar, bio
+├── password: Hash bcrypt (para login do employee)
 ├── active: Status do funcionário
 └── establishmentId: Estabelecimento
 
@@ -45,3 +46,18 @@ EmployeeService (Serviços que o funcionário presta)
 - `startTime`, `endTime`: Horas do dia
 
 Ambos são checados na criação de agendamento.
+
+## Criação de Employee com Conta de Acesso
+
+Ao criar um employee, o partner informa email (obrigatório) e senha:
+- Email é normalizado para lowercase
+- Senha é hashada com bcrypt (10 salt rounds)
+- Validação de unicidade: email não pode existir em `partners` nem em outros `employees` com senha
+- Employee pode então fazer login no mesmo endpoint `/login`
+
+## Rotas Employee Self (`routes/employee/`)
+
+Endpoints exclusivos para employees autenticados (usa `employee-auth` middleware):
+- `GET /employee/me` — perfil do employee + dados do establishment
+- `GET /employee/appointments` — agendamentos do employee (paginado, com filtros)
+- `GET /employee/earnings` — faturamento e comissão do employee no período

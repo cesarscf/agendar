@@ -1,6 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router"
+import { requirePartner } from "@/lib/route-guards"
 import { ChevronLeft, Loader2 } from "lucide-react"
 import { useForm } from "react-hook-form"
 import type z from "zod"
@@ -20,6 +21,7 @@ import { maskCPF, maskDate, maskPhone } from "@/lib/masks"
 import { createCustomerSchema } from "@/lib/validations/customer"
 
 export const Route = createFileRoute("/app/customers/new/")({
+  beforeLoad: requirePartner,
   component: NewCustomer,
 })
 

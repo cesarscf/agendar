@@ -1,5 +1,10 @@
 import { useQuery } from "@tanstack/react-query"
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router"
+import {
+  createFileRoute,
+  Link,
+  useNavigate,
+} from "@tanstack/react-router"
+import { requirePartner } from "@/lib/route-guards"
 import {
   ArrowRight,
   CalendarDays,
@@ -17,6 +22,7 @@ import { Input } from "@/components/ui/input"
 import { getCustomers } from "@/http/customers/get-customers"
 
 export const Route = createFileRoute("/app/customers/")({
+  beforeLoad: requirePartner,
   component: Customers,
 })
 
