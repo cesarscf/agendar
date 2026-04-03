@@ -63,8 +63,10 @@ export function EditEmployeeForm({ employee }: EditEmployeeFormProps) {
     }
 
     try {
+      const { password, ...rest } = inputs
       const payload = {
-        ...inputs,
+        ...rest,
+        ...(password ? { password } : {}),
         image: imageUrl,
       }
 
@@ -160,6 +162,30 @@ export function EditEmployeeForm({ employee }: EditEmployeeFormProps) {
             {form.formState.errors.email && (
               <Text className="text-red-500 text-xs">
                 {form.formState.errors.email.message}
+              </Text>
+            )}
+          </View>
+
+          <View className="gap-1">
+            <Text className="text-sm font-medium">
+              Nova Senha
+            </Text>
+            <Controller
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <Input
+                  placeholder="Deixe vazio para manter a atual"
+                  secureTextEntry
+                  {...field}
+                  onChangeText={field.onChange}
+                  value={field.value ?? ""}
+                />
+              )}
+            />
+            {form.formState.errors.password && (
+              <Text className="text-red-500 text-xs">
+                {form.formState.errors.password.message}
               </Text>
             )}
           </View>

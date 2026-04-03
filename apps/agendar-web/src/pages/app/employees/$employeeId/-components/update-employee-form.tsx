@@ -70,7 +70,13 @@ export function UpdateEmployeeForm({ employee }: { employee: Employee }) {
       image = employee.avatarUrl
     }
 
-    await mutateAsync({ ...values, avatarUrl: image, id: employee.id })
+    const { password, ...rest } = values
+    await mutateAsync({
+      ...rest,
+      ...(password ? { password } : {}),
+      avatarUrl: image,
+      id: employee.id,
+    })
 
     queryClient.invalidateQueries({ queryKey: [employee.id] })
 
@@ -109,6 +115,24 @@ export function UpdateEmployeeForm({ employee }: { employee: Employee }) {
               <FormControl>
                 <Input
                  
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Nova Senha</FormLabel>
+              <FormControl>
+                <Input
+                  type="password"
+                  placeholder="Deixe vazio para manter a atual"
                   {...field}
                 />
               </FormControl>

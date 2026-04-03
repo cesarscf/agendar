@@ -1,9 +1,10 @@
-import { and, eq } from "drizzle-orm"
+import bcrypt from "bcrypt"
+import { and, eq, isNotNull } from "drizzle-orm"
 import type { FastifyInstance } from "fastify"
 import type { ZodTypeProvider } from "fastify-type-provider-zod"
 import z from "zod"
 import { db } from "@/db"
-import { categories, employees } from "@/db/schema"
+import { categories, employees, partners } from "@/db/schema"
 import { auth } from "@/middlewares/auth"
 import { requireActiveSubscription } from "@/middlewares/require-active-subscription"
 import { establishmentHeaderSchema } from "@/utils/schemas/headers"
@@ -28,6 +29,7 @@ export async function updateEmployee(app: FastifyInstance) {
           body: z.object({
             name: z.string().optional(),
             email: z.string().email().optional(),
+            password: z.string().min(6).optional(),
             phone: z.string().optional(),
             address: z.string().optional(),
             biography: z.string().optional(),
@@ -42,7 +44,7 @@ export async function updateEmployee(app: FastifyInstance) {
         const { establishmentId } = await request.getCurrentEstablishmentId()
 
         const { id: employeeId } = request.params
-        const inputs = request.body
+        const { password, ...inputs } = request.body
 
         const employee = await db.query.employees.findFirst({
           where: and(
@@ -59,11 +61,55 @@ export async function updateEmployee(app: FastifyInstance) {
           throw new BadRequestError("Employee not found")
         }
 
+        if (inputs.email) {
+          const normalizedEmail =
+            inputs.email.toLowerCase()
+
+          const existingPartner =
+            await db.query.partners.findFirst({
+              where: eq(partners.email, normalizedEmail),
+            })
+
+          if (existingPartner) {
+            throw new BadRequestError(
+              "Este email já está em uso"
+            )
+          }
+
+          const existingEmployee =
+            await db.query.employees.findFirst({
+              where: and(
+                eq(employees.email, normalizedEmail),
+                isNotNull(employees.password)
+              ),
+            })
+
+          if (
+            existingEmployee &&
+            existingEmployee.id !== employeeId
+          ) {
+            throw new BadRequestError(
+              "Este email já está em uso"
+            )
+          }
+
+          inputs.email = normalizedEmail
+        }
+
+        const updateData: Record<string, unknown> = {
+          ...inputs,
+        }
+
+        if (password) {
+          updateData.password = await bcrypt.hash(
+            password,
+            10
+          )
+        }
+
         await db
           .update(employees)
-          .set({
-            ...inputs,
-          })
+          .set(updateData)
           .where(
             and(
               eq(employees.id, employeeId),

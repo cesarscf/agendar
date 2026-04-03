@@ -46,6 +46,13 @@ export const createEmployeeSchema = employeeSchema
 
 export const updateEmployeeSchema = employeeSchema.partial().extend({
   id: z.string().min(1, "ID obrigatório"),
+  password: z
+    .string()
+    .min(6, {
+      message: "Senha deve ter no mínimo 6 caracteres",
+    })
+    .optional()
+    .or(z.literal("")),
 })
 
 export const updateEmployeeServicesFormSchema = z.object({
