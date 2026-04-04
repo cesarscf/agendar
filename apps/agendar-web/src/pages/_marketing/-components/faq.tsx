@@ -29,7 +29,7 @@ const faqs: FAQ[] = [
   {
     question: "Posso ter mais de um funcionário usando o sistema?",
     answer:
-      "Sim! Dependendo do plano escolhido, você pode adicionar múltiplos funcionários, cada um com seu próprio acesso e agenda individual.",
+      "Sim! Dependendo do plano escolhido, você pode adicionar múltiplos funcionários. Cada profissional recebe seu próprio login e acessa apenas seus agendamentos, comissões e ganhos — sem visualizar dados financeiros ou de outros profissionais.",
   },
   {
     question: "Os dados dos meus clientes estão seguros?",

@@ -32,6 +32,11 @@ const reasons: Reason[] = [
       "Com processos automatizados, você ganha tempo para focar no que realmente importa: entregar um excelente atendimento.",
   },
   {
+    title: "Controle de acesso por profissional",
+    description:
+      "Cada profissional tem seu próprio login e vê apenas seus agendamentos e comissões. Você mantém o controle total do negócio.",
+  },
+  {
     title:
       "Funciona para vários tipos de negócios que trabalham com agendamentos",
     description:

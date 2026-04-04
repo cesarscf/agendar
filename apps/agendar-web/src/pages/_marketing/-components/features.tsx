@@ -5,6 +5,7 @@ import {
   Clock,
   DollarSign,
   type LucideIcon,
+  Shield,
   Users,
 } from "lucide-react"
 import {
@@ -57,6 +58,12 @@ const features: Feature[] = [
     title: "Notificações Automáticas",
     description:
       "Envie lembretes automáticos para seus clientes via whatsapp e reduza o número de faltas.",
+  },
+  {
+    icon: Shield,
+    title: "Acesso para Profissionais",
+    description:
+      "Crie login individual para cada profissional. Eles acessam apenas seus próprios agendamentos, comissões e ganhos, sem ver dados do negócio.",
   },
 ]
 
