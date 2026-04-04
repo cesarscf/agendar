@@ -89,79 +89,72 @@ export function SchedulingFromPackage({
   )
 
   async function handleConfirmBooking() {
-    setLoading(true)
-
     if (
       !selectedProfessionalId ||
       !selectedDate ||
       !selectedTime ||
-      !customerData
+      !customerData ||
+      !serviceId
     ) {
-      setLoading(false)
       return
     }
 
-    const customerCreated = await createPublicCustomer({
-      ...customerData,
-      slug,
-    })
-    if (!customerCreated) {
-      setLoading(false)
-      return toast.error("Falha ao criar o usuário")
-    }
-
-    const [hours, minutes] = selectedTime.split(":").map(Number)
-    const startTime = set(selectedDate, {
-      hours,
-      minutes,
-      seconds: 0,
-      milliseconds: 0,
-    })
-
-    if (!serviceId) {
-      setLoading(false)
-      return
-    }
-
-    const customerPhone = onlyNumbers(customerData.phoneNumber!)
-    let hasActivePackage = false
+    setLoading(true)
 
     try {
-      await getCustomersHasActivePackage({
-        customerPhone,
-        serviceId,
-        establishmentId: establishment.id,
+      const customerCreated = await createPublicCustomer({
+        ...customerData,
+        slug,
+      })
+      if (!customerCreated) {
+        return toast.error("Falha ao criar o usuário")
+      }
+
+      const [hours, minutes] = selectedTime.split(":").map(Number)
+      const startTime = set(selectedDate, {
+        hours,
+        minutes,
+        seconds: 0,
+        milliseconds: 0,
       })
 
-      hasActivePackage = true
-    } catch {
-      hasActivePackage = false
-    }
+      const customerPhone = onlyNumbers(customerData.phoneNumber!)
+      let hasActivePackage = false
 
-    if (!hasActivePackage) {
       try {
+        await getCustomersHasActivePackage({
+          customerPhone,
+          serviceId,
+          establishmentId: establishment.id,
+        })
+        hasActivePackage = true
+      } catch {
+        hasActivePackage = false
+      }
+
+      if (!hasActivePackage) {
         await linkCustomerToPackage({
           customerId: customerCreated.id,
           packageId,
         })
-      } catch {
-        setLoading(false)
-        return toast.error("Falha ao vincular o pacote ao cliente")
       }
-    }
 
-    const payload: CreateAppointmentWithPackageRequest = {
-      employeeId: selectedProfessionalId,
-      packageId,
-      date: selectedDate,
-      startTime,
-      customerPhone: onlyNumbers(customerData.phoneNumber!),
-      establishmentId: establishment.id,
-    }
+      const payload: CreateAppointmentWithPackageRequest = {
+        employeeId: selectedProfessionalId,
+        packageId,
+        date: selectedDate,
+        startTime,
+        customerPhone: onlyNumbers(customerData.phoneNumber!),
+        establishmentId: establishment.id,
+      }
 
-    await createAppointmentWithPackageMutate(payload)
-    setStep("success")
-    setLoading(false)
+      await createAppointmentWithPackageMutate(payload)
+      setStep("success")
+    } catch {
+      toast.error("Falha ao criar o agendamento")
+    } finally {
+      setLoading(false)
+    }
   }
 
   if (isLoading) {

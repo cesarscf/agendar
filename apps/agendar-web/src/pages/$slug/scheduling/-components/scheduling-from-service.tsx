@@ -82,47 +82,50 @@ export function SchedulingFromService({
   )
 
   async function handleConfirmBooking() {
-    setLoading(true)
-
     if (
       !selectedProfessionalId ||
       !selectedDate ||
       !selectedTime ||
       !customerData
     ) {
-      setLoading(false)
       return
     }
 
-    const [hours, minutes] = selectedTime.split(":").map(Number)
-    const startTime = set(selectedDate, {
-      hours,
-      minutes,
-      seconds: 0,
-      milliseconds: 0,
-    })
+    setLoading(true)
 
-    const customerCreated = await createPublicCustomer({
-      ...customerData,
-      slug,
-    })
-    if (!customerCreated) {
+    try {
+      const [hours, minutes] = selectedTime.split(":").map(Number)
+      const startTime = set(selectedDate, {
+        hours,
+        minutes,
+        seconds: 0,
+        milliseconds: 0,
+      })
+
+      const customerCreated = await createPublicCustomer({
+        ...customerData,
+        slug,
+      })
+      if (!customerCreated) {
+        return toast.error("Falha ao criar o usuário")
+      }
+
+      const payload: CreateAppointmentRequest = {
+        employeeId: selectedProfessionalId,
+        serviceId,
+        date: selectedDate,
+        startTime,
+        customerPhone: onlyNumbers(customerData.phoneNumber!),
+        establishmentId: establishment.id,
+      }
+
+      await createAppointmentMutate(payload)
+      setStep("success")
+    } catch {
+      toast.error("Falha ao criar o agendamento")
+    } finally {
       setLoading(false)
-      return toast.error("Falha ao criar o usuário")
     }
-
-    const payload: CreateAppointmentRequest = {
-      employeeId: selectedProfessionalId,
-      serviceId,
-      date: selectedDate,
-      startTime,
-      customerPhone: onlyNumbers(customerData.phoneNumber!),
-      establishmentId: establishment.id,
-    }
-
-    await createAppointmentMutate(payload)
-    setStep("success")
-    setLoading(false)
   }
 
   if (isLoading) {
