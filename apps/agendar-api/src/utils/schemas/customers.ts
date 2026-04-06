@@ -3,7 +3,7 @@ import { z } from "zod"
 export const customerSchema = z.object({
   id: z.string().uuid(),
   name: z.string(),
-  birthDate: z.coerce.date(),
+  birthDate: z.coerce.date().nullable().optional(),
   phoneNumber: z.string(),
   email: z.string().nullable(),
   address: z.string().nullable(),

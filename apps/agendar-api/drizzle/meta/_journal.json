@@ -22,6 +22,13 @@
       "when": 1774473814724,
       "tag": "0002_funny_gorgon",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1775479347512,
+      "tag": "0003_eager_micromax",
+      "breakpoints": true
     }
   ]
 }
