@@ -50,7 +50,7 @@ function NewLoyaltyProgram() {
     defaultValues: {
       serviceRewardId: "",
       name: "",
-      requiredPoints: 0,
+      requiredPoints: undefined,
       rules: [],
     },
   })
@@ -148,9 +148,12 @@ function NewLoyaltyProgram() {
                 <FormControl>
                   <Input
                     type="number"
-                   
                     {...field}
-                    onChange={e => field.onChange(Number(e.target.value))}
+                    value={field.value ?? ""}
+                    onChange={e => {
+                      const v = e.target.value
+                      field.onChange(v === "" ? undefined : Number(v))
+                    }}
                   />
                 </FormControl>
                 <FormMessage />

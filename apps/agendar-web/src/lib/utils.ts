@@ -203,7 +203,9 @@ export function parseDateString(value: string): Date {
  * @returns Data no formato "dd/mm/yyyy"
  */
 export function formatIsoToDateBr(iso: string) {
+  if (!iso) return ""
   const date = new Date(iso)
+  if (Number.isNaN(date.getTime())) return ""
   const day = String(date.getUTCDate()).padStart(2, "0")
   const month = String(date.getUTCMonth() + 1).padStart(2, "0")
   const year = date.getUTCFullYear()
