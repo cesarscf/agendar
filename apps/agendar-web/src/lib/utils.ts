@@ -257,6 +257,36 @@ export const themeOptions = [
   { label: "Laranja", value: "orange", color: "#ff6900" },
 ]
 
+// Paleta estável de cores para identificar profissionais visualmente.
+// Cada item traz a classe de texto e um fundo suave para o ícone.
+export const employeeColorPalette = [
+  { text: "text-blue-600", bg: "bg-blue-100", iconText: "text-blue-600" },
+  { text: "text-pink-600", bg: "bg-pink-100", iconText: "text-pink-600" },
+  { text: "text-purple-600", bg: "bg-purple-100", iconText: "text-purple-600" },
+  { text: "text-emerald-600", bg: "bg-emerald-100", iconText: "text-emerald-600" },
+  { text: "text-orange-600", bg: "bg-orange-100", iconText: "text-orange-600" },
+  { text: "text-cyan-600", bg: "bg-cyan-100", iconText: "text-cyan-600" },
+  { text: "text-rose-600", bg: "bg-rose-100", iconText: "text-rose-600" },
+  { text: "text-amber-600", bg: "bg-amber-100", iconText: "text-amber-600" },
+  { text: "text-indigo-600", bg: "bg-indigo-100", iconText: "text-indigo-600" },
+  { text: "text-teal-600", bg: "bg-teal-100", iconText: "text-teal-600" },
+]
+
+/**
+ * Retorna uma cor estável para um profissional baseado no seu ID.
+ * O mesmo ID sempre retorna a mesma cor.
+ */
+export function getEmployeeColor(employeeId: string) {
+  if (!employeeId) return employeeColorPalette[0]
+  let hash = 0
+  for (let i = 0; i < employeeId.length; i++) {
+    hash = (hash << 5) - hash + employeeId.charCodeAt(i)
+    hash |= 0
+  }
+  const index = Math.abs(hash) % employeeColorPalette.length
+  return employeeColorPalette[index]
+}
+
 // ============================================
 // FORMATAÇÃO DE COMISSÃO
 // ============================================

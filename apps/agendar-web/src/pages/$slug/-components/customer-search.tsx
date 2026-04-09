@@ -55,6 +55,10 @@ export function CustomerSearch({ slug, compact = false }: CustomerSearchProps) {
     id: string
     serviceName: string
   } | null>(null)
+  const lastSearchedPhoneRef = React.useRef<string | null>(null)
+  const debounceTimerRef = React.useRef<ReturnType<typeof setTimeout> | null>(
+    null
+  )
 
   const queryClient = useQueryClient()
 
@@ -63,13 +67,13 @@ export function CustomerSearch({ slug, compact = false }: CustomerSearchProps) {
       return await GetCustomerInfoByPhone({ slug, phone })
     },
     onSuccess: data => {
-      console.log(data)
       setCustomerData(data)
-
       setIsModalOpen(true)
       setError(null)
     },
     onError: () => {
+      setCustomerData(null)
+      lastSearchedPhoneRef.current = null
       setError("Cliente não encontrado. Verifique o número e tente novamente.")
     },
   })
@@ -102,11 +106,25 @@ export function CustomerSearch({ slug, compact = false }: CustomerSearchProps) {
   const handleSearch = () => {
     setError(null)
     const cleanPhone = phoneNumber.replace(/\D/g, "")
-    if (cleanPhone.length === 11) {
-      searchCustomerMutation.mutate(cleanPhone)
-    } else {
+    if (cleanPhone.length !== 11) {
       setError("Por favor, insira um número de telefone válido com 11 dígitos.")
+      return
     }
+    if (debounceTimerRef.current) {
+      clearTimeout(debounceTimerRef.current)
+      debounceTimerRef.current = null
+    }
+    if (
+      lastSearchedPhoneRef.current === cleanPhone &&
+      customerData &&
+      !searchCustomerMutation.isPending
+    ) {
+      setIsModalOpen(true)
+      return
+    }
+    if (searchCustomerMutation.isPending) return
+    lastSearchedPhoneRef.current = cleanPhone
+    searchCustomerMutation.mutate(cleanPhone)
   }
 
   const handleCancelClick = (appointmentId: string, serviceName: string) => {
@@ -128,14 +146,29 @@ export function CustomerSearch({ slug, compact = false }: CustomerSearchProps) {
     const cleanPhone = phoneNumber.replace(/\D/g, "")
 
     if (cleanPhone.length === 11) {
-      const debounceTimer = setTimeout(() => {
+      if (lastSearchedPhoneRef.current === cleanPhone) return
+      if (debounceTimerRef.current) clearTimeout(debounceTimerRef.current)
+      debounceTimerRef.current = setTimeout(() => {
+        debounceTimerRef.current = null
         handleSearch()
       }, 800)
-
-      return () => clearTimeout(debounceTimer)
-    } else if (cleanPhone.length > 0 && cleanPhone.length < 11) {
-      setError(null)
+      return () => {
+        if (debounceTimerRef.current) {
+          clearTimeout(debounceTimerRef.current)
+          debounceTimerRef.current = null
+        }
+      }
     }
+
+    if (debounceTimerRef.current) {
+      clearTimeout(debounceTimerRef.current)
+      debounceTimerRef.current = null
+    }
+    if (cleanPhone.length === 0) {
+      lastSearchedPhoneRef.current = null
+      setCustomerData(null)
+    }
+    setError(null)
   }, [phoneNumber])
 
   if (compact) {

@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/table"
 
 import type { Appointment } from "@/http/appointments/get-appointments"
+import { cn, getEmployeeColor } from "@/lib/utils"
 import { CancelDialog } from "./cancel-dialog"
 import { CheckinDialog } from "./checkin-dialog"
 
@@ -56,7 +57,9 @@ export function AppointmentsTable({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {appointments.map(appointment => (
+          {appointments.map(appointment => {
+            const employeeColor = getEmployeeColor(appointment.professional.id)
+            return (
             <TableRow
               key={appointment.id}
               className="hover:bg-muted/50 transition-colors"
@@ -78,8 +81,19 @@ export function AppointmentsTable({
 
               <TableCell>
                 <div className="flex items-center gap-2 text-sm">
-                  <Briefcase className="h-4 w-4 text-muted-foreground" />
-                  <span>{appointment.professional.name}</span>
+                  <span
+                    className={cn(
+                      "flex h-6 w-6 items-center justify-center rounded-full",
+                      employeeColor.bg
+                    )}
+                  >
+                    <Briefcase
+                      className={cn("h-3.5 w-3.5", employeeColor.iconText)}
+                    />
+                  </span>
+                  <span className={cn("font-medium", employeeColor.text)}>
+                    {appointment.professional.name}
+                  </span>
                 </div>
               </TableCell>
 
@@ -137,7 +151,8 @@ export function AppointmentsTable({
                 )}
               </TableCell>
             </TableRow>
-          ))}
+            )
+          })}
         </TableBody>
       </Table>
     </div>

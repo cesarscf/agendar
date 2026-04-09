@@ -36,6 +36,7 @@ interface AppointmentsFiltersProps {
   employees?: Array<{ id: string; name: string }>
   onFiltersChange: (filters: Partial<Filters>) => void
   onClearFilters: () => void
+  hideEmployeeFilter?: boolean
 }
 
 export function AppointmentsFilters({
@@ -44,6 +45,7 @@ export function AppointmentsFilters({
   employees,
   onFiltersChange,
   onClearFilters,
+  hideEmployeeFilter = false,
 }: AppointmentsFiltersProps) {
   const [startDate, setStartDate] = React.useState<Date | undefined>(
     filters.startDate ? parseISO(filters.startDate) : undefined
@@ -176,27 +178,29 @@ export function AppointmentsFilters({
         </SelectContent>
       </Select>
 
-      <Select
-        value={filters.employeeId || "all"}
-        onValueChange={value =>
-          onFiltersChange({
-            employeeId: value === "all" ? null : value,
-            page: 1,
-          })
-        }
-      >
-        <SelectTrigger className="w-48">
-          <SelectValue placeholder="Profissional" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="all">Todos os profissionais</SelectItem>
-          {employees?.map(employee => (
-            <SelectItem key={employee.id} value={employee.id}>
-              {employee.name}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+      {!hideEmployeeFilter && (
+        <Select
+          value={filters.employeeId || "all"}
+          onValueChange={value =>
+            onFiltersChange({
+              employeeId: value === "all" ? null : value,
+              page: 1,
+            })
+          }
+        >
+          <SelectTrigger className="w-48">
+            <SelectValue placeholder="Profissional" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">Todos os profissionais</SelectItem>
+            {employees?.map(employee => (
+              <SelectItem key={employee.id} value={employee.id}>
+                {employee.name}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      )}
 
       <Select
         value={filters.perPage.toString()}

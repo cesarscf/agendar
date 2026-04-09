@@ -3,10 +3,12 @@ import { createFileRoute } from "@tanstack/react-router"
 import { format } from "date-fns"
 import { RefreshCw } from "lucide-react"
 import { parseAsInteger, parseAsString, useQueryStates } from "nuqs"
+import * as React from "react"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 
+import { useAuth } from "@/hooks/use-auth"
 import {
   type GetAppointmentsParams,
   getAppointments,
@@ -25,6 +27,8 @@ export const Route = createFileRoute("/app/")({
 
 function RouteComponent() {
   const queryClient = useQueryClient()
+  const { role, employee } = useAuth()
+  const isEmployee = role === "employee"
 
   const today = format(new Date(), "yyyy-MM-dd")
 
@@ -39,6 +43,16 @@ function RouteComponent() {
     employeeId: parseAsString,
   })
 
+  // Force employee filter to logged-in employee's id
+  React.useEffect(() => {
+    if (isEmployee && employee?.id && filters.employeeId !== employee.id) {
+      setFilters({ employeeId: employee.id })
+    }
+  }, [isEmployee, employee?.id, filters.employeeId])
+
+  const effectiveEmployeeId =
+    isEmployee && employee?.id ? employee.id : filters.employeeId
+
   const queryParams: GetAppointmentsParams = {
     page: filters.page,
     perPage: filters.perPage,
@@ -49,7 +63,7 @@ function RouteComponent() {
     ...(filters.endDate && { endDate: filters.endDate }),
     ...(filters.search && { search: filters.search }),
     ...(filters.serviceId && { serviceId: filters.serviceId }),
-    ...(filters.employeeId && { employeeId: filters.employeeId }),
+    ...(effectiveEmployeeId && { employeeId: effectiveEmployeeId }),
   }
 
   const { data, isLoading, refetch, isFetching } = useQuery({
@@ -66,6 +80,7 @@ function RouteComponent() {
   const { data: employees } = useQuery({
     queryKey: ["employees"],
     queryFn: getEmployees,
+    enabled: !isEmployee,
   })
 
   const totalPages = data ? Math.ceil(data.total / filters.perPage) : 0
@@ -78,7 +93,7 @@ function RouteComponent() {
       endDate: null,
       search: null,
       serviceId: null,
-      employeeId: null,
+      employeeId: isEmployee && employee?.id ? employee.id : null,
     })
   }
 
@@ -117,6 +132,7 @@ function RouteComponent() {
         employees={employees}
         onFiltersChange={handleFiltersChange}
         onClearFilters={clearFilters}
+        hideEmployeeFilter={isEmployee}
       />
 
       <Card className="shadow-sm p-0">
