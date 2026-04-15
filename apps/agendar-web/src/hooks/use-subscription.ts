@@ -18,7 +18,8 @@ export interface UseSubscriptionReturn {
  * Só carrega se o usuário estiver autenticado
  */
 export function useSubscription(): UseSubscriptionReturn {
-  const { isAuthenticated } = useAuth()
+  const { isAuthenticated, role } = useAuth()
+  const isPartner = role !== "employee"
 
   const {
     data: subscriptions = [],
@@ -27,7 +28,7 @@ export function useSubscription(): UseSubscriptionReturn {
   } = useQuery({
     queryKey: ["subscriptions"],
     queryFn: getSubscriptions,
-    enabled: isAuthenticated,
+    enabled: isAuthenticated && isPartner,
     retry: false,
     staleTime: 1000 * 60 * 5,
   })

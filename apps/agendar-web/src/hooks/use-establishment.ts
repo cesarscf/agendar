@@ -13,7 +13,8 @@ export interface UseEstablishmentReturn {
  * Só carrega se o usuário estiver autenticado
  */
 export function useEstablishment(): UseEstablishmentReturn {
-  const { isAuthenticated } = useAuth()
+  const { isAuthenticated, role } = useAuth()
+  const isPartner = role !== "employee"
 
   const {
     data: establishment = null,
@@ -22,7 +23,7 @@ export function useEstablishment(): UseEstablishmentReturn {
   } = useQuery({
     queryKey: ["establishment"],
     queryFn: getEstablishment,
-    enabled: isAuthenticated,
+    enabled: isAuthenticated && isPartner,
     retry: false,
     staleTime: 1000 * 60 * 5,
   })
