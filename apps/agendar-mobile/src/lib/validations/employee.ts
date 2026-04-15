@@ -27,7 +27,7 @@ export const employeeSchema = z.object({
     .string()
     .max(500, { message: "Biografia deve ter no máximo 500 caracteres" })
     .optional(),
-  role: z.enum(["standard", "admin"]).default("standard"),
+  role: z.enum(["standard", "admin"]),
   services: z.array(employeeServiceSchema).optional(),
 })
 
