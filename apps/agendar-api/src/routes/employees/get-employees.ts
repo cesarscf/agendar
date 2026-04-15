@@ -41,6 +41,7 @@ export async function getEmployees(app: FastifyInstance) {
             avatarUrl: true,
             biography: true,
             phone: true,
+            role: true,
           },
           orderBy: asc(employees.name),
         })

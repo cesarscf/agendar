@@ -34,6 +34,7 @@ export async function updateEmployee(app: FastifyInstance) {
             address: z.string().optional(),
             biography: z.string().optional(),
             avatarUrl: z.string().optional(),
+            role: z.enum(["standard", "admin"]).optional(),
           }),
           response: {
             204: z.null(),

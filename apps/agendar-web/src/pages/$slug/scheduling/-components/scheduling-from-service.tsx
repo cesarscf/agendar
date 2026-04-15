@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { useNavigate } from "@tanstack/react-router"
 import { set } from "date-fns"
 import { ArrowLeft, Check, Loader2, User } from "lucide-react"
 import React from "react"
@@ -43,6 +44,7 @@ export function SchedulingFromService({
 }: SchedulingProps) {
   const [loading, setLoading] = React.useState(false)
   const queryClient = useQueryClient()
+  const navigate = useNavigate()
   const [step, setStep] = React.useState<Step>("professional")
   const [selectedProfessionalId, setSelectedProfessionalId] = React.useState<
     string | null
@@ -393,11 +395,7 @@ export function SchedulingFromService({
               <Button
                 className="w-full"
                 onClick={() => {
-                  setStep("professional")
-                  setSelectedProfessionalId(null)
-                  setSelectedDate(undefined)
-                  setSelectedTime(null)
-                  setCustomerData(null)
+                  navigate({ to: "/$slug", params: { slug } })
                 }}
               >
                 Fazer novo agendamento

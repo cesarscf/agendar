@@ -270,6 +270,20 @@ export const employeeColorPalette = [
   { text: "text-amber-600", bg: "bg-amber-100", iconText: "text-amber-600" },
   { text: "text-indigo-600", bg: "bg-indigo-100", iconText: "text-indigo-600" },
   { text: "text-teal-600", bg: "bg-teal-100", iconText: "text-teal-600" },
+  { text: "text-red-600", bg: "bg-red-100", iconText: "text-red-600" },
+  { text: "text-green-600", bg: "bg-green-100", iconText: "text-green-600" },
+  { text: "text-violet-600", bg: "bg-violet-100", iconText: "text-violet-600" },
+  { text: "text-fuchsia-600", bg: "bg-fuchsia-100", iconText: "text-fuchsia-600" },
+  { text: "text-lime-600", bg: "bg-lime-100", iconText: "text-lime-600" },
+  { text: "text-sky-600", bg: "bg-sky-100", iconText: "text-sky-600" },
+  { text: "text-yellow-600", bg: "bg-yellow-100", iconText: "text-yellow-600" },
+  { text: "text-stone-600", bg: "bg-stone-100", iconText: "text-stone-600" },
+  { text: "text-blue-800", bg: "bg-blue-200", iconText: "text-blue-800" },
+  { text: "text-pink-800", bg: "bg-pink-200", iconText: "text-pink-800" },
+  { text: "text-purple-800", bg: "bg-purple-200", iconText: "text-purple-800" },
+  { text: "text-emerald-800", bg: "bg-emerald-200", iconText: "text-emerald-800" },
+  { text: "text-orange-800", bg: "bg-orange-200", iconText: "text-orange-800" },
+  { text: "text-rose-800", bg: "bg-rose-200", iconText: "text-rose-800" },
 ]
 
 /**
