@@ -20,7 +20,6 @@ import { AppButton } from "../button"
 import { IconButton } from "../icon-button"
 import { ImagePickerControl } from "../image-picker"
 import { Input } from "../input"
-import { Select } from "../select"
 
 type Inputs = z.infer<typeof updateEmployeeSchema>
 
@@ -189,31 +188,6 @@ export function EditEmployeeForm({ employee }: EditEmployeeFormProps) {
                 {form.formState.errors.password.message}
               </Text>
             )}
-          </View>
-
-          <View className="gap-1">
-            <Text className="text-sm font-medium">Nível de acesso</Text>
-            <Controller
-              control={form.control}
-              name="role"
-              render={({ field }) => (
-                <Select
-                  value={field.value ?? "standard"}
-                  onValueChange={field.onChange}
-                  options={[
-                    {
-                      value: "standard",
-                      label: "Profissional (acesso operacional)",
-                    },
-                    {
-                      value: "admin",
-                      label: "Administrador (acesso total)",
-                    },
-                  ]}
-                  placeholder="Selecione o nível"
-                />
-              )}
-            />
           </View>
 
           <View className="gap-1">

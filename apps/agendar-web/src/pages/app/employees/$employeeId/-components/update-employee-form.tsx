@@ -16,13 +16,6 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
 import { Switch } from "@/components/ui/switch"
 import { Textarea } from "@/components/ui/textarea"
 import { deleteEmployee } from "@/http/employees/delete-employee"
@@ -53,7 +46,6 @@ export function UpdateEmployeeForm({ employee }: { employee: Employee }) {
       active: employee.active,
       address: employee.address,
       biography: employee.biography,
-      role: employee.role ?? "standard",
     },
   })
 
@@ -144,35 +136,6 @@ export function UpdateEmployeeForm({ employee }: { employee: Employee }) {
                   {...field}
                 />
               </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="role"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Nível de acesso</FormLabel>
-              <Select
-                value={field.value}
-                onValueChange={field.onChange}
-              >
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Selecione o nível" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value="standard">
-                    Profissional (acesso operacional)
-                  </SelectItem>
-                  <SelectItem value="admin">
-                    Administrador (acesso total)
-                  </SelectItem>
-                </SelectContent>
-              </Select>
               <FormMessage />
             </FormItem>
           )}

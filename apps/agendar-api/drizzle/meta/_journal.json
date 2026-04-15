@@ -29,13 +29,6 @@
       "when": 1775479347512,
       "tag": "0003_eager_micromax",
       "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "7",
-      "when": 1776281426948,
-      "tag": "0004_overjoyed_cassandra_nova",
-      "breakpoints": true
     }
   ]
 }

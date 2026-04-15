@@ -4,7 +4,7 @@ import type { FastifyInstance } from "fastify"
 import type { ZodTypeProvider } from "fastify-type-provider-zod"
 import z from "zod"
 import { db } from "@/db"
-import { employees, establishments, partners } from "@/db/schema"
+import { employees, partners } from "@/db/schema"
 import { UnauthorizedError } from "../_erros/unauthorized-error"
 
 export async function login(app: FastifyInstance) {
@@ -70,28 +70,6 @@ export async function login(app: FastifyInstance) {
 
       if (!isPasswordValid) {
         throw new UnauthorizedError("Credenciais inválidas")
-      }
-
-      if (existingEmployee.role === "admin") {
-        const establishment = await db.query.establishments.findFirst({
-          where: eq(establishments.id, existingEmployee.establishmentId),
-          columns: { ownerId: true },
-        })
-
-        if (!establishment) {
-          throw new UnauthorizedError("Credenciais inválidas")
-        }
-
-        const token = await reply.jwtSign(
-          {
-            sub: establishment.ownerId,
-            role: "partner",
-            actingAsEmployeeId: existingEmployee.id,
-          },
-          { sign: { expiresIn: "7d" } }
-        )
-
-        return reply.status(201).send({ token, role: "partner" })
       }
 
       const token = await reply.jwtSign(

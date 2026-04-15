@@ -17,7 +17,6 @@ export const employees = pgTable("employees", {
   avatarUrl: text("avatarUrl"),
   biography: text("biography"),
   password: text("password"),
-  role: text("role").notNull().default("standard"),
   createdAt: timestamp("created_at").notNull().defaultNow(),
 })
 

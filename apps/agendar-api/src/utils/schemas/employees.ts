@@ -9,5 +9,4 @@ export const employeeSchema = z.object({
   avatarUrl: z.string().nullable(),
   phone: z.string().nullable(),
   biography: z.string().nullable(),
-  role: z.enum(["standard", "admin"]).default("standard"),
 })

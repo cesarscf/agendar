@@ -18,13 +18,6 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 import { PasswordInput } from "@/components/password-input"
 import { useSubscription } from "@/hooks/use-subscription"
@@ -78,7 +71,6 @@ function NewEmployee() {
       phone: "",
       active: true,
       avatarUrl: "",
-      role: "standard",
     },
   })
 
@@ -248,35 +240,6 @@ function NewEmployee() {
                 <FormControl>
                   <PasswordInput {...field} />
                 </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="role"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Nível de acesso*</FormLabel>
-                <Select
-                  value={field.value}
-                  onValueChange={field.onChange}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Selecione o nível" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="standard">
-                      Profissional (acesso operacional)
-                    </SelectItem>
-                    <SelectItem value="admin">
-                      Administrador (acesso total)
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
                 <FormMessage />
               </FormItem>
             )}

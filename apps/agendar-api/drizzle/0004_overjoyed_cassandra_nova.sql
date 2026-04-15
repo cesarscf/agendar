@@ -1,1 +1,0 @@
-ALTER TABLE "employees" ADD COLUMN "role" text DEFAULT 'standard' NOT NULL;
