@@ -3,7 +3,7 @@ import type { FastifyInstance } from "fastify"
 import type { ZodTypeProvider } from "fastify-type-provider-zod"
 import z from "zod"
 import { db } from "@/db"
-import { partners } from "@/db/schema"
+import { employees, partners } from "@/db/schema"
 import { auth } from "@/middlewares/auth"
 import { BadRequestError } from "@/routes/_erros/bad-request-error"
 import { establishmentHeaderSchema } from "@/utils/schemas/headers"
@@ -83,7 +83,21 @@ export async function getPartner(app: FastifyInstance) {
           throw new BadRequestError("User not found")
         }
 
-        console.log({ partner })
+        const jwtPayload = (await request.jwtVerify()) as {
+          actingAsEmployeeId?: string
+        }
+
+        if (jwtPayload.actingAsEmployeeId) {
+          const actingEmployee = await db.query.employees.findFirst({
+            where: eq(employees.id, jwtPayload.actingAsEmployeeId),
+            columns: { name: true, email: true },
+          })
+
+          if (actingEmployee) {
+            partner.name = actingEmployee.name
+            partner.email = actingEmployee.email ?? partner.email
+          }
+        }
 
         return reply.status(200).send({ partner })
       }
