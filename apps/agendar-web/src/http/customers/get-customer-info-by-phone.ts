@@ -4,7 +4,7 @@ export type GetCustomerInfoByPhoneResponse = {
   customer: {
     name: string
     phoneNumber: string
-    birthDate: Date
+    birthDate: Date | null
   }
   packages: {
     packageName: string

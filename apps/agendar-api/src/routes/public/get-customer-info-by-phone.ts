@@ -33,7 +33,7 @@ export async function getCustomerInfoByPhone(app: FastifyInstance) {
               customer: z.object({
                 name: z.string(),
                 phoneNumber: z.string(),
-                birthDate: z.date(),
+                birthDate: z.date().nullable(),
               }),
               packages: z.array(
                 z.object({
