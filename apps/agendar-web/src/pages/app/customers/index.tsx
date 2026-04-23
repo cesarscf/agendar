@@ -77,7 +77,9 @@ function Customers() {
     <div className="p-6">
       <div className="flex flex-row justify-between">
         <div className="mb-6">
-          <h1 className="text-2xl font-bold text-foreground">Clientes</h1>
+          <h1 className="text-2xl font-bold text-foreground">
+            Clientes ({data?.length ?? 0})
+          </h1>
           <p className="text-muted-foreground">
             Gerencie todos os seus clientes
           </p>

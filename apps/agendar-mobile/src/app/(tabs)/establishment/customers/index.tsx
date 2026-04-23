@@ -1,4 +1,4 @@
-import { Link } from "expo-router"
+import { Link, Stack } from "expo-router"
 import { ChevronRight, Mail, Phone, UserX } from "lucide-react-native"
 import {
   ActivityIndicator,
@@ -25,6 +25,7 @@ export default function Customers() {
   if (!customers || customers.length === 0) {
     return (
       <SafeAreaView className="flex-1 bg-white">
+        <Stack.Screen options={{ title: "CLIENTES (0)" }} />
         <Empty
           message="Nenhum cliente cadastrado"
           icon={<UserX size={48} color="#9CA3AF" />}
@@ -35,6 +36,7 @@ export default function Customers() {
 
   return (
     <SafeAreaView className="flex-1 bg-white">
+      <Stack.Screen options={{ title: `CLIENTES (${customers.length})` }} />
       <ScrollView>
         <View className="mt-2 px-4">
           {customers?.map(customer => (
