@@ -10,6 +10,7 @@ import {
   services,
 } from "@/db/schema"
 import { employeeAuth } from "@/middlewares/employee-auth"
+import { reaisToCents } from "@/utils/price"
 
 const appointmentStatusSchema = z.enum(appointmentStatusValues)
 
@@ -134,7 +135,10 @@ export async function getMyAppointments(
             startTime: app.startTime.toISOString(),
             endTime: app.endTime.toISOString(),
             status: app.status,
-            service: app.service,
+            service: {
+              ...app.service,
+              servicePrice: reaisToCents(app.service.servicePrice),
+            },
             customer: app.customer,
           })),
           total: count,
