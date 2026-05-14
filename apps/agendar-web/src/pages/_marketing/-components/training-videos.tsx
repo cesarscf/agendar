@@ -2,69 +2,45 @@ import { Check } from "lucide-react"
 
 interface Video {
   title: string
-  videoId: string // YouTube video ID
+  videoId: string
 }
 
 const videos: Video[] = [
   {
     title: "Instalando o Agendar",
-    videoId: "dQw4w9WgXcQ", // Mock YouTube video ID
+    videoId: "nU9ebVVDo9A",
   },
   {
     title: "Configurando sua loja",
-    videoId: "dQw4w9WgXcQ",
+    videoId: "nU9ebVVDo9A",
   },
   {
     title: "Configurando categorias",
-    videoId: "dQw4w9WgXcQ",
+    videoId: "YieNa3wDJV4",
   },
   {
     title: "Configurando serviços",
-    videoId: "dQw4w9WgXcQ",
+    videoId: "2xsaXnB0VNo",
   },
   {
     title: "Configurando profissionais",
-    videoId: "dQw4w9WgXcQ",
+    videoId: "2DnNDKWHqlY",
   },
   {
     title: "Configurando pacote de serviços",
-    videoId: "dQw4w9WgXcQ",
+    videoId: "AS2JkPs1WCQ",
   },
   {
     title: "Configurando fidelidade",
-    videoId: "dQw4w9WgXcQ",
+    videoId: "B7vbzWETKaI",
   },
   {
     title: "Configurando clientes",
-    videoId: "dQw4w9WgXcQ",
+    videoId: "p92D8YVtQaI",
   },
   {
     title: "Configurando Profissionais",
-    videoId: "dQw4w9WgXcQ",
-  },
-  {
-    title: "Fazendo agendamento",
-    videoId: "dQw4w9WgXcQ",
-  },
-  {
-    title: "Relatórios gerenciais",
-    videoId: "dQw4w9WgXcQ",
-  },
-  {
-    title: "Agenda e check-out",
-    videoId: "dQw4w9WgXcQ",
-  },
-  {
-    title: "Fidelização de clientes",
-    videoId: "dQw4w9WgXcQ",
-  },
-  {
-    title: "Venda recorrente",
-    videoId: "dQw4w9WgXcQ",
-  },
-  {
-    title: "Fila de espera nunca mais",
-    videoId: "dQw4w9WgXcQ",
+    videoId: "U4FeM5PSywY",
   },
 ]
 
@@ -85,7 +61,12 @@ export function TrainingVideos() {
                   {video.title}
                 </h3>
               </div>
-              <div className="relative aspect-video rounded-lg overflow-hidden bg-gray-800 hover:scale-105 transition-transform cursor-pointer">
+              <a
+                href={`https://youtu.be/${video.videoId}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="relative aspect-video rounded-lg overflow-hidden bg-gray-800 hover:scale-105 transition-transform cursor-pointer block"
+              >
                 <img
                   src={`https://img.youtube.com/vi/${video.videoId}/mqdefault.jpg`}
                   alt={video.title}
@@ -102,7 +83,7 @@ export function TrainingVideos() {
                     </svg>
                   </div>
                 </div>
-              </div>
+              </a>
             </div>
           ))}
         </div>
