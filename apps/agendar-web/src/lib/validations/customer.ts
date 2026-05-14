@@ -17,10 +17,10 @@ export const customerSchema = z.object({
     .or(z.literal("")),
   phoneNumber: z
     .string()
+    .min(1, { message: "Telefone é obrigatório" })
     .regex(/^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$/, {
       message: "Telefone inválido",
-    })
-    .optional(),
+    }),
   email: z.string().optional(),
   cpf: z.string().optional(),
   notes: z.string().optional(),

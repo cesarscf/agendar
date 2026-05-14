@@ -158,7 +158,7 @@ export function CheckinDialog({
         ...data,
         appointmentId: appointment.id,
       })
-      Alert.alert("Sucesso", "Check-in realizado com sucesso!", [
+      Alert.alert("Sucesso", "Check-out realizado com sucesso!", [
         {
           text: "OK",
           onPress: () => {
@@ -194,7 +194,7 @@ export function CheckinDialog({
       <View className="flex-1 bg-white">
         {/* Header */}
         <View className="flex-row items-center justify-between p-4 border-b border-gray-200">
-          <Text className="text-xl font-semibold">Check-in</Text>
+          <Text className="text-xl font-semibold">Check-out</Text>
           <TouchableOpacity
             onPress={handleClose}
             className="p-2"
@@ -368,7 +368,7 @@ export function CheckinDialog({
 
           <View className="gap-3 mt-4">
             <AppButton
-              title="Confirmar Check-in"
+              title="Confirmar Check-out"
               onPress={form.handleSubmit(onSubmit)}
               loading={isSubmitting}
               disabled={isSubmitting}

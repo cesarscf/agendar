@@ -92,7 +92,7 @@ export function AppointmentCard({
             onPress={() => onCheckIn?.(appointment.id)}
             className="flex-1 bg-blue-600 py-3 rounded-lg items-center"
           >
-            <Text className="text-white font-semibold">Fazer Check-in</Text>
+            <Text className="text-white font-semibold">Fazer Check-out</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => onCancel?.(appointment.id)}

@@ -51,7 +51,7 @@ const videos: Video[] = [
     videoId: "dQw4w9WgXcQ",
   },
   {
-    title: "Agenda e check-in",
+    title: "Agenda e check-out",
     videoId: "dQw4w9WgXcQ",
   },
   {

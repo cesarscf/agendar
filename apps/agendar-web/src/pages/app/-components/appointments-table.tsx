@@ -34,7 +34,7 @@ export function AppointmentsTable({
   onInvalidateQueries,
 }: AppointmentsTableProps) {
   const handleCheckinSuccess = () => {
-    toast.success("Check-in realizado com sucesso!")
+    toast.success("Check-out realizado com sucesso!")
     onInvalidateQueries()
   }
 

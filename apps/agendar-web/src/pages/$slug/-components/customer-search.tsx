@@ -330,7 +330,7 @@ export function CustomerSearch({ slug, compact = false }: CustomerSearchProps) {
                                 </div>
                                 <div>
                                   <p className="text-muted-foreground">
-                                    Check-in
+                                    Check-out
                                   </p>
                                   <p
                                     className={cn(
@@ -707,7 +707,7 @@ export function CustomerSearch({ slug, compact = false }: CustomerSearchProps) {
                               </div>
                               <div>
                                 <p className="text-muted-foreground">
-                                  Check-in
+                                  Check-out
                                 </p>
                                 <p
                                   className={cn(

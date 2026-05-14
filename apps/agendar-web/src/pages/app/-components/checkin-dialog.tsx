@@ -91,7 +91,7 @@ export function CheckinDialog({
       setOpen(false)
     },
     onError: () => {
-      toast.error("Falha ao realizar o check-in. Tente novamente.")
+      toast.error("Falha ao realizar o check-out. Tente novamente.")
     },
   })
 
@@ -209,7 +209,7 @@ export function CheckinDialog({
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="outline" size="sm">
-          Fazer Check-in
+          Fazer Check-out
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[500px]">
@@ -217,7 +217,7 @@ export function CheckinDialog({
           <DialogTitle>
             {selectedStatus === "canceled"
               ? "Cancelar Agendamento"
-              : "Check-in"}
+              : "Check-out"}
           </DialogTitle>
           <DialogDescription>
             {selectedStatus === "canceled" ? (
@@ -227,7 +227,7 @@ export function CheckinDialog({
                 <strong>{data.service.name}</strong>?
               </>
             ) : (
-              "Preencha as informações abaixo para concluir o check-in do cliente."
+              "Preencha as informações abaixo para concluir o check-out do cliente."
             )}
           </DialogDescription>
         </DialogHeader>

@@ -85,7 +85,7 @@ function NewCustomer() {
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Nome</FormLabel>
+                <FormLabel>Nome*</FormLabel>
                 <FormControl>
                   <Input
                    
@@ -102,7 +102,7 @@ function NewCustomer() {
             name="phoneNumber"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Telefone</FormLabel>
+                <FormLabel>Telefone*</FormLabel>
                 <FormControl>
                   <Input
                    
