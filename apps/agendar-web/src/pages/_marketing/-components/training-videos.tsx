@@ -7,40 +7,32 @@ interface Video {
 
 const videos: Video[] = [
   {
-    title: "Instalando o Agendar",
-    videoId: "nU9ebVVDo9A",
-  },
-  {
-    title: "Configurando sua loja",
-    videoId: "nU9ebVVDo9A",
-  },
-  {
-    title: "Configurando categorias",
-    videoId: "YieNa3wDJV4",
-  },
-  {
-    title: "Configurando serviços",
+    title: "Cadastro inicial no Agendar",
     videoId: "2xsaXnB0VNo",
   },
   {
-    title: "Configurando profissionais",
-    videoId: "2DnNDKWHqlY",
-  },
-  {
-    title: "Configurando pacote de serviços",
+    title: "Configurar sua loja",
     videoId: "AS2JkPs1WCQ",
   },
   {
-    title: "Configurando fidelidade",
+    title: "Cadastro de categoria de serviços",
     videoId: "B7vbzWETKaI",
   },
   {
-    title: "Configurando clientes",
-    videoId: "p92D8YVtQaI",
+    title: "Cadastro de profissionais",
+    videoId: "U4FeM5PSywY",
   },
   {
-    title: "Configurando Profissionais",
-    videoId: "U4FeM5PSywY",
+    title: "Cadastro de Pacotes de serviços",
+    videoId: "2DnNDKWHqlY",
+  },
+  {
+    title: "Programa de fidelidade",
+    videoId: "nU9ebVVDo9A",
+  },
+  {
+    title: "Agendar serviços",
+    videoId: "YieNa3wDJV4",
   },
 ]
 
