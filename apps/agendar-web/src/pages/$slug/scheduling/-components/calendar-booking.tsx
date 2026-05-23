@@ -1,10 +1,9 @@
 import { useQuery } from "@tanstack/react-query"
-import { ptBR } from "date-fns/locale"
 import { Button } from "@/components/ui/button"
-import { Calendar } from "@/components/ui/calendar"
 import { Card, CardContent } from "@/components/ui/card"
 import { getAvailability } from "@/http/public/get-public-availability"
 import { toISODateString } from "@/lib/utils"
+import { BookingCalendar } from "./booking-calendar"
 
 interface CalendarBookingProps {
   selectedDate: Date | undefined
@@ -69,25 +68,13 @@ export function CalendarBooking({
         <CardContent className="p-0">
           <div className="flex flex-col">
             <div className="flex-1 p-4">
-              <Calendar
-                mode="single"
+              <BookingCalendar
                 selected={selectedDate}
                 onSelect={setSelectedDate}
                 defaultMonth={selectedDate}
-                showOutsideDays
-                fixedWeeks
-                modifiersClassNames={{
-                  booked: "[&>button]:line-through opacity-100",
-                }}
                 disabled={date =>
                   date < new Date(new Date().setHours(0, 0, 0, 0))
                 }
-                className="bg-transparent p-0 w-full"
-                locale={ptBR}
-                formatters={{
-                  formatWeekdayName: date =>
-                    date.toLocaleString("pt-BR", { weekday: "short" }),
-                }}
               />
             </div>
 
