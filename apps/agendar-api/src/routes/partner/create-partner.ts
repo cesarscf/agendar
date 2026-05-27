@@ -121,7 +121,7 @@ export async function createPartner(app: FastifyInstance) {
 
       if (trialPlan) {
         try {
-          const TRIAL_DAYS = 7
+          const TRIAL_DAYS = trialPlan.trialPeriodDays
           const stripeSubscription = await stripe.subscriptions.create({
             customer: customerPayment.id,
             items: [{ price: trialPlan.integrationPriceId }],

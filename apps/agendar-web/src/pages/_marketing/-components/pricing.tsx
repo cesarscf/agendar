@@ -66,7 +66,7 @@ export function Pricing() {
             <span className="text-[#F4C430]">Ideal</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Planos flexíveis para equipes de todos os tamanhos. Comece com 7
+            Planos flexíveis para equipes de todos os tamanhos. Comece com 30
             dias grátis, sem compromisso.
           </p>
         </div>

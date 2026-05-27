@@ -14,7 +14,7 @@ const faqs: FAQ[] = [
   {
     question: "Como funciona o período de teste gratuito?",
     answer:
-      "Você pode experimentar todas as funcionalidades do Agendar gratuitamente por 14 dias, sem precisar cadastrar cartão de crédito. Após o período de teste, você pode escolher o plano que melhor se adequa ao seu negócio.",
+      "Você pode experimentar todas as funcionalidades do Agendar gratuitamente por 30 dias, sem precisar cadastrar cartão de crédito. Após o período de teste, você pode escolher o plano que melhor se adequa ao seu negócio.",
   },
   {
     question: "Posso cancelar minha assinatura a qualquer momento?",

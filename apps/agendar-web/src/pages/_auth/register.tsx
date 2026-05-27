@@ -94,7 +94,7 @@ function Register() {
     onSuccess: () => {
       toast.success("Cadastro realizado!", {
         description:
-          "Bem-vindo ao Agendar. Seu teste grátis de 7 dias começou!",
+          "Bem-vindo ao Agendar. Seu teste grátis de 30 dias começou!",
       })
     },
     onError: (error: Error) => {
