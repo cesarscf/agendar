@@ -59,7 +59,7 @@ function AdminDashboard() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold">Partners</h2>
+        <h2 className="text-2xl font-bold">Parceiros</h2>
         <p className="text-muted-foreground">
           {partners.length} parceiros cadastrados
         </p>
@@ -76,7 +76,7 @@ function AdminDashboard() {
               <TableRow>
                 <TableHead>Nome</TableHead>
                 <TableHead>Email</TableHead>
-                <TableHead>Localizacao</TableHead>
+                <TableHead>Localização</TableHead>
                 <TableHead>Plano</TableHead>
                 <TableHead>Status</TableHead>
                 <TableHead>Validade</TableHead>
