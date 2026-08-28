@@ -18,6 +18,9 @@
   "author": "",
   "license": "ISC",
   "description": "",
+  "engines": {
+    "node": ">=24"
+  },
   "dependencies": {
     "@better-auth/utils": "^0.2.3",
     "@fastify/cookie": "^11.0.2",

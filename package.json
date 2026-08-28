@@ -7,6 +7,9 @@
     "format": "biome format ./apps --write",
     "format:check": "biome format ./apps"
   },
+  "engines": {
+    "node": ">=24"
+  },
   "devDependencies": {
     "@biomejs/biome": "^2.1.3"
   }
