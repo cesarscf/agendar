@@ -34,24 +34,29 @@ import { subscriptionRoutes } from "@/routes/subscription"
 import { stripeWebhook } from "@/routes/subscription/stripe-webhook"
 import { errorHandler } from "@/utils/error-handler"
 
+const isProduction = env.NODE_ENV === "production"
+
 const app = fastify({
   logger: {
     level: "info",
-    transport: {
-      target: "pino-pretty",
-      options: {
-        colorize: true,
-      },
-    },
+    // pino-pretty é devDependency: registrar o transport em produção quebra
+    // o boot em instalações sem devDependencies.
+    ...(isProduction
+      ? {}
+      : {
+          transport: {
+            target: "pino-pretty",
+            options: { colorize: true },
+          },
+        }),
   },
 })
 app.setSerializerCompiler(serializerCompiler)
 app.setValidatorCompiler(validatorCompiler)
 
 app.register(fastifyCors, {
-  origin: ["*"],
+  origin: env.CORS_ORIGINS,
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-  credentials: true,
 })
 
 app.register(fastifyJwt, {

@@ -14,6 +14,9 @@ const envSchema = z.object({
   RESEND_API_KEY: z.string(),
   RESEND_EMAIL: z.string(),
   FRONTEND_URL: z.string().default("http://localhost:3000"),
+  // Origens extras liberadas no CORS, separadas por vírgula
+  // (previews da Vercel, domínio customizado). O FRONTEND_URL já entra sozinho.
+  CORS_ORIGINS: z.string().optional(),
   // Z-API (opcional)
   ZAPI_INSTANCE_ID: z.string().optional(),
   ZAPI_TOKEN: z.string().optional(),
@@ -24,6 +27,12 @@ const parsedEnv = envSchema.parse(process.env)
 
 export const env = {
   ...parsedEnv,
+  CORS_ORIGINS: [
+    parsedEnv.FRONTEND_URL,
+    ...(parsedEnv.CORS_ORIGINS?.split(",") ?? []),
+  ]
+    .map(origin => origin.trim())
+    .filter(Boolean),
   ZAPI:
     parsedEnv.ZAPI_INSTANCE_ID &&
     parsedEnv.ZAPI_TOKEN &&
