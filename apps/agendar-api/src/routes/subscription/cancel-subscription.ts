@@ -79,9 +79,13 @@ export async function cancelSubscription(app: FastifyInstance) {
           .set({ cancelAtPeriodEnd: true })
           .where(eq(subscriptions.id, subscription.id))
 
+        const periodEnd = updated.items.data[0]?.current_period_end
+
         return reply.send({
           cancelAtPeriodEnd: true,
-          currentPeriodEnd: new Date(updated.current_period_end * 1000),
+          currentPeriodEnd: periodEnd
+            ? new Date(periodEnd * 1000)
+            : subscription.currentPeriodEnd,
         })
       }
     )
